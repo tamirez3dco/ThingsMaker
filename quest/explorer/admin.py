@@ -14,11 +14,12 @@ class PickleField(forms.CharField):
 class GhDefinitionAdminForm( forms.ModelForm ):    
     file_name = forms.CharField( max_length = 255, required = True )
     scene_file = forms.CharField( max_length = 255, required = True )
+    product = forms.IntegerField()
     active = forms.BooleanField(initial=True, required=False)
     param_names = PickleField( max_length = 1000, required = True )
     
 class GhDefinitionAdmin(admin.ModelAdmin):
-    fields = ('file_name','scene_file','active','param_names')
+    fields = ('file_name','scene_file','product','active','param_names')
     form = GhDefinitionAdminForm
 #    def save_model(self, request, obj, form, change):
 #        obj.file_name = form.cleaned_data['file_name']

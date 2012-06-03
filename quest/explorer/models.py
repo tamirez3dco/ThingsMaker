@@ -2,6 +2,7 @@ from django.db import models
 #import cPickle as pickle
 from django.utils import simplejson as pickle
 from south.modelsinspector import add_introspection_rules
+#from lfs.catalog.models import Product
 
 class PickledObject(str):
     """A subclass of string so it can be told whether a string is
@@ -50,6 +51,7 @@ class GhDefinition(models.Model):
     active = models.BooleanField()
     param_names = PickledObjectField(null=True)
     scene_file = models.CharField(max_length=100)
+    product = models.IntegerField()
     
     def __unicode__(self):
         return self.file_name

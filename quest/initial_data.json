@@ -1,0 +1,152 @@
+[
+  {
+    "pk": 1, 
+    "model": "page.page", 
+    "fields": {
+      "body": "", 
+      "meta_description": "", 
+      "meta_title": "<title>", 
+      "meta_keywords": "", 
+      "exclude_from_navigation": true, 
+      "title": "Root", 
+      "file": "", 
+      "active": true, 
+      "position": 999, 
+      "short_text": "", 
+      "slug": ""
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "page.page", 
+    "fields": {
+      "body": "Enter your terms and conditions here.", 
+      "meta_description": "", 
+      "meta_title": "<title>", 
+      "meta_keywords": "", 
+      "exclude_from_navigation": false, 
+      "title": "Terms and Conditions", 
+      "file": "", 
+      "active": true, 
+      "position": 999, 
+      "short_text": "", 
+      "slug": "terms-and-conditions"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "page.page", 
+    "fields": {
+      "body": "<p>About</p>", 
+      "meta_description": "", 
+      "meta_title": "<title>", 
+      "meta_keywords": "", 
+      "exclude_from_navigation": false, 
+      "title": "About", 
+      "file": "", 
+      "active": true, 
+      "position": 999, 
+      "short_text": "", 
+      "slug": "about"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "core.country", 
+    "fields": {
+      "code": "us", 
+      "name": "USA"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "core.actiongroup", 
+    "fields": {
+      "name": "Footer"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "core.actiongroup", 
+    "fields": {
+      "name": "Tabs"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "core.action", 
+    "fields": {
+      "group": 1, 
+      "parent": null, 
+      "title": "Create", 
+      "link": "/create", 
+      "active": true, 
+      "position": 10
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "core.action", 
+    "fields": {
+      "group": 2, 
+      "parent": null, 
+      "title": "Terms and Conditions", 
+      "link": "/page/terms-and-conditions", 
+      "active": true, 
+      "position": 10
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "core.action", 
+    "fields": {
+      "group": 1, 
+      "parent": null, 
+      "title": "My Store", 
+      "link": "/mystore", 
+      "active": true, 
+      "position": 20
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "core.shop", 
+    "fields": {
+      "meta_keywords": "", 
+      "image": "", 
+      "shipping_countries": [
+        1
+      ], 
+      "shop_owner": "ATA", 
+      "static_block": null, 
+      "google_analytics_id": "", 
+      "ga_ecommerce_tracking": false, 
+      "from_email": "john@doe.com", 
+      "price_calculator": "lfs.gross_price.GrossPriceCalculator", 
+      "meta_description": "", 
+      "meta_title": "<name>", 
+      "description": "<h1 class=\"first-heading\">Welcome to ThingsMaker</h1>\r\n<p>The future of design</p>\r\n<h1>Login</h1>\r\n<p>Go to the <a href=\"/manage\">management interface</a> to start to add content.</p>", 
+      "default_locale": "en_US.UTF-8", 
+      "default_country": 1, 
+      "product_rows": 10, 
+      "name": "ThingsMaker", 
+      "checkout_type": 0, 
+      "confirm_toc": false, 
+      "product_cols": 1, 
+      "notification_emails": "john@doe.com", 
+      "use_international_currency_code": false, 
+      "invoice_countries": [
+        1
+      ], 
+      "ga_site_tracking": false, 
+      "category_cols": 1
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "core.application", 
+    "fields": {
+      "version": "0.7"
+    }
+  }
+]

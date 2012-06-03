@@ -518,17 +518,19 @@ Ext.define('Quest.view.Panel', {
 		//Ext.getCmp('canvas-panel').hide();
 	},
 	qAddProductVariant : function(rec) {
-		console.log(rec);
 		Ext.Ajax.request({
 			url : '/explorer/add_product_variant',
 			params : {
 				item_uuid: rec.data.id
 			},
 			success : function(response) {
-				var text = response.responseText;
+				window.location = '/product/'+rec.data.id
+				//console.log('success');
+				//var text = response.responseText;
+				//console.log(text)
 				// process server response here
 			}
 		});
-		console.log('hi');
+		
 	}
 });

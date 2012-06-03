@@ -58,7 +58,7 @@ class Controller:
             c = Item.objects.filter(image_url__isnull=False, definition=d).count()
             item = None
             if (c<10):
-                self.page_size = 50
+                self.page_size = 60
                 self.algo.page_size = self.page_size
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size], countdown=0)

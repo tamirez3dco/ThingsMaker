@@ -60,7 +60,7 @@ def add_product_variant(request):
     item_uuid = request.POST.get('item_uuid','')
     item = Item.objects.get(uuid=item_uuid)
     logging.warn(item.image_url)
-    product = Product.objects.get(pk=2)
+    product = Product.objects.get(pk=1)
     props = product.get_properties()
     logging.warn(simplejson.dumps(props))
     slug = item_uuid

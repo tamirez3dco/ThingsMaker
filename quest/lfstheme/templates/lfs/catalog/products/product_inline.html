@@ -43,9 +43,9 @@
                 {{ property.title }}: {{ property.value }} {{ property.unit|safe }}
             </div>
         {% endfor %}
-        <span class='st_sharethis_large' st_url="http://127.0.0.1:8000/product/{{ product.slug }}" st_image="{{ product.get_item_image }}" displayText='ShareThis'></span>
-		<span class='st_facebook_large' st_url="http://127.0.0.1:8000/product/{{ product.slug }}" st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
-		<span class='st_pinterest_large' st_url="http://127.0.0.1:8000/product/{{ product.slug }}" st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
+        <span class='st_sharethis_large' st_image="{{ product.get_item_image }}" displayText='ShareThis'></span>
+		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
+		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
     </div>
     {% shipping product %}
     {% average_for_instance product %}

@@ -51,7 +51,7 @@ class GhDefinition(models.Model):
     active = models.BooleanField()
     param_names = PickledObjectField(null=True)
     scene_file = models.CharField(max_length=100)
-    product = models.IntegerField()
+    # = models.IntegerField()
     
     def __unicode__(self):
         return self.file_name

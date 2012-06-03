@@ -48,29 +48,6 @@ class Base:
             
         return rparams   
 
-    def _mrange_random_params(self, params, r1, r2):
-        rparams = []
-        #for v in params:
-        for i in range(len(params)):
-            v = params[i]
-            a0 = v+r1[i]
-            b0 = min(1,v+r2[i])
-            l0 = b0-a0
-            
-            a1 = max(0,v-r2[i])
-            b1 = v-r1[i]
-            l1 = b1-a1
-            ##logging.warning("l0 %s l1 %s" % (l0, l1))
-            n = random.uniform(-l1,l0)
-            
-            sign = n/abs(n)  
-            
-            nn = float("%.2f" % (v+(sign*r1[i])+n))
-            #logging.warning("n %s nn %s" % (n, nn))    
-            rparams.append(nn)
-            
-        return rparams   
-    
 class Test(Base):
     def get_page_params(self, parent_params):    
         n_rows = int(math.ceil(float(self.page_size) / float(self.row_size)))
@@ -109,38 +86,22 @@ class Directions(Base):
                 minD=distance
         return minD
                 
-    def get_page_params(self, parent_params, gp_params, ranges): 
-        if gp_params != None:
-            logging.warn(simplejson.dumps(gp_params)) 
-            gp_diff = np.abs(np.array(gp_params)-np.array(parent_params))
-            logging.warn("gp_diff: %s" % simplejson.dumps(list(gp_diff)))
-            gp_diff[gp_diff>0.3] = 0.3
-            gp_diff[gp_diff<0.07] = 0.07
-            r1 = [0 for i in range(len(parent_params))]
-            r2 = list(gp_diff)
-        else:
-            r1 = [ranges[0] for i in range(len(parent_params))]
-            r2 = [ranges[1] for i in range(len(parent_params))]
-        
-        logging.warn("r1: %s" % simplejson.dumps(r1))
-        logging.warn("r2: %s" % simplejson.dumps(r2))
-        
+    def get_page_params(self, parent_params, ranges):  
+        r1 = ranges[0]
+        r2 = ranges[1]
+        #logging.warn(r2)
         num_tries = 5
-        params = self._mrange_random_params(parent_params, r1, r2)
+        params = self._my_random_params(parent_params, r1, r2)
         params_list = [params]
         for i in range(self.page_size):
             maxD=0
             for t in range(num_tries):
-                params = self._mrange_random_params(parent_params, r1, r2)
+                params = self._my_random_params(parent_params, r1, r2)
                 minD = self._min_d(params_list, params)
                 if minD>maxD:
                     maxD = minD
                     maxD_params = params  
             params_list.append(maxD_params)
     
-        return params_list
-        return list(itertools.chain(*[params_list,op_list]))
-            
-                
-            
+        return params_list 
             

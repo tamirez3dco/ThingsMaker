@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
 
+
 class Controller:
     """
     Explore parameter space
@@ -26,12 +27,12 @@ class Controller:
             
         self.row_size = int(ExplorerConfig.objects.get(k__exact='row_size').v)
         self.deep_count=int(ExplorerConfig.objects.get(k__exact='deep_count').v)
-        self.deep = False
+        self.deep = True
         self.bake = "all"
         self.renderer = Renderer()
         self.distances = {
-            'near': [0.01, 0.2],
-            'medium': [0.01, 0.3]
+            'near': [0.01, 0.13],
+            'medium': [0.05, 0.25]
         };
         self.algo = Algo(self.page_size, self.row_size)
         
@@ -148,10 +149,7 @@ class Controller:
         if root==None:
             children_params = self.algo.get_random_page_params(len(definition.param_names))
         else:
-            gp_params = None
-            if(root.parent != None):
-                gp_params = root.parent.params
-            children_params = self.algo.get_page_params(root.params, gp_params, self.distances[distance])
+            children_params = self.algo.get_page_params(root.params, self.distances[distance])
        
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []
@@ -200,4 +198,3 @@ class Controller:
         old_obj.uuid = str(uuid.uuid1())
         old_obj.save()
         return old_obj
-    

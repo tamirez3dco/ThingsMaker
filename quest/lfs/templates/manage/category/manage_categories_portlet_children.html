@@ -1,0 +1,17 @@
+{% if categories %}
+	<ol class="menu" id="{{ category.id }}">
+	    {% for category in categories %}
+	        <li id="category_{{ category.id }}"
+	            {% if category.is_current %}class="selected"{% endif %}>
+                <div>
+                    <a class="selectable {% if category.is_current %}selected{% endif %}"
+                       href="{% url lfs_manage_category category.id %}">
+                        <img class="handle" src="{{ STATIC_URL }}img/handle.png" alt="Handle"/>
+                        {{ category.name }}
+                    </a>
+                 </div>
+                 {{ category.children }}
+	        </li>    
+	    {% endfor %}
+	</ol>
+{% endif %}

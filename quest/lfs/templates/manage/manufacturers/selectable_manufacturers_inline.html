@@ -1,0 +1,8 @@
+{% for manufacturer in manufacturers %}
+    <div>
+        <a class="selectable {% ifequal manufacturer_id manufacturer.id  %}selected{% endifequal %}"
+              href="{{ manufacturer.get_absolute_url }}">
+            {{ manufacturer.name }}
+        </a>
+    </div>
+{% endfor %}

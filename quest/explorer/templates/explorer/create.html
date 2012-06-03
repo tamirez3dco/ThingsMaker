@@ -1,0 +1,17 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+
+{% block title %}
+    {% trans 'Create' %} - {{ block.super }}
+{% endblock %}
+
+{% block section %}create{% endblock %}
+
+{% block breadcrumbs %}
+    {% breadcrumbs _("Create") %}
+{% endblock %}
+
+{% block content %}
+<div id="explorer-container"></div>
+{% endblock %}

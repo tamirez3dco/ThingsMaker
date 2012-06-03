@@ -203,78 +203,7 @@
 
     {# Variants #}
     {% if product.is_variant %}
-        <div class="variants">
-            <h1 class="section">{% trans 'Variants' %}</h1>
-            {# List #}
-            {% if display_variants_list %}
-                <table class="product-variants lfs-default"
-                       data="{% url lfs_select_variant %}">
-                    <tr>
-                        <th></th>
-                        <th>
-                            {% trans 'Name' %}
-                        </th>
-                        {% for property in properties %}
-                            <th>
-                                {{ property.title }}
-                            </th>
-                        {% endfor %}
-                        <th class="number">
-                            {% trans 'Price' %}
-                        </th>
-                    </tr>
-                    {% for product_variant in variants %}
-                        <tr>
-                            <td class="select">
-                                <input type="radio"
-                                       class="variant"
-                                       name="variant_id"
-                                       value="{{ product_variant.id }}"
-                                       {% ifequal product_variant.id product.id %}checked="checked"{% endifequal %}  />
-                            </td>
-                            <td>
-                                {{ product_variant.get_name }}
-                            </td>
-                            {% for property in product_variant.get_variant_properties %}
-                                <td>
-                                    {{ property.value }}
-                                </td>
-                            {% endfor %}
-                            <td class="number"
-                            nowrap="nowrap">
-                                {% if product_variant.get_for_sale %}
-                                    <span class="for-sale-standard-price">
-                                        {{ product_variant|get_standard_price:request|currency:request}}
-                                    </span>
-                                    {{ product_variant|get_for_sale_price:request|currency:request}}
-                                {% else %}
-                                    {{ product_variant|get_price:request|currency:request}}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                <div>
-                    {% for property in properties %}
-                        <div>
-                            <span class="property-label">
-                                {{ property.title }}:
-                            </span>
-                            <select class="property"
-                                    name="property_{{ property.id }}">
-                                {% for option in property.options %}
-                                    <option value="{{ option.id }}"
-                                            {% if option.selected %}selected="selected"{% endif %}>
-                                        {{ option.name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
+    
     {% endif %}
 
     {# Attachments #}

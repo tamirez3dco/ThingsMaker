@@ -9,11 +9,20 @@
     <head>
         <title>{% block title %}{{ SHOP.get_meta_title }}{% endblock %}</title>
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/ico" />
-
+		<link rel="image_src" href="http://s3.amazonaws.com/amit_Bucket/e7e4522b-ac40-11e1-ba5a-b88d1212eb4e.jpg" />
         {% block head %}{% endblock %}
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
         <meta name="generator" content="LFS - http://www.getlfs.com" />
-
+        <link rel="image_src" href="http://s3.amazonaws.com/amit_Bucket/e7e4522b-ac40-11e1-ba5a-b88d1212eb4e.jpg" />
+        <meta property="og:image" content="http://s3.amazonaws.com/amit_Bucket/e7e4522b-ac40-11e1-ba5a-b88d1212eb4e.jpg" />
+		<meta property="og:title" content="ShareThis Homepage" />
+		<meta property="og:type" content="Sharing Widgets" />
+		<meta property="og:url" content="http://sharethis.com" />
+		<meta property="og:image" content="http://sharethis.com/images/logo.jpg" />
+		<meta property="og:description" content="I made this!" />
+		<meta property="og:site_name" content="ThingsMaker" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ext-all-gray.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/explorer.css" />
         {% compress css %}
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery/lightbox/jquery.lightbox-0.5.css" />
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery-ui-1.8.13.custom/css/smoothness/jquery-ui-1.8.13.custom.css" />
@@ -22,6 +31,7 @@
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/src/grid.css">
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" />
         {% endcompress %}
+        
         <!--[if IE]>
             {% compress css %}
                 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/iefixes.css" />
@@ -37,7 +47,21 @@
             <script type="text/javascript" src="{{ STATIC_URL }}jquery/lightbox/jquery.lightbox-0.5.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}js/lfs.js"></script>
         {% endcompress %}
-
+        	<script type="text/javascript" src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all.js"></script>
+        	<script type="text/javascript">
+				Ext.ns('Quest.config');
+				Quest.config.site_domain = '{{site_domain}}';	
+			</script>
+        	<script type="text/javascript" src="{{ STATIC_URL }}/js/app/model/Item.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/store/Items.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/Animate.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/ImageGrid.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/Panel.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Explorer.js"></script>
+<script type="text/javascript">var switchTo5x=false;</script>
+<script type="text/javascript">var useFastShare=false;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "36099e7a-a82b-4963-acce-96e8892c1e3f"}); </script>
     </head>
     <body class="{% block section %}lfs{% endblock %}">
         <div id="header">
@@ -46,7 +70,7 @@
                     <div class="span-6 logo">
                         <a href="{% url lfs.core.views.shop_view %}">
                             <img class="logo"
-                                 src="{{ STATIC_URL }}img/logo.jpg"
+                                 src="{{ STATIC_URL }}images/logo.png"
                                  alt="Logo" />
                         </a>
                     </div>
@@ -164,11 +188,9 @@
         <div id="colophon">
             <div class="container">
                 {% block colophon %}
-                    <p>{% trans 'Powered by' %} <a target="_blank" href="http://www.getlfs.com">LFS</a> &mdash; Lightning Fast Shop</p>
                     <p>
-                        &copy; 2009 - 2011 {% trans 'by' %} Kai Diefenbach and contributors &mdash; {% trans 'All rights reserved' %}
+                        &copy; 2012 {% trans 'by' %} EZ3D &mdash; {% trans 'All rights reserved' %}
                     </p>
-                    <p>{% trans 'Distributed under the' %} <a target="_blank" href="http://www.opensource.org/licenses/bsd-license.php">{% trans 'BSD-License' %}</a></p>
                 {% endblock %}
             </div>
         </div>

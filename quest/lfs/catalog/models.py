@@ -952,7 +952,7 @@ class Product(models.Model):
 
     def get_item_image(self):
         try:
-            item = Item.objects.get(uuid=self.sku)
+            item = Item.objects.get(uuid=self.slug)
             return item.image_url
         except IndexError:
             return None

@@ -64,7 +64,7 @@ def add_product_variant(request):
     props = product.get_properties()
     logging.warn(simplejson.dumps(props))
     slug = item_uuid
-    sku =  item_uuid
+    sku = item_uuid[:30]
     price = 24.3
     name = "Vase"
     variants_count = product.variants.count()

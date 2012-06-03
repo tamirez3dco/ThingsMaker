@@ -19,11 +19,11 @@
     {% if product.get_meta_description %}
         <meta name="description" content="{{ product.get_meta_description }}" />
     {% endif %}
-       <link rel="image_src" href="http://s3.amazonaws.com/amit_Bucket/e7e4522b-ac40-11e1-ba5a-b88d1212eb4e.jpg" />
-        <meta property="og:image" content="http://s3.amazonaws.com/amit_Bucket/e7e4522b-ac40-11e1-ba5a-b88d1212eb4e.jpg" />
+       	<link rel="image_src" href="{{ product.get_item_image }}" />
+        <meta property="og:image" content="{{ product.get_item_image }}" />
 		<meta property="og:title" content="ThingsMaker" />
 		<meta property="og:type" content="ThingsMaker" />
-		<meta property="og:url" content="http://pure-leaf-1781.herokuapp.com/" />
+		<meta property="og:url" content="http://pure-leaf-1781.herokuapp.com/product/{{ product.slug }}" />
 		<meta property="og:description" content="I made this!" />
 		<meta property="og:site_name" content="ThingsMaker" />
 {% endblock %}

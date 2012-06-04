@@ -34,6 +34,7 @@ Ext.define('Quest.view.Panel', {
 	 //listeners:
 	 }],*/
 	initComponent : function() {
+		this.qCreateDialog();
 		this.callParent();
 		store0 = Ext.create('Quest.store.Items');
 		store1 = Ext.create('Quest.store.Items');
@@ -95,6 +96,22 @@ Ext.define('Quest.view.Panel', {
 		this.add(this.qGrids);
 		this.itemTpl = ['<tpl for=".">', '<div class="thumb-wrap" id="{id}">', '<div class="thumb"><img id="img_{id}" src="{image_url}" title="{index}"></div>', '<span class="x-editable"></span></div>', '</tpl>', '<div class="x-clear"></div>'];
 
+	},
+	qCreateDialog : function() {
+		var dialogOpts = {
+			buttons : {
+				"Ok" : function() {
+				},
+				"Cancel" : function() {
+					$("#creation-details-dialog").dialog("close");
+				}
+			},
+			autoOpen : false,
+			modal : true,
+			width : "auto",
+			dialogClass : 'noTitleStuff'
+		};
+		$("#creation-details-dialog").dialog(dialogOpts);
 	},
 	afterRender : function() {
 		this.callParent();
@@ -437,39 +454,28 @@ Ext.define('Quest.view.Panel', {
 	},
 	qCreateCanvas : function() {
 		var p = Ext.create('Ext.panel.Panel', {
-			width : 195,
-			height : 195,
+			width : 198,
+			height : 225,
+			border:false,
 			padding : 7,
 			id : 'canvas-panel',
 			frame : false,
 			floating : true,
 			shadow : false,
 			//border : true,
-			style : {
-				opacity : 0.15
-			},
+			/*style : {
+			 opacity : 0.15
+			 },*/
+			bodyStyle: 'background:transparent;',
 			hidden : true,
-			html : '<canvas id="hover-canvas" style="background: transparent;" width=180px height=180px>',
+			html : '<canvas id="hover-canvas" style="opacity: 1; position: absolute; left: 0px; top: 0px" width=180px height=180px></canvas>'+
+				'<div style="height: 30px; position: absolute; left: 0px; top: 154px" id="image-buttons">'+
+				'<button id="makeit-button" style="position: absolute; width: 76px; left: -11px; top: -3px;" >Make It!</button></div>',
 			listeners : {
 				'afterrender' : {
 					fn : function(panel) {
-						canvas = document.getElementById("hover-canvas");
-						ctx = canvas.getContext('2d');
-						ctx.beginPath();
-						ctx.fillStyle = "orange";
-						//ctx.fillRect(0,0,50,50)
-						ctx.arc(90, 90, 70, 0, 2 * Math.PI, false);
-						ctx.fill();
-						ctx.closePath();
-						ctx.beginPath();
-						ctx.fillStyle = "red";
-						ctx.arc(90, 90, 30, 0, 2 * Math.PI, false);
-						ctx.fill();
-						ctx.closePath();
-						ctx.beginPath();
-						ctx.fillStyle = "green";
-						ctx.arc(20, 160, 15, 0, 2 * Math.PI, false);
-						ctx.fill();
+						//return;
+						canvas = this.qCreateTarget();
 						Ext.fly(canvas).on('click', function(evt, el, o) {
 							//console.log('evtevt');
 							var p1 = Ext.fly(el).getXY();
@@ -501,6 +507,39 @@ Ext.define('Quest.view.Panel', {
 		});
 		p.render(Ext.getBody());
 	},
+	qCreateTarget : function() {
+		canvas = document.getElementById("hover-canvas");
+		ctx = canvas.getContext('2d');
+		ctx.globalCompositeOperation = 'source-over';
+		//outer
+		ctx.beginPath();
+		ctx.fillStyle = "rgba(255, 165, 0, 0.15)";
+		ctx.arc(90, 90, 70, 0, 2 * Math.PI, false);
+		ctx.fill();
+		ctx.closePath();
+		//inner
+		ctx.beginPath();
+		ctx.fillStyle = "rgba(255, 0, 0, 0.12)";
+		ctx.arc(90, 90, 30, 0, 2 * Math.PI, false);
+		ctx.fill();
+		ctx.closePath();
+		//
+		/*
+		ctx.fillStyle = "rgba(255, 165, 0, 0.5)";
+      	ctx.fillRect(50, 38, 84, 16);
+		//text
+		ctx.font = "9pt Calibri";
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.fillText("Create", 73, 83);
+		ctx.fillText("Close", 75, 95);
+		ctx.fillText("Relatives", 69, 107);
+		ctx.fillText("Distant Relatives", 51, 50);
+		*/
+		Ext.fly('makeit-button').on('click', function(){
+			this.qAddProductVariant(this.currRec);
+		}, this);
+		return canvas;
+	},
 	qOnMouseEnter : function(view, rec, item) {
 		console.log('enter')
 		if(rec.data.displayed != true)
@@ -508,7 +547,7 @@ Ext.define('Quest.view.Panel', {
 		p = Ext.getCmp('canvas-panel');
 		//if(p.is)
 		xy = Ext.fly(item).getXY();
-		p.setPosition(xy[0], xy[1]);
+		p.setPosition(xy[0]-2, xy[1]);
 		this.currRec = rec;
 		this.curItem = item;
 		p.show();
@@ -518,19 +557,19 @@ Ext.define('Quest.view.Panel', {
 		//Ext.getCmp('canvas-panel').hide();
 	},
 	qAddProductVariant : function(rec) {
+		//this.qOpenDialog();
 		Ext.Ajax.request({
 			url : '/explorer/add_product_variant',
 			params : {
-				item_uuid: rec.data.id
+				item_uuid : rec.data.id
 			},
 			success : function(response) {
 				window.location = '/product/'+rec.data.id
-				//console.log('success');
-				//var text = response.responseText;
-				//console.log(text)
-				// process server response here
 			}
 		});
-		
+
+	},
+	qOpenDialog : function() {
+		$("#creation-details-dialog").dialog("open");
 	}
 });

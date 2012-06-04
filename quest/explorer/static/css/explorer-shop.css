@@ -1,0 +1,5 @@
+.noTitleStuff .ui-dialog-titlebar {display:none}
+.ui-button {
+	margin: 0;
+	color: #58585A !important;
+}

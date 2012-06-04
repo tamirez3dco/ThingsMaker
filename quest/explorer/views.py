@@ -59,10 +59,10 @@ def explore(request):
 def add_product_variant(request):
     item_uuid = request.POST.get('item_uuid','')
     item = Item.objects.get(uuid=item_uuid)
-    logging.warn(item.image_url)
+    controller = Controller(request.GET.get('distance', 'medium'))
+    controller.item_to_product(item);
     product = Product.objects.get(pk=item.definition.product)
-    props = product.get_properties()
-    logging.warn(simplejson.dumps(props))
+    #props = product.get_properties()
     slug = item_uuid
     sku = item_uuid[:30]
     price = 24.3

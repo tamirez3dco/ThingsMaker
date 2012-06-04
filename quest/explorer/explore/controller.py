@@ -102,6 +102,10 @@ class Controller:
         else:
             return self._explore()       
      
+    def item_to_product(self, item):
+        job = self._prepare_job(item.definition, item.uuid + '_' + str(300), item.params, 350)
+        self.renderer.request_images_async([job]) 
+         
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size], countdown=0)
@@ -160,16 +164,19 @@ class Controller:
         
         for i in range(len(uuids)):
             self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance)
-        
+    
+    
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params):
+    def _prepare_job(self, definition, item_id, params, width=180):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
-        job['item_id'] = item_id
+        job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake
         job['operation'] = 'render_model'
+        job['width'] = width
+        job['height'] = width
         job['gh_file'] = definition.file_name
         job['scene'] = definition.scene_file 
         return job
@@ -198,3 +205,4 @@ class Controller:
         old_obj.uuid = str(uuid.uuid1())
         old_obj.save()
         return old_obj
+    

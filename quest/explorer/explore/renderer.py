@@ -57,6 +57,8 @@ class Renderer:
             if(body['status']!='STARTED'):
                 q.delete_message(rs[i])
                 continue
+            if (body['item_id'].find('_') != -1):
+                continue
             item = Item.objects.get(uuid=body['item_id'])
             item.image_url = body['url']
             item.save()

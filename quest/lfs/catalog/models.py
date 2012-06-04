@@ -956,7 +956,11 @@ class Product(models.Model):
             return item.image_url
         except IndexError:
             return None
-
+    
+    def get_item_large_image(self):
+        url = self.get_item_image()
+        return url.replace('.jpg', '_300.jpg')
+        
     def get_images(self):
         """
         Returns all images of the product, including the main image.

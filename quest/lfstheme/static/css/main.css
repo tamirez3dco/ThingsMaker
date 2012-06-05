@@ -215,8 +215,13 @@ td.padding-left {
     text-align: right;
 }
 
+.logo {
+	/*position: relative;*/
+}
 img.logo {
-    height: 90px;
+    height: 86px;
+    left: -2px;
+    position: relative;
 }
 
 /* Search */
@@ -325,7 +330,7 @@ table.search-results {
 
 /* Tabs */
 .tabs {
-    padding: 6px 0 0 0;
+    padding: 2px 0 0 0;
 }
 
 .tabs ul {

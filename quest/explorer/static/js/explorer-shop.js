@@ -35,4 +35,5 @@ function textSwitch() {
 $(function() {
     setInterval( "slideSwitch()", 4000 );
     setInterval( "textSwitch()", 4000 );
+    $('#slideshow').on('click', function(){window.location = '/create'});
 });

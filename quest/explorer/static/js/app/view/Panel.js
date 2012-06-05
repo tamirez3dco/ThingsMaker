@@ -307,25 +307,9 @@ Ext.define('Quest.view.Panel', {
 				left : left
 			},
 			to : {
-				top : 200,
-				left : 200
+				top : 400,
+				left : 675
 			},
-			/*
-			 listeners: {
-			 afteranimate: {
-			 fn: function(anim){
-			 console.log('done');
-			 var old = Ext.getCmp('resting-panel');
-			 if (old!=null) {
-			 Ext.getCmp('resting-panel').destroy();
-			 }
-			 Ext.getCmp('floating-panel').id = 'resting-panel';
-			 console.log('really done');
-			 },
-			 scope: this
-			 }
-			 }
-			 */
 		});
 	},
 	qFadeOut : function(index, duration) {

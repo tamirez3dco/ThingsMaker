@@ -3,3 +3,46 @@
 	margin: 0;
 	color: #58585A !important;
 }
+
+#slideshow {
+    position:relative;
+    height:320px;
+}
+
+#slideshow IMG {
+    position:absolute;
+    top:0;
+    left:0;
+    height:320px;
+    width: 320px;
+    z-index:8;
+}
+
+#slideshow IMG.active-img {
+    z-index:10;
+}
+
+#slideshow IMG.last-active-img {
+    z-index:9;
+}
+
+#slideshow DIV {
+    position:absolute;
+    top:0;
+    left:320px;
+    z-index:8;
+    width: 270px;
+    height: 320px;
+    padding: 30px;
+    font-size: 17px;
+    color: #58585A;
+    background-color: #EEE;
+}
+
+#slideshow  DIV.active-txt {
+    z-index:10;
+}
+
+#slideshow DIV.last-active-txt {
+    z-index:9;
+}

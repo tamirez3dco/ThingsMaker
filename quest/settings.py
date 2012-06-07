@@ -10,8 +10,8 @@ djcelery.setup_loader()
 
 DIRNAME = os.path.dirname(__file__)
 
-#DEBUG = True
 DEBUG = False
+#DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
@@ -23,8 +23,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
+#DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -84,6 +84,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'lfs.utils.middleware.RedirectFallbackMiddleware',
     "pagination.middleware.PaginationMiddleware",
+    'explorer.middleware.RequireLoginMiddleware'
 )
 
 ROOT_URLCONF = 'urls'
@@ -294,3 +295,12 @@ CELERYBEAT_SCHEDULE = {
 
 AWS_ACCESS_KEY_ID = 'AKIAJ4FEEKD3KIPZASTQ'
 AWS_SECRET_ACCESS_KEY = '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'
+
+LOGIN_REQUIRED_URLS = (
+    r'/(.*)$',
+)
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+    r'/login(.*)$', 
+    r'/logout(.*)$',
+    r'/$',
+)

@@ -43,7 +43,7 @@ function getRecentImages() {
 		for(var i = 0; i < data.products.length; i++) {
 			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
 			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<img style="float: left; width: 118px; padding: 4px;" id=recent-product-img-"' + i + '" src="' + data.products[i] + '">'
+			html = '<img style="float: left; width: 115px; padding: 4px;" id=recent-product-img-"' + i + '" src="' + data.products[i] + '">'
 			$(html, {
 				'class' : 'my-new-list',
 				html : ''
@@ -58,7 +58,7 @@ function getTopInspirations() {
 		for(var i = 0; i < data.products.length; i++) {
 			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
 			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<img style="float: left; width: 118px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i] + '">'
+			html = '<img style="float: left; width: 115px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i] + '">'
 			$(html, {
 				'class' : 'my-new-list',
 				html : ''

@@ -62,14 +62,14 @@
         <div id="header">
             <div class="container">
                 {% block header %}
-                    <div class="span-6 logo">
+                    <div class="span-8 logo">
                         <a href="{% url lfs.core.views.shop_view %}">
                             <img class="logo"
                                  src="{{ STATIC_URL }}images/logo.png"
                                  alt="Logo" />
                         </a>
                     </div>
-                    <div class="span-18 search last">
+                    <div class="span-15 search last">
                         {% if user.is_authenticated %}
                             {% if user.first_name %}
                                 <span>{{ user.first_name }} {{user.last_name}}</span>

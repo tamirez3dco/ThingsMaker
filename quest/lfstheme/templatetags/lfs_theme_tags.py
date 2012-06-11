@@ -40,11 +40,11 @@ class SlotsInformationNode(Node):
         if content_class is None:
             content_class = "span-24 last"
             if context.get("SlotLeft", None) and context.get("SlotRight", None):
-                content_class = "span-16 padding-both"
+                content_class = "span-15 padding-both"
             elif context.get("SlotLeft", None):
-                content_class = "span-19 padding-left last"
+                content_class = "span-18 padding-left last"
             elif context.get("SlotRight", None):
-                content_class = "span-20 padding-right"
+                content_class = "span-19 padding-right"
 
             cache.set(cache_key, content_class)
 

@@ -9,7 +9,7 @@ import lfs.core.settings as lfs_settings
 from lfs.checkout.settings import CHECKOUT_TYPES
 from lfs.checkout.settings import CHECKOUT_TYPE_SELECT
 from lfs.core.fields.thumbs import ImageWithThumbsField
-from lfs.catalog.models import StaticBlock
+from lfs.catalog.models import StaticBlock, Product
 
 
 class Country(models.Model):
@@ -241,7 +241,16 @@ class Shop(models.Model):
         """
         return self.meta_description.replace("<name>", self.name)
 
-
+    def get_recent_products(self):
+        limit = settings.LFS_RECENT_PRODUCTS_LIMIT
+        products = Product.objects.all().order_by('-creation_date')[:limit] 
+        return products 
+    
+    def get_top_inspirations(self):
+        limit = settings.LFS_RECENT_PRODUCTS_LIMIT
+        products = Product.objects.all().order_by('-creation_date')[limit:2*limit] 
+        return products
+     
 class Application(models.Model):
     version = models.CharField(_("Version"), blank=True, max_length=10)
 

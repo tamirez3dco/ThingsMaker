@@ -46,3 +46,13 @@
 #slideshow DIV.last-active-txt {
     z-index:9;
 }
+
+#recent-products {
+	margin-top: 40px;
+	height: 270px;
+}
+#top-inspirations {
+	margin-top: 20px;
+	height: 270px;
+}
+

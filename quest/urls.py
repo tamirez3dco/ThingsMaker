@@ -28,5 +28,7 @@ urlpatterns += patterns("",
 urlpatterns += patterns("",
     (r'^create','explorer.views.create'),
     (r'^explorer/add_product_variant','explorer.views.add_product_variant'),
+    (r'^explorer/get_recent_products','explorer.views.get_recent_products'),
+    (r'^explorer/get_top_inspirations','explorer.views.get_top_inspirations'),
     (r'^explore','explorer.views.explore'),
 )

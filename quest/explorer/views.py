@@ -22,6 +22,8 @@ from explorer.models import Item
 from lfs.catalog.models import Product
 from lfs.catalog.settings import VARIANT
 from lfs.core.utils import LazyEncoder
+from lfs.caching.utils import lfs_get_object_or_404
+from lfs.core.models import Shop
 
 logging.basicConfig(level=logging.INFO)
 
@@ -80,3 +82,29 @@ def add_product_variant(request):
     }, cls=LazyEncoder)
 
     return HttpResponse(result)
+
+def get_recent_products(request):
+    shop = lfs_get_object_or_404(Shop, pk=1)
+    products = shop.get_recent_products()
+    res = []
+    for product in products:
+        res.append(product.get_item_image())
+        
+    result = simplejson.dumps({
+        "products": res
+    }, cls=LazyEncoder)
+
+    return HttpResponse(result)    
+
+def get_top_inspirations(request):
+    shop = lfs_get_object_or_404(Shop, pk=1)
+    products = shop.get_top_inspirations()
+    res = []
+    for product in products:
+        res.append(product.get_item_image())
+        
+    result = simplejson.dumps({
+        "products": res
+    }, cls=LazyEncoder)
+
+    return HttpResponse(result)    

@@ -193,7 +193,7 @@ PAYPAL_IDENTITY_TOKEN = "set_this_to_your_paypal_pdt_identity_token"
 # TODO: Put this into the Shop model
 LFS_PAYPAL_REDIRECT = True
 LFS_AFTER_ADD_TO_CART = "lfs_added_to_cart"
-LFS_RECENT_PRODUCTS_LIMIT = 10
+LFS_RECENT_PRODUCTS_LIMIT = 12
 
 LFS_ORDER_NUMBER_GENERATOR = "lfs_order_numbers.models.OrderNumberGenerator"
 LFS_DOCS = "http://docs.getlfs.com/en/latest/"
@@ -303,4 +303,6 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$', 
     r'/logout(.*)$',
     r'/$',
+    r'/explorer/get_recent_products$',
+    r'/explorer/get_top_inspirations$',
 )

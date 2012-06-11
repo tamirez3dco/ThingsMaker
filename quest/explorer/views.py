@@ -30,6 +30,15 @@ logging.basicConfig(level=logging.INFO)
 def create(request, template_name="explorer/create.html"):
     return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
+def inspirations(request, template_name="explorer/create.html"):
+    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+
+def mystore(request, template_name="explorer/create.html"):
+    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+
+def designers(request, template_name="explorer/create.html"):
+    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+
 def explore(request):
     controller = Controller(request.GET.get('distance', 'medium'))
     cb = request.GET.get('callback','')

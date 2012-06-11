@@ -248,7 +248,7 @@ class Shop(models.Model):
     
     def get_top_inspirations(self):
         limit = settings.LFS_RECENT_PRODUCTS_LIMIT
-        products = Product.objects.all().order_by('-creation_date')[limit:2*limit] 
+        products = Product.objects.filter(sub_type=VARIANT).order_by('-creation_date')[limit:2*limit] 
         return products
      
 class Application(models.Model):

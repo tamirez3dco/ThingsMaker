@@ -303,6 +303,6 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$', 
     r'/logout(.*)$',
     r'/$',
-    r'/explorer',
+    r'/explore',
     #r'/explorer',
 )

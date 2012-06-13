@@ -14,7 +14,7 @@ from django.contrib.sites.models import Site
 import uuid
 
 
-class Controller:
+class Base:
     """
     Explore parameter space
     """
@@ -194,7 +194,7 @@ class Controller:
         price = 172
         db_item = Item(price=price, selected=False, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params)
         db_item.save()
-       # db_item.set_params(params)
+        #db_item.set_params(params)
         return db_item
     
     def _copy_item(self, obj):
@@ -207,3 +207,6 @@ class Controller:
         old_obj.save()
         return old_obj
     
+class Remember(Base):
+    def stam(self):
+        pass

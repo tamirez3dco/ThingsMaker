@@ -1,6 +1,6 @@
 from celery.task import task
 from explorer.helper.server_manager import ServerManager
-from explorer.explore.controller import Controller
+from explorer.explore.controller import Base as Controller
 from explorer.explore.renderer import Renderer
 
 #exploration renderer tasks

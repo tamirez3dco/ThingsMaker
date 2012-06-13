@@ -15,7 +15,7 @@ from django.conf import settings
 from django.utils import simplejson
 from explorer.helper.server_manager import ServerManager
 from django.contrib.sites.models import Site
-from explorer.explore.controller import Controller
+from explorer.explore.controller import Base as Controller
 import explorer.tasks
 import uuid
 from explorer.models import Item

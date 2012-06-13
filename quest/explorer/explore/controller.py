@@ -8,7 +8,7 @@ from datetime import datetime
 from explorer.explore.renderer import Renderer
 from explorer.models import Item, GhDefinition, ExplorerConfig
 import explorer.tasks
-from explorer.explore.algo import Directions as Algo
+from explorer.explore.algo import Iterative as Algo
 from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
@@ -27,7 +27,7 @@ class Controller:
             
         self.row_size = int(ExplorerConfig.objects.get(k__exact='row_size').v)
         self.deep_count=int(ExplorerConfig.objects.get(k__exact='deep_count').v)
-        self.deep = True
+        self.deep = False
         self.bake = "all"
         self.renderer = Renderer()
         self.distances = {
@@ -94,8 +94,9 @@ class Controller:
         items = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(copies, range(len(copies))))
         return items
         
-    def explore(self, item_id):
+    def explore(self, item_id, param_index):
         self.root = Item.objects.get(uuid=item_id)
+        self.param_index = int(param_index)
         self.definition = self.root.definition
         if self.deep:
             return self._explore_deep()
@@ -108,7 +109,7 @@ class Controller:
          
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size], countdown=0)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index], countdown=0)
         self.root.selected=True
         self.root.save()
         return self._make_result(uuids)
@@ -148,12 +149,12 @@ class Controller:
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
                        
-    def _send_jobs(self, definition, uuids, root, n_jobs, distance):
+    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index):
         children_params = None
         if root==None:
             children_params = self.algo.get_random_page_params(len(definition.param_names))
         else:
-            children_params = self.algo.get_page_params(root.params, self.distances[distance])
+            children_params = self.algo.get_page_params(root.params, param_index)
        
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []

@@ -93,6 +93,7 @@ Ext.define('Quest.view.Panel', {
 
 		this.qFront = 0;
 		this.qBack = 1;
+		this.clickIndex = 0;
 		this.add(this.qGrids);
 		this.itemTpl = ['<tpl for=".">', '<div class="thumb-wrap" id="{id}">', '<div class="thumb"><img id="img_{id}" src="{image_url}" title="{index}"></div>', '<span class="x-editable"></span></div>', '</tpl>', '<div class="x-clear"></div>'];
 
@@ -123,29 +124,13 @@ Ext.define('Quest.view.Panel', {
 		this.qCreateCanvas();
 	},
 	qOnStoreLoad : function(store, records) {
-		console.log('qOnStoreLoad');
-		console.log(store);
-		console.log(records);
 		var ln = records.length
 		p = self.page_size
 		hp = p / 2
 		if(this.qFirstPage == false) {
 			store.add(this.qLastClickedRec);
-
-			//store.removeAll()
-			//var r = records.slice(0, hp);
-
-			//r = r.concat([this.qLastClickedRec], records.slice(hp, p));
-			//store.add(r);
 			ln += 1;
-			//var grid = this.qGrids[store.qIndex];
-			//grid.on()
-			//var node = grid.getNode(hp);
-
-			//node.style.opacity = 1;
-			//console.log(node);
-
-		}
+		} 
 
 		this.imageOrder = this.qRandomPermutation(ln);
 		this.qSetImageEvents(store, records);
@@ -161,18 +146,18 @@ Ext.define('Quest.view.Panel', {
 		}
 	},
 	qSetImageEvents : function(store, records) {
-		console.log('qSetImageEvents');
+		//console.log('qSetImageEvents');
 		var grid = this.qGrids[store.qIndex];
 		var nodes = grid.getNodes();
 		for(var i = 0; i < nodes.length; i++) {
 			im = Ext.fly(nodes[i].firstChild.firstChild);
 			node = nodes[i];
 			im.on('load', function(evt, el) {
-				console.log('loaded image');
+				//console.log('loaded image');
 				id = el.id.substring(4);
 				var rec = store.getAt(store.findExact('id', id));
-				console.log(rec.data.id);
-				console.log(rec.data.image_url);
+				//console.log(rec.data.id);
+				//console.log(rec.data.image_url);
 				rec.data.loaded = true;
 			}, this);
 			im.on('error', function(evt, el) {
@@ -191,8 +176,10 @@ Ext.define('Quest.view.Panel', {
 		return this.qOnItemClick(view, record, item, 'medium')
 	},
 	qOnItemClick : function(view, record, item, distance) {
+		this.clickIndex++;
+		console.log(this.clickIndex);
 		this.qLastClickedRec = record
-		console.log(this.qFirstPage)
+		//console.log(this.qFirstPage)
 		Ext.TaskManager.stop(task2);
 		task2 = {
 			run : this.qWaitImage2,
@@ -201,7 +188,7 @@ Ext.define('Quest.view.Panel', {
 			scope : this
 		};
 		var animate = this.qItemsType == 'model';
-		this.qLoadStore(this.qBack, record, distance);
+		this.qLoadStore(this.qBack, record, distance, this.clickIndex-2);
 		var task1 = new Ext.util.DelayedTask(function() {
 			this.qStores[this.qFront].removeAll();
 			this.qToggleActive();
@@ -229,7 +216,7 @@ Ext.define('Quest.view.Panel', {
 			return;
 		var idx = store.findExact('loaded', false);
 		if(idx == -1) {
-			console.log('all here');
+			//console.log('all here');
 			Ext.TaskManager.stop(task2);
 			this.qFadeIn(index, this.qFadinDuration);
 		}
@@ -276,7 +263,7 @@ Ext.define('Quest.view.Panel', {
 		var top = el.getTop();
 		var left = el.getLeft();
 		id = 'fl-im-' + record.data.id;
-		console.log(top + ' ' + left);
+		//console.log(top + ' ' + left);
 		var p = Ext.create('Ext.panel.Panel', {
 			width : 195,
 			height : 195,
@@ -349,7 +336,7 @@ Ext.define('Quest.view.Panel', {
 			useDisplay : false
 		});
 	},
-	qLoadStore : function(index, record, distance) {
+	qLoadStore : function(index, record, distance, param_index) {
 		if(this.qItemsType == 'definition') {
 			this.qItemsType = 'model';
 			this.qFirstPage = true;
@@ -359,7 +346,8 @@ Ext.define('Quest.view.Panel', {
 			this.qStores[index].load({
 				params : {
 					definition_id : record.data.id,
-					distance : distance
+					distance : distance,
+					param_index: param_index
 				}
 			});
 		} else {
@@ -369,7 +357,8 @@ Ext.define('Quest.view.Panel', {
 			this.qStores[index].load({
 				params : {
 					item_id : record.data.id,
-					distance : distance
+					distance : distance,
+					param_index: param_index
 				}
 			});
 		}
@@ -390,7 +379,7 @@ Ext.define('Quest.view.Panel', {
 			l[a] = l[j];
 			l[j] = t;
 		}
-		console.log(l);
+		//console.log(l);
 		return l;
 	},
 	qFindDistance : function() {
@@ -408,18 +397,18 @@ Ext.define('Quest.view.Panel', {
 		}
 	},
 	qOnGridRefresh : function(grid) {
-		console.log('refresh');
+		//console.log('refresh');
 
 		var nodes = grid.getNodes();
 		if(nodes.length != this.pageSize + 1)
 			return;
-		console.log(nodes.length)
+		//console.log(nodes.length)
 		var parentEl = grid.getTargetEl();
 		/*parentEl.applyStyles({
 		 display : 'block',
 		 position : 'relative'
 		 });*/
-		console.log('myrefresh');
+		//console.log('myrefresh');
 		items_pos = [[95, 0], [290, 0], [0, 195], [390, 195], [95, 390], [290, 390], [195, 195]]
 		if(this.qFirstPage != true) {
 			Ext.get(nodes[this.pageSize]).applyStyles({
@@ -525,7 +514,7 @@ Ext.define('Quest.view.Panel', {
 		return canvas;
 	},
 	qOnMouseEnter : function(view, rec, item) {
-		console.log('enter')
+		//console.log('enter')
 		if(rec.data.displayed != true)
 			return;
 		p = Ext.getCmp('canvas-panel');

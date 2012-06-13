@@ -43,7 +43,7 @@ def explore(request):
     controller = Controller(request.GET.get('distance', 'medium'))
     cb = request.GET.get('callback','')
     model_types = request.GET.get('show_definitions', False)
-    
+    param_index = request.GET.get('param_index', 'medium')
     if (model_types):
         explorer.tasks.wakeup_servers.delay(True)
         items = controller.get_definitions() 
@@ -58,7 +58,7 @@ def explore(request):
             logging.info('Completed: '+ str(end-start))
         else:
             item_id = request.GET.get('item_id','')
-            items = controller.explore(item_id)
+            items = controller.explore(item_id, param_index)
         
     to_json = {
             "success": True,

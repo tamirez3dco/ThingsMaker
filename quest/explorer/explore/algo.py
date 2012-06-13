@@ -77,7 +77,7 @@ class Test(Base):
         
         return params_list  
      
-class Directions(Base):
+class Target(Base):
     def _min_d(self, l, params):
         minD = 1000
         for p in l:
@@ -104,4 +104,22 @@ class Directions(Base):
             params_list.append(maxD_params)
     
         return params_list 
+
+class Iterative(Base):
+    def get_page_params(self, parent_params, param_index): 
+        param_index = param_index % len(parent_params)
+        #logging.warn(str(param_index))
+        logging.warn("Param index: %s" % param_index)
+        params_list = []
+        for i in range(self.page_size):
+            param = i*(0.98/(self.page_size-1))+0.01
+            params = list(parent_params)
+            params[param_index] = param
+            params_list.append(params)
             
+        params_list2 = list(params_list)
+        params_list2[2] = params_list[5] 
+        params_list2[3] = params_list[2]      
+        params_list2[5] = params_list[3]  
+        
+        return params_list2    

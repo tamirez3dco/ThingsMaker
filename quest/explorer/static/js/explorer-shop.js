@@ -18,9 +18,9 @@ function slideSwitch() {
 }
 
 function textSwitch() {
-	console.log('hi');
+	//console.log('hi');
 	var $active1 = $('#slideshow DIV.active-txt');
-	console.log($active1);
+	//console.log($active1);
 	if($active1.length == 0)
 		$active1 = $('#slideshow DIV:last');
 

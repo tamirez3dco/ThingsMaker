@@ -123,6 +123,12 @@ Ext.define('Quest.view.Panel', {
 		});
 		this.qCreateCanvas();
 	},
+	afterLayout: function(){
+		console.log('hi');
+		console.log(this.getPosition());
+		pos = this.getPosition();
+		this.qCenter = [pos[0]+195+3,pos[1]+195+3];
+	},
 	qOnStoreLoad : function(store, records) {
 		var ln = records.length
 		p = self.page_size
@@ -263,6 +269,8 @@ Ext.define('Quest.view.Panel', {
 		var top = el.getTop();
 		var left = el.getLeft();
 		id = 'fl-im-' + record.data.id;
+		pos = this.getPosition();
+		this.qCenter = [pos[0]+195+3,pos[1]+195+3];
 		//console.log(top + ' ' + left);
 		var p = Ext.create('Ext.panel.Panel', {
 			width : 195,
@@ -285,7 +293,7 @@ Ext.define('Quest.view.Panel', {
 			}
 		});
 		p.render(Ext.getBody());
-
+		//pos = this.qGrids[0].getPosition(true);
 		Ext.create('Ext.fx.Anim', {
 			target : p,
 			duration : duration,
@@ -294,8 +302,8 @@ Ext.define('Quest.view.Panel', {
 				left : left
 			},
 			to : {
-				top : 400,
-				left : 675
+				top : this.qCenter[1],
+				left : this.qCenter[0]
 			},
 		});
 	},

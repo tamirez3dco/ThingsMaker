@@ -76,7 +76,26 @@ class Test(Base):
         
         
         return params_list  
-     
+class Directions(Base):
+    def _map_params(self, params):
+        p=params
+        #mapped = [p[0],p[2],p[4],p[5],p[3],p[1]]
+        mapped = [p[0],p[2],p[4],p[6],p[7],p[5],p[3],p[1]]
+        return mapped
+    
+    def get_page_params(self, parent_params, param_index, exploration_type):
+        step=0.23
+        params_list=[]
+        for i in range(0, 0 + self.page_size/2):
+            params_more = list(parent_params)
+            params_more[i] = min(1.0, parent_params[i]+step) 
+            params_less = list(parent_params)
+            params_less[i] = max(0, parent_params[i]-step) 
+            params_list.append(params_less)
+            params_list.append(params_more)
+        
+        return self._map_params(params_list)
+           
 class Target(Base):
     def _min_d(self, l, params):
         minD = 1000
@@ -106,13 +125,50 @@ class Target(Base):
         return params_list 
 
 class Iterative(Base):
-    def get_page_params(self, parent_params, param_index): 
+    def _min_d(self, l, params):
+        minD = 1000
+        for p in l:
+            distance = np.linalg.norm(np.array(p)-np.array(params))
+            if distance<minD:
+                minD=distance
+        return minD
+                
+    def _get_random_page_params(self, parent_params, ranges):  
+        r1 = ranges[0]
+        r2 = ranges[1]
+        #logging.warn(r2)
+        num_tries = 5
+        params = self._my_random_params(parent_params, r1, r2)
+        params_list = [params]
+        for i in range(self.page_size):
+            maxD=0
+            for t in range(num_tries):
+                params = self._my_random_params(parent_params, r1, r2)
+                minD = self._min_d(params_list, params)
+                if minD>maxD:
+                    maxD = minD
+                    maxD_params = params  
+            params_list.append(maxD_params)
+    
+        return params_list 
+    
+    def _get_param_points(self, param):
+        a = param/0.2
+        start = a - (math.floor(a) * 0.2)
+        for i in range(5):
+            point = start + (i*0.2)
+            
+    def get_page_params(self, parent_params, param_index, exploration_type):
+        if (exploration_type == 'random'):
+            return self._get_random_page_params(parent_params, [0, 0.15])
+        
         param_index = param_index % len(parent_params)
         #logging.warn(str(param_index))
         logging.warn("Param index: %s" % param_index)
         params_list = []
         for i in range(self.page_size):
             param = i*(0.98/(self.page_size-1))+0.01
+            
             params = list(parent_params)
             params[param_index] = param
             params_list.append(params)

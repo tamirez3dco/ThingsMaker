@@ -7,7 +7,7 @@ Ext.define('Quest.view.Panel', {
 	qFadinDuration : 1200,
 	qImageDisplayInterval : 800,
 	nextImageIndex : 0,
-	pageSize : 6,
+	pageSize : 8,
 	qFirstPage : true,
 	/*tbar : [{
 	 xtype : 'button',
@@ -412,12 +412,11 @@ Ext.define('Quest.view.Panel', {
 			return;
 		//console.log(nodes.length)
 		var parentEl = grid.getTargetEl();
-		/*parentEl.applyStyles({
-		 display : 'block',
-		 position : 'relative'
-		 });*/
-		//console.log('myrefresh');
-		items_pos = [[95, 0], [290, 0], [0, 195], [390, 195], [95, 390], [290, 390], [195, 195]]
+		//items_pos = [[95, 0], [290, 0], [0, 195], [390, 195], [95, 390], [290, 390], [195, 195]]
+		items_pos = [[0, 0],    [195, 0],     [390, 0], 
+		             [0, 195],               [390, 195],
+		             [0, 390],  [195, 390],   [390, 390],
+		             [195, 195]]
 		if(this.qFirstPage != true) {
 			Ext.get(nodes[this.pageSize]).applyStyles({
 				opacity : 1
@@ -443,10 +442,6 @@ Ext.define('Quest.view.Panel', {
 			frame : false,
 			floating : true,
 			shadow : false,
-			//border : true,
-			/*style : {
-			 opacity : 0.15
-			 },*/
 			bodyStyle: 'background:transparent;',
 			hidden : true,
 			html : '<canvas id="hover-canvas" style="opacity: 1; position: absolute; left: 0px; top: 0px" width=180px height=180px></canvas>'+
@@ -455,25 +450,17 @@ Ext.define('Quest.view.Panel', {
 			listeners : {
 				'afterrender' : {
 					fn : function(panel) {
-						//return;
 						canvas = this.qCreateTarget();
 						Ext.fly(canvas).on('click', function(evt, el, o) {
-							//console.log('evtevt');
 							var p1 = Ext.fly(el).getXY();
 							var p2 = evt.getXY();
-							var x = (p2[0] - p1[0]) - 90;
-							var y = (p2[1] - p1[1]) - 90;
-							var x1 = (p2[0] - p1[0]);
-							var y1 = (p2[1] - p1[1]);
-							var r = (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
-							var r1 = (Math.sqrt(Math.pow(x1 - 20, 2) + Math.pow(y1 - 160, 2)))
-							if(r1 < 15) {
-								this.qAddProductVariant(this.currRec);
-								return;
-							}
-							var distance = 'medium'
-							if(r <= 30)
-								distance = 'near';
+							var x = (p2[0] - p1[0]);
+							var y = (p2[1] - p1[1]);
+							var r = (Math.sqrt(Math.pow(x - 55, 2) + Math.pow(y - 20, 2)));
+							var r1 = (Math.sqrt(Math.pow(x - 20, 2) + Math.pow(y - 160, 2)))
+							var distance = 'linear'
+							if(r <= 20)
+								distance = 'random';
 							this.qOnItemClick(null, this.currRec, this.curItem, distance);
 							Ext.getCmp('canvas-panel').hide();
 						}, this);
@@ -494,28 +481,16 @@ Ext.define('Quest.view.Panel', {
 		ctx.globalCompositeOperation = 'source-over';
 		//outer
 		ctx.beginPath();
-		ctx.fillStyle = "rgba(255, 165, 0, 0.15)";
-		ctx.arc(90, 90, 70, 0, 2 * Math.PI, false);
-		ctx.fill();
+		ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
+		ctx.arc(20, 20, 15, 0, 2 * Math.PI, false);
+		//ctx.fill();
 		ctx.closePath();
 		//inner
 		ctx.beginPath();
-		ctx.fillStyle = "rgba(255, 0, 0, 0.12)";
-		ctx.arc(90, 90, 30, 0, 2 * Math.PI, false);
-		ctx.fill();
+		ctx.fillStyle = "rgba(0, 255, 0, 0.12)";
+		ctx.arc(55, 20, 15, 0, 2 * Math.PI, false);
+		//ctx.fill();
 		ctx.closePath();
-		//
-		/*
-		ctx.fillStyle = "rgba(255, 165, 0, 0.5)";
-      	ctx.fillRect(50, 38, 84, 16);
-		//text
-		ctx.font = "9pt Calibri";
-        ctx.fillStyle = "rgba(0, 0, 0, 1)";
-        ctx.fillText("Create", 73, 83);
-		ctx.fillText("Close", 75, 95);
-		ctx.fillText("Relatives", 69, 107);
-		ctx.fillText("Distant Relatives", 51, 50);
-		*/
 		Ext.fly('makeit-button').on('click', function(){
 			this.qAddProductVariant(this.currRec);
 		}, this);

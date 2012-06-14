@@ -8,7 +8,7 @@ from datetime import datetime
 from explorer.explore.renderer import Renderer
 from explorer.models import Item, GhDefinition, ExplorerConfig
 import explorer.tasks
-from explorer.explore.algo import Iterative as Algo
+from explorer.explore.algo import Directions as Algo
 from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
@@ -154,7 +154,7 @@ class Base:
         if root==None:
             children_params = self.algo.get_random_page_params(len(definition.param_names))
         else:
-            children_params = self.algo.get_page_params(root.params, param_index)
+            children_params = self.algo.get_page_params(root.params, param_index, distance)
        
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []

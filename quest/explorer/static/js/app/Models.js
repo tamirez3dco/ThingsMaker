@@ -1,3 +1,28 @@
+Ext.define('Quest.model.Algo', {
+	extend: 'Ext.data.Model',
+	fields: [{
+		type: 'string',
+		name: 'id'
+	},{
+		type: 'string',
+		name: 'name'
+	}],
+	idProperty: 'id',
+});
+Ext.define('Quest.model.Material', {
+	extend: 'Ext.data.Model',
+	fields: [{
+		type: 'string',
+		name: 'id'
+	},{
+		type: 'string',
+		name: 'name'
+	},{
+		type: 'number',
+		name: 'price'
+	}],
+	idProperty: 'id',
+});
 Ext.define('Quest.model.Item', {
 	extend: 'Ext.data.Model',
 	fields: [{

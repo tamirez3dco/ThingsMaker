@@ -1,3 +1,30 @@
+Ext.define('Quest.store.Algos', {
+	extend : 'Ext.data.Store',
+	model : 'Quest.model.Algo',
+	storeId: 'Algos',
+	data : [{
+		id : 1,
+		name : "Iterate"
+	},{
+		id : 2,
+		name : "Explore"
+	},{
+		id : 3,
+		name : "Axis"
+	}]
+});
+Ext.define('Quest.store.Materials', {
+	extend : 'Ext.data.Store',
+	model : 'Quest.model.Material',
+	storeId: 'Materials',
+	data : [{
+		id : 1,
+		name : "Silver"
+	},{
+		id : 2,
+		name : "Gold"
+	}]
+});
 Ext.define('Quest.store.Items', {
 	extend : 'Ext.data.Store',
 	model : 'Quest.model.Item',

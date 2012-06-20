@@ -8,7 +8,7 @@ from datetime import datetime
 from explorer.explore.renderer import Renderer
 from explorer.models import Item, GhDefinition, ExplorerConfig
 import explorer.tasks
-from explorer.explore.algo import Directions as Algo
+from explorer.explore.algo import Axis, Explore, Iterate
 from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
@@ -18,7 +18,7 @@ class Base:
     """
     Explore parameter space
     """
-    def __init__(self, distance='medium', page_size=None):
+    def __init__(self, distance='medium', page_size=None, explore_type='explore'):
         self.distance = distance
         if page_size==None:
             self.page_size = int(ExplorerConfig.objects.get(k__exact='page_size').v)
@@ -34,7 +34,12 @@ class Base:
             'near': [0.01, 0.13],
             'medium': [0.05, 0.25]
         };
-        self.algo = Algo(self.page_size, self.row_size)
+        if explore_type == 'explore':
+            self.algo = Explore(self.page_size, self.row_size)
+        if explore_type == 'axis':
+            self.algo = Axis(self.page_size, self.row_size)
+        if explore_type == 'iterate':
+            self.algo = Iterate(self.page_size, self.row_size)
         
 #    def get_definitions(self):
 #        defs = GhDefinition.objects.all()  
@@ -94,10 +99,12 @@ class Base:
         items = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(copies, range(len(copies))))
         return items
         
-    def explore(self, item_id, param_index):
+    def explore(self, item_id, param_index, explore_type, iterate_type):
         self.root = Item.objects.get(uuid=item_id)
         self.param_index = int(param_index)
         self.definition = self.root.definition
+        self.explore_type = explore_type
+        self.iterate_type = iterate_type
         if self.deep:
             return self._explore_deep()
         else:
@@ -109,7 +116,7 @@ class Base:
          
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index], countdown=0)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type], countdown=0)
         self.root.selected=True
         self.root.save()
         return self._make_result(uuids)
@@ -149,12 +156,13 @@ class Base:
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
                        
-    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index):
+    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type):
+        logging.warn(explore_type)
         children_params = None
         if root==None:
             children_params = self.algo.get_random_page_params(len(definition.param_names))
         else:
-            children_params = self.algo.get_page_params(root.params, param_index, distance)
+            children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
        
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []

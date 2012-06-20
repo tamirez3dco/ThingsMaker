@@ -13,7 +13,14 @@
 }
 
 .thumb img{
+    height: 220px;
+    width: 220px;
+}
+.thumb.small img{
     height: 180px;
+    width: 180px;
+}
+.thumb.small div{
     width: 180px;
 }
 .thumb-wrap{
@@ -28,7 +35,6 @@
     display: block;
     overflow: hidden;
     text-align: center;
-    width: 136px; // for ie to ensure that the text is centered
 }
 
 .x-item-over{
@@ -48,7 +54,7 @@
 
 .loading-indicator {
     font-size:11px;
-    background-image:url('../../resources/themes/images/default/grid/loading.gif');
+    background-image:url('/static/images/loading.gif');
     background-repeat: no-repeat;
     background-position: left;
     padding-left:20px;
@@ -70,4 +76,20 @@
 }.ext-strict .ext-ie .x-tree .x-panel-bwrap{
     position:relative;
     overflow:hidden;
+}
+
+.item-menu-canvas {
+	opacity: 1; 
+	position: absolute; 
+	left: 0px; 
+	top: 0px;
+}
+.item-menu-buttons {
+height: 30px; 
+position: absolute; 
+left: 0px; 
+top: 124px;
+}
+.x-form-trigger {
+	background-image: url('/static/images/ext/form/trigger.gif');
 }

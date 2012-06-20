@@ -5,7 +5,7 @@ Ext.define('Quest.view.ImageGrid', {
 	frame : false,
 	padding : 8,
 	//id : 'quest-explorer-imagegrid',
-	tpl : ['<tpl for=".">', '<div class="thumb-wrap" id="{tstid}">', '<div class="thumb"><img id="img_{id}" src="{image_url}" title="{index}"></div>', '<span class="x-editable"></span></div>', '</tpl>', '<div class="x-clear"></div>'],
+	tpl : ['<tpl for=".">', '<div class="thumb-wrap" id="{tstid}">', '<div class="thumb small"><img id="img_{id}" src="{image_url}" title="{index}"></div>', '<span class="x-editable"></span></div>', '</tpl>', '<div class="x-clear"></div>'],
 	trackOver : true,
 	loadMask : false,
 	overItemCls : 'x-item-over',

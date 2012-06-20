@@ -381,16 +381,16 @@ ul.breadcrumbs li {
 }
 
 .left-slot {
-    padding-right: 20px;
+    padding-right: 5px;
     border-right: 1px solid #dfd7d3;
 }
 
 .padding-both .middle-slot  {
-    padding: 0 20px;
+    padding: 0 0px;
 }
 
 .padding-left .middle-slot {
-    padding-left: 20px;
+    padding-left: 0px;
 }
 
 .padding-right .middle-slot {

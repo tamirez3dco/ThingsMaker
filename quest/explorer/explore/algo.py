@@ -48,7 +48,7 @@ class Base:
             
         return rparams   
 
-class Test(Base):
+class Rows(Base):
     def get_page_params(self, parent_params):    
         n_rows = int(math.ceil(float(self.page_size) / float(self.row_size)))
         num_tries = 5
@@ -72,21 +72,26 @@ class Test(Base):
                         maxD = minD
                         maxD_params = params
                 row_params.append(maxD_params)
-                params_list.append(maxD_params)
-        
+                params_list.append(maxD_params)    
         
         return params_list  
-class Directions(Base):
+    
+class Axis(Base):
     def _map_params(self, params):
-        p=params
+        #p=params
         #mapped = [p[0],p[2],p[4],p[5],p[3],p[1]]
-        mapped = [p[0],p[2],p[4],p[6],p[7],p[5],p[3],p[1]]
+        #mapped = [p[0],p[2],p[4],p[6],p[7],p[5],p[3],p[1]]
+        mapped=[]
+        for i in range(0,self.page_size,2):
+            mapped.append(params[i])
+        for i in range(self.page_size-1,0,-2):
+            mapped.append(params[i])            
         return mapped
     
-    def get_page_params(self, parent_params, param_index, exploration_type):
-        step=0.23
+    def get_page_params(self, parent_params, ranges, param_index, iterate_type):
+        step=0.3
         params_list=[]
-        for i in range(0, 0 + self.page_size/2):
+        for i in range(3, 3 + self.page_size/2):
             params_more = list(parent_params)
             params_more[i] = min(1.0, parent_params[i]+step) 
             params_less = list(parent_params)
@@ -96,7 +101,7 @@ class Directions(Base):
         
         return self._map_params(params_list)
            
-class Target(Base):
+class Explore(Base):
     def _min_d(self, l, params):
         minD = 1000
         for p in l:
@@ -105,7 +110,7 @@ class Target(Base):
                 minD=distance
         return minD
                 
-    def get_page_params(self, parent_params, ranges):  
+    def get_page_params(self, parent_params, ranges, param_index, iterate_type):  
         r1 = ranges[0]
         r2 = ranges[1]
         #logging.warn(r2)
@@ -124,7 +129,7 @@ class Target(Base):
     
         return params_list 
 
-class Iterative(Base):
+class Iterate(Base):
     def _min_d(self, l, params):
         minD = 1000
         for p in l:
@@ -152,14 +157,14 @@ class Iterative(Base):
     
         return params_list 
     
-    def _get_param_points(self, param):
-        a = param/0.2
-        start = a - (math.floor(a) * 0.2)
-        for i in range(5):
-            point = start + (i*0.2)
+#    def _get_param_points(self, param):
+#        a = param/0.2
+#        start = a - (math.floor(a) * 0.2)
+#        for i in range(5):
+#            point = start + (i*0.2)
             
-    def get_page_params(self, parent_params, param_index, exploration_type):
-        if (exploration_type == 'random'):
+    def get_page_params(self,  parent_params, ranges, param_index, iterate_type):
+        if (iterate_type == 'random'):
             return self._get_random_page_params(parent_params, [0, 0.15])
         
         param_index = param_index % len(parent_params)
@@ -179,3 +184,7 @@ class Iterative(Base):
         params_list2[5] = params_list[3]  
         
         return params_list2    
+    
+class Learn(Base):
+    def get_page_params(self, parent_params, param_index, exploration_type):
+        pass

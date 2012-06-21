@@ -18,8 +18,9 @@ class Base:
     """
     Explore parameter space
     """
-    def __init__(self, distance='medium', page_size=None, explore_type='explore'):
+    def __init__(self, distance='medium', material='Default', page_size=None, explore_type='explore'):
         self.distance = distance
+        self.material = material
         if page_size==None:
             self.page_size = int(ExplorerConfig.objects.get(k__exact='page_size').v)
         else:
@@ -116,7 +117,7 @@ class Base:
          
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type], countdown=0)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material], countdown=0)
         self.root.selected=True
         self.root.save()
         return self._make_result(uuids)
@@ -188,6 +189,7 @@ class Base:
         job['height'] = width
         job['gh_file'] = definition.file_name
         job['scene'] = definition.scene_file 
+        job['layer_name'] = self.material
         return job
     
     def _make_result(self, uuids):

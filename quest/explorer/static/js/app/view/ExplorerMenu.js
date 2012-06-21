@@ -11,7 +11,7 @@ Ext.define('Quest.view.ExplorerMenu', {
 		labelAlign : 'top',
 		queryMode : 'local',
 		displayField : 'name',
-		value : "Silver",
+		value : "Gold",
 		width: 100,
 	},{
 		xtype : 'combo',

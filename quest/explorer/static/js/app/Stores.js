@@ -19,10 +19,19 @@ Ext.define('Quest.store.Materials', {
 	storeId: 'Materials',
 	data : [{
 		id : 1,
-		name : "Silver"
+		name : "Gold"
 	},{
 		id : 2,
-		name : "Gold"
+		name : "Silver"
+	},{
+		id : 3,
+		name : "Plastic_Red"
+	},{
+		id : 4,
+		name : "Plastic_Green"
+	},{
+		id : 4,
+		name : "Clay"
 	}]
 });
 Ext.define('Quest.store.Items', {

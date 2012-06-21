@@ -46,8 +46,8 @@ def explore(request):
     explore_type = request.GET.get('explore_type', 'explore')
     iterate_type = request.GET.get('iterate_type', 'linear')
     page_size = int(request.GET.get('page_size', '6'))
-    
-    controller = Controller(request.GET.get('distance', 'medium'), page_size)
+    material = request.GET.get('material', 'Default')
+    controller = Controller(request.GET.get('distance', 'medium'), material, page_size)
     if (model_types):
         explorer.tasks.wakeup_servers.delay(True)
         items = controller.get_definitions() 

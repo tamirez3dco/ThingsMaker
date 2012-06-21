@@ -23,6 +23,9 @@ Ext.define('Quest.Controller', {
 	}, {
 		ref : 'algoCombo',
 		selector : '#algoCombo'
+	}, {
+		ref : 'materialCombo',
+		selector : '#materialCombo'
 	}],
 
 	init : function() {
@@ -388,6 +391,7 @@ Ext.define('Quest.Controller', {
 		return false;
 	},
 	loadStore : function(index, record, distance, paramIndex, iterateType, exploreType) {
+		console.log(this.getMaterialCombo().getValue());
 		if(this.itemsType == 'definition') {
 			this.itemsType = 'model';
 			this.firstPage = true;
@@ -401,7 +405,8 @@ Ext.define('Quest.Controller', {
 					param_index : paramIndex,
 					explore_type : exploreType,
 					iterate_type : iterateType,
-					page_size: this.pageSize
+					page_size: this.pageSize,
+					material: this.getMaterialCombo().getValue()
 				}
 			});
 		} else {
@@ -415,7 +420,8 @@ Ext.define('Quest.Controller', {
 					param_index : paramIndex,
 					explore_type : exploreType,
 					iterate_type : iterateType,
-					page_size: this.pageSize
+					page_size: this.pageSize,
+					material: this.getMaterialCombo().getValue()
 				}
 			});
 		}

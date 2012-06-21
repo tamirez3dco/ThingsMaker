@@ -10,8 +10,8 @@ djcelery.setup_loader()
 
 DIRNAME = os.path.dirname(__file__)
 
-#DEBUG = False
-DEBUG = True
+DEBUG = False
+#DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 

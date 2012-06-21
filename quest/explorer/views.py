@@ -40,12 +40,14 @@ def designers(request, template_name="explorer/create.html"):
     return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
 def explore(request):
-    controller = Controller(request.GET.get('distance', 'medium'))
     cb = request.GET.get('callback','')
     model_types = request.GET.get('show_definitions', False)
     param_index = request.GET.get('param_index', 0)
     explore_type = request.GET.get('explore_type', 'explore')
     iterate_type = request.GET.get('iterate_type', 'linear')
+    page_size = int(request.GET.get('page_size', '6'))
+    
+    controller = Controller(request.GET.get('distance', 'medium'), page_size)
     if (model_types):
         explorer.tasks.wakeup_servers.delay(True)
         items = controller.get_definitions() 

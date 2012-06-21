@@ -4,7 +4,7 @@ Ext.define('Quest.Controller', {
 	//views: ['EZ3D.creators.snow.view.Panel'],
 	gridWidth : 600,
 	gridHeight : 600,
-	pageSize : 8,
+	pageSize : 6,
 	imageSize : 195,
 	imageNetSize : 180,
 	rowSize : 3,
@@ -152,10 +152,13 @@ Ext.define('Quest.Controller', {
 
 	},
 	algoChange : function(combo, newVal, oldVal) {
-		console.log(this.itemMenus[oldVal]);
 		this.itemMenus[oldVal].hide();
 		this.itemMenus[newVal].show();
-		console.log(newVal);
+		if(newVal == 'Axis') {
+			this.pageSize = 8;
+		} else {
+			this.pageSize = 6;
+		}
 	},
 	materialChange : function(combo, newVal, oldVal) {
 		console.log(newVal);
@@ -303,7 +306,9 @@ Ext.define('Quest.Controller', {
 				}
 			}
 		} else {
-			
+			items_pos = [[this.imageSize*(1/2), 0], [this.imageSize*(3/2), 0], 
+			[0, this.imageSize], [this.imageSize*2, this.imageSize], 
+			[this.imageSize*(1/2), this.imageSize*2], [this.imageSize*(3/2), this.imageSize*2]]
 		}
 		items_pos.push([this.imageSize, this.imageSize])
 
@@ -395,7 +400,8 @@ Ext.define('Quest.Controller', {
 					distance : distance,
 					param_index : paramIndex,
 					explore_type : exploreType,
-					iterate_type : iterateType
+					iterate_type : iterateType,
+					page_size: this.pageSize
 				}
 			});
 		} else {
@@ -407,7 +413,9 @@ Ext.define('Quest.Controller', {
 					item_id : record.data.id,
 					distance : distance,
 					param_index : paramIndex,
-					explore_type : exploreType
+					explore_type : exploreType,
+					iterate_type : iterateType,
+					page_size: this.pageSize
 				}
 			});
 		}
@@ -470,15 +478,15 @@ Ext.define('Quest.Controller', {
 		ctx.globalCompositeOperation = 'source-over';
 		//outer
 		ctx.beginPath();
-		ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
+		ctx.fillStyle = "rgba(0, 255, 0, 0.15)";
 		ctx.arc(20, 20, 15, 0, 2 * Math.PI, false);
 		ctx.fill();
 		ctx.closePath();
 		//inner
 		ctx.beginPath();
-		ctx.fillStyle = "rgba(0, 255, 0, 0.12)";
+		ctx.fillStyle = "rgba(255, 0, 0, 0.12)";
 		ctx.arc(55, 20, 15, 0, 2 * Math.PI, false);
-		ctx.fill();
+		//ctx.fill();
 		ctx.closePath();
 	},
 	createAxisMenu : function(canvas) {
@@ -518,9 +526,9 @@ Ext.define('Quest.Controller', {
 		var p2 = evt.getXY();
 		var x = (p2[0] - p1[0]);
 		var y = (p2[1] - p1[1]);
-		var r = (Math.sqrt(Math.pow(x - 90, 2) + Math.pow(y - 90, 2)));
+		var r = (Math.sqrt(Math.pow(x - 20, 2) + Math.pow(y - 20, 2)));
 		var iterate_type = 'linear'
-		if(r <= 20)
+		if(r <= 15)
 			iterate_type = 'random';
 
 		this.onItemClick(null, this.currRec, this.curItem, 'medium', iterate_type, 'iterate');

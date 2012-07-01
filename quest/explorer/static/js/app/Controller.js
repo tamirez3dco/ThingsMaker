@@ -13,6 +13,7 @@ Ext.define('Quest.Controller', {
 	imageDisplayInterval : 800,
 	nextImageIndex : 0,
 	firstPage : true,
+	algoName : 'Explore',
 	itemsType : 'definition',
 	refs : [{
 		ref : 'explorerPanel',
@@ -155,6 +156,7 @@ Ext.define('Quest.Controller', {
 
 	},
 	algoChange : function(combo, newVal, oldVal) {
+		this.algoName = newVal;
 		this.itemMenus[oldVal].hide();
 		this.itemMenus[newVal].show();
 		if(newVal == 'Axis') {
@@ -173,7 +175,11 @@ Ext.define('Quest.Controller', {
 			ln += 1;
 		}
 
-		this.imageOrder = this.randomPermutation(ln);
+		if (this.algoName == 'Iterate') {
+			this.imageOrder = [0,1,2,3,4,5];
+		} else {
+			this.imageOrder = this.randomPermutation(ln);
+		}
 		this.setImageEvents(store, records);
 
 		if(this.itemsType == 'definition') {

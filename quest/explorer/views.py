@@ -101,8 +101,8 @@ def get_recent_products(request):
     products = shop.get_recent_products()
     res = []
     for product in products:
-        res.append(product.get_item_image())
-        
+        res.append({"image_url": product.get_item_image(), 
+                    "product_url": "/product/" + product.slug})
     result = simplejson.dumps({
         "products": res
     }, cls=LazyEncoder)
@@ -114,7 +114,8 @@ def get_top_inspirations(request):
     products = shop.get_top_inspirations()
     res = []
     for product in products:
-        res.append(product.get_item_image())
+        res.append({"image_url": product.get_item_image(), 
+                    "product_url": "/product/" + product.slug})
         
     result = simplejson.dumps({
         "products": res

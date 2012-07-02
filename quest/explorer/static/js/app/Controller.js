@@ -32,6 +32,7 @@ Ext.define('Quest.Controller', {
 	init : function() {
 		console.log('init');
 		this.getAlgoCombo().on('change', this.algoChange, this);
+		this.getMaterialCombo().on('change', this.materialChange, this);
 		var store0 = Ext.create('Quest.store.Items', {
 			storeId : 'Items0'
 		});
@@ -197,6 +198,7 @@ Ext.define('Quest.Controller', {
 	},
 	materialChange : function(combo, newVal, oldVal) {
 		console.log(newVal);
+		//this.showMessage('hi');
 	},
 	onStoreLoad : function(store, records) {
 		var ln = records.length
@@ -597,6 +599,19 @@ Ext.define('Quest.Controller', {
 		});
 
 	},
+	
+	showMessage : function(message) {
+		Ext.MessageBox.show({
+           //title: 'Please wait',
+           msg: 'Creating new models based on your selection...',
+           //progressText: 'Initializing...',
+           width:300,
+           //progress:true,
+           closable:false,
+           modal: false,
+           //animateTarget: 'mb6'
+       });
+	}
 	/*destroy: function() {
 	 this.callParent();
 	 },*/

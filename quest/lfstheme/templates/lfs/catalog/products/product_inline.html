@@ -48,6 +48,13 @@
         {% endfor %}
     </div>
     {% shipping product %}
+        <div class="product-properties">
+    	
+        
+        <a class="button left" href="/create?start_product={{ product.slug }}">
+           {% trans 'Customize' %}
+        </a>
+    </div>
     {% average_for_instance product %}
 
     {# Prices #}

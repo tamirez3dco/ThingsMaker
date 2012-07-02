@@ -36,13 +36,6 @@
 
     {{ product.static_block.html|safe }}
 
-    <div class="overview">
-    	
-        {% current_category product %}
-        <a href="/create?start_product={{ product.slug }}">
-           {% trans 'Customize' %}
-        </a>
-    </div>
 
     <div id="product-inline">
         {{ product_inline|safe }}

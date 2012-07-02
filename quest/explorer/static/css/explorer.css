@@ -93,3 +93,11 @@ top: 124px;
 .x-form-trigger {
 	background-image: url('/static/images/ext/form/trigger.gif');
 }
+
+.x-message-box {
+	background-color: transparent;
+}
+
+.x-message-box .x-window-body {
+	background-color: transparent;
+}

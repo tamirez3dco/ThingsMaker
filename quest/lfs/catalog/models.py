@@ -950,6 +950,13 @@ class Product(models.Model):
         except IndexError:
             return None
 
+    def get_item(self):
+        try:
+            item = Item.objects.filter(uuid=self.slug)[0]
+            return item
+        except IndexError:
+            return None
+                
     def get_item_image(self):
         try:
             item = Item.objects.filter(uuid=self.slug)[0]

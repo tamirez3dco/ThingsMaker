@@ -37,9 +37,10 @@
     {{ product.static_block.html|safe }}
 
     <div class="overview">
+    	
         {% current_category product %}
-        <a href="{{ current_category.get_absolute_url }}">
-           {% trans 'Back to overview' %}
+        <a href="/create?start_product={{ product.slug }}">
+           {% trans 'Customize' %}
         </a>
     </div>
 

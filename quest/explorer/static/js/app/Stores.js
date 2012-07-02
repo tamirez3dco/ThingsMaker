@@ -38,7 +38,7 @@ Ext.define('Quest.store.Items', {
 	extend : 'Ext.data.Store',
 	model : 'Quest.model.Item',
 	sorters : [{
-		property : 'id',
+		property : 'index',
 		direction : 'ASC'
 	}],
 

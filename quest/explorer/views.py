@@ -47,22 +47,30 @@ def explore(request):
     iterate_type = request.GET.get('iterate_type', 'linear')
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
-    controller = Controller(request.GET.get('distance', 'medium'), material, page_size)
-    if (model_types):
-        explorer.tasks.wakeup_servers.delay(True)
-        items = controller.get_definitions() 
-        
-    else:
-        start = datetime.now()
-        definition_id = request.GET.get('definition_id','')
-        if (definition_id != ''):
-            logging.info('Start exploration')
-            items = controller.start_exploration(definition_id)
-            end = datetime.now()
-            logging.info('Completed: '+ str(end-start))
+    controller = Controller(request.GET.get('distance', 'near'), material, page_size)
+    start_product = request.GET.get('start_product', None)
+    if (start_product):
+        #product = Product.objects.get(slug=start_product)
+        #logging.warn(product.slug)
+        #item = product.get_item()
+        items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
+    
+    else:   
+        if (model_types):
+            explorer.tasks.wakeup_servers.delay(True)
+            items = controller.get_definitions() 
+            
         else:
-            item_id = request.GET.get('item_id','')
-            items = controller.explore(item_id, param_index, explore_type, iterate_type)
+            start = datetime.now()
+            definition_id = request.GET.get('definition_id','')
+            if (definition_id != ''):
+                logging.info('Start exploration')
+                items = controller.start_exploration(definition_id)
+                end = datetime.now()
+                logging.info('Completed: '+ str(end-start))
+            else:
+                item_id = request.GET.get('item_id','')
+                items = controller.explore(item_id, param_index, explore_type, iterate_type)
         
     to_json = {
             "success": True,

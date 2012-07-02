@@ -87,14 +87,44 @@ Ext.define('Quest.Controller', {
 		this.front = 0;
 		this.back = 1;
 		this.clickIndex = 0;
-		this.itemStores[this.front].load({
-			params : {
-				show_definitions : true
-			}
-		});
+		/*this.itemStores[this.front].load({
+		 params : {
+		 show_definitions : true
+		 }
+		 });*/
 
+		this.loadInitialItems();
 		this.getExplorerPanel().on('afterrender', this.afterExplorerPanelRender, this);
 		this.getItemMenu().on('afterrender', this.afterItemMenuRender, this);
+	},
+	loadInitialItems : function() {
+		console.log(window.location)
+		var qs = Ext.Object.fromQueryString(window.location.search.substring(1));
+		if(qs.start_product != null) {
+			this.firstPage = false;
+			this.itemsType = 'model';
+			waitImagesTask = {
+				run : this.waitImagesIterate,
+				args : [this.front],
+				interval : 200,
+				scope : this
+			};
+			this.itemStores[this.front].load({
+				params : {
+					start_product : qs.start_product
+				}
+			});
+
+			this.showNextImage = true;
+			Ext.TaskManager.start(waitImagesTask);
+		} else {
+			this.itemStores[this.front].load({
+				params : {
+					show_definitions : true
+				}
+			});
+		}
+		//console.log(qs.start_product !);
 	},
 	afterItemMenuRender : function() {
 		console.log('afterItemMenuRender');
@@ -170,16 +200,22 @@ Ext.define('Quest.Controller', {
 	},
 	onStoreLoad : function(store, records) {
 		var ln = records.length
-		if(this.firstPage == false) {
+		if((this.firstPage == false) && (this.lastClickedRec!=null)) {
 			store.add(this.lastClickedRec);
 			ln += 1;
 		}
-
-		if (this.algoName == 'Iterate') {
-			this.imageOrder = [0,1,2,3,4,5];
+		
+	
+		if(this.algoName == 'Iterate') {
+			this.imageOrder = [0, 1, 2, 3, 4, 5];
 		} else {
 			this.imageOrder = this.randomPermutation(ln);
 		}
+		if((this.firstPage == false) && (this.lastClickedRec==null)) {
+			//store.add(this.lastClickedRec);
+			this.imageOrder = this.randomPermutation(ln-1);
+			this.imageOrder.push(6);
+		}	
 		this.setImageEvents(store, records);
 
 		if(this.itemsType == 'definition') {
@@ -191,6 +227,9 @@ Ext.define('Quest.Controller', {
 			};
 			Ext.TaskManager.start(waitImagesTask);
 		}
+		
+		r = store.getRange();
+		console.log(r);
 	},
 	setImageEvents : function(store, records) {
 		var grid = this.grids[store._index];
@@ -226,7 +265,6 @@ Ext.define('Quest.Controller', {
 		}
 	},
 	waitImagesIterate : function(storeIndex) {
-
 		if(this.showNextImage == false) {
 			return;
 		}
@@ -315,9 +353,7 @@ Ext.define('Quest.Controller', {
 				}
 			}
 		} else {
-			items_pos = [[this.imageSize*(1/2), 0], [this.imageSize*(3/2), 0], 
-			[0, this.imageSize], [this.imageSize*2, this.imageSize], 
-			[this.imageSize*(1/2), this.imageSize*2], [this.imageSize*(3/2), this.imageSize*2]]
+			items_pos = [[this.imageSize * (1 / 2), 0], [this.imageSize * (3 / 2), 0], [0, this.imageSize], [this.imageSize * 2, this.imageSize], [this.imageSize * (1 / 2), this.imageSize * 2], [this.imageSize * (3 / 2), this.imageSize * 2]]
 		}
 		items_pos.push([this.imageSize, this.imageSize])
 
@@ -411,8 +447,8 @@ Ext.define('Quest.Controller', {
 					param_index : paramIndex,
 					explore_type : exploreType,
 					iterate_type : iterateType,
-					page_size: this.pageSize,
-					material: this.getMaterialCombo().getValue()
+					page_size : this.pageSize,
+					material : this.getMaterialCombo().getValue()
 				}
 			});
 		} else {
@@ -426,8 +462,8 @@ Ext.define('Quest.Controller', {
 					param_index : paramIndex,
 					explore_type : exploreType,
 					iterate_type : iterateType,
-					page_size: this.pageSize,
-					material: this.getMaterialCombo().getValue()
+					page_size : this.pageSize,
+					material : this.getMaterialCombo().getValue()
 				}
 			});
 		}

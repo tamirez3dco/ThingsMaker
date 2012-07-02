@@ -548,6 +548,10 @@ ___________________________________________________________________________ */
     float: left;
 }
 
+.product-share {
+	float: left;
+}
+
 .product-images .main-image {
     margin-right: 25px;
     width: 200px;

@@ -611,14 +611,10 @@ Ext.define('Quest.Controller', {
 
 	},
 	showMessage : function(message) {
-		console.log(this.center);
 		pos = this.getExplorerPanel().getPosition();
 		this.getMessagePanel().setPosition(pos[0] + 20, pos[1] - 25);
 		this.getMessagePanel().show();
 		this.getMessagePanel().toFront();
 
 	}
-	/*destroy: function() {
-	 this.callParent();
-	 },*/
 });

@@ -22,6 +22,9 @@ Ext.define('Quest.Controller', {
 		ref : 'itemMenu',
 		selector : '#explorer-item-menu'
 	}, {
+		ref : 'messagePanel',
+		selector : '#explorer-message-panel'
+	}, {
 		ref : 'algoCombo',
 		selector : '#algoCombo'
 	}, {
@@ -97,6 +100,7 @@ Ext.define('Quest.Controller', {
 		this.loadInitialItems();
 		this.getExplorerPanel().on('afterrender', this.afterExplorerPanelRender, this);
 		this.getItemMenu().on('afterrender', this.afterItemMenuRender, this);
+		//this.getItemMenu().on('afterrender', this.afterItemMenuRender, this);
 	},
 	loadInitialItems : function() {
 		console.log(window.location)
@@ -118,6 +122,7 @@ Ext.define('Quest.Controller', {
 
 			this.showNextImage = true;
 			Ext.TaskManager.start(waitImagesTask);
+			//this.showMessage('Hi');
 		} else {
 			this.itemStores[this.front].load({
 				params : {
@@ -183,6 +188,10 @@ Ext.define('Quest.Controller', {
 	afterExplorerPanelRender : function() {
 		console.log('afterExplorerPanelRender');
 		this.getExplorerPanel().add(this.grids);
+		var qs = Ext.Object.fromQueryString(window.location.search.substring(1));
+		if(qs.start_product != null) {
+			this.showMessage('Hi');
+		}
 		//this.control();
 
 	},
@@ -202,22 +211,21 @@ Ext.define('Quest.Controller', {
 	},
 	onStoreLoad : function(store, records) {
 		var ln = records.length
-		if((this.firstPage == false) && (this.lastClickedRec!=null)) {
+		if((this.firstPage == false) && (this.lastClickedRec != null)) {
 			store.add(this.lastClickedRec);
 			ln += 1;
 		}
-		
-	
+
 		if(this.algoName == 'Iterate') {
-			this.imageOrder = [0, 1, 2, 3, 4, 5];
+			this.imageOrder = [0, 1, 2, 3, 4, 5, 6];
 		} else {
 			this.imageOrder = this.randomPermutation(ln);
 		}
-		if((this.firstPage == false) && (this.lastClickedRec==null)) {
+		if((this.firstPage == false) && (this.lastClickedRec == null)) {
 			//store.add(this.lastClickedRec);
-			this.imageOrder = this.randomPermutation(ln-1);
+			this.imageOrder = this.randomPermutation(ln - 1);
 			this.imageOrder.push(6);
-		}	
+		}
 		this.setImageEvents(store, records);
 
 		if(this.itemsType == 'definition') {
@@ -229,7 +237,6 @@ Ext.define('Quest.Controller', {
 			};
 			Ext.TaskManager.start(waitImagesTask);
 		}
-		
 		r = store.getRange();
 		console.log(r);
 	},
@@ -275,6 +282,7 @@ Ext.define('Quest.Controller', {
 		var toDisplay = null;
 		var store = this.itemStores[storeIndex];
 		var records = store.getRange();
+		console.log(records.length);
 		for(var i = 0; i < records.length; i++) {
 			o = this.imageOrder[i];
 			if(records[o].data.loaded == true && records[o].data.displayed == false) {
@@ -290,7 +298,9 @@ Ext.define('Quest.Controller', {
 
 		records[toDisplay].data.displayed = true;
 		this.fadeInOne(storeIndex, this.fadinDuration, toDisplay);
-
+		if(records[toDisplay].data.index != 6) {
+			this.getMessagePanel().hide();
+		};
 		if(store.findExact('displayed', false) == -1) {
 			Ext.TaskManager.stop(waitImagesTask);
 		}
@@ -431,7 +441,7 @@ Ext.define('Quest.Controller', {
 		}
 		this.fadeOut(this.front, duration);
 		task1.delay(duration);
-
+		this.showMessage('Hi');
 		return false;
 	},
 	loadStore : function(index, record, distance, paramIndex, iterateType, exploreType) {
@@ -505,6 +515,7 @@ Ext.define('Quest.Controller', {
 			}
 		});
 		p.render(Ext.getBody());
+		p.toBack();
 		//pos = this.qGrids[0].getPosition(true);
 		Ext.create('Ext.fx.Anim', {
 			target : p,
@@ -599,18 +610,13 @@ Ext.define('Quest.Controller', {
 		});
 
 	},
-	
 	showMessage : function(message) {
-		Ext.MessageBox.show({
-           //title: 'Please wait',
-           msg: 'Creating new models based on your selection...',
-           //progressText: 'Initializing...',
-           width:300,
-           //progress:true,
-           closable:false,
-           modal: false,
-           //animateTarget: 'mb6'
-       });
+		console.log(this.center);
+		pos = this.getExplorerPanel().getPosition();
+		this.getMessagePanel().setPosition(pos[0] + 20, pos[1] - 25);
+		this.getMessagePanel().show();
+		this.getMessagePanel().toFront();
+
 	}
 	/*destroy: function() {
 	 this.callParent();

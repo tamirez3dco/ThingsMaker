@@ -21,10 +21,12 @@ Ext.onReady(function() {
 	});
 
 	var item_menu = Ext.create('Quest.view.ItemMenu', {});
-
+	var message_panel = Ext.create('Quest.view.MessagePanel', {});
+	
 	controller = Ext.create('Quest.Controller', {});
 	controller.init();
 
 	panel.render(container);
+	message_panel.render(container);
 	item_menu.render(container);
 });

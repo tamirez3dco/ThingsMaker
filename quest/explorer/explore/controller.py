@@ -32,8 +32,8 @@ class Base:
         self.bake = "all"
         self.renderer = Renderer()
         self.distances = {
-            'near': [0.01, 0.13],
-            'medium': [0.05, 0.25]
+            'near': [0.01, 0.09],
+            'medium': [0.05, 0.2]
         };
         if explore_type == 'explore':
             self.algo = Explore(self.page_size, self.row_size)

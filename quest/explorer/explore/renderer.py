@@ -34,6 +34,7 @@ class Renderer:
         params = self.trunc_params(params)
         messages = []
         for i in range(len(params)):
+            #params[i]['params']['textParam'] = 'sunsun'
             body = simplejson.dumps(params[i])
             sys.stderr.write(body + "\n")
             messages.append((i,base64.b64encode(body),0))
@@ -70,6 +71,8 @@ class Renderer:
         nlist = [];
         for params in params_list:
             for k,v in params['params'].iteritems():
+                if k == 'textParam':
+                    continue
                 nv = float("%.2f" % v)
                 params['params'][k] = nv
             nlist.append(params)

@@ -100,12 +100,14 @@ class Base:
         items = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(copies, range(len(copies))))
         return items
         
-    def explore(self, item_id, param_index, explore_type, iterate_type):
+    def explore(self, item_id, param_index, explore_type, iterate_type, text):
+        #text = "ZOHAR"
         self.root = Item.objects.get(uuid=item_id)
         self.param_index = int(param_index)
         self.definition = self.root.definition
         self.explore_type = explore_type
         self.iterate_type = iterate_type
+        self.text = text
         if self.deep:
             return self._explore_deep()
         else:
@@ -122,7 +124,7 @@ class Base:
          
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material], countdown=0)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
         self.root.selected=True
         self.root.save()
         return self._make_result(uuids)
@@ -162,7 +164,7 @@ class Base:
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
                        
-    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type):
+    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
         logging.warn(explore_type)
         children_params = None
         if root==None:
@@ -174,7 +176,7 @@ class Base:
         jobs = []
         for p in perm:
             logging.warn(str(p))
-            jobs.append(self._prepare_job(definition, uuids[p], children_params[p])) 
+            jobs.append(self._prepare_job(definition, uuids[p], children_params[p], text)) 
         self.renderer.request_images(jobs)  
         
         for i in range(len(uuids)):
@@ -184,9 +186,10 @@ class Base:
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params, width=180):
+    def _prepare_job(self, definition, item_id, params, text, width=180):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
+        job['params']['textParam'] = text
         job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake
         job['operation'] = 'render_model'

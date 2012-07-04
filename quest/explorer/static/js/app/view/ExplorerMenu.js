@@ -23,5 +23,11 @@ Ext.define('Quest.view.ExplorerMenu', {
 		displayField : 'name',
 		value : "Explore",
 		width: 100,
+	},{
+		xtype: 'textfield',
+		fieldLabel : 'Text',
+		id: 'explorer-text',
+		labelAlign : 'top',
+		width: 100
 	}]
 });

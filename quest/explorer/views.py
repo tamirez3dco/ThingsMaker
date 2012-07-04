@@ -47,6 +47,7 @@ def explore(request):
     iterate_type = request.GET.get('iterate_type', 'linear')
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
+    text = request.GET.get('text', 'naama')
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)
     if (start_product):
@@ -70,7 +71,7 @@ def explore(request):
                 logging.info('Completed: '+ str(end-start))
             else:
                 item_id = request.GET.get('item_id','')
-                items = controller.explore(item_id, param_index, explore_type, iterate_type)
+                items = controller.explore(item_id, param_index, explore_type, iterate_type, text)
         
     to_json = {
             "success": True,

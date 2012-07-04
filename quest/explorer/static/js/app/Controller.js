@@ -30,6 +30,9 @@ Ext.define('Quest.Controller', {
 	}, {
 		ref : 'materialCombo',
 		selector : '#materialCombo'
+	}, {
+		ref : 'textField',
+		selector : '#explorer-text'
 	}],
 
 	init : function() {
@@ -460,7 +463,8 @@ Ext.define('Quest.Controller', {
 					explore_type : exploreType,
 					iterate_type : iterateType,
 					page_size : this.pageSize,
-					material : this.getMaterialCombo().getValue()
+					material : this.getMaterialCombo().getValue(),
+					text: this.getTextField().getValue()
 				}
 			});
 		} else {
@@ -475,7 +479,8 @@ Ext.define('Quest.Controller', {
 					explore_type : exploreType,
 					iterate_type : iterateType,
 					page_size : this.pageSize,
-					material : this.getMaterialCombo().getValue()
+					material : this.getMaterialCombo().getValue(),
+					text: this.getTextField().getValue()
 				}
 			});
 		}

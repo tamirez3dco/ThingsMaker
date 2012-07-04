@@ -48,6 +48,9 @@ def explore(request):
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
     text = request.GET.get('text', 'naama')
+    if text == "":
+        text = 'naama'
+        
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)
     if (start_product):

@@ -68,7 +68,7 @@ class Base:
                 self.page_size = 60
                 self.algo.page_size = self.page_size
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-                explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, 0, 'explore', 'linear', 'Default'], countdown=0)
+                explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, 0, 'explore', 'linear', 'Default', 'naama'], countdown=0)
             else: 
                 rep = None
                 r = Item.objects.filter(image_url__isnull=False, selected=True, definition=d).count()

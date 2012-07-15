@@ -113,8 +113,8 @@ class Base:
         else:
             return self._explore()       
     
-    def explore_product(self, item_id, param_index, explore_type, iterate_type):
-        res = self.explore(item_id, param_index, explore_type, iterate_type)
+    def explore_product(self, item_id, param_index, explore_type, iterate_type, text):
+        res = self.explore(item_id, param_index, explore_type, iterate_type, text)
         res.append(self._prepare_result_item(self.root, len(res)))
         return res
     

@@ -169,7 +169,7 @@ class Iterate(Base):
         
         param_index = param_index % len(parent_params)
         #logging.warn(str(param_index))
-        logging.warn("Param index: %s" % param_index)
+        #logging.warn("Param index: %s" % param_index)
         params_list = []
         for i in range(self.page_size):
             param = i*(0.98/(self.page_size-1))+0.01

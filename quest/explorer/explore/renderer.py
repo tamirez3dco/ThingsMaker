@@ -19,17 +19,20 @@ class Renderer:
     A client for the Rhino / Grasshopper web service
     """
     def __init__(self):
-        site_name = Site.objects.get(id=settings.SITE_ID).name
+        self.site_name = Site.objects.get(id=settings.SITE_ID).name
         
-        self.q_ready = site_name + '_ready'
-        self.q_request = site_name + '_request'
+        self.q_ready = self.site_name + '_ready'
+        #self.q_request = site_name + '_request'
         
     def request_images_async(self, params):
         explorer.tasks.request_images.apply_async(args=[params], countdown=0)
         
     def request_images(self, params):
+        scene = params[0]['scene']
+        scene = scene.replace('.3dm','')
+        q_name = "%s_%s_%s" % (self.site_name, scene, 'request')
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-        q = conn.create_queue(self.q_request)
+        q = conn.create_queue(q_name)
         q.set_message_class(Message)
         params = self.trunc_params(params)
         messages = []

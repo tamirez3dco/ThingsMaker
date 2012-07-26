@@ -89,9 +89,9 @@ class Axis(Base):
         return mapped
     
     def get_page_params(self, parent_params, ranges, param_index, iterate_type):
-        step=0.3
+        step=0.2
         params_list=[]
-        for i in range(3, 3 + self.page_size/2):
+        for i in range(0, self.page_size/2):
             params_more = list(parent_params)
             params_more[i] = min(1.0, parent_params[i]+step) 
             params_less = list(parent_params)

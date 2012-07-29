@@ -68,6 +68,8 @@ class Item(models.Model):
     selected = models.BooleanField()
     uuid = models.CharField(max_length=100, null=True)
     parent_distance = models.CharField(max_length=20)
+    material = models.CharField(max_length=20, default="Gold")
+    
     
     def __unicode__(self):
         return str(self.id)

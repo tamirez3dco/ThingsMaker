@@ -52,6 +52,7 @@ class GhDefinition(models.Model):
     param_names = PickledObjectField(null=True)
     scene_file = models.CharField(max_length=100)
     product = models.IntegerField()
+    accepts_text_params = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.file_name
@@ -64,6 +65,7 @@ class Item(models.Model):
     definition = models.ForeignKey(GhDefinition)
     created = models.DateTimeField(auto_now_add=True)
     params = PickledObjectField(null=True)
+    textParam = models.CharField(max_length=100, null=True)
     sent = models.BooleanField()
     selected = models.BooleanField()
     uuid = models.CharField(max_length=100, null=True)

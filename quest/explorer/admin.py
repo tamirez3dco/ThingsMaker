@@ -17,9 +17,11 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     product = forms.IntegerField()
     active = forms.BooleanField(initial=True, required=False)
     param_names = PickleField( max_length = 1000, required = True )
+    accepts_text_params = forms.BooleanField(initial=False,required=True)
+    
     
 class GhDefinitionAdmin(admin.ModelAdmin):
-    fields = ('file_name','scene_file','product','active','param_names')
+    fields = ('file_name','scene_file','product','active','param_names','accepts_text_params')
     form = GhDefinitionAdminForm
 #    def save_model(self, request, obj, form, change):
 #        obj.file_name = form.cleaned_data['file_name']

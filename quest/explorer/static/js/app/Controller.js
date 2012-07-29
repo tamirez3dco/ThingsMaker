@@ -114,6 +114,10 @@ Ext.define('Quest.Controller', {
 			if (qs.material != null){
 				this.getMaterialCombo().setValue(qs.material)
 			}
+			if (qs.textParam != null){
+				this.getTextField().setValue(qs.textParam)
+			}
+			
 			waitImagesTask = {
 				run : this.waitImagesIterate,
 				args : [this.front],

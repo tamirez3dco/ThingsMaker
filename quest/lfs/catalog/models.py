@@ -981,7 +981,7 @@ class Product(models.Model):
     
     def get_item_large_image(self):
         url = self.get_item_image()
-        return url.replace('.jpg', '_300.jpg')
+        return url.replace('.jpg', '_Render.jpg')
         
     def get_images(self):
         """

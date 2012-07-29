@@ -124,8 +124,11 @@ class Base:
         return res
     
     def item_to_product(self, item):
-        job = self._prepare_job(item.definition, item.uuid + '_' + str(300), item.params, item.textParam, 350)
-        self.renderer.request_images_async([job]) 
+        jobs = []
+        for view_name in ["Top","Front","Render"]:
+            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
+        
+        self.renderer.request_images_async(jobs) 
          
     def _explore(self):
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
@@ -160,7 +163,7 @@ class Base:
                 item.sent=True
                 item.save()
                 logging.warn(item.uuid + 'missing!!!!')
-                jobs.append(self._prepare_job(item.definition, item.uuid, item.params)) 
+                jobs.append(self._prepare_job(item.definition, item.uuid, item.params, item.textParam, "Render", item.material)) 
         self.renderer.request_images(jobs)          
         
     def _send_deep_jobs(self, items):
@@ -181,7 +184,7 @@ class Base:
         jobs = []
         for p in perm:
             logging.warn(str(p))
-            jobs.append(self._prepare_job(definition, uuids[p], children_params[p], text)) 
+            jobs.append(self._prepare_job(definition, uuids[p], children_params[p], text, "Render", self.material)) 
         self.renderer.request_images(jobs)  
         
         for i in range(len(uuids)):
@@ -191,7 +194,7 @@ class Base:
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params, text, width=180):
+    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
@@ -206,7 +209,8 @@ class Base:
         job['height'] = width
         job['gh_file'] = definition.file_name
         job['scene'] = definition.scene_file 
-        job['layer_name'] = self.material
+        job['layer_name'] = material
+        job['view_name'] = view_name
         return job
     
     def _make_result(self, uuids):

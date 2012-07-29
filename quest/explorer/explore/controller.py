@@ -195,7 +195,10 @@ class Base:
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
-            job['params']['textParam'] = text
+            textToSend = "test"
+            if (text != None):
+               textToSend = textToSend
+            job['params']['textParam'] = textToSend
         job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake
         job['operation'] = 'render_model'

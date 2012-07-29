@@ -18,9 +18,10 @@ class Base:
     """
     Explore parameter space
     """
-    def __init__(self, distance='medium', material='Default', page_size=None, explore_type='explore'):
+    def __init__(self, distance='medium', material='Default', page_size=None, explore_type='explore', textParam=''):
         self.distance = distance
         self.material = material
+        self.text = textParam
         if page_size==None:
             self.page_size = int(ExplorerConfig.objects.get(k__exact='page_size').v)
         else:
@@ -113,16 +114,17 @@ class Base:
         else:
             return self._explore()       
     
-    def explore_product(self, item_id, param_index, explore_type, iterate_type, text):
+    def explore_product(self, item_id, param_index, explore_type, iterate_type):
         startItem = Item.objects.get(uuid=item_id)
         self.material = startItem.material
+        self.text = startItem.textParam
         
-        res = self.explore(item_id, param_index, explore_type, iterate_type, text)
+        res = self.explore(item_id, param_index, explore_type, iterate_type, self.text)
         res.append(self._prepare_result_item(self.root, len(res)))
         return res
     
     def item_to_product(self, item):
-        job = self._prepare_job(item.definition, item.uuid + '_' + str(300), item.params, 350)
+        job = self._prepare_job(item.definition, item.uuid + '_' + str(300), item.params, item.textParam, 350)
         self.renderer.request_images_async([job]) 
          
     def _explore(self):
@@ -183,7 +185,7 @@ class Base:
         self.renderer.request_images(jobs)  
         
         for i in range(len(uuids)):
-            self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material)
+            self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material, text)
     
     
     def _uuid_to_url(self, item_uuid):
@@ -192,7 +194,8 @@ class Base:
     def _prepare_job(self, definition, item_id, params, text, width=180):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
-        job['params']['textParam'] = text
+        if (definition.accepts_text_params):
+            job['params']['textParam'] = text
         job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake
         job['operation'] = 'render_model'
@@ -211,9 +214,9 @@ class Base:
     def _prepare_result_item(self, item, index):
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}
 
-    def _save_item(self, parent, definition, params, sent, item_uuid, distance, material):
+    def _save_item(self, parent, definition, params, sent, item_uuid, distance, material, textParam):
         price = 172
-        db_item = Item(price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params)
+        db_item = Item(price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
         #db_item.set_params(params)
         return db_item

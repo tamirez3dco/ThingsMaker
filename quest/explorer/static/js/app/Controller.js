@@ -111,6 +111,9 @@ Ext.define('Quest.Controller', {
 		if(qs.start_product != null) {
 			this.firstPage = false;
 			this.itemsType = 'model';
+			if (qs.material != null){
+				this.getMaterialCombo().setValue(qs.material)
+			}
 			waitImagesTask = {
 				run : this.waitImagesIterate,
 				args : [this.front],

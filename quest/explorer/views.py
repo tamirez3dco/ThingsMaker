@@ -57,7 +57,7 @@ def explore(request):
         #product = Product.objects.get(slug=start_product)
         #logging.warn(product.slug)
         #item = product.get_item()
-        items = controller.explore_product(start_product, param_index, explore_type, iterate_type, text)
+        items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
     
     else:   
         if (model_types):

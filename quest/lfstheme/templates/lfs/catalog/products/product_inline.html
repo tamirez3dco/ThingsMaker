@@ -49,9 +49,7 @@
     </div>
     {% shipping product %}
         <div class="product-properties">
-    	
-        
-        <a class="button left" href="/create?start_product={{ product.slug }}">
+        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}">
            {% trans 'Customize' %}
         </a>
     </div>

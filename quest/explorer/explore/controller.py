@@ -114,6 +114,9 @@ class Base:
             return self._explore()       
     
     def explore_product(self, item_id, param_index, explore_type, iterate_type, text):
+        startItem = Item.objects.get(uuid=item_id)
+        self.material = startItem.material
+        
         res = self.explore(item_id, param_index, explore_type, iterate_type, text)
         res.append(self._prepare_result_item(self.root, len(res)))
         return res
@@ -180,7 +183,7 @@ class Base:
         self.renderer.request_images(jobs)  
         
         for i in range(len(uuids)):
-            self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance)
+            self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material)
     
     
     def _uuid_to_url(self, item_uuid):
@@ -208,9 +211,9 @@ class Base:
     def _prepare_result_item(self, item, index):
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}
 
-    def _save_item(self, parent, definition, params, sent, item_uuid, distance):
+    def _save_item(self, parent, definition, params, sent, item_uuid, distance, material):
         price = 172
-        db_item = Item(price=price, selected=False, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params)
+        db_item = Item(price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params)
         db_item.save()
         #db_item.set_params(params)
         return db_item

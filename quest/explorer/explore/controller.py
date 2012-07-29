@@ -197,7 +197,7 @@ class Base:
         if (definition.accepts_text_params):
             textToSend = "test"
             if (text != None):
-               textToSend = textToSend
+               textToSend = text
             job['params']['textParam'] = textToSend
         job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake

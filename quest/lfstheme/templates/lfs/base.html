@@ -22,6 +22,9 @@
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}yui/reset-fonts.css">
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}blueprint/src/grid.css">
             <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" />
+            
+		    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}adgalery/jquery.ad-gallery.css">
+            
         {% endcompress %}
         
         <!--[if IE]>
@@ -56,6 +59,9 @@
 			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/MessagePanel.js"></script>
 			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Controller.js"></script>
 			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Explorer.js"></script>
+		  
+		    <script type="text/javascript" src="{{ STATIC_URL }}adgalery/jquery.ad-gallery.js"></script>
+			
 <script type="text/javascript">var switchTo5x=false;</script>
 <script type="text/javascript">var useFastShare=false;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -197,6 +203,5 @@
             {% google_analytics_tracking %}
         {% endblock %}
         {% block google-analytics-ecommerce %}{% endblock %}
-
     </body>
 </html>

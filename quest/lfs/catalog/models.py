@@ -979,10 +979,20 @@ class Product(models.Model):
         except IndexError:
             return None
     
+    
     def get_item_large_image(self):
         url = self.get_item_image()
         return url.replace('.jpg', '_Render.jpg')
         
+    def get_item_Top_image(self):
+        url = self.get_item_image()
+        return url.replace('.jpg', '_Top.jpg')
+
+    def get_item_Front_image(self):
+        url = self.get_item_image()
+        return url.replace('.jpg', '_Front.jpg')
+
+
     def get_images(self):
         """
         Returns all images of the product, including the main image.

@@ -19,10 +19,10 @@
                      width: false,
                      height: false,
                      display_next_and_prev: true,
-                     display_back_and_forward: true,
+                     display_back_and_forward: false,
                      scroll_jump: 0, // If 0, it jumps the width of the container
                      slideshow: {
-                       enable: true,
+                       enable: false,
                        autostart: false,
                        start_label: 'Start',
                        stop_label: 'Stop',
@@ -884,9 +884,10 @@
         this.thumbs_wrapper.find('a:not(.ad-active) img').fadeTo(300, this.settings.thumb_opacity);
         thumb.find('img').fadeTo(300, 1);
       };
-      var left = thumb[0].parentNode.offsetLeft;
-      left -= (this.nav_display_width / 2) - (thumb[0].offsetWidth / 2);
-      this.thumbs_wrapper.animate({scrollLeft: left +'px'});
+      //Tamir - remarked next 3 lines so thumbs dont animate..
+      //var left = thumb[0].parentNode.offsetLeft;
+      //left -= (this.nav_display_width / 2) - (thumb[0].offsetWidth / 2);
+      //this.thumbs_wrapper.animate({scrollLeft: left +'px'});
     },
     fireCallback: function(fn) {
       if($.isFunction(fn)) {

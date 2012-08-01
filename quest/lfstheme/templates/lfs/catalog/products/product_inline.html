@@ -7,8 +7,132 @@
       data="{% url lfs_select_variant_from_properties %}"
       method="post">
     {% csrf_token %}
+<script>
+    var galleries
+    $(document).ready(function () {
+        waitImages();
+    });
+    
+	function waitImage(imgsrc, imageId, imageTitle) {
+		var img = new Image();
 
+		img.onerror = function (evt) {
+  		    console.log(this.src + " can't be loaded.");
+  			setTimeout(waitImage(imgsrc),3000);
+  		}
+		img.onload = function (evt) {
+  			console.log(this.src + " is loaded.");
+  			galleries[0].tamir_addImage(imgsrc, imageId, imageTitle);
+  		}
+		img.src = imgsrc;
+	}
+	
+    function waitImages()
+	{
+		var tamir_element = document.getElementById('tamir-label');
+		var urlTop = tamir_element.getAttribute("urlTop");
+		var urlFront = tamir_element.getAttribute("urlFront");
+		var urlRender = tamir_element.getAttribute("urlRender");
+		var urlSmall = tamir_element.getAttribute("urlSmall");
+		var statics = tamir_element.getAttribute("statics");
+		
+		console.log("Top=" + urlTop);
+		console.log("Front=" + urlFront);
+		console.log("Render=" + urlRender);
+		
+		
+ 		galleries = $('.ad-gallery').adGallery({'loader_image':statics+"adgalery/loader.gif"});
+    	galleries[0].tamir_addImage(urlSmall, "smallID", "Small Title");
+    	waitImage(urlRender,"RenderID","Render Title");
+    	waitImage(urlTop, "TopID","Top Title");
+    	waitImage(urlFront,"FrontID","Front Title");
+    	galleries[0].removeImage(0);		
+	}
+</script>
+    <label id="tamir-label" urlRender="{{ product.get_item_large_image }}" urlTop="{{ product.get_item_Top_image }}" urlFront="{{ product.get_item_Front_image }}" urlSmall="{{ product.get_item_image }}" statics="{{ STATIC_URL }}"></label>
     {# Images #}
+  <style type="text/css">
+  * {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+    color: #333;
+    line-height: 140%;
+  }
+  select, input, textarea {
+    font-size: 1em;
+  }
+  body {
+    padding: 30px;
+    font-size: 70%;
+    width: 800px;
+  }
+  h2 {
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+    border-bottom: 1px dotted #dedede;
+  }
+  h3 {
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  .example {
+    border: 1px solid #CCC;
+    background: #f2f2f2;
+    padding: 10px;
+  }
+  ul {
+    list-style-image:url(list-style.gif);
+  }
+  pre {
+    font-family: "Lucida Console", "Courier New", Verdana;
+    border: 1px solid #CCC;
+    background: #f2f2f2;
+    padding: 10px;
+  }
+  code {
+    font-family: "Lucida Console", "Courier New", Verdana;
+    margin: 0;
+    padding: 0;
+  }
+
+  #gallery {
+    padding: 30px;
+    background: #e1eef5;
+  }
+  #descriptions {
+    position: relative;
+    height: 50px;
+    background: #EEE;
+    margin-top: 10px;
+    width: 640px;
+    padding: 10px;
+    overflow: hidden;
+  }
+    #descriptions .ad-image-description {
+      position: absolute;
+    }
+      #descriptions .ad-image-description .ad-description-title {
+        display: block;
+      }
+  </style>
+   <div id="gallery" class="ad-gallery">
+      <div class="ad-image-wrapper">
+      </div>
+      <div class="ad-controls">
+      </div>
+      <div class="ad-nav">
+        <div class="ad-thumbs">
+          <ul class="ad-thumb-list">
+            <li>
+              <a href="{{ STATIC_URL }}adgalery/temp.jpg">
+                <img src="{{ STATIC_URL }}adgalery/temp.jpg" class="image0">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>    
     <div class="product-images">
         <div class="main-image">
             {% if product.get_item_image %}

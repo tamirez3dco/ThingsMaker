@@ -8,16 +8,11 @@
  * Demo and documentation: http://coffeescripter.com/code/ad-gallery/
  */
 .ad-gallery {
-  width: 500px;
-}
-.ad-gallery, .ad-gallery * {
-  margin: 0;
-  padding: 0;
+  width: 420px;
 }
   .ad-gallery .ad-image-wrapper {
-    width: 100%;
+    width: 420px;
     height: 400px;
-    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
   }
@@ -42,7 +37,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      width: 25%;
+      width: 5%;
       height: 100%;
       cursor: pointer;
       display: block;
@@ -70,7 +65,7 @@
         left: auto;
       }
     .ad-gallery .ad-image-wrapper .ad-image {
-      position: absolute;
+      /*position: relative;*/
       overflow: hidden;
       top: 0;
       left: 0;

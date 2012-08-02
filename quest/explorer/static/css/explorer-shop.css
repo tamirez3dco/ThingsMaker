@@ -4,6 +4,17 @@
 	color: #58585A !important;
 }
 
+#home-img  {
+	padding: 18px 18px 18px 18px;
+	border-radius: 4px;
+	border:1px solid;
+	border-color: #ECECEC;
+}
+#home-img IMG {
+	width: 912px;
+	border-radius: 4px;
+	border: 0px solid;
+}
 #slideshow {
     position:relative;
     height:350px;

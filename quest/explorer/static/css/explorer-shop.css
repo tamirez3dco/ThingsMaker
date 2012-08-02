@@ -61,3 +61,30 @@
 	overflow: auto;
 }
 
+.home-product {
+	float: left; 
+	width: 175px;
+	padding: 7px 7px 7px 7px; 
+	margin: 0px 7px 10px 0px; 
+	border: 1px;
+	border-style:solid;
+	border-color: #ECECEC;
+}
+
+.home-product IMG {
+	width: 161px; 
+	height: 161px;
+	margin: 0px 0px 3px 0px; 
+	padding: 0px;
+	float: left; 
+}
+
+.home-product P {
+	width: 178px; 
+	height: 20px;
+	padding: 0px 4px 6px 4px;
+	float: left; 
+}
+
+
+

@@ -92,8 +92,8 @@ def add_product_variant(request):
     #props = product.get_properties()
     slug = item_uuid
     sku = item_uuid[:30]
-    price = 24.3
-    name = "Vase"
+    price = product.price
+    name = product.name
     variants_count = product.variants.count()
     variant = Product(name=name, slug=slug, sku=sku, parent=product, price=price, 
                       active=True, active_images=True, active_sku=True, active_price=True, active_name=False,
@@ -114,6 +114,7 @@ def get_recent_products(request):
     res = []
     for product in products:
         res.append({"image_url": product.get_item_image(), 
+                    "name": product.name,
                     "product_url": "/product/" + product.slug})
     result = simplejson.dumps({
         "products": res
@@ -127,6 +128,7 @@ def get_top_inspirations(request):
     res = []
     for product in products:
         res.append({"image_url": product.get_item_image(), 
+                    "name": product.name,
                     "product_url": "/product/" + product.slug})
         
     result = simplejson.dumps({

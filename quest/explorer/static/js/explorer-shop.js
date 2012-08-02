@@ -37,38 +37,24 @@ function textSwitch() {
 	});
 }
 
-function getRecentImages() {
-	$.getJSON('/explorer/get_recent_products', function(data) {
+function getProductList(url, element) {
+	$.getJSON(url, function(data) {
 		var items = [];
 		for(var i = 0; i < data.products.length; i++) {
-			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
-			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 182px; height: 182px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
+			html = '<div class="home-product"><a href="' + data.products[i].product_url + '">'+
+				   '<img src="' + data.products[i].image_url + '" /><p>'+ data.products[i].name +'</p></a></div>';
 			$(html, {
-				'class' : 'my-new-list',
+				'class' : 'home-product-list',
 				html : ''
-			}).appendTo('#recent-products');
+			}).appendTo(element);
 		}
-	});
+	});	
 }
 
-function getTopInspirations() {
-	$.getJSON('/explorer/get_top_inspirations', function(data) {
-		var items = [];
-		for(var i = 0; i < data.products.length; i++) {
-			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
-			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 182px; height: 182px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
-			$(html, {
-				'class' : 'my-new-list',
-				html : ''
-			}).appendTo('#top-inspirations');
-		}
-	});
-}
 $(function() {
+	getProductList('/explorer/get_top_inspirations', '#top-inspirations');
+	getProductList('/explorer/get_recent_products', '#recent-products');
 	getRecentImages();
-	getTopInspirations();
 	setInterval("slideSwitch()", 4000);
 	setInterval("textSwitch()", 4000);
 	$('#slideshow').on('click', function() {

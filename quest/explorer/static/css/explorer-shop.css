@@ -27,6 +27,33 @@
 	background-color: green;
 	color: black;
 }
+#home-tab {
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border: 0px solid;
+	margin-right: 2px;
+}
+#last-tab {
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	border: 0px solid;
+	margin-right: 2px;
+	width: 500px;
+	position: absolute;
+	right: 0px;
+	height: 60px;
+	z-index: -1;
+}
+#home-tab A {
+	border-radius: 4px;
+	border: 0px solid;
+}
+#home-tab-img {
+	width: 150px;
+	border-radius: 4px;
+	border: 0px solid;
+	padding: 18px 0px 18px 0px;
+}
 #slideshow {
     position:relative;
     height:350px;

@@ -70,16 +70,7 @@
     <body class="{% block section %}lfs{% endblock %}">
         <div id="header">
             <div class="container">
-                {% block header %}
-                    <div class="span-8 logo">
-                        <a href="{% url lfs.core.views.shop_view %}">
-                            <img class="logo"
-                                 src="{{ STATIC_URL }}images/logo.png"
-                                 alt="Logo" />
-                        </a>
-                    </div>
 
-                {% endblock %}
             </div>
             <div class="container livesearch-wrapper">
                  <div id="livesearch-result"></div>

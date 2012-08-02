@@ -334,14 +334,17 @@ table.search-results {
 }
 
 .tabs ul {
-    height: 40px;
+	position: relative;
+    height: 60px;
     padding: 0;
-    background: url(../img/menu_bg.jpg) repeat-x;
+    /*background: url(../img/menu_bg.jpg) repeat;*/
+   /*background-color: #ECECEC;*/
 }
 
 .tabs li {
     list-style-type: none;
     float: left;
+    background-color: #ECECEC;
 }
 
 .tabs li a {
@@ -349,7 +352,7 @@ table.search-results {
     position: relative;
     float: left;
     padding: 0 20px;
-    line-height: 40px;
+    line-height: 60px;
     text-align: center;
     background: transparent;
     text-decoration: none;

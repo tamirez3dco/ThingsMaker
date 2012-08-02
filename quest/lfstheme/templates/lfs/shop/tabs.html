@@ -2,9 +2,9 @@
 
 <div class="tabs">
     <ul>
-        <li>
+        <li id="home-tab">
             <a href="/">
-                {% trans 'Home' %}
+            	<img id="home-tab-img" src="static/images/logo_home.png" \>
             </a>                                            
         </li>
         {% for tab in tabs %}
@@ -14,6 +14,8 @@
                 </a>                                
             </li>            
         {% endfor %}
+        <li id="last-tab">                                          
+        </li>
     </ul>
  
 </div>

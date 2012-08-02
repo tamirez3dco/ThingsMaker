@@ -65,7 +65,7 @@
         left: auto;
       }
     .ad-gallery .ad-image-wrapper .ad-image {
-      /*position: relative;*/
+      position: relative;
       overflow: hidden;
       top: 0;
       left: 0;

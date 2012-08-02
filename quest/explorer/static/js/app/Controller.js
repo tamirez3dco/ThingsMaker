@@ -220,6 +220,7 @@ Ext.define('Quest.Controller', {
 		//this.showMessage('hi');
 	},
 	onStoreLoad : function(store, records) {
+		if (records == undefined) return;
 		var ln = records.length
 		if((this.firstPage == false) && (this.lastClickedRec != null)) {
 			store.add(this.lastClickedRec);

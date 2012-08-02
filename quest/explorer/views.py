@@ -115,6 +115,7 @@ def get_recent_products(request):
     for product in products:
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
+                    "price": product.price,
                     "product_url": "/product/" + product.slug})
     result = simplejson.dumps({
         "products": res
@@ -129,6 +130,7 @@ def get_top_inspirations(request):
     for product in products:
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
+                    "price": product.price,
                     "product_url": "/product/" + product.slug})
         
     result = simplejson.dumps({

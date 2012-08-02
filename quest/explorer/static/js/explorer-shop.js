@@ -43,7 +43,7 @@ function getRecentImages() {
 		for(var i = 0; i < data.products.length; i++) {
 			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
 			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 135px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
+			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 182px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
 			$(html, {
 				'class' : 'my-new-list',
 				html : ''
@@ -58,7 +58,7 @@ function getTopInspirations() {
 		for(var i = 0; i < data.products.length; i++) {
 			//items.push('<li id=recent-product-img-"' + i + '">' + data.products[i] + '</li>');
 			//items.push('<img id=recent-product-img-"' + i + '" src="' + data.products[i] + '">');
-			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 135px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
+			html = '<a href="' + data.products[i].product_url + '"><img style="float: left; width: 182px; padding: 4px;" id=top-insp-img-"' + i + '" src="' + data.products[i].image_url + '" /></a>';
 			$(html, {
 				'class' : 'my-new-list',
 				html : ''

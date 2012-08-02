@@ -37,12 +37,18 @@
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 	border: 0px solid;
-	margin-right: 2px;
+	margin-right: 0px;
 	width: 600px;
 	position: absolute;
 	right: 0px;
 	height: 60px;
 	z-index: -1;
+}
+#last-tab img {
+	position: absolute;
+	right: 30px;
+	top: 16px;
+	width: 30px;	
 }
 #home-tab A {
 	border-radius: 4px;

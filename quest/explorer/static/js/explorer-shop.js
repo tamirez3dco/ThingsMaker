@@ -57,7 +57,6 @@ function getProductList(url, element) {
 $(function() {
 	getProductList('/explorer/get_top_inspirations', '#top-inspirations');
 	getProductList('/explorer/get_recent_products', '#recent-products');
-	getRecentImages();
 	setInterval("slideSwitch()", 4000);
 	setInterval("textSwitch()", 4000);
 	$('#slideshow').on('click', function() {

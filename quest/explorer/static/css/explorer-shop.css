@@ -48,11 +48,13 @@
 }
 
 #recent-products {
-	margin-top: 40px;
-	height: 270px;
+	margin-top: 20px;
+	position:relative;
+	overflow: auto;
 }
 #top-inspirations {
 	margin-top: 20px;
-	height: 270px;
+	position:relative;
+	overflow: auto;
 }
 

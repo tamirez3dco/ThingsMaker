@@ -7,6 +7,9 @@
 #slideshow {
     position:relative;
     height:350px;
+    width: 700px;
+    margin-left: auto;
+  	margin-right: auto;
 }
 
 #slideshow IMG {

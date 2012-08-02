@@ -8,9 +8,20 @@
       method="post">
     {% csrf_token %}
 <script>
-    var galleries
+    var galleries;
+	var step = 0;
+	var myInterval;
     $(document).ready(function () {
         waitImages();
+        myInterval = setInterval(chooseRenderImage,1000);
+/*        
+        for (var x = 0 ; x < 10 ; x++)
+        {
+        	var timeout = 1000*x;
+        	console.log("timeout="+timeout);
+        	myInterval = setInterval(chooseRenderImage,timeout);	
+        }
+*/        
     });
     
 	function waitImage(imgsrc, imageId, imageTitle) {
@@ -18,13 +29,53 @@
 
 		img.onerror = function (evt) {
   		    console.log(this.src + " can't be loaded.");
-  			setTimeout(waitImage(imgsrc),3000);
+  			setTimeout(waitImage(imgsrc,imageId,imageTitle),3000);
   		}
 		img.onload = function (evt) {
   			console.log(this.src + " is loaded.");
-  			galleries[0].tamir_addImage(imgsrc, imageId, imageTitle);
+			galleries[0].tamir_addImage(imgsrc, imageId, imageTitle);	
   		}
 		img.src = imgsrc;
+	}
+	
+	function chooseRenderImage()
+	{
+		var date = new Date();
+		console.log("date=:"+date.getTime());
+		console.log("chhoseRenderImage:"+step);
+		if (step > 2) 
+		{
+			clearInterval(myInterval);
+			return;
+		}
+		console.log("step <= 2="+step);
+		for (var i = 0 ; i < this.galleries[0].images.length ; i++)
+		{
+			console.log("galleries[0].images[i="+i+"]=");
+			console.log(galleries[0].images[i]);
+			if (galleries[0].images[i].image.indexOf("Render") != -1)
+			{
+				console.log("found i="+i +",step="+step);
+				if (step == 1)
+				{
+					console.log("step == 0:before remove ");
+					console.log("galleries[0].images[0]=");
+					console.log(galleries[0].images[0]);
+					galleries[0].removeImage(0);
+					step++;
+					return;
+				}
+				if ((step == 0) || (step == 2))
+				{
+					console.log("step == 1:before windowLocation ");
+					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-RenderID";
+					window.location = newWindowLocation;
+					galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
+					step++;
+					return;					
+				}
+			}
+		}
 	}
 	
     function waitImages()
@@ -42,11 +93,17 @@
 		
 		
  		galleries = $('.ad-gallery').adGallery({'loader_image':statics+"adgalery/loader.gif"});
-    	galleries[0].tamir_addImage(urlSmall, "smallID", "Small Title");
+/* 		
+    	galleries[0].tamir_addImage(urlSmall, "Small_ID", "Small Title");
+    	galleries[0].tamir_addImage(urlRender, "Render_ID", "Render Title");
+    	galleries[0].tamir_addImage(urlTop, "Top_ID", "Top Title");
+    	galleries[0].tamir_addImage(urlFront, "Front_ID", "Front Title");
+*/    	
     	waitImage(urlRender,"RenderID","Render Title");
     	waitImage(urlTop, "TopID","Top Title");
     	waitImage(urlFront,"FrontID","Front Title");
-    	galleries[0].removeImage(0);		
+
+    	console.log(galleries[0].images);
 	}
 </script>
     <label id="tamir-label" urlRender="{{ product.get_item_large_image }}" urlTop="{{ product.get_item_Top_image }}" urlFront="{{ product.get_item_Front_image }}" urlSmall="{{ product.get_item_image }}" statics="{{ STATIC_URL }}"></label>
@@ -60,11 +117,6 @@
   select, input, textarea {
     font-size: 1em;
   }
-/*  body {
-    padding: 30px;
-    font-size: 70%;
-    width: 800px;
-}*/
   h2 {
     margin-top: 1.2em;
     margin-bottom: 0;
@@ -98,7 +150,7 @@
 
   #gallery {
     padding: 30px;
-    background: #e1eef5;
+    background: white;
   }
   #descriptions {
     position: relative;
@@ -125,8 +177,8 @@
         <div class="ad-thumbs">
           <ul class="ad-thumb-list">
             <li>
-              <a href="{{ STATIC_URL }}adgalery/temp.jpg">
-                <img src="{{ STATIC_URL }}adgalery/temp.jpg" class="image0">
+              <a href="{{ product.get_item_image }}">    
+                <img src="{{ product.get_item_image }}" title="Plain" class="image0">    
               </a>
             </li>
           </ul>
@@ -134,7 +186,9 @@
       </div>
     </div>    
     <div class="product-images">
-        <div class="main-image">
+    	
+<!--
+       <div class="main-image">
             {% if product.get_item_image %}
                 <a href="{{ product.get_item_large_image }}"
                    class="product-image">
@@ -154,7 +208,7 @@
                 </a>
             {% endfor %}
         </div>
-        
+-->        
     </div>
     
   

@@ -35,17 +35,25 @@
 	margin-right: 2px;
 }
 #last-tab {
+	margin-right: 0px;
+	width: 500px;
+	position: absolute;
+	right: 102px;
+	height: 60px;
+	z-index: -1;
+}
+#cart-tab {
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 	border: 0px solid;
-	margin-right: 0px;
-	width: 600px;
+	margin-left: 2px;
+	width: 100px;
 	position: absolute;
 	right: 0px;
 	height: 60px;
 	z-index: -1;
 }
-#last-tab img {
+#cart-tab img {
 	position: absolute;
 	right: 30px;
 	top: 16px;

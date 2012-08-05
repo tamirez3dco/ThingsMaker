@@ -2,6 +2,7 @@
 import os
 import os.path
 import djcelery
+#from boto.s3.connection. import CallingFormat
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 import dj_database_url
@@ -151,7 +152,8 @@ INSTALLED_APPS = (
     'gunicorn',
     'djcelery',
     'kombu.transport.django',
-    'south'
+    'south',
+    'storages'
 )
 
 FORCE_SCRIPT_NAME=""
@@ -295,6 +297,10 @@ CELERYBEAT_SCHEDULE = {
 
 AWS_ACCESS_KEY_ID = 'AKIAJ4FEEKD3KIPZASTQ'
 AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
+#AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',

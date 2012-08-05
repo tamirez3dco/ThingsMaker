@@ -166,6 +166,8 @@
 }
 
 .products-product {
+	float:left;
+	width:98%;
 	margin: 0px 7px 10px 7px; 
 	padding: 4px 4px 4px 4px;
 	border: 1px;
@@ -173,4 +175,14 @@
 	border-color: #ECECEC;	
 }
 
+.products-product IMG {
+	width: 300px; 
+	height: 200px;	
+	float: left;
+	margin-right: 20px;
+}
 
+.products-product .button {
+	text-align: center;
+	width: 160px; 
+}

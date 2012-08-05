@@ -18,7 +18,7 @@ from django.contrib.sites.models import Site
 from explorer.explore.controller import Base as Controller
 import explorer.tasks
 import uuid
-from explorer.models import Item
+from explorer.models import Item, GhDefinition
 from lfs.catalog.models import Product
 from lfs.catalog.settings import VARIANT
 from lfs.core.utils import LazyEncoder
@@ -54,10 +54,13 @@ def explore(request):
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)
     if (start_product):
-        #product = Product.objects.get(slug=start_product)
-        #logging.warn(product.slug)
-        #item = product.get_item()
-        items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
+        product = Product.objects.get(slug=start_product)
+        if product.is_variant() == False:
+            gh_def = GhDefinition.objects.filter(product=product.id)[0]
+            items = controller.start_exploration(gh_def.id)
+            logging.error(gh_def.file_name)
+        else:
+            items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
     
     else:   
         if (model_types):

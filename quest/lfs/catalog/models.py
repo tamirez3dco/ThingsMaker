@@ -2,6 +2,7 @@
 import locale
 import math
 import uuid
+import logging
 
 # django imports
 from django.contrib.contenttypes import generic
@@ -305,6 +306,8 @@ class Category(models.Model):
         the parent category.
         """
         if self.image:
+            logging.error('self.image')
+            logging.error(self.image)
             return self.image
         else:
             if self.parent:
@@ -946,7 +949,11 @@ class Product(models.Model):
         Returns the first image (the main image) of the product.
         """
         try:
-            return self.get_images()[0]
+            file_name = self.get_images()[0]
+            logging.error(file_name)
+            src = "%s%s" % ('https://s3.amazonaws.com/ez3d_media/images/', file_name)
+            logging.error(src)
+            return src
         except IndexError:
             return None
 

@@ -444,11 +444,12 @@ def all_products(request, template_name="lfs/catalog/products.html"):
     products = []
     for product in raw_products:
         products.append({
-            'name': product.name
+            'name': product.name,
+            'description': product.description
         })
     result = render_to_response(template_name, RequestContext(request, {
         "name_of_p": 'amit',
-        "products": products
+        "products": raw_products
     }))
     return result
     

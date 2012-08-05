@@ -8,4 +8,3 @@ quest.db
 quest/celerybeat-schedule.db
 distribute-0.6.19.tar.gz
 lfs.log
-quest/media

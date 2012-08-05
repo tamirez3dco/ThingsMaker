@@ -13,13 +13,14 @@
 {% endblock %}
 
 {% block content %}
-	<h1 class="first-heading">
-	    {{ name_of_p }}
-	</h1> 
 	<div id="products">
 		{% for product in products %}
-			<div>
+			<div class="products-product">
+				<img src="{{ product.get_image }}">
 				<h3>{{ product.name }}</h3>
+				<p class="product-description">
+        			{{ product.get_description|safe}}
+    			</p>
 			</div>
 		{% endfor %}
 	</div>

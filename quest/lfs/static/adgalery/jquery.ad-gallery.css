@@ -8,11 +8,17 @@
  * Demo and documentation: http://coffeescripter.com/code/ad-gallery/
  */
 .ad-gallery {
-  width: 420px;
+  width: 400px;
+  float :left;
+}
+.ad-gallery, .ad-gallery * {
+  margin: 0;
+  padding: 0;
 }
   .ad-gallery .ad-image-wrapper {
-    width: 420px;
-    height: 400px;
+    width: 100%;
+    height: 370px;
+    margin-bottom: 10px;
     position: relative;
     overflow: hidden;
   }
@@ -65,7 +71,7 @@
         left: auto;
       }
     .ad-gallery .ad-image-wrapper .ad-image {
-      position: relative;
+      position: absolute;
       overflow: hidden;
       top: 0;
       left: 0;
@@ -87,7 +93,7 @@
       }
       * html .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
         background: none;
-        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='opa75.png');
+/*        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='opa75.png');*/
       }
         .ad-gallery .ad-image-wrapper .ad-image .ad-image-description .ad-description-title {
           display: block;
@@ -144,6 +150,7 @@
     .ad-gallery .ad-nav .ad-thumbs {
       overflow: hidden;
       width: 100%;
+      padding-left : 16px;
     }
       .ad-gallery .ad-thumbs .ad-thumb-list {
         float: left;
@@ -153,6 +160,7 @@
         .ad-gallery .ad-thumbs li {
           float: left;
           padding-right: 5px;
+          list-style : none;
         }
           .ad-gallery .ad-thumbs li a {
             display: block;

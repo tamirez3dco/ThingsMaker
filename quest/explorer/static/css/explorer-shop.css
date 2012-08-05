@@ -38,7 +38,7 @@
 	margin-right: 0px;
 	width: 500px;
 	position: absolute;
-	right: 102px;
+	right: 122px;
 	height: 60px;
 	z-index: -1;
 }
@@ -47,16 +47,19 @@
 	border-bottom-right-radius: 6px;
 	border: 0px solid;
 	margin-left: 2px;
-	width: 100px;
+	width: 120px;
 	position: absolute;
 	right: 0px;
 	height: 60px;
-	z-index: -1;
 }
-#cart-tab img {
-	position: absolute;
-	right: 30px;
-	top: 16px;
+#cart-tab A {
+	/*padding: 0px 0px 20px 8px;*/
+}
+#cart-tab-img {
+	/*position: absolute;
+	right: 0px;
+	top: 16px;*/
+	/*margin-top: 24px;*/
 	width: 30px;	
 }
 #home-tab A {

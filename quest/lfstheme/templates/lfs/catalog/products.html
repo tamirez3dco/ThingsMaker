@@ -1,0 +1,26 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+
+{% block head %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            {% trans 'Products' %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+	<h1 class="first-heading">
+	    {{ name_of_p }}
+	</h1> 
+	<div id="products">
+		{% for product in products %}
+			<div>
+				<h3>{{ product.name }}</h3>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

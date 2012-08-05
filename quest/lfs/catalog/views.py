@@ -439,7 +439,19 @@ def category_products(request, slug, start=1, template_name="lfs/catalog/categor
     cache.set(cache_key, temp)
     return result
 
-
+def all_products(request, template_name="lfs/catalog/products.html"):
+    raw_products = lfs.catalog.utils.get_all_products()
+    products = []
+    for product in raw_products:
+        products.append({
+            'name': product.name
+        })
+    result = render_to_response(template_name, RequestContext(request, {
+        "name_of_p": 'amit',
+        "products": products
+    }))
+    return result
+    
 def product_view(request, slug, template_name="lfs/catalog/product_base.html"):
     """Main view to display a product.
     """

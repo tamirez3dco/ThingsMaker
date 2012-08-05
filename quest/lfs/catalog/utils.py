@@ -670,3 +670,8 @@ def calculate_real_amount(product, quantity):
     """
     logger.info("Decprecated: lfs.catalog.utils: the function 'calculate_real_amount' is deprecated. Please use 'get_amount_by_packages'of the Product class.")
     return product.get_amount_by_packages(quantity)
+
+
+def get_all_products():
+    products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS, active=True)
+    return products

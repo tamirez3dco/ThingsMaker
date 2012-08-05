@@ -166,6 +166,7 @@
 }
 
 .products-product {
+	position: relative;
 	float:left;
 	width:98%;
 	margin: 0px 7px 10px 7px; 
@@ -180,6 +181,12 @@
 	height: 200px;	
 	float: left;
 	margin-right: 20px;
+}
+
+.products-product .buttons {
+	position: absolute;
+	bottom: -3px;
+	left: 320px;
 }
 
 .products-product .button {

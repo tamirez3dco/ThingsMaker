@@ -21,12 +21,14 @@
 				<p class="product-description">
         			{{ product.get_description|safe}}
     			</p>
-    			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
-           			{% trans 'Make it yours' %}
-       			</a>
-       			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
-           			{% trans 'See what others made' %}
-       			</a>
+    			<div class="buttons">
+	    			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
+	           			{% trans 'Make it yours' %}
+	       			</a>
+	       			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
+	           			{% trans 'See what others made' %}
+	       			</a>
+       			</div>
 			</div>
 		{% endfor %}
 	</div>

@@ -140,7 +140,7 @@
     image_wrapper: false,
     gallery_info: false,
     nav: false,
-    loader: true,
+    loader: false,
     preloads: false,
     thumbs_wrapper: false,
     thumbs_wrapper_width: 0,
@@ -277,7 +277,6 @@
           context.whenImageLoaded(thumb[0], function() {
           	thumb[0].style['height'] = '100px';
     		thumb[0].style['width'] = '100px';
-          	//this.resize_image(thumb[0],100,100);
             var width = thumb[0].parentNode.parentNode.offsetWidth;
             if(thumb[0].width == 0) {
               // If the browser tells us that the image is loaded, but the width

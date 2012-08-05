@@ -13,7 +13,7 @@
 	var myInterval;
     $(document).ready(function () {
         waitImages();
-        myInterval = setInterval(chooseRenderImage,1000);
+        myInterval = setInterval(chooseRenderImage,500);
     });
     
 	function waitImage(imgsrc, imageId, imageTitle) {
@@ -32,37 +32,35 @@
 	function chooseRenderImage()
 	{
 		var date = new Date();
-		console.log("date=:"+date.getTime());
-		console.log("chhoseRenderImage:"+step);
-		if (step > 2) 
+		if (step > 3) 
 		{
-			
 			clearInterval(myInterval);
 			return;
 		}
-		console.log("step <= 2="+step);
 		for (var i = 0 ; i < this.galleries[0].images.length ; i++)
 		{
-			console.log("galleries[0].images[i="+i+"]=");
-			console.log(galleries[0].images[i]);
 			if (galleries[0].images[i].image.indexOf("Render") != -1)
 			{
-				console.log("found i="+i +",step="+step);
+				if ((step == 0) || (step == 3)) 
+				{
+					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-RenderID";
+					window.location = newWindowLocation;
+					//galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
+					step++;
+					return;					
+				}
 				if (step == 1)
 				{
-					console.log("step == 0:before remove ");
-					console.log("galleries[0].images[0]=");
-					console.log(galleries[0].images[0]);
 					galleries[0].removeImage(0);
 					step++;
 					return;
 				}
-				if ((step == 0) || (step == 2))
+				if (step == 2) 
 				{
-					console.log("step == 1:before windowLocation ");
-					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-RenderID";
+					var meantime = (i + this.galleries[0].images.length-1) % 3;
+					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-" + meantime;
 					window.location = newWindowLocation;
-					galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
+					//galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
 					step++;
 					return;					
 				}

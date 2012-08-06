@@ -22,7 +22,9 @@
     {{ shop.static_block.html|safe }}
     <div id="home-img">
     	<img src="https://s3.amazonaws.com/ez3d_media/home_products.jpg" alt=""/>
-    	<button type="button">Start creating your personal thing!</button>
+    	<a class="button" href="/products">
+	           	{% trans 'Start creating your personal thing!' %}
+	    </a>
     </div>
     
 	<div id="top-inspirations">

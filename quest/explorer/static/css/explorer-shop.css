@@ -17,14 +17,14 @@
 	border-radius: 4px;
 	border: 0px solid;
 }
-#home-img BUTTON {
+#home-img A {
 	border-radius: 8px;
 	border: 1px solid;
 	position: absolute;
-	padding: 12px;
+	padding: 3px 12px 6px 12px;
 	top: 388px;
 	left: 418px;
-	font-size: 28px;
+	font-size: 26px;
 	background-color: green;
 	color: black;
 }

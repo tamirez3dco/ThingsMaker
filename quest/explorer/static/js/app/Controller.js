@@ -618,7 +618,8 @@ Ext.define('Quest.Controller', {
 				item_uuid : rec.data.id
 			},
 			success : function(response) {
-				window.location = '/product/' + rec.data.id
+				console.log("requesting product waitImages");
+				window.location = '/product/' + rec.data.id + "?waitImages=true"
 			}
 		});
 

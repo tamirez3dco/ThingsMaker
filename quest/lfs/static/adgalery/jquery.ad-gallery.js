@@ -411,9 +411,11 @@
           $(this).data("ad-i", i);
         }
       );
+/*      
       if(index == this.current_index && this.images.length != 0) {
         this.showImage(0);
       };
+*/      
     },
     removeAllImages: function() {
       for (var i = this.images.length - 1; i >= 0; i--) {

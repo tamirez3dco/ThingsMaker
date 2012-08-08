@@ -11,9 +11,20 @@
     var galleries;
 	var step = 0;
 	var myInterval;
+	var waitImages = false;
     $(document).ready(function () {
-        waitImages();
-        myInterval = setInterval(chooseRenderImage,500);
+    	waitImages = (this.URL.indexOf("waitImages") != -1);
+    	if (waitImages)
+    	{
+    		console.log("waitImages");
+        	waitForImages();
+        	myInterval = setInterval(chooseRenderImage2,500);
+    	}
+    	else
+    	{
+    		console.log("Dont waitImages");
+    		dontWaitImages();
+    	}
     });
     
 	function waitImage(imgsrc, imageId, imageTitle) {
@@ -29,46 +40,31 @@
   		}
 		img.src = imgsrc;
 	}
-	function chooseRenderImage()
+	function chooseRenderImage2()
 	{
-		var date = new Date();
-		if (step > 3) 
-		{
-			clearInterval(myInterval);
-			return;
-		}
 		for (var i = 0 ; i < this.galleries[0].images.length ; i++)
 		{
 			if (galleries[0].images[i].image.indexOf("Render") != -1)
 			{
-				if ((step == 0) || (step == 3)) 
-				{
-					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-RenderID";
-					window.location = newWindowLocation;
-					//galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
-					step++;
-					return;					
-				}
-				if (step == 1)
+				console.log("i="+i);
+				if (step == 0)
 				{
 					galleries[0].removeImage(0);
 					step++;
-					return;
 				}
-				if (step == 2) 
+				else if (step == 1)
 				{
-					var meantime = (i + this.galleries[0].images.length-1) % 3;
-					newWindowLocation = window.location.origin + window.location.pathname + "#ad-image-" + meantime;
-					window.location = newWindowLocation;
-					//galleries[0].gallery_info.html((i+1)+" / "+galleries[0].images.length);
-					step++;
-					return;					
+		    	    galleries[0].in_transition = false;
+		    	    galleries[0].current_index = -1;
+					galleries[0].showImage(i,undefined);
+					clearInterval(myInterval);
 				}
+				return;
 			}
 		}
 	}
-	
-    function waitImages()
+
+    function waitForImages()
 	{
 		var tamir_element = document.getElementById('tamir-label');
 		var urlTop = tamir_element.getAttribute("urlTop");
@@ -96,6 +92,26 @@
 
     	console.log(galleries[0].images);
 	}
+    function dontWaitImages()
+	{
+		var tamir_element = document.getElementById('tamir-label');
+		var urlTop = tamir_element.getAttribute("urlTop");
+		var urlFront = tamir_element.getAttribute("urlFront");
+		var urlRender = tamir_element.getAttribute("urlRender");
+		var statics = tamir_element.getAttribute("statics");
+		
+		
+ 		galleries = $('.ad-gallery').adGallery({'loader_image':statics+"adgalery/loader.gif"});
+ 		galleries[0].settings.description_wrapper = $('#descriptions');
+ 		galleries[0].removeAllImages();
+    	galleries[0].tamir_addImage(urlTop, "Top_ID", "Top Title");
+    	galleries[0].tamir_addImage(urlFront, "Front_ID", "Front Title");
+    	galleries[0].tamir_addImage(urlRender, "Render_ID", "Render Title");
+    	galleries[0].in_transition = false;
+		galleries[0].showImage(2,undefined);
+    	console.log(galleries[0].images);
+	}
+
 </script>
     <label id="tamir-label" urlRender="{{ product.get_item_large_image }}" urlTop="{{ product.get_item_Top_image }}" urlFront="{{ product.get_item_Front_image }}" urlSmall="{{ product.get_item_image }}" statics="{{ STATIC_URL }}"></label>
     {# Images #}

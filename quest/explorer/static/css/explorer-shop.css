@@ -24,7 +24,7 @@
 	padding: 3px 12px 6px 12px;
 	top: 388px;
 	left: 418px;
-	font-size: 26px;
+	font-size: 24px;
 	background-color: green;
 	color: black;
 }
@@ -131,7 +131,7 @@
 
 .home-product {
 	float: left; 
-	width: 183px;
+	width: 167px;
 	padding: 7px 7px 3px 7px; 
 	margin: 0px 7px 10px 0px; 
 	border: 1px;
@@ -148,7 +148,7 @@
 }
 
 .home-product-name {
-	width: 168px; 
+	width: 158px; 
 	height: 20px;
 	padding: 0px 0px 0px 4px;
 	margin: 0px;
@@ -157,7 +157,7 @@
 
 .home-product-price {
 	text-align:right;
-	width: 168px; 
+	width: 158px; 
 	height: 20px;
 	padding: 0px 4px 0px 0px;
 	float: right; 

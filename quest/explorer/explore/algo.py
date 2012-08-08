@@ -162,7 +162,21 @@ class Iterate(Base):
 #        start = a - (math.floor(a) * 0.2)
 #        for i in range(5):
 #            point = start + (i*0.2)
-            
+    
+    def get_initial_page_params(self, num_params, selected_param_index):
+        params_list = []
+        for img_idx in range(self.page_size):
+            params = []
+            for param_idx in range(num_params):
+                if selected_param_index == param_idx:
+                    param = img_idx*(0.98/(self.page_size-1))+0.01
+                    params.append(param)
+                else:
+                    params.append(0.5)
+                    
+            params_list.append(params) 
+        return params_list  
+             
     def get_page_params(self,  parent_params, ranges, param_index, iterate_type):
         if (iterate_type == 'random'):
             return self._get_random_page_params(parent_params, [0, 0.15])
@@ -183,7 +197,7 @@ class Iterate(Base):
         params_list2[3] = params_list[2]      
         params_list2[5] = params_list[3]  
         
-        return params_list2    
+        return params_list  
     
 class Learn(Base):
     def get_page_params(self, parent_params, param_index, exploration_type):

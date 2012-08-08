@@ -86,9 +86,9 @@ class Base:
         pass
     
     def start_exploration(self, definition_id): 
-        self.page_size = self.page_size+1;
+        #self.page_size = self.page_size+1;
         self.definition = GhDefinition.objects.get(pk=definition_id) 
-        #children_params = self.algo.get_random_page_params(len(self.definition.param_names))
+
         r = Item.objects.filter(image_url__isnull=False, selected=True, definition=self.definition).count()
         reps=[]
         if r>10: 
@@ -100,7 +100,14 @@ class Base:
             explorer.tasks.send_deep_jobs.apply_async(args=[copies], countdown=0)
         items = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(copies, range(len(copies))))
         return items
-        
+    
+    
+    def start_iterate(self, definition_id, text):
+        uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
+        self.definition = GhDefinition.objects.get(pk=definition_id) 
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, 0, 'iterate', 'linear', 'Default', 'naama'], countdown=0)
+        return self._make_result(uuids)
+    
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
         #text = "ZOHAR"
         self.root = Item.objects.get(uuid=item_id)
@@ -120,7 +127,7 @@ class Base:
         self.text = startItem.textParam
         
         res = self.explore(item_id, param_index, explore_type, iterate_type, self.text)
-        res.append(self._prepare_result_item(self.root, len(res)))
+        #res.append(self._prepare_result_item(self.root, len(res)))
         return res
     
     def item_to_product(self, item):
@@ -176,7 +183,11 @@ class Base:
         logging.warn(explore_type)
         children_params = None
         if root==None:
-            children_params = self.algo.get_random_page_params(len(definition.param_names))
+            if explore_type=='iterate':
+                children_params = self.algo.get_initial_page_params(len(definition.param_names), param_index)
+            else:
+                children_params = self.algo.get_random_page_params(len(definition.param_names))
+        
         else:
             children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
        
@@ -200,7 +211,7 @@ class Base:
         if (definition.accepts_text_params):
             textToSend = "test"
             if (text != None):
-               textToSend = text
+                textToSend = text
             job['params']['textParam'] = textToSend
         job['item_id'] = item_id #+ '_' + str(width)
         job['bake'] = self.bake

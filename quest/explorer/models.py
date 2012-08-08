@@ -56,7 +56,12 @@ class GhDefinition(models.Model):
     
     def __unicode__(self):
         return self.file_name
-
+    
+#class DefinitionParams(models.Model):
+#    name = models.CharField(max_length=100)
+#    readable_name = models.CharField(max_length=200)
+#    definition = models.ForeignKey(GhDefinition)
+    
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
     price = models.DecimalField(max_digits=7, decimal_places=2)

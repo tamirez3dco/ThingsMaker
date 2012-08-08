@@ -1,103 +1,207 @@
-.x-panel-body{
-    background: white;
-    font: 11px Arial, Helvetica, sans-serif;
+.x-panel-body {
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
 }
-.thumb{
-    background: #dddddd;
-    padding: 3px;
-    padding-bottom: 0;
+.thumb {
+	background: #dddddd;
+	padding: 3px;
+	padding-bottom: 0;
 }
-
 .x-quirks .thumb {
-    padding-bottom: 3px;
+	padding-bottom: 3px;
 }
-
-.thumb img{
-    height: 220px;
-    width: 220px;
+.thumb img {
+	height: 220px;
+	width: 220px;
 }
-.thumb.small img{
-    height: 180px;
-    width: 180px;
+.thumb.small img {
+	height: 180px;
+	width: 180px;
 }
-.thumb.small div{
-    width: 180px;
+.thumb.small div {
+	width: 180px;
 }
-.thumb-wrap{
-    float: left;
-    margin: 4px;
-    margin-right: 0;
-    padding: 5px;
-    opacity:0;
+.thumb-wrap {
+	float: left;
+	margin: 4px;
+	margin-right: 0;
+	padding: 5px;
+	opacity: 0;
 }
 .thumb-wrap span {
-    
-    display: block;
-    overflow: hidden;
-    text-align: center;
-}
 
-.x-item-over{
-    border:1px solid #dddddd;
-    background: #efefef url(/static/images/over.gif) repeat-x left top;
-    padding: 4px;
+	display: block;
+	overflow: hidden;
+	text-align: center;
 }
-
-.x-item-selected{
-    background: #eff5fb url(/static/images/selected.gif) no-repeat right bottom;
-    border:1px solid #99bbe8;
-    padding: 4px;
+.x-item-over {
+	border: 1px solid #dddddd;
+	background: #efefef url(/static/images/over.gif) repeat-x left top;
+	padding: 4px;
 }
-.x-item-selected .thumb{
-    background:transparent;
+.x-item-selected {
+	background: #eff5fb url(/static/images/selected.gif) no-repeat right bottom;
+	border: 1px solid #99bbe8;
+	padding: 4px;
 }
-
+.x-item-selected .thumb {
+	background: transparent;
+}
 .loading-indicator {
-    font-size:11px;
-    background-image:url('/static/images/loading.gif');
-    background-repeat: no-repeat;
-    background-position: left;
-    padding-left:20px;
-    margin:10px;
+	font-size: 11px;
+	background-image: url('/static/images/loading.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 20px;
+	margin: 10px;
 }
-
 .x-view-selector {
-    position:absolute;
-    left:0;
-    top:0;
-    width:0;
-    border:1px dotted;
-    opacity: .5;
-    -moz-opacity: .5;
-    filter:alpha(opacity=50);
-    zoom:1;
-    background-color:#c3daf9;
-    border-color:#3399bb;
-}.ext-strict .ext-ie .x-tree .x-panel-bwrap{
-    position:relative;
-    overflow:hidden;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0;
+	border: 1px dotted;
+	opacity: .5;
+	-moz-opacity: .5;
+	filter: alpha(opacity=50);
+	zoom: 1;
+	background-color: #c3daf9;
+	border-color: #3399bb;
 }
-
+.ext-strict .ext-ie .x-tree .x-panel-bwrap {
+	position: relative;
+	overflow: hidden;
+}
 .item-menu-canvas {
-	opacity: 1; 
-	position: absolute; 
-	left: 0px; 
+	opacity: 1;
+	position: absolute;
+	left: 0px;
 	top: 0px;
 }
 .item-menu-buttons {
-height: 30px; 
-position: absolute; 
-left: 0px; 
-top: 124px;
+	height: 30px;
+	position: absolute;
+	left: 0px;
+	top: 124px;
 }
 .x-form-trigger {
 	background-image: url('/static/images/ext/form/trigger.gif');
 }
-
 .x-message-box {
 	background-color: transparent;
 }
-
 .x-message-box .x-window-body {
 	background-color: transparent;
+}
+/* jWizard-specific configuration */
+.jw-widget {
+	margin-left: 98px;
+	margin-right: 98px;
+	overflow: hidden;
+}
+.jw-header {
+	display: none;
+	padding: 1em;
+	/*border: 0px solid;*/
+}
+.jw-header h2 {
+	margin: 0;
+	padding: .3em 0;
+}
+.jw-header .jw-counter {
+	float: right;
+}
+.jw-title {
+	padding: 0 1em;
+}
+.jw-content {
+	padding: 0.8em 0 0 0.2em;
+	border-color: #ECECEC;
+}
+.jw-menu-wrap {
+	width: 12em;
+	margin-right: -12em;
+	float: left;
+}
+.jw-menu {
+	margin: 0 .5em;
+}
+.jw-menu ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.jw-menu li {
+	padding: .25em .5em;
+	margin-bottom: .25em;
+	cursor: pointer;
+}
+.jw-hasmenu .jw-steps-wrap {
+	margin-left: 12em;
+}
+.jw-steps-wrap {
+	height: 30em;
+	width: 44em;
+	overflow: auto;
+	padding: 0em 1.5em;
+}
+.jw-content p {
+	margin-top: 0;
+}
+.jw-content div.jw-step {
+}
+.jw-footer {
+	padding: 1em;
+	display: none;
+}
+.jw-counter {
+	float: left;
+	padding: .2em;
+}
+/* Text: Left -- Bar: Right */
+.jw-counter.jw-left .jw-counter-text {
+	float: left;
+	padding: .4em;
+}
+.jw-counter.jw-left .jw-counter-progressbar {
+	display: block;
+	width: 6em;
+	float: right;
+}
+/* Text Center-aligned over Progress Bar */
+.jw-counter.jw-center .jw-counter-text {
+	float: left;
+	width: 10em;
+	padding: .4em;
+	text-align: center;
+}
+.jw-counter.jw-center .jw-counter-progressbar {
+	display: block;
+}
+/* Bar: Left -- Text: Right */
+.jw-counter.jw-right {
+	text-align: right;
+}
+.jw-counter.jw-right .jw-counter-text {
+	float: right;
+	padding: .4em;
+}
+.jw-counter.jw-right .jw-counter-progressbar {
+	display: block;
+	width: 6em;
+	float: left;
+}
+.jw-buttons {
+	text-align: right;
+}
+.jw-buttons button {
+	padding: .5em 1em;
+	margin-left: 1em;
+}
+
+.explorer-image {
+	width:180px;
+	height:180px;
+	margin: 0px 10px 10px 0px;
+	float: left;
 }

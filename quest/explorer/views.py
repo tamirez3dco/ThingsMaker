@@ -57,7 +57,7 @@ def explore(request):
         product = Product.objects.get(slug=start_product)
         if product.is_variant() == False:
             gh_def = GhDefinition.objects.filter(product=product.id)[0]
-            items = controller.start_exploration(gh_def.id)
+            items = controller.start_iterate(gh_def.id, text)
             logging.error(gh_def.file_name)
         else:
             items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
@@ -83,7 +83,9 @@ def explore(request):
             "success": True,
             "items": items
     }
-    jsonp = cb + "(" + simplejson.dumps(to_json) + ");"
+    
+    #jsonp = cb + "(" + simplejson.dumps(to_json) + ");"
+    jsonp = simplejson.dumps(items)
     return HttpResponse(jsonp, mimetype='text/javascript')
 
 def add_product_variant(request):

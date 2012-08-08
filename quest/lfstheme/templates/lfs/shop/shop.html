@@ -10,6 +10,10 @@
     {% endif %}
 {% endblock %}
 
+{% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/explorer-shop.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %}
     <ul class="breadcrumbs">
         <li>
@@ -29,12 +33,12 @@
     
 	<div id="top-inspirations">
 		<div class="panel-heading">
-			<h3>Popular Inspirations</h3>
+			<h3>Popular</h3>
 		</div>
 	</div>
 	<div id="recent-products">
 		<div class="panel-heading">
-			<h3>Recent Creations</h3>
+			<h3>Recent</h3>
 		</div>
 	</div>
 {% endblock %}

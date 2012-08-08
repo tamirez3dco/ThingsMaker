@@ -5,7 +5,15 @@
 {% load lfs_theme_tags %}
 {% load reviews_tags %}
 {% load tagging_tags %}
-
+{% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}adgalery/jquery.ad-gallery.js"></script>	
+{% endblock %}
+{% block uncompressed_page_js %}
+	<script type="text/javascript">var switchTo5x=false;</script>
+	<script type="text/javascript">var useFastShare=false;</script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript">stLight.options({publisher: "36099e7a-a82b-4963-acce-96e8892c1e3f"}); </script>
+{% endblock %}
 {% block title %}
     {{ product.get_meta_title }} - {{ block.super }}
 {% endblock %}

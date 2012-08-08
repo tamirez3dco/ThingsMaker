@@ -1,0 +1,42 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+{% block page_js %}
+	        <script type="text/javascript" src="http://cdn.sencha.io/ext-4.0.7-gpl/ext-all.js"></script>
+        	<script type="text/javascript">
+				Ext.ns('Quest.config');
+				Quest.config.site_domain = '{{site_domain}}';	
+			</script>
+        	<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Models.js"></script>
+        	<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Stores.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/ImageGrid.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/Panel.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/ExplorerMenu.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/ItemMenu.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/view/MessagePanel.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Controller.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}/js/app/Explorer.js"></script>
+{% endblock %}
+{% block title %}
+    {% trans 'Create' %} - {{ block.super }}
+{% endblock %}
+
+{% block section %}create{% endblock %}
+
+{% block breadcrumbs %}
+    {% breadcrumbs _("Create") %}
+{% endblock %}
+
+{% block content %}
+<div id="explorer-container"></div>
+<div>.</div>
+{% endblock %}
+
+{% block stam %}
+<div id="creation-details-dialog">
+	<p>Name it</p>
+	<input type="text"></input>
+	<p>Write something about it</p>
+	<textarea cols="40" rows="4"></textarea>
+</div>
+{% endblock %}

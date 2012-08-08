@@ -1,4 +1,4 @@
-from explorer.models import Item, GhDefinition, ExplorerConfig, AppData
+from explorer.models import Item, GhDefinition, ExplorerConfig, AppData, DefinitionParam
 from django.contrib import admin
 from django import forms
 import cPickle as pickle
@@ -33,3 +33,4 @@ admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item)
 admin.site.register(ExplorerConfig)
 admin.site.register(AppData)
+admin.site.register(DefinitionParam)

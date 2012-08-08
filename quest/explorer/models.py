@@ -57,10 +57,13 @@ class GhDefinition(models.Model):
     def __unicode__(self):
         return self.file_name
     
-#class DefinitionParams(models.Model):
-#    name = models.CharField(max_length=100)
-#    readable_name = models.CharField(max_length=200)
-#    definition = models.ForeignKey(GhDefinition)
+class DefinitionParam(models.Model):
+    name = models.CharField(max_length=100)
+    readable_name = models.CharField(max_length=200)
+    definition = models.ForeignKey(GhDefinition)
+    index = models.IntegerField()
+    order = models.IntegerField()
+    stage = models.IntegerField()
     
 class Item(models.Model):
     id = models.AutoField(primary_key=True)

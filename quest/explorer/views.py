@@ -18,7 +18,7 @@ from django.contrib.sites.models import Site
 from explorer.explore.controller import Base as Controller
 import explorer.tasks
 import uuid
-from explorer.models import Item, GhDefinition
+from explorer.models import Item, GhDefinition, DefinitionParam
 from lfs.catalog.models import Product
 from lfs.catalog.settings import VARIANT
 from lfs.core.utils import LazyEncoder
@@ -28,7 +28,15 @@ from lfs.core.models import Shop
 logging.basicConfig(level=logging.INFO)
 
 def create(request, template_name="explorer/create.html"):
-    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+    start_product = request.GET.get('start_product', None)
+    product = Product.objects.get(slug=start_product)
+    if product.is_variant() == False:
+        logging.error('here')
+        gh_def = GhDefinition.objects.filter(product=product.id)[0]
+        logging.error(gh_def.file_name)
+        params = DefinitionParam.objects.filter(definition=gh_def).order_by('order')
+        
+    return render_to_response(template_name, RequestContext(request, {'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
 def inspirations(request, template_name="explorer/create.html"):
     return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
@@ -42,22 +50,24 @@ def designers(request, template_name="explorer/create.html"):
 def explore(request):
     cb = request.GET.get('callback','')
     model_types = request.GET.get('show_definitions', False)
-    param_index = request.GET.get('param_index', 0)
+    param_index = int(request.GET.get('param_index', 0)) 
     explore_type = request.GET.get('explore_type', 'explore')
     iterate_type = request.GET.get('iterate_type', 'linear')
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
     text = request.GET.get('text', 'naama')
+    logging.error(text)
     if text == "":
         text = 'naama'
-        
+    logging.error(text)
+      
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)
     if (start_product):
         product = Product.objects.get(slug=start_product)
         if product.is_variant() == False:
             gh_def = GhDefinition.objects.filter(product=product.id)[0]
-            items = controller.start_iterate(gh_def.id, text)
+            items = controller.start_iterate(gh_def.id, param_index, text)
             logging.error(gh_def.file_name)
         else:
             items = controller.explore_product(start_product, param_index, explore_type, iterate_type)

@@ -205,3 +205,9 @@
 	margin: 0px 10px 10px 0px;
 	float: left;
 }
+
+.jw-step BUTTON {
+	width:180px;
+	margin-right: 100px;
+	margin-top: 20px;
+}

@@ -1,3 +1,22 @@
+$.extend({
+  getUrlVars: function(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+    }
+    return vars;
+  },
+  getUrlVar: function(name){
+    return $.getUrlVars()[name];
+  }
+});
+$.fn.exists = function () {
+    return this.length !== 0;
+}
 ( function($) {
 	/**
 	 * @class The jWizard object will be fed into $.widget()
@@ -23,6 +42,7 @@
 
 		_exploreURL : '/explore',
 		_itemId : null,
+		_startProduct : null,
 		/**
 		 * @description Initializes jWizard
 		 * @return void
@@ -30,7 +50,8 @@
 		_create : function() {
 			this._buildSteps();
 			this._buildTitle();
-
+			this._startProduct = $.getUrlVar('start_product');
+			
 			if(this.options.menuEnable) {
 				this._buildMenu();
 			}
@@ -405,7 +426,10 @@
 		 */
 		_changeStep : function(nextStep, firstStep) {
 			var wizard = this, $steps = this.element.find(".jw-step"), $currentStep = $steps.eq(this._stepIndex);
-
+			
+			if ($('#create-param-text-input').length) {
+				this._userText = $('#create-param-text-input').val();
+			}
 			if( typeof nextStep === "number") {
 				if(nextStep < 0 || nextStep > ($steps.length - 1)) {
 					alert("Index " + nextStep + " Out of Range");
@@ -472,14 +496,17 @@
 		_getExploreParams: function() {
 			var $steps = this.element.find(".jw-step"), $currentStep = $steps.eq(this._stepIndex);
 			var paramIndex = $currentStep.data('paramIndex');
-			var params = {start_product: 'ring'};
+			
+			var params = {
+				param_index : paramIndex, 
+				text: this._userText,
+				explore_type: 'iterate'
+			};
 			if(this._itemId != null) {
-				params = {
-					item_id : this._itemId,
-					param_index : paramIndex,
-					explore_type : 'iterate'
-				};
-			} 
+				params['item_id'] = this._itemId;
+			} else {
+				params['start_product'] = this._startProduct;
+			}
 			return params;
 		},
 		/**

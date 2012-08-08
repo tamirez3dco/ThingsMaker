@@ -17,14 +17,16 @@
 
 {% block content %}
 	<div id="wizard">
+	{% if definition.accepts_text_params %}
     <div title="Add Text" id="create-param-text">
     	<div><p>Enter text to be part of your design</p></div>
-    	<div><input type="text"></div>
+    	<div><input type="text" id="create-param-text-input"></div>
     	<button id="text-next" type="button" class="ui-state-default ui-corner-all jw-button-next">Continue</button>
     </div>
-    <div title="Set basic shape" id="create-param-0"></div>
-    <div title="Set line width" id="create-param-1"></div>
-    <div title="Set line spaceing" id="create-param-2"></div>
-    <div title="Set material" id="create-param-material">images</div>
+    {% endif %}
+    {% for param in params %}
+    	<div title="Select {{ param.readable_name }}" id="create-param-{{ param.index }}"></div>
+    {% endfor %}
+    <div title="Select material" id="create-param-material">images</div>
 </div>
 {% endblock %}

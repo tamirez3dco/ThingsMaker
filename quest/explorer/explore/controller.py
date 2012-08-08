@@ -102,10 +102,11 @@ class Base:
         return items
     
     
-    def start_iterate(self, definition_id, text):
+    def start_iterate(self, definition_id, param_index, text):
+        logging.error(param_index)
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         self.definition = GhDefinition.objects.get(pk=definition_id) 
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, 0, 'iterate', 'linear', 'Default', 'naama'], countdown=0)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', 'Default', text], countdown=0)
         return self._make_result(uuids)
     
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
@@ -180,7 +181,9 @@ class Base:
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
                        
     def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
-        logging.warn(explore_type)
+        #logging.warn()
+        logging.error('pppp')
+        logging.error(param_index)
         children_params = None
         if root==None:
             if explore_type=='iterate':

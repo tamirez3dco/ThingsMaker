@@ -12,6 +12,8 @@ from lfs.catalog.settings import CONFIGURABLE_PRODUCT
 from lfs.catalog.settings import STANDARD_PRODUCT
 from lfs.catalog.settings import PRODUCT_WITH_VARIANTS
 from lfs.catalog.settings import PROPERTY_VALUE_TYPE_FILTER
+from lfs.catalog.settings import VARIANT
+
 
 # Load logger
 import logging
@@ -674,4 +676,8 @@ def calculate_real_amount(product, quantity):
 
 def get_all_products():
     products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS, active=True)
+    return products
+
+def get_products_by_name(name):
+    products = lfs.catalog.models.Product.objects.filter(sub_type = VARIANT, name=name, active=True)
     return products

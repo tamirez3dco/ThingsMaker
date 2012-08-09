@@ -454,9 +454,7 @@ def all_products(request, template_name="lfs/catalog/products.html"):
     return result
 
 def list_products_by_name(request, name, template_name="lfs/catalog/products/products_by_name.html"):
-    print ("name="+name)
     raw_products = lfs.catalog.utils.get_products_by_name(name)
-    print ("raw_products.length="+str(len(raw_products)))
     products = []
     for product in raw_products:
         products.append({

@@ -119,7 +119,8 @@ def get_recent_products(request):
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
                     "price": product.price,
-                    "product_url": "/product/" + product.slug})
+                    "product_url": "/product/" + product.slug,
+                    "slug" : product.slug})
     result = simplejson.dumps({
         "products": res
     }, cls=LazyEncoder)
@@ -134,8 +135,8 @@ def get_top_inspirations(request):
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
                     "price": product.price,
-                    "product_url": "/product/" + product.slug})
-        
+                    "product_url": "/product/" + product.slug,
+                    "slug" : product.slug})
     result = simplejson.dumps({
         "products": res
     }, cls=LazyEncoder)

@@ -37,13 +37,23 @@ function textSwitch() {
 	});
 }
 
+function hart_clicked(element)
+{
+	myslug = element.getAttribute("slug");
+	//products = Product.objects.get(slug=myslug);
+	console.log("hart_clicked on slug=" + myslug);
+	return false;
+}
+
+
 function getProductList(url, element) {
 	$.getJSON(url, function(data) {
 		var items = [];
 		for(var i = 0; i < data.products.length; i++) {
-			html = '<div class="home-product"><a href="' + data.products[i].product_url + '">'+
-				   '<img src="' + data.products[i].image_url + '" /></a>'+
-				   '<p class="home-product-name">'+ data.products[i].name +'</p>' + 
+			html = '<div class="home-product"><a class="home-product-pointer" href="' + data.products[i].product_url + '">'+
+				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" /></a>'+
+				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
+				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"></div>'+ 
 				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) +' <small>USD</small></p>' + 
 				   '</div>';
 			$(html, {
@@ -53,6 +63,7 @@ function getProductList(url, element) {
 		}
 	});	
 }
+
 
 $(function() {
 	getProductList('/explorer/get_top_inspirations', '#top-inspirations');

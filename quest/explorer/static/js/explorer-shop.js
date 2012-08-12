@@ -54,7 +54,7 @@ function getProductList(url, element) {
 				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" /></a>'+
 				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
 				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"></div>'+ 
-				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) +' <small>USD</small></p>' + 
+				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + 
 				   '</div>';
 			$(html, {
 				'class' : 'home-product-list',

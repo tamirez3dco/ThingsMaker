@@ -205,7 +205,9 @@
 	border-style:solid;
 	border-color: #ECECEC;
 }
-.home-product:hover .home-product-lovemeImage{visibility:visible}
+.home-product:hover .home-product-lovemeImage{
+	visibility:visible;
+	}
 
 
 .home-product-lovemeImage {
@@ -241,7 +243,7 @@
 
 
 .home-product-name {
-	width: 75px; 
+	width: 95px; 
 	height: 20px;
 	padding: 0px 0px 0px 4px;
 	margin: 0px;
@@ -250,7 +252,7 @@
 
 .home-product-price {
 	text-align:right;
-	width: 75px; 
+	width: 55px; 
 	height: 20px;
 	padding: 0px 4px 0px 0px;
 	float: right; 

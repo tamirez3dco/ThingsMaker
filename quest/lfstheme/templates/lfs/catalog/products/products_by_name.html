@@ -17,19 +17,20 @@
         </li>
     </ul>
 {% endblock %}
-
 {% block content %}
 	<div id="home-product-list">
 		{% for product in products %}
 			<div class="home-product">
-				<a href="{{ product.get_url }}">
-				<img src="{{ product.get_item_image }}">
-				<p class="home-product-name">
-        			{{ product.name }}
-    			</p>
-				<p class="home-product-price">
-        			{{ product.price }}
-    			</p>
+				<a class="home-product-pointer" href="{{ product.get_url }}">
+					<img class="home-product-mainImage" src="{{ product.get_item_image }}" alt="Product Image">
+					<p class="home-product-name">
+        				{{ product.name }}
+    				</p>
+					<div class="home-product-lovemeImage" slug="{{ product.slug }}" onclick="return hart_clicked(this)" alt="loveme"></div>
+					<p class="home-product-price">
+        				{{ product.get_price_formatted }} <small>USD</small>
+    				</p>
+    			</a>
 			</div>
 		{% endfor %}
 	</div>

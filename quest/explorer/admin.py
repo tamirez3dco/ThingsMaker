@@ -17,7 +17,7 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     product = forms.IntegerField()
     active = forms.BooleanField(initial=True, required=False)
     param_names = PickleField( max_length = 1000, required = True )
-    accepts_text_params = forms.BooleanField(initial=False,required=True)
+    accepts_text_params = forms.BooleanField(initial=False,required=False)
     
     
 class GhDefinitionAdmin(admin.ModelAdmin):

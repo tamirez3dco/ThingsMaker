@@ -457,18 +457,23 @@ $.fn.exists = function() {
 				this._disableButtons();
 				this._stepIndex = $steps.index(nextStep);
 				this._updateTitle(firstStep);
-
+				
+				if(nextStep.data('paramType') != 'text') {
+					nextStep.children(".create-image-container").html('');
+					wizard._loadImages(nextStep, this._stepIndex);
+				}
 				this._effect($currentStep, "step", "hide", "hide", function() {
+					//var a = 1;
 					if($currentStep.data('paramType') != 'text') {
 						$currentStep.children(".create-image-container").html('');
 					}
 					wizard._effect(nextStep, "step", "show", "show", function() {
 						wizard._enableButtons();
 						wizard._updateNavigation(firstStep);
-						if(nextStep.data('paramType') != 'text') {
-							nextStep.children(".create-image-container").html('');
-							wizard._loadImages(nextStep);
-						}
+						//if(nextStep.data('paramType') != 'text') {
+						//	nextStep.children(".create-image-container").html('');
+						//	wizard._loadImages(nextStep);
+						//}
 					});
 				});
 			} else {
@@ -494,27 +499,28 @@ $.fn.exists = function() {
 			}
 			img.src = imgsrc;
 		},
-		_loadImages : function(step) {
+		_loadImages : function(step, stepidx) {
 			var wizard = this;
 			var params = this._getExploreParams();
-
+			
 			$.getJSON(this._exploreURL, params, function(data) {
 				for(var i = 0; i < data.length; i++) {
-					var html = '<a id="explorer-ln-' + i + '" href="#"><div class="explorer-image" id="explorer-image-' + i + '"></div></a>';
+					var id = stepidx + '-' + i;
+					var html = '<a id="explorer-ln-' + id + '" href="#"><div class="explorer-image" id="explorer-image-' + id + '"></div></a>';
 					//$(html).appendTo(step);
 					//console.log(step);
 					//console.log(step.children(".create-image-container"));
 					step.children(".create-image-container").append(html);
-					$("#explorer-image-" + i).data('itemId', data[i].id);
-					$("#explorer-image-" + i).data('material', data[i].material);
-					$("#explorer-image-" + i).click(function() {
+					$("#explorer-image-" + id).data('itemId', data[i].id);
+					$("#explorer-image-" + id).data('material', data[i].material);
+					$("#explorer-image-" + id).click(function() {
 						wizard._itemId = $(this).data('itemId');
 						console.log(wizard._itemId);
 						wizard._material = $(this).data('material');
 						//wizard.nextStep();
 						wizard._imageClick();
 					});
-					wizard._waitImage(data[i].image_url, i, 'hi');
+					wizard._waitImage(data[i].image_url, id, 'hi');
 				}
 			});
 		},
@@ -969,8 +975,49 @@ $.fn.exists = function() {
 $(document).ready(function() {
 	$("#wizard").jWizard({
 		menuEnable : true,
-		next : function() {
-		}
+		effects : {
+			enable : true,
+			step : {
+				enable : true,
+				hide : {
+					type : "fade",
+					options : {
+					},
+					duration : 3000
+				},
+				show : {
+					type : "fade",
+					options : {
+					},
+					duration : 1000
+				}
+			},
+			title : {
+				enable : false,
+				hide : {
+					type : "slide",
+					duration : "fast"
+				},
+				show : {
+					type : "slide",
+					duration : "fast"
+				}
+			},
+			menu : {
+				enable : false,
+				change : {
+					type : "highlight",
+					duration : "fast"
+				}
+			},
+			counter : {
+				enable : false,
+				change : {
+					type : "highlight",
+					duration : "fast"
+				}
+			}
+		},
 	});
 	$('#text-next').click(function() {
 		$("#wizard").jWizard("nextStep");

@@ -95,11 +95,6 @@ def explore(request):
                 else:
                     items = controller.explore(item_id, param_index, explore_type, iterate_type, text)
         
-    to_json = {
-            "success": True,
-            "items": items
-    }
-    
     #jsonp = cb + "(" + simplejson.dumps(to_json) + ");"
     jsonp = simplejson.dumps(items)
     return HttpResponse(jsonp, mimetype='text/javascript')

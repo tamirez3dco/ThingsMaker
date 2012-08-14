@@ -39,12 +39,23 @@ function textSwitch() {
 
 function hart_clicked(element)
 {
+	// first increase the number in element
+	var currentNum = parseInt(element.innerText);
+	currentNum += 1;
+	element.innerHTML = "<small>"+currentNum +"<\small>";
+	
+	// next send the AJAX
 	myslug = element.getAttribute("slug");
-	//products = Product.objects.get(slug=myslug);
-	console.log("hart_clicked on slug=" + myslug);
+
+	$.post("/addlover", { 
+    item_uuid: myslug 
+	},
+    	function(data) {
+        /*	alert(data); */
+    	}
+	);
 	return false;
 }
-
 
 function getProductList(url, element) {
 	$.getJSON(url, function(data) {

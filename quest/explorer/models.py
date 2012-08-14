@@ -87,6 +87,7 @@ class Item(models.Model):
     uuid = models.CharField(max_length=100, null=True)
     parent_distance = models.CharField(max_length=20)
     material = models.CharField(max_length=20, default="Gold")
+    param_hash = models.CharField(max_length=100, null=True)
     
     
     def __unicode__(self):

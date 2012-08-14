@@ -18,7 +18,7 @@ class Base:
     """
     Explore parameter space
     """
-    def __init__(self, distance='medium', material='Default', page_size=None, explore_type='explore', textParam=''):
+    def __init__(self, distance='medium', material='Default', page_size=None, explore_type='iterate', textParam=''):
         self.distance = distance
         self.material = material
         self.text = textParam
@@ -103,12 +103,48 @@ class Base:
     
     
     def start_iterate(self, definition_id, param_index, text):
-        logging.error(param_index)
-        uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
+        #logging.error(param_index)
+        self.algo = Iterate(self.page_size, self.row_size)
+        #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         self.definition = GhDefinition.objects.get(pk=definition_id) 
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', self.definition.default_material.name, text], countdown=0)
-        return self._make_result(uuids, [self.definition.default_material.name for i in range(self.page_size)])
+       
+        params = self._get_children_params(self.definition, None, self.distance, param_index, 'iterate', 'linear')
+        materials = [self.definition.default_material.name for i in range(len(params))]
+        if self.definition.accepts_text_params == False:
+            text = ""
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, text)
+       
+        #explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', self.definition.default_material.name, text], countdown=0)
+        explorer.tasks.send_jobs_with_params.apply_async(args=[self.definition, todo_uuids, None, todo_params, self.distance, self.definition.default_material.name, self.page_size, 'iterate', text])
+        return self._make_result(all_uuids, materials)
     
+    def _get_cached_items(self, params, materials, text):
+        all_uuids = []
+        todo_uuids = []
+        todo_params = []
+        todo_materials = []
+        for p,m in zip(params, materials):
+            param_key = self._item_param_hash(p, m, text)
+            #logging.error(param_key)
+            cached = Item.objects.filter(param_hash = param_key)
+            #res = []
+            if len(cached)>0:
+                all_uuids.append(cached[0].uuid)
+                #logging.error("found %s %s" % (param_key, cached[0].uuid))
+            else:
+                new_uuid = str(uuid.uuid1())
+                todo_uuids.append(new_uuid)
+                todo_materials.append(m)
+                todo_params.append(p)
+                all_uuids.append(new_uuid)
+                
+        logging.error("all %s, todo %s" % (len(materials), len(todo_uuids)))
+        return (all_uuids, todo_uuids, todo_params, todo_materials) 
+    
+    def _item_param_hash(self, params, material, text):
+        p = "".join(map(lambda x: ("%.2f" %  x)[2:], params)) + material + text
+        return p
+        
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
         #text = "ZOHAR"
         logging.error(item_id)
@@ -117,6 +153,8 @@ class Base:
         self.definition = self.root.definition
         self.explore_type = explore_type
         self.iterate_type = iterate_type
+        if self.definition.accepts_text_params == False:
+            text = ""
         self.text = text
         if self.deep:
             return self._explore_deep()
@@ -140,11 +178,16 @@ class Base:
         self.renderer.request_images_async(jobs) 
          
     def _explore(self):
-        uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
+        #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
+        params = self._get_children_params(self.definition, self.root, self.distance, self.param_index, self.explore_type, self.iterate_type)
+        materials = [self.material for i in range(len(params))]
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, self.text)
+        #explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
+        explorer.tasks.send_jobs_with_params.apply_async(args=[self.definition, todo_uuids, self.root, todo_params, self.distance, self.material, self.page_size, 'iterate', self.text])
+        
         self.root.selected=True
         self.root.save()
-        return self._make_result(uuids, [self.material for i in range(self.page_size)])
+        return self._make_result(all_uuids, materials)
         
     def render_materials(self, materials, parent_id, definition_id, text):
         if parent_id == None:
@@ -155,15 +198,25 @@ class Base:
             definition = root.definition
             text = root.textParam
             
+        if definition.accepts_text_params == False:
+            text = ""    
+            
         self.iterate_type = 'linear'
         self.explore_type = 'iterate'
         
-        uuids = map(lambda x: str(uuid.uuid1()), range(len(materials)))
+        #uuids = map(lambda x: str(uuid.uuid1()), range(len(materials)))
        
-        for i in range(len(materials)):
-            explorer.tasks.send_jobs.apply_async(args=[definition, [uuids[i]], root, 1, self.distance, 1, -1, 'noop', self.iterate_type, materials[i], text], countdown=0)
+        params = self._get_children_params(definition, root, self.distance, -1, 'noop', 'linear') 
+        params = [params[0] for i in materials]
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, text)
+        for i in range(len(todo_materials)):
+            explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
+       
+       
+        #for i in range(len(materials)):
+        #    explorer.tasks.send_jobs.apply_async(args=[definition, [uuids[i]], root, 1, self.distance, 1, -1, 'noop', self.iterate_type, materials[i], text], countdown=0)
         
-        return self._make_result(uuids, materials)
+        return self._make_result(all_uuids, materials)
     
     
     def _explore_deep(self):
@@ -201,9 +254,7 @@ class Base:
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
     
-    #def _get_children_params(self, explore_type, ):
-                           
-    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
+    def _get_children_params(self, definition, root, distance, param_index, explore_type, iterate_type ):
         children_params = None
         if explore_type == 'noop':
             if root==None:
@@ -220,10 +271,15 @@ class Base:
             else:
                 children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
            
+        return children_params     
+    #def _get
+                      
+    def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
+        children_params = self._get_children_params(definition, root, distance, param_index, explore_type, iterate_type)
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []
         for p in perm:
-            logging.warn(str(p))
+            #logging.warn(str(p))
             jobs.append(self._prepare_job(definition, uuids[p], children_params[p], text, "Render", self.material)) 
         self.renderer.request_images(jobs)  
         
@@ -231,6 +287,16 @@ class Base:
             self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material, text)
     
     
+    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text):
+        jobs = []
+        for i in range(len(uuids)):
+            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material))
+        
+        self.renderer.request_images(jobs)  
+        
+        for i in range(len(uuids)):
+            self._save_item(root, definition, children_params[i], True, uuids[i], distance, self.material, text)
+        
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
@@ -263,7 +329,9 @@ class Base:
 
     def _save_item(self, parent, definition, params, sent, item_uuid, distance, material, textParam):
         price = 172
-        db_item = Item(price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params, textParam=textParam)
+        
+        param_hash = self._item_param_hash(params, material, textParam)
+        db_item = Item(param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
         #db_item.set_params(params)
         return db_item
@@ -278,6 +346,7 @@ class Base:
         old_obj.save()
         return old_obj
     
+
 class Remember(Base):
     def stam(self):
         pass

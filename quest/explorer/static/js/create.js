@@ -457,7 +457,7 @@ $.fn.exists = function() {
 				this._disableButtons();
 				this._stepIndex = $steps.index(nextStep);
 				this._updateTitle(firstStep);
-				
+
 				if(nextStep.data('paramType') != 'text') {
 					nextStep.children(".create-image-container").html('');
 					wizard._loadImages(nextStep, this._stepIndex);
@@ -502,7 +502,7 @@ $.fn.exists = function() {
 		_loadImages : function(step, stepidx) {
 			var wizard = this;
 			var params = this._getExploreParams();
-			
+
 			$.getJSON(this._exploreURL, params, function(data) {
 				for(var i = 0; i < data.length; i++) {
 					var id = stepidx + '-' + i;
@@ -563,14 +563,14 @@ $.fn.exists = function() {
 			}
 		},
 		_onLastStep : function() {
-			var url = '/explorer/add_product_variant';
+			/*var url = '/explorer/add_product_variant';
 			var params = {
 				item_uuid : this._itemId
 			};
 			var wizard = this;
 			$.getJSON(url, params, function(data) {
 				//window.location = '/product/' + wizard._itemId + "?waitImages=true"
-			});
+			});*/
 			$("#create-finish-dialog").dialog('open');
 			//this.changeStep(1);
 		},
@@ -595,16 +595,15 @@ $.fn.exists = function() {
 			});
 		},
 		makeIt : function() {
-			/*console.log(this._itemId);
-			 var url = '/explorer/add_product_variant';
-			 var params = {
-			 item_uuid : this._itemId
-			 };
-			 var wizard = this;
-			 $.getJSON(url, params, function(data) {
-			 */
-			window.location = '/product/' + this._itemId + "?waitImages=true"
-			//});
+			//console.log(this._itemId);
+			var url = '/explorer/add_product_variant';
+			var params = {
+				item_uuid : this._itemId
+			};
+			var wizard = this;
+			$.getJSON(url, params, function(data) {
+				window.location = '/product/' + this._itemId + "?waitImages=true"
+			});
 		},
 		/**
 		 * @private
@@ -983,7 +982,7 @@ $(document).ready(function() {
 					type : "fade",
 					options : {
 					},
-					duration : 3000
+					duration : 2000
 				},
 				show : {
 					type : "fade",

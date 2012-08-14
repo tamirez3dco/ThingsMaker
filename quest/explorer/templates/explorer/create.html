@@ -16,17 +16,28 @@
 {% endblock %}
 
 {% block content %}
-	<div id="wizard">
+<div id="wizard">
 	{% if definition.accepts_text_params %}
     <div title="Add Text" id="create-param-text">
     	<div><p>Enter text to be part of your design</p></div>
-    	<div><input type="text" id="create-param-text-input"></div>
-    	<button id="text-next" type="button" class="ui-state-default ui-corner-all jw-button-next">Continue</button>
-    </div>
+    	<div><input type="text" id="create-param-text-input" value="MAMI"></div>
+    	<a class="button" href="#" id="text-next">
+	          {% trans 'Continue' %}
+	    </a>
+    	</div>
     {% endif %}
+    <div title="Select material" id="create-param-material">
+    	<div class="create-image-container"></div>		
+    </div>
     {% for param in params %}
-    	<div title="Select {{ param.readable_name }}" id="create-param-{{ param.index }}"></div>
+    	<div title="Select {{ param.readable_name }}" id="create-param-{{ param.index }}">
+    		<div class="create-image-container"></div>
+    	</div>
     {% endfor %}
-    <div title="Select material" id="create-param-material">images</div>
+</div>
+<div id="create-finish-dialog">
+	<h1>Your new name pendant is ready</h1>
+	<button type="button" class="button left" id="create-show-details">Show Details</input>
+	<button type="button" class="button left" id="create-continue-creating">Continue Creating</input>
 </div>
 {% endblock %}

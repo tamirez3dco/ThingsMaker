@@ -964,6 +964,9 @@ class Product(models.Model):
         except IndexError:
             return None
 
+    def get_default_material(self):
+        pass
+    
     def get_item_material(self):
         try:
             item = Item.objects.filter(uuid=self.slug)[0]

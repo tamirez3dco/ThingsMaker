@@ -40,7 +40,7 @@ class Base:
             self.algo = Explore(self.page_size, self.row_size)
         if explore_type == 'axis':
             self.algo = Axis(self.page_size, self.row_size)
-        if explore_type == 'iterate':
+        if explore_type == 'iterate' or explore_type == 'noop':
             self.algo = Iterate(self.page_size, self.row_size)
         
 #    def get_definitions(self):
@@ -106,11 +106,12 @@ class Base:
         logging.error(param_index)
         uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         self.definition = GhDefinition.objects.get(pk=definition_id) 
-        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', 'Default', text], countdown=0)
-        return self._make_result(uuids)
+        explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', self.definition.default_material.name, text], countdown=0)
+        return self._make_result(uuids, [self.definition.default_material.name for i in range(self.page_size)])
     
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
         #text = "ZOHAR"
+        logging.error(item_id)
         self.root = Item.objects.get(uuid=item_id)
         self.param_index = int(param_index)
         self.definition = self.root.definition
@@ -143,8 +144,28 @@ class Base:
         explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
         self.root.selected=True
         self.root.save()
-        return self._make_result(uuids)
+        return self._make_result(uuids, [self.material for i in range(self.page_size)])
         
+    def render_materials(self, materials, parent_id, definition_id, text):
+        if parent_id == None:
+            root = None
+            definition = GhDefinition.objects.get(pk=definition_id) 
+        else:
+            root = Item.objects.get(uuid=parent_id)
+            definition = root.definition
+            text = root.textParam
+            
+        self.iterate_type = 'linear'
+        self.explore_type = 'iterate'
+        
+        uuids = map(lambda x: str(uuid.uuid1()), range(len(materials)))
+       
+        for i in range(len(materials)):
+            explorer.tasks.send_jobs.apply_async(args=[definition, [uuids[i]], root, 1, self.distance, 1, -1, 'noop', self.iterate_type, materials[i], text], countdown=0)
+        
+        return self._make_result(uuids, materials)
+    
+    
     def _explore_deep(self):
         children = None
         for i in range(100):
@@ -162,7 +183,7 @@ class Base:
         self.root.save()
         
         uuids = map(lambda x: x.uuid, children)
-        return self._make_result(uuids)
+        return self._make_result(uuids, [self.material for i in range(self.page_size)])
     
     def _send_missing_jobs(self, items):
         jobs=[]
@@ -179,21 +200,26 @@ class Base:
             for distance in self.distances.keys():
                 uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
-                       
+    
+    #def _get_children_params(self, explore_type, ):
+                           
     def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
-        #logging.warn()
-        logging.error('pppp')
-        logging.error(param_index)
         children_params = None
-        if root==None:
-            if explore_type=='iterate':
+        if explore_type == 'noop':
+            if root==None:
                 children_params = self.algo.get_initial_page_params(len(definition.param_names), param_index)
             else:
-                children_params = self.algo.get_random_page_params(len(definition.param_names))
-        
+                children_params = [root.params]
         else:
-            children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
-       
+            if root==None:
+                if explore_type=='iterate':
+                    children_params = self.algo.get_initial_page_params(len(definition.param_names), param_index)
+                else:
+                    children_params = self.algo.get_random_page_params(len(definition.param_names))
+            
+            else:
+                children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
+           
         perm = random.sample(range(len(uuids)), n_jobs)
         jobs = []
         for p in perm:
@@ -227,10 +253,10 @@ class Base:
         job['view_name'] = view_name
         return job
     
-    def _make_result(self, uuids):
+    def _make_result(self, uuids, materials):
         def do(x):
-            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1]}
-        return map(do, zip(uuids, range(len(uuids))))
+            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1], "material": x[2]}
+        return map(do, zip(uuids, range(len(uuids)), materials))
         
     def _prepare_result_item(self, item, index):
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}

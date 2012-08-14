@@ -22,10 +22,10 @@
         			{{ product.get_description|safe}}
     			</p>
     			<div class="buttons">
-	    			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
+	    			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_default_material }}&textParam={{ product.get_item_textParam }}">
 	           			{% trans 'Make yours' %}
 	       			</a>
-	       			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
+	       			<a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_default_material }}&textParam={{ product.get_item_textParam }}">
 	           			{% trans 'See what others made' %}
 	       			</a>
        			</div>

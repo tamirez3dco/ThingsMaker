@@ -67,14 +67,17 @@ def explore(request):
         product = Product.objects.get(slug=start_product)
         if product.is_variant() == False:
             gh_def = GhDefinition.objects.filter(product=product.id)[0]
-            items = controller.start_iterate(gh_def.id, param_index, text)
+            if material == 'Available':
+                items = controller.render_materials(['Gold', 'Silver'], None, gh_def.id, text)
+            else:
+                items = controller.start_iterate(gh_def.id, param_index, text)
             logging.error(gh_def.file_name)
         else:
             items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
     
     else:   
         if (model_types):
-            explorer.tasks.wakeup_servers.delay(True)
+            #explorer.tasks.wakeup_servers.delay(True)
             items = controller.get_definitions() 
             
         else:
@@ -87,7 +90,10 @@ def explore(request):
                 logging.info('Completed: '+ str(end-start))
             else:
                 item_id = request.GET.get('item_id','')
-                items = controller.explore(item_id, param_index, explore_type, iterate_type, text)
+                if material == 'Available':
+                    items = controller.render_materials(['Gold', 'Silver'], item_id, None, text)
+                else:
+                    items = controller.explore(item_id, param_index, explore_type, iterate_type, text)
         
     to_json = {
             "success": True,
@@ -99,7 +105,8 @@ def explore(request):
     return HttpResponse(jsonp, mimetype='text/javascript')
 
 def add_product_variant(request):
-    item_uuid = request.POST.get('item_uuid','')
+    item_uuid = request.GET.get('item_uuid','')
+    logging.error(item_uuid)
     item = Item.objects.get(uuid=item_uuid)
     controller = Controller(request.GET.get('distance', 'medium'))
     controller.item_to_product(item);

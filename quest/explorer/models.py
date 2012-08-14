@@ -44,6 +44,9 @@ class PickledObjectField(models.Field):
             raise TypeError('Lookup type %s is not supported.' % lookup_type)
 
 add_introspection_rules([], ["^explorer\.models\.PickledObjectField"])
+class Material(models.Model):
+    name = models.CharField(max_length=100)
+    readable_name = models.CharField(max_length=200)
 
 class GhDefinition(models.Model):
     id = models.AutoField(primary_key=True)
@@ -53,9 +56,14 @@ class GhDefinition(models.Model):
     scene_file = models.CharField(max_length=100)
     product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False)
+    default_material = models.ForeignKey(Material)
     
     def __unicode__(self):
         return self.file_name
+
+class DefinitionMaterial(models.Model):
+    definition = models.ForeignKey(GhDefinition)
+    material = models.ForeignKey(Material)
     
 class DefinitionParam(models.Model):
     name = models.CharField(max_length=100)

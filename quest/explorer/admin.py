@@ -1,4 +1,4 @@
-from explorer.models import Item, GhDefinition, ExplorerConfig, AppData, DefinitionParam
+from explorer.models import Item, GhDefinition, ExplorerConfig, AppData, DefinitionParam, Material, DefinitionMaterial
 from django.contrib import admin
 from django import forms
 import cPickle as pickle
@@ -18,10 +18,11 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     active = forms.BooleanField(initial=True, required=False)
     param_names = PickleField( max_length = 1000, required = True )
     accepts_text_params = forms.BooleanField(initial=False,required=True)
+    default_material = forms.ModelChoiceField(Material.objects.all())
     
     
 class GhDefinitionAdmin(admin.ModelAdmin):
-    fields = ('file_name','scene_file','product','active','param_names','accepts_text_params')
+    fields = ('file_name','scene_file','product','active','param_names','accepts_text_params', 'default_material')
     form = GhDefinitionAdminForm
 #    def save_model(self, request, obj, form, change):
 #        obj.file_name = form.cleaned_data['file_name']
@@ -34,3 +35,5 @@ admin.site.register(Item)
 admin.site.register(ExplorerConfig)
 admin.site.register(AppData)
 admin.site.register(DefinitionParam)
+admin.site.register(Material)
+admin.site.register(DefinitionMaterial)

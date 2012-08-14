@@ -1,23 +1,21 @@
 $.extend({
-  getUrlVars: function(){
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-      hash = hashes[i].split('=');
-      vars.push(hash[0]);
-      vars[hash[0]] = hash[1];
-    }
-    return vars;
-  },
-  getUrlVar: function(name){
-    return $.getUrlVars()[name];
-  }
+	getUrlVars : function() {
+		var vars = [], hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++) {
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	},
+	getUrlVar : function(name) {
+		return $.getUrlVars()[name];
+	}
 });
-$.fn.exists = function () {
-    return this.length !== 0;
-}
-( function($) {
+$.fn.exists = function() {
+	return this.length !== 0;
+}( function($) {
 	/**
 	 * @class The jWizard object will be fed into $.widget()
 	 */
@@ -51,7 +49,8 @@ $.fn.exists = function () {
 			this._buildSteps();
 			this._buildTitle();
 			this._startProduct = $.getUrlVar('start_product');
-			
+			this._buildDialog();
+
 			if(this.options.menuEnable) {
 				this._buildMenu();
 			}
@@ -383,9 +382,13 @@ $.fn.exists = function () {
 		 */
 		_buildSteps : function() {
 			var $steps = this.element.children("div, fieldset");
-			$steps.each(function(index,element){
-				var paramIndex = parseInt(element.id.replace('create-param-',''), 10);
-				if(!isNaN(paramIndex)){
+			$steps.each(function(index, element) {
+				var param = element.id.replace('create-param-', '');
+				var paramIndex = parseInt(param, 10);
+				if(isNaN(paramIndex)) {
+					$(element).data('paramType', param);
+				} else {
+					$(element).data('paramType', 'model');
 					$(element).data('paramIndex', paramIndex);
 				}
 			});
@@ -426,11 +429,18 @@ $.fn.exists = function () {
 		 */
 		_changeStep : function(nextStep, firstStep) {
 			var wizard = this, $steps = this.element.find(".jw-step"), $currentStep = $steps.eq(this._stepIndex);
-			
-			if ($('#create-param-text-input').length) {
+
+			if($('#create-param-text-input').length) {
 				this._userText = $('#create-param-text-input').val();
 			}
+
 			if( typeof nextStep === "number") {
+				/*if(nextStep == $steps.length) {
+				 this._onLastStep();
+				 //nextStep = 1;
+
+				 }*/
+
 				if(nextStep < 0 || nextStep > ($steps.length - 1)) {
 					alert("Index " + nextStep + " Out of Range");
 					return false;
@@ -449,18 +459,26 @@ $.fn.exists = function () {
 				this._updateTitle(firstStep);
 
 				this._effect($currentStep, "step", "hide", "hide", function() {
-					$currentStep.html('');
+					if($currentStep.data('paramType') != 'text') {
+						$currentStep.children(".create-image-container").html('');
+					}
 					wizard._effect(nextStep, "step", "show", "show", function() {
 						wizard._enableButtons();
 						wizard._updateNavigation(firstStep);
-						$(nextStep).html('');
-						wizard._loadImages(nextStep);
+						if(nextStep.data('paramType') != 'text') {
+							nextStep.children(".create-image-container").html('');
+							wizard._loadImages(nextStep);
+						}
 					});
 				});
 			} else {
 				this._stepIndex = $steps.index(nextStep);
 				this._updateTitle(firstStep);
 				this._updateNavigation(firstStep);
+				if(nextStep.data('paramType') != 'text') {
+					nextStep.children(".create-image-container").html('');
+					wizard._loadImages(nextStep);
+				}
 			}
 		},
 		_waitImage : function(imgsrc, imageId, imageTitle) {
@@ -479,35 +497,108 @@ $.fn.exists = function () {
 		_loadImages : function(step) {
 			var wizard = this;
 			var params = this._getExploreParams();
-			
+
 			$.getJSON(this._exploreURL, params, function(data) {
 				for(var i = 0; i < data.length; i++) {
 					var html = '<a id="explorer-ln-' + i + '" href="#"><div class="explorer-image" id="explorer-image-' + i + '"></div></a>';
-					$(html).appendTo(step);
+					//$(html).appendTo(step);
+					//console.log(step);
+					//console.log(step.children(".create-image-container"));
+					step.children(".create-image-container").append(html);
 					$("#explorer-image-" + i).data('itemId', data[i].id);
+					$("#explorer-image-" + i).data('material', data[i].material);
 					$("#explorer-image-" + i).click(function() {
-						wizard._itemId = $(this).data('itemId'); 
-						wizard.nextStep();
+						wizard._itemId = $(this).data('itemId');
+						console.log(wizard._itemId);
+						wizard._material = $(this).data('material');
+						//wizard.nextStep();
+						wizard._imageClick();
 					});
 					wizard._waitImage(data[i].image_url, i, 'hi');
 				}
 			});
 		},
-		_getExploreParams: function() {
+		_getExploreParams : function() {
 			var $steps = this.element.find(".jw-step"), $currentStep = $steps.eq(this._stepIndex);
-			var paramIndex = $currentStep.data('paramIndex');
-			
+
+			var paramType = $currentStep.data('paramType');
+			var paramIndex = 0;
+
+			if(paramType == 'model') {
+				paramIndex = $currentStep.data('paramIndex');
+			}
+
 			var params = {
-				param_index : paramIndex, 
-				text: this._userText,
-				explore_type: 'iterate'
+				param_index : paramIndex,
+				text : this._userText,
+				explore_type : 'iterate'
 			};
 			if(this._itemId != null) {
 				params['item_id'] = this._itemId;
+				if(paramType == 'material') {
+					params['material'] = 'Available'
+				} else {
+					params['material'] = this._material;
+				}
 			} else {
+				if(paramType == 'material') {
+					params['material'] = 'Available'
+				}
 				params['start_product'] = this._startProduct;
 			}
 			return params;
+		},
+		_imageClick : function() {
+			var $steps = this.element.find(".jw-step")
+			if(this._stepIndex == $steps.length - 1) {
+				this._onLastStep();
+			} else {
+				this.nextStep();
+			}
+		},
+		_onLastStep : function() {
+			var url = '/explorer/add_product_variant';
+			var params = {
+				item_uuid : this._itemId
+			};
+			var wizard = this;
+			$.getJSON(url, params, function(data) {
+				//window.location = '/product/' + wizard._itemId + "?waitImages=true"
+			});
+			$("#create-finish-dialog").dialog('open');
+			//this.changeStep(1);
+		},
+		_buildDialog : function() {
+			var wizard = this;
+			$("#create-finish-dialog").dialog({
+				autoOpen : false,
+				width : 380,
+				height : 110,
+				//position: [300, 300],
+				resizable : false,
+				modal : true,
+				//dialogClass: 'alert'
+			});
+			$("#create-continue-creating").click(function() {
+				wizard.changeStep(1);
+				$("#create-finish-dialog").dialog('close');
+			});
+			$("#create-show-details").click(function() {
+				wizard.makeIt();
+				$("#create-finish-dialog").dialog('close');
+			});
+		},
+		makeIt : function() {
+			/*console.log(this._itemId);
+			 var url = '/explorer/add_product_variant';
+			 var params = {
+			 item_uuid : this._itemId
+			 };
+			 var wizard = this;
+			 $.getJSON(url, params, function(data) {
+			 */
+			window.location = '/product/' + this._itemId + "?waitImages=true"
+			//});
 		},
 		/**
 		 * @private

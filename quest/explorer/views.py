@@ -99,6 +99,17 @@ def explore(request):
     jsonp = simplejson.dumps(items)
     return HttpResponse(jsonp, mimetype='text/javascript')
 
+def add_lover_to_product(request):
+    item_uuid = request.POST.get('item_uuid','')
+    item = Item.objects.get(uuid=item_uuid)
+    product = Product.objects.get(slug=item_uuid)
+    product.increase_product_lovers()
+    result = simplejson.dumps({
+        "html": "Hi",
+        "message": "Hi",
+    }, cls=LazyEncoder)
+    return HttpResponse(result)
+
 def add_product_variant(request):
     item_uuid = request.GET.get('item_uuid','')
     logging.error(item_uuid)

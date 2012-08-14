@@ -216,10 +216,12 @@
 	width: 25px; 
 	height: 25px;
 	top : -30px;
-	left : -90px; 
+	left : -120px; 
 	visibility: hidden;
 	background-image: url("/static/images/Hart_fainted.png");
-	/*src : "static/images/Hart_fainted.png";*/
+	text-align:center;
+	line-height:25px;
+	color:white;
 }
 
 .home-product-lovemeImage:hover {background-image: url("/static/images/Hart.png");}

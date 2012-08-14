@@ -36,7 +36,7 @@ def create(request, template_name="explorer/create.html"):
         logging.error(gh_def.file_name)
         params = DefinitionParam.objects.filter(definition=gh_def).order_by('order')
         
-    return render_to_response(template_name, RequestContext(request, {'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+    return render_to_response(template_name, RequestContext(request, {'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
 def inspirations(request, template_name="explorer/create.html"):
     return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))

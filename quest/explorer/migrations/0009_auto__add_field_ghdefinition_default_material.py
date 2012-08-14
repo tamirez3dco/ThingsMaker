@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'GhDefinition.default_material'
-        db.add_column('explorer_ghdefinition', 'default_material', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['explorer.Material']), keep_default=False)
+        db.add_column('explorer_ghdefinition', 'default_material', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['explorer.Material']), keep_default=False)
 
 
     def backwards(self, orm):

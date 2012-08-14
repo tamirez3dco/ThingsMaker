@@ -95,8 +95,8 @@
 }
 /* jWizard-specific configuration */
 .jw-widget {
-	margin-left: 98px;
-	margin-right: 98px;
+	margin-left: 68px;
+	margin-right: 68px;
 	overflow: hidden;
 }
 .jw-header {
@@ -119,8 +119,8 @@
 	border-color: #ECECEC;
 }
 .jw-menu-wrap {
-	width: 12em;
-	margin-right: -12em;
+	width: 16em;
+	margin-right: -16em;
 	float: left;
 }
 .jw-menu {
@@ -137,11 +137,11 @@
 	cursor: pointer;
 }
 .jw-hasmenu .jw-steps-wrap {
-	margin-left: 12em;
+	margin-left: 16em;
 }
 .jw-steps-wrap {
 	height: 30em;
-	width: 44em;
+	width: 48em;
 	overflow: auto;
 	padding: 0em 1.5em;
 }

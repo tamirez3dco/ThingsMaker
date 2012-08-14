@@ -1,0 +1,37 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+
+{% block head %}
+    {% if shop.get_meta_keywords %}
+        <meta name="keywords" content="{{ shop.get_meta_keywords }}" />
+    {% endif %}
+    {% if shop.get_meta_description %}
+        <meta name="description" content="{{ shop.get_meta_description }}" />
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            {% trans 'Products' %}
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}
+	<div id="home-product-list">
+		{% for product in products %}
+			<div class="home-product">
+				<a class="home-product-pointer" href="{{ product.get_url }}">
+					<img class="home-product-mainImage" src="{{ product.get_item_image }}" alt="Product Image">
+					<p class="home-product-name">
+        				{{ product.name }}
+    				</p>
+					<div class="home-product-lovemeImage" slug="{{ product.slug }}" onclick="return hart_clicked(this)" alt="loveme"></div>
+					<p class="home-product-price">
+        				{{ product.get_price_formatted }}
+    				</p>
+    			</a>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

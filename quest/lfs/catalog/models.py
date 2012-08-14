@@ -981,6 +981,9 @@ class Product(models.Model):
         except IndexError:
             return None
 
+    def get_price_formatted(self):
+        return "$"+"{0:.2f}".format(self.price)
+
 
     def get_item_image(self):
         try:
@@ -989,6 +992,8 @@ class Product(models.Model):
         except IndexError:
             return None
     
+    def get_url(self):
+        return "/product/" + self.slug
     
     def get_item_large_image(self):
         url = self.get_item_image()

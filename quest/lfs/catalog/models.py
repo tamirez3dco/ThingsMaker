@@ -995,6 +995,15 @@ class Product(models.Model):
     def get_url(self):
         return "/product/" + self.slug
     
+    def get_product_lovers(self):
+        floatVal = self.stock_amount
+        intVal = int(floatVal)
+        return intVal
+        
+    def increase_product_lovers(self):
+        self.stock_amount += 1
+        self.save()
+    
     def get_item_large_image(self):
         url = self.get_item_image()
         return url.replace('.jpg', '_Render.jpg')

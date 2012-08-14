@@ -10,6 +10,10 @@
     {% endif %}
 {% endblock %}
 
+{% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/explorer-shop.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %}
     <ul class="breadcrumbs">
         <li>
@@ -17,6 +21,7 @@
         </li>
     </ul>
 {% endblock %}
+
 {% block content %}
 	<div id="home-product-list">
 		{% for product in products %}
@@ -26,7 +31,7 @@
 					<p class="home-product-name">
         				{{ product.name }}
     				</p>
-					<div class="home-product-lovemeImage" slug="{{ product.slug }}" onclick="return hart_clicked(this)" alt="loveme"></div>
+					<div class="home-product-lovemeImage" slug="{{ product.slug }}" onclick="return hart_clicked(this)" alt="loveme"><small>{{ product.get_product_lovers }}</small></div>
 					<p class="home-product-price">
         				{{ product.get_price_formatted }}
     				</p>

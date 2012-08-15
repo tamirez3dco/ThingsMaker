@@ -508,7 +508,7 @@ $.fn.exists = function() {
 		},
 		_showImages : function(){
 			var wizard = this;
-			wizard._showNextImage = true;
+			//wizard._showNextImage = true;
 			wizard._showImagesTask = setInterval(function(){
 				console.log('showImagesTask');
 				if (wizard._showNextImage!=true) return;
@@ -530,7 +530,7 @@ $.fn.exists = function() {
 				if (done==$('.explorer-image').size()) {
 					clearInterval(wizard._showImagesTask);
 				}
-			}, 200);
+			}, 100);
 		},
 		_loadImages : function(step, stepidx) {
 			var wizard = this;
@@ -555,6 +555,8 @@ $.fn.exists = function() {
 					});
 					wizard._waitImage(data[i].image_url, id, 'hi', 0);
 				}
+				wizard._showNextImage = true;
+				//wizard._showImages();
 			});
 		},
 		_getExploreParams : function() {

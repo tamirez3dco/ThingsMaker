@@ -41,6 +41,7 @@ $.fn.exists = function() {
 		_exploreURL : '/explore',
 		_itemId : null,
 		_startProduct : null,
+		_stepAfterLast: 0,
 		/**
 		 * @description Initializes jWizard
 		 * @return void
@@ -382,8 +383,12 @@ $.fn.exists = function() {
 		 */
 		_buildSteps : function() {
 			var $steps = this.element.children("div, fieldset");
+			var afterLast = 0;
 			$steps.each(function(index, element) {
 				var param = element.id.replace('create-param-', '');
+				if (param == 'text') {
+					afterLast = 1;
+				}
 				var paramIndex = parseInt(param, 10);
 				if(isNaN(paramIndex)) {
 					$(element).data('paramType', param);
@@ -392,6 +397,7 @@ $.fn.exists = function() {
 					$(element).data('paramIndex', paramIndex);
 				}
 			});
+			this._stepAfterLast = afterLast;
 			this._stepCount = $steps.length;
 
 			$steps.addClass("jw-step").each(function(x) {
@@ -495,7 +501,8 @@ $.fn.exists = function() {
 			}
 			img.onload = function(evt) {
 				//console.log(this.src + " is loaded.");
-				$("#explorer-image-" + imageId).append(img);
+				$("#explorer-image-" + imageId).prepend(img);
+				$("#explorer-image-" + imageId).css({visibility: "visible"});
 			}
 			img.src = imgsrc;
 		},
@@ -506,7 +513,7 @@ $.fn.exists = function() {
 			$.getJSON(this._exploreURL, params, function(data) {
 				for(var i = 0; i < data.length; i++) {
 					var id = stepidx + '-' + i;
-					var html = '<a id="explorer-ln-' + id + '" href="#"><div class="explorer-image" id="explorer-image-' + id + '"></div></a>';
+					var html = '<a id="explorer-ln-' + id + '" href="#"><div class="explorer-image" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></a>';
 					//$(html).appendTo(step);
 					//console.log(step);
 					//console.log(step.children(".create-image-container"));
@@ -590,7 +597,7 @@ $.fn.exists = function() {
 				//dialogClass: 'alert'
 			});
 			$("#create-continue-creating").click(function() {
-				wizard.changeStep(1);
+				wizard.changeStep(wizard._stepAfterLast);
 				$("#create-finish-dialog").dialog('close');
 			});
 			$("#create-show-details").click(function() {

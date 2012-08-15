@@ -219,19 +219,34 @@
 	width: 93px;
 }
 
+.jw-step BUTTON {
+	width:180px;
+	margin-right: 100px;
+	margin-top: 20px;
+}
 .explorer-image {
+	visibility: hidden;
+	position: relative;
 	width:180px;
 	height:180px;
 	margin: 0px 10px 10px 0px;
 	float: left;
 }
 
-.jw-step BUTTON {
-	width:180px;
-	margin-right: 100px;
-	margin-top: 20px;
+.explorer-image-button {
+	visibility: hidden;
+	position: absolute;
+}
+.explorer-image button {
+	left: -6px;
+	top: 133px;
+	width: 80px;
 }
 
+.explorer-image:hover .explorer-image-button {
+	visibility:visible;
+}
+	
 #create-param-text A {
 	text-align: center;
 	width:180px;

@@ -602,7 +602,7 @@ $.fn.exists = function() {
 			};
 			var wizard = this;
 			$.getJSON(url, params, function(data) {
-				window.location = '/product/' + this._itemId + "?waitImages=true"
+				window.location = '/product/' + wizard._itemId + "?waitImages=true"
 			});
 		},
 		/**

@@ -112,13 +112,13 @@ class Base:
         materials = [self.definition.default_material.name for i in range(len(params))]
         if self.definition.accepts_text_params == False:
             text = ""
-        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, text)
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(self.definition, params, materials, text)
        
         #explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, None, self.page_size, self.distance, self.page_size, param_index, 'iterate', 'linear', self.definition.default_material.name, text], countdown=0)
         explorer.tasks.send_jobs_with_params.apply_async(args=[self.definition, todo_uuids, None, todo_params, self.distance, self.definition.default_material.name, self.page_size, 'iterate', text])
         return self._make_result(all_uuids, materials)
     
-    def _get_cached_items(self, params, materials, text):
+    def _get_cached_items(self, definition, params, materials, text):
         all_uuids = []
         todo_uuids = []
         todo_params = []
@@ -126,7 +126,7 @@ class Base:
         for p,m in zip(params, materials):
             param_key = self._item_param_hash(p, m, text)
             #logging.error(param_key)
-            cached = Item.objects.filter(param_hash = param_key)
+            cached = Item.objects.filter(param_hash = param_key, definition = definition)
             #res = []
             if len(cached)>0:
                 all_uuids.append(cached[0].uuid)
@@ -181,7 +181,7 @@ class Base:
         #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         params = self._get_children_params(self.definition, self.root, self.distance, self.param_index, self.explore_type, self.iterate_type)
         materials = [self.material for i in range(len(params))]
-        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, self.text)
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(self.definition, params, materials, self.text)
         #explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
         explorer.tasks.send_jobs_with_params.apply_async(args=[self.definition, todo_uuids, self.root, todo_params, self.distance, self.material, self.page_size, 'iterate', self.text])
         
@@ -208,7 +208,7 @@ class Base:
        
         params = self._get_children_params(definition, root, self.distance, -1, 'noop', 'linear') 
         params = [params[0] for i in materials]
-        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(params, materials, text)
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(definition, params, materials, text)
         for i in range(len(todo_materials)):
             explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
        

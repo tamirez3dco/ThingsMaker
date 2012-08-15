@@ -590,9 +590,10 @@ $.fn.exists = function() {
 		_imageClick : function(image_parent) {
 			var $steps = this.element.find(".jw-step")
 			var new_div1 = $('<div />').append($(".jw-last").find(':first-child').find(':first-child').clone());
-			this.element.find(".jw-history").append(new_div1);	
+			//this.element.find(".jw-history").append(new_div1);	
 			var new_div0 = $('<div />').append($(image_parent).find(':first-child').clone());
-			this.element.find(".jw-last").html(new_div0);		
+			this.element.find(".jw-last").html(new_div0);	
+			this.element.find(".jw-history").append(new_div1);		
 			$(".jw-history").scrollLeft($(".jw-history")[0].scrollWidth);
 			if(this._stepIndex == $steps.length - 1) {
 				this._onLastStep();

@@ -34,7 +34,11 @@ def create(request, template_name="explorer/create.html"):
         logging.error('here')
         gh_def = GhDefinition.objects.filter(product=product.id)[0]
         logging.error(gh_def.file_name)
-        params = DefinitionParam.objects.filter(definition=gh_def).order_by('order')
+    else:
+        item = Item.objects.filter(uuid=start_product)[0]
+        gh_def = item.definition 
+
+    params = DefinitionParam.objects.filter(definition=gh_def).order_by('order')
         
     return render_to_response(template_name, RequestContext(request, {'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
@@ -128,7 +132,7 @@ def add_product_variant(request):
                       variant_position=(variants_count + 1), sub_type=VARIANT)  
     
     variant.save()
-    
+    print "sababa"
     result = simplejson.dumps({
         "html": "Hi",
         "message": "Hi",

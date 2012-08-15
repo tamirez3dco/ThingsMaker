@@ -468,7 +468,7 @@ $.fn.exists = function() {
 					nextStep.children(".create-image-container").html('');
 					wizard._loadImages(nextStep, this._stepIndex);
 				}
-				$currentStep.animate({opacity: 0.0}, 600, 'linear', function() {
+				$currentStep.animate({opacity: 0.0}, 1500, 'linear', function() {
 					$currentStep.hide();
 				//this._effect($currentStep, "step", "hide", "hide", function() {
 					if($currentStep.data('paramType') != 'text') {

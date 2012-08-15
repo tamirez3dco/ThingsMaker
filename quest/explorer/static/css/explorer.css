@@ -98,6 +98,8 @@
 	margin-left: 68px;
 	margin-right: 68px;
 	overflow: hidden;
+	
+	border: solid 1px #ECECEC;
 }
 .jw-header {
 	display: none;
@@ -152,7 +154,7 @@
 }
 .jw-footer {
 	padding: 1em;
-	display: none;
+	/*display: none;*/
 }
 .jw-counter {
 	float: left;
@@ -197,6 +199,25 @@
 .jw-buttons button {
 	padding: .5em 1em;
 	margin-left: 1em;
+}
+.jw-history {
+	width: 520px;
+	height: 130px;
+	overflow: auto;
+	white-space: nowrap;
+	text-align: right;
+}
+.jw-history div {
+	display: inline-block;
+	width: 93px;
+	height: 93px;
+	padding: 4px;
+	margin-left: 4px;
+	border: solid 1px #ECECEC;
+}
+.jw-history img {
+	height: 93px;
+	width: 93px;
 }
 
 .explorer-image {

@@ -518,7 +518,7 @@ $.fn.exists = function() {
 						console.log(wizard._itemId);
 						wizard._material = $(this).data('material');
 						//wizard.nextStep();
-						wizard._imageClick();
+						wizard._imageClick(this);
 					});
 					wizard._waitImage(data[i].image_url, id, 'hi');
 				}
@@ -554,14 +554,18 @@ $.fn.exists = function() {
 			}
 			return params;
 		},
-		_imageClick : function() {
+		_imageClick : function(image_parent) {
 			var $steps = this.element.find(".jw-step")
+			var new_div = $('<div />').append($(image_parent).find(':first-child').clone());
+			this.element.find(".jw-history").append(new_div);	
+			$(".jw-history").scrollLeft($(".jw-history")[0].scrollWidth);
 			if(this._stepIndex == $steps.length - 1) {
 				this._onLastStep();
 			} else {
 				this.nextStep();
 			}
 		},
+		
 		_onLastStep : function() {
 			/*var url = '/explorer/add_product_variant';
 			var params = {
@@ -786,7 +790,7 @@ $.fn.exists = function() {
 		 */
 		_buildButtons : function() {
 			var self = this, options = this.options.buttons, $footer = $("<div />", {
-				"class" : "jw-footer ui-widget-header ui-corner-bottom"
+				"class" : "jw-footer ui-corner-bottom"
 			}), $cancel = $('<button type="' + options.cancelType + '" class="ui-state-default ui-corner-all jw-button-cancel jw-priority-secondary' + (options.cancelHide ? " ui-helper-hidden" : "") + '">' + options.cancelText + '</button>'), $previous = $('<button type="button" class="ui-state-default ui-corner-all jw-button-previous">' + options.previousText + '</button>'), $next = $('<button type="button" class="ui-state-default ui-corner-all jw-button-next">' + options.nextText + '</button>'), $finish = $('<button type="' + options.finishType + '" class="ui-state-default ui-corner-all jw-button-finish ui-state-highlight">' + options.finishText + '</button>');
 
 			$cancel.click(function(event) {
@@ -824,7 +828,8 @@ $.fn.exists = function() {
 				});
 			}
 
-			this.element.append($footer.append($('<div class="jw-buttons" />').append($cancel).append($previous).append($next).append($finish)));
+			//this.element.append($footer.append($('<div class="jw-buttons" />').append($cancel).append($previous).append($next).append($finish)));
+			this.element.append($footer.append('<div class="jw-history" />'));
 		},
 		/**
 		 * @private

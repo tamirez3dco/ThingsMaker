@@ -678,6 +678,3 @@ def get_all_products():
     products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS, active=True)
     return products
 
-def get_products_by_name(name):
-    products = lfs.catalog.models.Product.objects.filter(sub_type = VARIANT, name=name, active=True)
-    return products

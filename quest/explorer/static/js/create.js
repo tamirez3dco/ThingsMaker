@@ -563,8 +563,10 @@ $.fn.exists = function() {
 		},
 		_imageClick : function(image_parent) {
 			var $steps = this.element.find(".jw-step")
-			var new_div = $('<div />').append($(image_parent).find(':first-child').clone());
-			this.element.find(".jw-history").append(new_div);	
+			var new_div1 = $('<div />').append($(".jw-last").find(':first-child').find(':first-child').clone());
+			this.element.find(".jw-history").append(new_div1);	
+			var new_div0 = $('<div />').append($(image_parent).find(':first-child').clone());
+			this.element.find(".jw-last").html(new_div0);		
 			$(".jw-history").scrollLeft($(".jw-history")[0].scrollWidth);
 			if(this._stepIndex == $steps.length - 1) {
 				this._onLastStep();
@@ -836,7 +838,7 @@ $.fn.exists = function() {
 			}
 
 			//this.element.append($footer.append($('<div class="jw-buttons" />').append($cancel).append($previous).append($next).append($finish)));
-			this.element.append($footer.append('<div class="jw-history" />'));
+			this.element.append($footer.append('<div class="jw-history" /><div class="jw-last" />'));
 		},
 		/**
 		 * @private

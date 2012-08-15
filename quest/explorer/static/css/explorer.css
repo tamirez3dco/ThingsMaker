@@ -154,6 +154,7 @@
 }
 .jw-footer {
 	padding: 1em;
+	padding-top: 0.1em;
 	/*display: none;*/
 }
 .jw-counter {
@@ -201,9 +202,11 @@
 	margin-left: 1em;
 }
 .jw-history {
-	width: 520px;
-	height: 130px;
+	float: left;
+	width: 595px;
+	height: 120px;
 	overflow: auto;
+	padding-top:13px;
 	white-space: nowrap;
 	text-align: right;
 }
@@ -218,7 +221,24 @@
 	height: 93px;
 	width: 93px;
 }
-
+.jw-last {
+	float: left;
+	width: 130px;
+	height: 130px;
+	margin-left: 30px;
+	padding-top: 4px;
+}
+.jw-last div {
+	display: inline-block;
+	width: 120px;
+	height: 120px;
+	padding: 4px;
+	margin-left: 4px;
+}
+.jw-last img {
+	height: 120px;
+	width: 120px;
+}
 .jw-step BUTTON {
 	width:180px;
 	margin-right: 100px;
@@ -241,6 +261,7 @@
 	left: -6px;
 	top: 133px;
 	width: 80px;
+	opacity: 0.7;
 }
 
 .explorer-image:hover .explorer-image-button {

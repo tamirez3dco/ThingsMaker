@@ -514,18 +514,18 @@ $.fn.exists = function() {
 				for(var i = 0; i < data.length; i++) {
 					var id = stepidx + '-' + i;
 					var html = '<a id="explorer-ln-' + id + '" href="#"><div class="explorer-image" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></a>';
-					//$(html).appendTo(step);
-					//console.log(step);
-					//console.log(step.children(".create-image-container"));
 					step.children(".create-image-container").append(html);
 					$("#explorer-image-" + id).data('itemId', data[i].id);
 					$("#explorer-image-" + id).data('material', data[i].material);
 					$("#explorer-image-" + id).click(function() {
 						wizard._itemId = $(this).data('itemId');
-						console.log(wizard._itemId);
 						wizard._material = $(this).data('material');
-						//wizard.nextStep();
 						wizard._imageClick(this);
+					});
+					$("#explorer-image-" + id + " button").click(function() {
+						wizard._itemId = $(this).parent().data('itemId');
+						wizard.makeIt();
+						return false;
 					});
 					wizard._waitImage(data[i].image_url, id, 'hi');
 				}

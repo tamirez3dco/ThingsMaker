@@ -35,5 +35,7 @@ urlpatterns += patterns("",
     (r'^explorer/get_top_inspirations','explorer.views.get_top_inspirations'),
     (r'^explore','explorer.views.explore'),
     (r'^addlover','explorer.views.add_lover_to_product'),
+    (r'^products_by_name/(?P<name>[-\w ]*)', 'explorer.views.list_products_by_name'),    
+
     
 )

@@ -62,10 +62,10 @@ function getProductList(url, element) {
 		var items = [];
 		for(var i = 0; i < data.products.length; i++) {
 			html = '<div class="home-product"><a class="home-product-pointer" href="' + data.products[i].product_url + '">'+
-				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" /></a>'+
+				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" />'+
 				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
-				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"></div>'+ 
-				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + 
+				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"><small>' + data.products[i].lovers +'</small></div>'+
+				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + '</a>' +
 				   '</div>';
 			$(html, {
 				'class' : 'home-product-list',

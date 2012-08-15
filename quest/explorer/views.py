@@ -145,7 +145,8 @@ def get_recent_products(request):
                     "name": product.name,
                     "price": product.price,
                     "product_url": "/product/" + product.slug,
-                    "slug" : product.slug})
+                    "slug" : product.slug,
+                    "lovers" : product.stock_amount})
     result = simplejson.dumps({
         "products": res
     }, cls=LazyEncoder)
@@ -161,9 +162,26 @@ def get_top_inspirations(request):
                     "name": product.name,
                     "price": product.price,
                     "product_url": "/product/" + product.slug,
-                    "slug" : product.slug})
+                    "slug" : product.slug,
+                    "lovers" : product.stock_amount})
     result = simplejson.dumps({
         "products": res
     }, cls=LazyEncoder)
 
     return HttpResponse(result)    
+
+def list_products_by_name(request, name, template_name="lfs/catalog/products/products_by_name.html"):
+    raw_products = Product.objects.filter(sub_type = VARIANT, name=name, active=True).order_by('-stock_amount')
+    products = []
+    for product in raw_products:
+        products.append({
+            "image_url": product.get_item_image(),            
+            "name": product.name,
+            "price": product.price,
+            "product_url": "/product/" + product.slug
+        })
+    result = render_to_response(template_name, RequestContext(request, {
+        "name_of_p": 'amit',
+       "products": raw_products
+    }))
+    return result

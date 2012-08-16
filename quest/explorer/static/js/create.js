@@ -41,15 +41,20 @@ $.fn.exists = function() {
 		_exploreURL : '/explore',
 		_itemId : null,
 		_startProduct : null,
-		_stepAfterLast: 0,
+		_productType : null,
+		_stepAfterLast : 0,
+		_material : null,
 		/**
 		 * @description Initializes jWizard
 		 * @return void
 		 */
 		_create : function() {
+			this._startProduct = $.getUrlVar('start_product');
+			this._productType = $.getUrlVar('product_type');
+			this._userText = $.getUrlVar('textParam');
+			this._material = $.getUrlVar('material');
 			this._buildSteps();
 			this._buildTitle();
-			this._startProduct = $.getUrlVar('start_product');
 			this._buildDialog();
 
 			if(this.options.menuEnable) {
@@ -384,10 +389,14 @@ $.fn.exists = function() {
 		_buildSteps : function() {
 			var $steps = this.element.children("div, fieldset");
 			var afterLast = 0;
+			var wizard = this;
 			$steps.each(function(index, element) {
 				var param = element.id.replace('create-param-', '');
-				if (param == 'text') {
+				if(param == 'text') {
 					afterLast = 1;
+					if(wizard._userText != null) {
+						$(element).find("#create-param-text-input").val(wizard._userText);
+					}
 				}
 				var paramIndex = parseInt(param, 10);
 				if(isNaN(paramIndex)) {
@@ -468,17 +477,21 @@ $.fn.exists = function() {
 					nextStep.children(".create-image-container").html('');
 					wizard._loadImages(nextStep, this._stepIndex);
 				}
-				$currentStep.animate({opacity: 0.0}, 2000, 'linear', function() {
+				$currentStep.animate({
+					opacity : 0.0
+				}, 2000, 'linear', function() {
 					$currentStep.hide();
-				//this._effect($currentStep, "step", "hide", "hide", function() {
+					//this._effect($currentStep, "step", "hide", "hide", function() {
 					if($currentStep.data('paramType') != 'text') {
 						$currentStep.children(".create-image-container").html('');
 					}
-					nextStep.css({opacity: 1.0}).show();
+					nextStep.css({
+						opacity : 1.0
+					}).show();
 					//wizard._effect(nextStep, "step", "show", "show", function() {
-						wizard._showImages();
-						wizard._enableButtons();
-						wizard._updateNavigation(firstStep);
+					wizard._showImages();
+					wizard._enableButtons();
+					wizard._updateNavigation(firstStep);
 					//});
 				});
 			} else {
@@ -496,8 +509,8 @@ $.fn.exists = function() {
 			var img = new Image();
 			var self = this;
 			img.onerror = function(evt) {
-				if (count < 100) {
-					setTimeout(self._waitImage(imgsrc, imageId, imageTitle, count+1), 300);
+				if(count < 100) {
+					setTimeout(self._waitImage(imgsrc, imageId, imageTitle, count + 1), 300);
 				}
 			}
 			img.onload = function(evt) {
@@ -506,28 +519,34 @@ $.fn.exists = function() {
 			}
 			img.src = imgsrc;
 		},
-		_showImages : function(){
+		_showImages : function() {
 			var wizard = this;
 			//wizard._showNextImage = true;
-			wizard._showImagesTask = setInterval(function(){
+			wizard._showImagesTask = setInterval(function() {
 				console.log('showImagesTask');
-				if (wizard._showNextImage!=true) return;
-				var done = 0; 
-				$('.explorer-image').each(function(index, element){
-					if(($(element).data('visible')==true) || ($(element).data('aborted')==true)) {
+				if(wizard._showNextImage != true)
+					return;
+				var done = 0;
+				$('.explorer-image').each(function(index, element) {
+					if(($(element).data('visible') == true) || ($(element).data('aborted') == true)) {
 						done++;
 					}
 					if(($(element).data('loaded') == true) && ($(element).data('visible') != true)) {
-						wizard._showNextImage=false;
+						wizard._showNextImage = false;
 						$(element).data('visible', true);
-						$(element).css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0}, 700, 'linear');
-						setTimeout(function(){
-							wizard._showNextImage=true;		
+						$(element).css({
+							opacity : 0.0,
+							visibility : "visible"
+						}).animate({
+							opacity : 1.0
+						}, 700, 'linear');
+						setTimeout(function() {
+							wizard._showNextImage = true;
 						}, 350);
 						return false;
 					}
 				});
-				if (done==$('.explorer-image').size()) {
+				if(done == $('.explorer-image').size()) {
 					clearInterval(wizard._showImagesTask);
 				}
 			}, 100);
@@ -568,23 +587,21 @@ $.fn.exists = function() {
 			if(paramType == 'model') {
 				paramIndex = $currentStep.data('paramIndex');
 			}
-
+			
 			var params = {
 				param_index : paramIndex,
 				text : this._userText,
 				explore_type : 'iterate'
 			};
+			
+			if(paramType == 'material') {
+				params['material'] = 'Available'
+			} else {
+				params['material'] = this._material;
+			}
 			if(this._itemId != null) {
 				params['item_id'] = this._itemId;
-				if(paramType == 'material') {
-					params['material'] = 'Available'
-				} else {
-					params['material'] = this._material;
-				}
 			} else {
-				if(paramType == 'material') {
-					params['material'] = 'Available'
-				}
 				params['start_product'] = this._startProduct;
 			}
 			return params;
@@ -592,10 +609,10 @@ $.fn.exists = function() {
 		_imageClick : function(image_parent) {
 			var $steps = this.element.find(".jw-step")
 			var new_div1 = $('<div />').append($(".jw-last").find(':first-child').find(':first-child').clone());
-			//this.element.find(".jw-history").append(new_div1);	
+			//this.element.find(".jw-history").append(new_div1);
 			var new_div0 = $('<div />').append($(image_parent).find(':first-child').clone());
-			this.element.find(".jw-last").html(new_div0);	
-			this.element.find(".jw-history").append(new_div1);		
+			this.element.find(".jw-last").html(new_div0);
+			this.element.find(".jw-history").append(new_div1);
 			$(".jw-history").scrollLeft($(".jw-history")[0].scrollWidth);
 			if(this._stepIndex == $steps.length - 1) {
 				this._onLastStep();
@@ -603,16 +620,15 @@ $.fn.exists = function() {
 				this.nextStep();
 			}
 		},
-		
 		_onLastStep : function() {
 			/*var url = '/explorer/add_product_variant';
-			var params = {
-				item_uuid : this._itemId
-			};
-			var wizard = this;
-			$.getJSON(url, params, function(data) {
-				//window.location = '/product/' + wizard._itemId + "?waitImages=true"
-			});*/
+			 var params = {
+			 item_uuid : this._itemId
+			 };
+			 var wizard = this;
+			 $.getJSON(url, params, function(data) {
+			 //window.location = '/product/' + wizard._itemId + "?waitImages=true"
+			 });*/
 			$("#create-finish-dialog").dialog('open');
 			//this.changeStep(1);
 		},
@@ -866,8 +882,11 @@ $.fn.exists = function() {
 				});
 			}
 
-			//this.element.append($footer.append($('<div class="jw-buttons" />').append($cancel).append($previous).append($next).append($finish)));
 			this.element.append($footer.append('<div class="jw-history" /><div class="jw-last" />'));
+			if(this._productType == 'variant') {
+				var new_div = $('<div />').append($("#start-product-img").clone());
+				this.element.find(".jw-last").html(new_div);
+			}
 		},
 		/**
 		 * @private

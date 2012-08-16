@@ -150,7 +150,7 @@
 -->    
     {% shipping product %}
         <div class="product-properties">
-        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}">
+        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}&product_type=variant">
            {% trans 'Customize' %}
         </a>
     </div>

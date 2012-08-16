@@ -77,7 +77,11 @@ def explore(request):
                 items = controller.start_iterate(gh_def.id, param_index, text)
             logging.error(gh_def.file_name)
         else:
-            items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
+            if material == 'Available':
+                items = controller.render_materials(['Gold', 'Silver'], start_product, None, text)
+            else:
+                items = controller.explore(start_product, param_index, explore_type, iterate_type, text)            
+            #items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
     
     else:   
         if (model_types):

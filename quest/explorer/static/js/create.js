@@ -475,7 +475,7 @@ $.fn.exists = function() {
 					nextStep.children(".create-image-container").html('');
 					//wizard._loadImages(nextStep, this._stepIndex);
 				}
-				wizard._loadImages(nextStep, this._stepIndex);
+				wizard._loadImages(nextStep, this._stepIndex, false);
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {
@@ -500,8 +500,7 @@ $.fn.exists = function() {
 				this._updateNavigation(firstStep);
 				if(nextStep.data('paramType') != 'text') {
 					nextStep.children(".create-image-container").html('');
-					wizard._loadImages(nextStep, this._stepIndex);
-					wizard._addImagesToStep(nextStep, this._stepIndex);
+					wizard._loadImages(nextStep, this._stepIndex, true);
 					wizard._showImages();
 				}
 			}
@@ -575,13 +574,16 @@ $.fn.exists = function() {
 			}
 			wizard._showNextImage = true;
 		},
-		_loadImages : function(step, stepidx) {
+		_loadImages : function(step, stepidx, add) {
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
 			console.log(wizard._itemId);
 			$.getJSON(this._exploreURL, params, function(data) {
 				wizard._loadedImages = data;
+				if (add == true) {
+					wizard._addImagesToStep(step, stepidx);
+				}
 			});
 		},
 		_getExploreParams : function() {

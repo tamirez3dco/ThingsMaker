@@ -38,7 +38,7 @@ def create(request, template_name="explorer/create.html"):
         item = Item.objects.filter(uuid=start_product)[0]
         gh_def = item.definition 
 
-    params = DefinitionParam.objects.filter(definition=gh_def).order_by('order')
+    params = DefinitionParam.objects.filter(definition=gh_def, active=True).order_by('order')
         
     return render_to_response(template_name, RequestContext(request, {'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 

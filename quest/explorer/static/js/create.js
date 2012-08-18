@@ -746,7 +746,7 @@ $.fn.exists = function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
 			var constWidth = 26*$steps.size();
-			var stepWidth = Math.floor((710-constWidth)/$steps.size());
+			var stepWidth = Math.floor((740-constWidth)/$steps.size());
 			this.element.addClass("jw-hastopmenu");
 			$steps.each(function(x) {
 				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");

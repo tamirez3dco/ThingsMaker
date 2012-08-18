@@ -58,7 +58,8 @@ $.fn.exists = function() {
 			this._buildDialog();
 
 			if(this.options.menuEnable) {
-				this._buildMenu();
+				//this._buildMenu();
+				this._buildTopMenu();
 			}
 
 			this._buildButtons();
@@ -336,7 +337,8 @@ $.fn.exists = function() {
 		_updateNavigation : function(firstStep) {
 			this._updateButtons();
 			if(this.options.menuEnable) {
-				this._updateMenu(firstStep);
+				//this._updateMenu(firstStep);
+				this._updateTopMenu(firstStep);
 			}
 			if(this.options.counter.enable) {
 				this._updateCounter(firstStep);
@@ -578,10 +580,10 @@ $.fn.exists = function() {
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
-			console.log(wizard._itemId);
+			//console.log(wizard._itemId);
 			$.getJSON(this._exploreURL, params, function(data) {
 				wizard._loadedImages = data;
-				if (add == true) {
+				if (add) {
 					wizard._addImagesToStep(step, stepidx);
 				}
 			});
@@ -707,6 +709,7 @@ $.fn.exists = function() {
 
 			this.element.addClass("jw-hasmenu");
 			this.element.find(".jw-step").each(function(x) {
+				console.log(x);
 				list.push($("<li />", {
 				"class": "ui-corner-all " + (x === 0 ? "jw-current ui-state-highlight" : "jw-inactive ui-state-disabled"),
 				html: $("<a />", {
@@ -735,6 +738,45 @@ $.fn.exists = function() {
 				var $target = $(event.target), nextStep = parseInt($target.attr("step"), 10);
 
 				if($target.parent().hasClass("jw-active")) {
+					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
+				}
+			}, this));
+		},
+		_buildTopMenu : function() {
+			var list = [], $menu, $anchors;
+			var $steps = this.element.find(".jw-step");
+			var constWidth = 26*$steps.size();
+			var stepWidth = Math.floor((710-constWidth)/$steps.size());
+			this.element.addClass("jw-hastopmenu");
+			$steps.each(function(x) {
+				list.push($("<div />",{
+					"class": "completed-step",
+					step: x, 
+					html: $("<a />", {
+						style: 'width: '+ stepWidth + 'px;',
+						html: '<span>'+ (x+1).toString() + '</span>' + '<div class="wizard-steps-inner">' + $(this).attr("title") + '</div>'//$(this).attr("title")
+					})
+				})[0]); 
+			});
+			
+			$menu = $("<div />", {
+				"class" : "wizard-steps",
+				html : $(list)
+			});
+			
+			//console.log($menu);
+			
+			this.element.find(".jw-content").prepend($menu);
+
+			/*if(this.options.effects.enable || this.options.effects.menu.enable) {
+				$menu.find("li").addClass("jw-animated");
+			}
+			*/
+			$menu.find("a").click($.proxy(function(event) {
+				var $target = $(event.target), nextStep = parseInt($target.parent().attr("step"), 10);
+				console.log('click');
+				
+				if($target.parent().hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
 			}, this));
@@ -775,6 +817,19 @@ $.fn.exists = function() {
 				}
 
 				$li.removeClass("jw-active jw-current jw-inactive ui-state-default ui-state-highlight ui-state-disabled").addClass(sClass);
+			});
+		},
+		_updateTopMenu : function(firstStep) {
+			var wizard = this, currentStep = this._stepIndex, $menu = this.element.find(".wizard-steps");
+			$menu.children().each(function(x){
+				console.log(x);
+				var $d = $(this), iStep = parseInt($d.attr("step"), 10);
+				//console.log(iStep);
+				var sClass = "";
+				if(iStep == currentStep) {
+					sClass = "active-step";
+				} 
+				$d.removeClass("active-step").addClass(sClass)
 			});
 		},
 		/**

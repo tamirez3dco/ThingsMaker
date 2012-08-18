@@ -141,11 +141,15 @@
 .jw-hasmenu .jw-steps-wrap {
 	margin-left: 16em;
 }
+.jw-hastopmenu .jw-steps-wrap {
+	margin-top: 5em;
+}
 .jw-steps-wrap {
 	height: 30em;
 	width: 48em;
 	overflow: auto;
 	padding: 0em 1.5em;
+	margin-left: 7.6em;
 }
 .jw-content p {
 	margin-top: 0;
@@ -292,4 +296,141 @@
 #create-finish-dialog BUTTON {
 	width: 150px;
 	margin: 10px 10px 0px 10px;
+}
+
+
+/* = STEPS CONTAINER
+----------------------------*/
+.wizard-steps {
+    margin:0px 10px 40px 38px;
+    padding:0px;
+    position: relative;
+    clear:both;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+.wizard-steps div {
+    position:relative;
+}
+/* = STEP NUMBERS
+----------------------------*/
+.wizard-steps span {
+    display: block;
+    float: left;
+    font-size: 12px;
+    text-align:center;
+    width:20px;
+    margin: 8px 5px 0px 0px;
+    line-height:20px;
+    color: #ccc;
+    background: #FFF;
+    border: 2px solid #CCC;
+    -webkit-border-radius:13px;
+    -moz-border-radius:13px;
+    border-radius:13px;
+}
+/* = DEFAULT STEPS
+----------------------------*/
+.wizard-steps a {
+    position:relative;
+    display:block;
+    /*width:auto;*/
+    height:40px;
+    vertical-align: bottom;
+    width: 115px;
+    margin-right: 26px;
+    padding:0px 6px 0px 3px;
+    float: left;
+    font-size:14px;
+    line-height:15px;
+    color:#666;
+    background: #F0EEE3;
+    text-decoration:none;
+    text-shadow:1px 1px 1px rgba(255,255,255, 0.8);
+}
+.wizard-steps-inner {
+	padding-top: 4px;
+}
+.wizard-steps a:before {
+    width:0px;
+    height:0px;
+    border-top: 20px solid #F0EEE3;
+    border-bottom: 20px solid #F0EEE3;
+    border-left:20px solid transparent;
+    position: absolute;
+    content: "";
+    top: 0px;
+    left: -20px;
+}
+.wizard-steps a:after {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left:20px solid #F0EEE3;
+    position: absolute;
+    content: "";
+    top: 0px;
+    right: -20px;
+}
+ 
+/* = COMPLETED STEPS
+----------------------------*/
+ 
+.wizard-steps .completed-step a {
+    color:#163038;
+    vertical-align: middle;
+    background: #A3C1C9;
+}
+.wizard-steps .completed-step a:before {
+    border-top: 20px solid #A3C1C9;
+    border-bottom: 20px solid #A3C1C9;
+}
+.wizard-steps .completed-step a:after {
+    border-left: 20px solid #A3C1C9;
+}
+.wizard-steps .completed-step span {
+    border: 2px solid #163038;
+    color: #163038;
+    text-shadow:none;
+}
+/* = ACTIVE STEPS
+----------------------------*/
+.wizard-steps .active-step a {
+    color:#A3C1C9;
+    background: #163038;
+    text-shadow:1px 1px 1px rgba(0,0,0, 0.8);
+}
+.wizard-steps .active-step a:before {
+    border-top: 20px solid #163038;
+    border-bottom: 20px solid #163038;
+}
+.wizard-steps .active-step a:after {
+    border-left: 20px solid #163038;
+}
+.wizard-steps .active-step span {
+    color: #163038;
+    -webkit-box-shadow:0px 0px 2px rgba(0,0,0, 0.8);
+    -moz-box-shadow:0px 0px 2px rgba(0,0,0, 0.8);
+    box-shadow:0px 0px 2px rgba(0,0,0, 0.8);
+    text-shadow:none;
+    border: 2px solid #A3C1C9;
+}
+/* = HOVER STATES
+----------------------------*/
+.wizard-steps .completed-step:hover a, .wizard-steps .active-step:hover a {
+    color:#fff !important;
+    background: #8F061E;
+    text-shadow:1px 1px 1px rgba(0,0,0, 0.8);
+    cursor: pointer;
+}
+.wizard-steps .completed-step:hover span, .wizard-steps .active-step:hover span {
+    color:#8F061E;
+}
+.wizard-steps .completed-step:hover a:before, .wizard-steps .active-step:hover a:before {
+    border-top: 20px solid #8F061E;
+    border-bottom: 20px solid #8F061E;
+}
+.wizard-steps .completed-step:hover a:after, .wizard-steps .active-step:hover a:after {
+    border-left: 20px solid #8F061E;
 }

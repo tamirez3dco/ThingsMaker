@@ -139,17 +139,20 @@
 	cursor: pointer;
 }
 .jw-hasmenu .jw-steps-wrap {
-	margin-left: 19em;
+	margin-left: 15em;
 }
 .jw-hastopmenu .jw-steps-wrap {
-	margin-top: 5em;
+	margin-top: 3.3em;
 }
 .jw-steps-wrap {
 	height: 30em;
-	width: 52em;
+	width: 42.5em;
 	overflow: auto;
-	padding: 0em 1.5em;
-	margin-left: 11em;
+	padding: 1.5em 3em 0em 3em;
+	margin-left: 10em;
+	margin-bottom: 1em;
+	background-color: #F6F6FF;
+	border-radius: 4px;
 }
 .jw-content p {
 	margin-top: 0;

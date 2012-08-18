@@ -350,10 +350,16 @@
     text-shadow:1px 1px 1px rgba(255,255,255, 0.8);
 }
 .wizard-steps-inner {
-	padding-top: 3px;
+	/*padding-top: 3px;*/
+	position: absolute;
+	top: 3px;
+	left: -1px;
 }
 .wizard-steps-inner-ol {
-	padding-top: 9px;
+	/*padding-top: 8px;*/
+	position: absolute;
+	top: 9px;
+	left: -1px;
 }
 .wizard-steps a:before {
     width:0px;

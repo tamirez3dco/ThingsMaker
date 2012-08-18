@@ -745,7 +745,7 @@ $.fn.exists = function() {
 		_buildTopMenu : function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
-			var constWidth = 26*$steps.size();
+			var constWidth = 28*$steps.size();
 			var stepWidth = Math.floor((740-constWidth)/$steps.size());
 			this.element.addClass("jw-hastopmenu");
 			$steps.each(function(x) {

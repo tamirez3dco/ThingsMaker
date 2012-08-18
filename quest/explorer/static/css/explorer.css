@@ -332,6 +332,7 @@
 /* = DEFAULT STEPS
 ----------------------------*/
 .wizard-steps a {
+	overflow: visible;
     position:relative;
     display:block;
     /*width:auto;*/

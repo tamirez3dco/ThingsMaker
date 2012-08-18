@@ -352,6 +352,9 @@
 .wizard-steps-inner {
 	padding-top: 3px;
 }
+.wizard-steps-inner-ol {
+	padding-top: 9px;
+}
 .wizard-steps a:before {
     width:0px;
     height:0px;

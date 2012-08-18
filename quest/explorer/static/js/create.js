@@ -745,17 +745,22 @@ $.fn.exists = function() {
 		_buildTopMenu : function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
-			var constWidth = 28*$steps.size();
+			var constWidth = 26*$steps.size();
 			var stepWidth = Math.floor((740-constWidth)/$steps.size());
 			this.element.addClass("jw-hastopmenu");
 			$steps.each(function(x) {
+				var sClass = "wizard-steps-inner";
+				var l = $(this).attr("title").split(' ');
+				if (l.length == 1) {
+					sClass = "wizard-steps-inner-ol";
+				}
 				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");
 				list.push($("<div />",{
 					"class": "completed-step",
 					step: x, 
 					html: $("<a />", {
 						style: 'width: '+ stepWidth + 'px;',
-						html: '<span>'+ (x+1).toString() + '</span>' + '<div class="wizard-steps-inner">' + menuTitle + '</div>'
+						html: '<span>'+ (x+1).toString() + '</span>' + '<div class="'+ sClass +'">' + menuTitle + '</div>'
 					})
 				})[0]); 
 			});

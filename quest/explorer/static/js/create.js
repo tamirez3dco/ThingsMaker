@@ -749,12 +749,13 @@ $.fn.exists = function() {
 			var stepWidth = Math.floor((710-constWidth)/$steps.size());
 			this.element.addClass("jw-hastopmenu");
 			$steps.each(function(x) {
+				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");
 				list.push($("<div />",{
 					"class": "completed-step",
 					step: x, 
 					html: $("<a />", {
 						style: 'width: '+ stepWidth + 'px;',
-						html: '<span>'+ (x+1).toString() + '</span>' + '<div class="wizard-steps-inner">' + $(this).attr("title") + '</div>'//$(this).attr("title")
+						html: '<span>'+ (x+1).toString() + '</span>' + '<div class="wizard-steps-inner">' + menuTitle + '</div>'
 					})
 				})[0]); 
 			});

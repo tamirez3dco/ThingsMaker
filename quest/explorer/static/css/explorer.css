@@ -315,12 +315,12 @@
 /* = STEP NUMBERS
 ----------------------------*/
 .wizard-steps span {
-    display: none;
+    display: block;
     float: left;
     font-size: 10px;
     text-align:center;
     width:15px;
-    /*margin: 10px 5px 0px 0px;*/
+    margin: 10px 5px 0px 0px;
     line-height:15px;
     color: #ccc;
     background: #FFF;

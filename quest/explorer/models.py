@@ -72,6 +72,8 @@ class DefinitionParam(models.Model):
     index = models.IntegerField()
     order = models.IntegerField()
     stage = models.IntegerField()
+    def __unicode__(self):
+        return "%s - %s" % (self.definition.id, self.readable_name)
     
 class Item(models.Model):
     id = models.AutoField(primary_key=True)

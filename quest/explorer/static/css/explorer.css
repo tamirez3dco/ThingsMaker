@@ -317,17 +317,17 @@
 .wizard-steps span {
     display: block;
     float: left;
-    font-size: 12px;
+    font-size: 10px;
     text-align:center;
-    width:20px;
-    margin: 8px 5px 0px 0px;
-    line-height:20px;
+    width:15px;
+    margin: 10px 5px 0px 0px;
+    line-height:15px;
     color: #ccc;
     background: #FFF;
     border: 2px solid #CCC;
-    -webkit-border-radius:13px;
-    -moz-border-radius:13px;
-    border-radius:13px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
 }
 /* = DEFAULT STEPS
 ----------------------------*/
@@ -341,7 +341,7 @@
     margin-right: 26px;
     padding:0px 6px 0px 3px;
     float: left;
-    font-size:14px;
+    font-size:12px;
     line-height:15px;
     color:#666;
     background: #F0EEE3;

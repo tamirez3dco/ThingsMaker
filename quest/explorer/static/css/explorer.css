@@ -95,8 +95,8 @@
 }
 /* jWizard-specific configuration */
 .jw-widget {
-	margin-left: 68px;
-	margin-right: 68px;
+	margin-left: 20px;
+	margin-right: 20px;
 	overflow: hidden;
 	border: solid 1px #ECECEC;
 }
@@ -139,17 +139,17 @@
 	cursor: pointer;
 }
 .jw-hasmenu .jw-steps-wrap {
-	margin-left: 16em;
+	margin-left: 19em;
 }
 .jw-hastopmenu .jw-steps-wrap {
 	margin-top: 5em;
 }
 .jw-steps-wrap {
 	height: 30em;
-	width: 48em;
+	width: 52em;
 	overflow: auto;
 	padding: 0em 1.5em;
-	margin-left: 7.6em;
+	margin-left: 11em;
 }
 .jw-content p {
 	margin-top: 0;
@@ -207,7 +207,7 @@
 }
 .jw-history {
 	float: left;
-	width: 595px;
+	width: 710px;
 	height: 120px;
 	overflow: auto;
 	padding-top:13px;

@@ -774,10 +774,10 @@ $.fn.exists = function() {
 			}
 			*/
 			$menu.find("a").click($.proxy(function(event) {
-				var $target = $(event.target), nextStep = parseInt($target.parent().attr("step"), 10);
+				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
 				console.log('click');
-				
-				if($target.parent().hasClass("completed-step")) {
+				console.log(parent);
+				if($(parent).hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
 			}, this));

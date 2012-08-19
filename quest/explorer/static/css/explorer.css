@@ -120,13 +120,54 @@
 	border: 0px solid;
 	border-bottom: solid 1px #ECECEC;
 }
-.jw-menu-wrap {
-	width: 16em;
-	margin-right: -16em;
+.jw-left-menu-wrap {
+	width: 9em;
+	clear: left;
 	float: left;
+	position: relative;
 }
-.jw-menu {
+.jw-left-menu {
 	margin: 0 .5em;
+	position: absolute;
+	top: 180px;
+	left: 78px;
+}
+.triangle-button-left {
+	height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-right: 40px solid #666;
+}
+.triangle-button-left:hover {
+	cursor: pointer;
+}
+
+.jw-right-menu-wrap {
+	width: 9em;
+	clear: right;
+	float: right;
+	position: relative;
+}
+.jw-right-menu {
+	margin: 0 .5em;
+	position: absolute;
+	top: 180px;
+	left: -13px;
+}
+.triangle-button-right {
+	height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid #666;
+}
+.triangle-button-right:hover {
+	cursor: pointer;
 }
 .jw-menu ol {
 	list-style: none;
@@ -311,6 +352,7 @@
     clear:both;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
+    /*display: none;*/
 }
 .wizard-steps div {
     position:relative;

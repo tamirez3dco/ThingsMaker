@@ -1,0 +1,54 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+
+{% block head %}
+    {% if shop.get_meta_keywords %}
+        <meta name="keywords" content="{{ shop.get_meta_keywords }}" />
+    {% endif %}
+    {% if shop.get_meta_description %}
+        <meta name="description" content="{{ shop.get_meta_description }}" />
+    {% endif %}
+{% endblock %}
+
+{% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/explorer-shop.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/sorted-page-starter.js"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            {% trans 'Home' %}
+        </li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="small_tabs">
+	    <div class="container" height="40px">
+	    <div class="small_tabs">
+    <ul>
+            <li name="one_small_tab"onclick="return tab_clicked(this)" sorterName="creation_date">
+                <p>
+                    By Creation time
+                </p>                                
+            </li>            
+            <li name="one_small_tab" onclick="return tab_clicked(this)" sorterName="stock_amount">
+                <p>
+                    By popularity
+                </p>                                
+            </li>            
+    </ul>
+    </div>
+            </div>
+</div>
+
+
+    {{ shop.static_block.html|safe }}
+	<div id="sorted-products">
+		<div class="panel-heading">
+		</div>
+	</div>
+{% endblock %}

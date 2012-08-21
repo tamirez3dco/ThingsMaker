@@ -17,7 +17,14 @@ function tab_clicked(element)
 			
 		}
 	}
+	removeAllImages();
 	
+	initImages(sorterName);
+	return false;
+}
+
+function removeAllImages()
+{
 	var mainElem = document.getElementById("sorted-products");
 	
 	if ( mainElem.hasChildNodes() )
@@ -28,35 +35,51 @@ function tab_clicked(element)
     	}	 
 	}
 	
+}
+function getJSONableStringFromURLString(urlStr)
+{
+	var res = urlStr.replace(/%22/g,'"');
+	res = res.replace(/%7B/g,'{');
+	res = res.replace(/%7D/g,'}');
+	return res;
+}
+
+function initImages(sorterName)
+{
 	var strs = window.location.href.split("products_sorted/");
-	
-	strs[1] = strs[1].replace(/%22/g,'"');
-	strs[1] = strs[1].replace(/%7B/g,'{');
-	strs[1] = strs[1].replace(/%7D/g,'}');
-	var jsonobj = JSON.parse(strs[1]);
-	jsonobj["sorter"] = sorterName;
+	var urlStr = strs[1];
+	var jsonobj = JSON.parse(getJSONableStringFromURLString(urlStr));
+	if (sorterName != undefined) 
+	{
+		jsonobj["sorter"] = sorterName;
+	}
 	var jsonstr = JSON.stringify(jsonobj);
 	
 	getProductsURL = window.location.origin+"/get_ssp/"+jsonstr;
 	getProductList(getProductsURL, '#sorted-products');
-	
-	return false;
 }
 
-
-
 $(function() {
-	var elems = document.getElementsByName("one_small_tab");
-	var screenerName = "";
-	for (var i = 0 ; i < elems.length ; i++)
+	var screenerExists = document.URL.indexOf("screener") > 0;
+	if (screenerExists)
 	{
-		var one_tab = elems[i];
-		var sorterName = one_tab.getAttribute("sorterName");
-		if (window.location.href.indexOf(sorterName) > 0)
+		var elems = document.getElementsByName("one_small_tab");
+		for (var i = 0 ; i < elems.length ; i++)
 		{
-			tab_clicked(one_tab);
-			return;
+			var one_tab = elems[i];
+			var sorterName = one_tab.getAttribute("sorterName");
+			if (window.location.href.indexOf(sorterName) > 0)
+			{
+				tab_clicked(one_tab);
+				return;
+			}
 		}
+	}
+	else
+	{
+		var child = document.getElementById("small_tabs");
+		child.parentNode.removeChild(child);
+		initImages();
 	}
 });
 

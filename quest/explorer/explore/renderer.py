@@ -24,8 +24,8 @@ class Renderer:
         self.q_ready = self.site_name + '_ready'
         #self.q_request = site_name + '_request'
         
-    def request_images_async(self, params):
-        explorer.tasks.request_images.apply_async(args=[params], countdown=0)
+    def request_images_async(self, params, countdown=0):
+        explorer.tasks.request_images.apply_async(args=[params], countdown=countdown)
         
     def request_images(self, params):
         scene = params[0]['scene']

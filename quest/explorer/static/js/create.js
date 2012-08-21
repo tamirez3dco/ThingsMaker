@@ -572,7 +572,11 @@ $.fn.exists = function() {
 				});
 				$("#explorer-image-" + id + " button").click(function() {
 					wizard._itemId = $(this).parent().data('itemId');
-					wizard.makeIt();
+					wizard._appendHistory($(this).parent());
+					wizard._addProductVariant();
+					//$("#create-finish-dialog").dialog('close');
+					$("#create-makeit-dialog").dialog('open');
+					//wizard.makeIt();
 					return false;
 				});
 				wizard._waitImage(data[i].image_url, id, 'hi', 0);
@@ -692,13 +696,17 @@ $.fn.exists = function() {
 				return false;
 			});
 			$("#create-show-details").click(function() {
-				var url = '/explorer/add_product_variant';
-				var params = {
-					item_uuid : wizard._itemId
-				};
-				$.getJSON(url, params, function(data) {});
+				wizard._addProductVariant();
 				$("#create-finish-dialog").dialog('close');
 				$("#create-makeit-dialog").dialog('open');
+			});
+		},
+		_addProductVariant : function() {
+			var url = '/explorer/add_product_variant';
+			var params = {
+				item_uuid : this._itemId
+			};
+			$.getJSON(url, params, function(data) {
 			});
 		},
 		_buildMakeitDialog : function() {
@@ -725,7 +733,7 @@ $.fn.exists = function() {
 			//};
 			var wizard = this;
 			//$.getJSON(url, params, function(data) {
-				window.location = '/product/' + wizard._itemId + "?waitImages=true"
+			window.location = '/product/' + wizard._itemId + "?waitImages=true"
 			//});
 		},
 		/**

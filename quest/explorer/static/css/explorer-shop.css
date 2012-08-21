@@ -128,73 +128,6 @@
 	position:relative;
 	overflow: auto;
 }
-/*
-.home-product {
-	float: left; 
-	width: 167px;
-	padding: 7px 7px 3px 7px; 
-	margin: 0px 7px 10px 0px; 
-	border: 1px;
-	border-style:solid;
-	border-color: #ECECEC;
-}
-
-.home-product IMG {
-	width: 167px; 
-	height: 167px;
-	margin: 0px 0px 3px 0px; 
-	padding: 0px;
-	float: left; 
-}
-
-.home-product-pointer {
-}
-
-.loveme {
-	position : relative;
-	width: 25px; 
-	height: 25px;
-	top : -35px;
-	left: -148px; 
-    cursor:pointer;
-    border: none;
-    visibility: hidden;
-}
-
-.home-product:hover .loveme {
-   visibility: visible;
-}  
-
-.home-product-name {
-	width: 158px; 
-	height: 20px;
-	padding: 0px 0px 0px 4px;
-	margin: 0px;
-	float: left; 
-}
-
-.home-product-price {
-	text-align:right;
-	width: 158px; 
-	height: 20px;
-	padding: 0px 4px 0px 0px;
-	float: right; 
-	margin: 0px;
-	color: green;
-}
-
-.loveme {
-	position : relative;
-	width: 25px; 
-	height: 25px;
-	top : -30px;
-	left: -138px; 
-    cursor:pointer;
-    border: none;
-    visibility: hidden;
-	background: url('/static/images/Hart.png') no-repeat;
-}
-*/
 
 .home-product {
 	float: left; 
@@ -261,6 +194,11 @@
 	margin: 0px;
 	color: green;
 }
+
+.home-product-price a{
+	color: green;
+}
+
 
 .products-product {
 	position: relative;

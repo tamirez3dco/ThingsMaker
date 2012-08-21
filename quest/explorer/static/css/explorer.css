@@ -274,6 +274,13 @@
 .jw-history:hover div {
 	cursor: pointer;
 }
+.jw-history div:hover .explorer-image-button {
+	visibility:visible;
+}
+.jw-history .explorer-image-button {
+	width: 93px;
+	margin: 0px;
+}
 .jw-last {
 	float: left;
 	width: 130px;

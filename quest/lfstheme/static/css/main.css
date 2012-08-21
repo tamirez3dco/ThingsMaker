@@ -1318,3 +1318,38 @@ button.emphasized:hover {
 	padding-top:20px;	
 }	
 
+.small_tabs {
+    padding: 2px 0 0 0;
+    height: 40px;
+}
+.small_tabs ul {
+	position: relative;
+    margin: 0;
+    /*background: url(../img/menu_bg.jpg) repeat;*/
+   /*background-color: #ECECEC;*/
+}
+
+.small_tabs li{
+    height: 30px;
+    list-style-type: none;
+    float: left;
+    background-color: #ECECEC;
+}
+
+
+.small_tabs li p {
+    display: block;
+    position: relative;
+    float: left;
+    padding: 0 20px;
+    line-height: 30px;
+    text-align: center;
+    background: transparent;
+    text-decoration: none;
+}
+
+.small_tabs li.selected p,
+.small_tabs li p:hover {
+    background: url(../img/menu_bg_selected.jpg);
+    color: white !important;
+}

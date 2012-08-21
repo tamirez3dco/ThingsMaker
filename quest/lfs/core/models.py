@@ -251,6 +251,14 @@ class Shop(models.Model):
         products = Product.objects.filter(sub_type=VARIANT).order_by('-stock_amount')[:limit] 
         return products
      
+    def get_ssp(self,screener,sorter,lower_limit,upper_limit):
+        if (screener != None):
+            products = Product.objects.filter(sub_type=VARIANT,name=screener).order_by('-' + sorter)[lower_limit:upper_limit]
+        else:
+            products = Product.objects.filter(sub_type=VARIANT).order_by('-' + sorter)[lower_limit:upper_limit]
+        return products
+
+
 class Application(models.Model):
     version = models.CharField(_("Version"), blank=True, max_length=10)
 

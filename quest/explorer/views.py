@@ -194,3 +194,38 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
        "products": raw_products
     }))
     return result
+
+def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
+    myobj = simplejson.loads(jsonstr)
+    shop = lfs_get_object_or_404(Shop, pk=1)
+    myobj["shop"]=shop
+    return render_to_response(template_name, RequestContext(request, myobj))
+
+def get_screened_sorted_products(request,jsonstr):
+    jsonobj = simplejson.loads(jsonstr)
+    lower_limit = 0
+    upper_limit = 10
+    if ('limits' in jsonobj):
+        limits = jsonobj['limits'].partition('-')
+        lower_limit = limits[0]
+        upper_limit = limits[2]
+        
+    screener = None
+    if ('sorter' in jsonobj):
+        sorter = jsonobj['sorter']
+        
+    shop = lfs_get_object_or_404(Shop, pk=1)
+    products = shop.get_ssp(screener,sorter,lower_limit,upper_limit)
+    res = []
+    for product in products:
+        res.append({"image_url": product.get_item_image(), 
+                    "name": product.name,
+                    "price": product.price,
+                    "product_url": "/product/" + product.slug,
+                    "slug" : product.slug,
+                    "lovers" : product.stock_amount})
+    result = simplejson.dumps({
+        "products": res
+    }, cls=LazyEncoder)
+
+    return HttpResponse(result)    

@@ -347,7 +347,6 @@ def tabs(context, obj=None):
         "STATIC_URL": context.get("STATIC_URL"),
     }
 
-
 @register.inclusion_tag('lfs/catalog/top_level_categories.html', takes_context=True)
 def top_level_categories(context):
     """Displays the top level categories.

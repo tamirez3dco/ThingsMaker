@@ -635,8 +635,10 @@ $.fn.exists = function() {
 				new_history_div = $('<div />').append(last_image_clone);
 				this._copyItemData($(".jw-last").find(':first-child')[0], new_history_div);
 			}
-			var cur_image_clone = $(image_parent).find(':first-child').clone();
-			var new_last_div = $('<div />').append(cur_image_clone);
+			var cur_image_clone1 = $(image_parent).find(':first-child').clone();
+			var cur_image_clone2 = $(cur_image_clone1).clone();
+			$('#create-finish-dialog-left').html(cur_image_clone2);
+			var new_last_div = $('<div />').append(cur_image_clone1);
 			//this._copyItemData($(".jw-last").find(':first-child')[0], new_history_div);
 			this._copyItemData(image_parent, new_last_div);
 			this.element.find(".jw-last").html(new_last_div);
@@ -663,15 +665,19 @@ $.fn.exists = function() {
 				$(to).data(props[i], $(from).data(props[i]));
 			}
 		},
+		_getCurrentItem: function(){
+			return $("#explorer-image-" + this._itemId);
+		},
 		_onLastStep : function() {
+			//var currentItem = 
 			$("#create-finish-dialog").dialog('open');
 		},
 		_buildDialog : function() {
 			var wizard = this;
 			$("#create-finish-dialog").dialog({
 				autoOpen : false,
-				width : 380,
-				height : 110,
+				width : 570,
+				height : 200,
 				//position: [300, 300],
 				resizable : false,
 				modal : true,

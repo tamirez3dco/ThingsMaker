@@ -44,9 +44,13 @@
             <script type="text/javascript" src="{{ STATIC_URL }}js/lfs.js"></script>
             {% block page_js %}{% endblock %}
         {% endcompress %}
+                    <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.validate.pack.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.contactable.js"></script>
+             <script type="text/javascript" src="{{ STATIC_URL }}js/feedback.js"></script>
         {% block uncompressed_page_js %}{% endblock %}
     </head>
     <body class="{% block section %}lfs{% endblock %}">
+    	<div id="contactable"><!-- contactable html placeholder --></div>
         <div id="header">
             <div class="container">
 
@@ -120,7 +124,6 @@
                 {% endblock %}
             </div>
         </div>
-
         {% block google-analytics-tracking %}
             {% google_analytics_tracking %}
         {% endblock %}

@@ -341,7 +341,16 @@
 .ui-dialog-titlebar {display:none}
 #create-finish-dialog BUTTON {
 	width: 150px;
-	margin: 10px 10px 0px 10px;
+	margin: 109px 10px 0px 10px;
+}
+
+#create-finish-dialog-left {
+	float: left;
+}
+#create-finish-dialog-right {
+	float: left;
+	margin-left: 20px;
+	/*height: 190px;*/
 }
 
 

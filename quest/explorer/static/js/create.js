@@ -686,6 +686,7 @@ $.fn.exists = function() {
 			$("#create-continue-creating").click(function() {
 				wizard.changeStep(wizard._stepAfterLast);
 				$("#create-finish-dialog").dialog('close');
+				return false;
 			});
 			$("#create-show-details").click(function() {
 				wizard.makeIt();

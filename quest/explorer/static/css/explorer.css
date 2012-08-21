@@ -329,7 +329,9 @@
 	margin-right: 100px;
 	margin-top: 20px;	
 }
-
+#create-param-text:hover A {
+	cursor: pointer;
+}
 .create-image-container {
 	float: left;
 	width: 570px;

@@ -214,6 +214,10 @@ def get_screened_sorted_products(request,jsonstr):
     if ('screener' in jsonobj):
         screener = jsonobj['screener']
         
+    sorter = None
+    if ('sorter' in jsonobj):
+        sorter = jsonobj['sorter']
+
     shop = lfs_get_object_or_404(Shop, pk=1)
     products = shop.get_ssp(screener,sorter,lower_limit,upper_limit)
     res = []

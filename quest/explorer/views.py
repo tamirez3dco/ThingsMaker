@@ -119,9 +119,16 @@ def add_lover_to_product(request):
     return HttpResponse(result)
 
 def add_product_variant(request):
+    result = simplejson.dumps({
+        "html": "Hi",
+        "message": "Hi",
+    }, cls=LazyEncoder)
     item_uuid = request.GET.get('item_uuid','')
     logging.error(item_uuid)
     item = Item.objects.get(uuid=item_uuid)
+    old_products = Product.objects.filter(slug=item.uuid)
+    if len(old_products)>0:
+        return HttpResponse(result)
     controller = Controller(request.GET.get('distance', 'medium'))
     controller.item_to_product(item);
     product = Product.objects.get(pk=item.definition.product)
@@ -136,12 +143,6 @@ def add_product_variant(request):
                       variant_position=(variants_count + 1), sub_type=VARIANT)  
     
     variant.save()
-    print "sababa"
-    result = simplejson.dumps({
-        "html": "Hi",
-        "message": "Hi",
-    }, cls=LazyEncoder)
-
     return HttpResponse(result)
 
 def get_recent_products(request):

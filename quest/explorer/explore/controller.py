@@ -163,10 +163,16 @@ class Base:
     
     def item_to_product(self, item):
         jobs = []
-        for view_name in ["Top","Front","Render"]:
+        for view_name in ["Render"]:
             jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
-        
+     
         self.renderer.request_images_async(jobs) 
+        
+        jobs = []
+        for view_name in ["Top","Front"]:
+            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
+            
+        self.renderer.request_images_async(jobs, countdown=1) 
          
     def _explore(self):
         #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))

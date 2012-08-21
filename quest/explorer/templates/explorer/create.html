@@ -43,11 +43,19 @@
 		<button type="button" class="button left" id="create-continue-creating">Continue Creating</input>
 	</div>
 </div>
-<div id="create-makeit-dialog" style="display: none">
-		<h1>You made it, You can name it</h1>
-		<input type="text"></input>
+<div id="create-makeit-dialog">
+	<div id="create-makeit-dialog-left"></div>
+	<div id="create-makeit-dialog-right">
+		<h1>You made it, You can name it..</h1>
+		<input type="text" value="My precious" />
 		<h1>Share your creation</h1>
-		<button type="button" class="button left">OK</input>
+		    <div class="product-share">
+        <span class='st_sharethis_large' st_image="{{ product.get_item_image }}" displayText='ShareThis'></span>
+		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
+		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
+	</div>
+		<button type="button" class="button left">Continue</input>
+	</div>
 </div>
 <div style="display: none">
 	<img id="start-product-img" src="{{ product.get_item_image }}" />

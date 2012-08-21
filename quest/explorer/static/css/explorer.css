@@ -354,6 +354,14 @@
 	margin-left: 20px;
 	/*height: 190px;*/
 }
+#create-makeit-dialog-left {
+	float: left;
+}
+#create-makeit-dialog-right {
+	float: left;
+	margin-left: 20px;
+	/*height: 190px;*/
+}
 
 
 /* = STEPS CONTAINER

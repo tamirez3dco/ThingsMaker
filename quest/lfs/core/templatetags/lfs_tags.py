@@ -328,7 +328,7 @@ def tabs(context, obj=None):
         obj = context.get("product") or context.get("category")
 
     request = context.get("request")
-    tabs = Action.objects.filter(active=True, group=1)
+    tabs = Action.objects.filter(active=True , group=1)
     if isinstance(obj, (Product, Category)):
         top_category = lfs.catalog.utils.get_current_top_category(request, obj)
         if top_category:
@@ -338,7 +338,10 @@ def tabs(context, obj=None):
                     break
     else:
         for tab in tabs:
-            if request.path.find(tab.link) != -1:
+            urlStr = tab.link.replace("%7B","{")
+            urlStr = urlStr.replace("%7D","}")
+            urlStr = urlStr.replace("%22",'"')
+            if request.path.find(urlStr) != -1:
                 tab.selected = True
                 break
 

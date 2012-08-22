@@ -37,7 +37,7 @@ urlpatterns += patterns("",
     (r'^addlover','explorer.views.add_lover_to_product'),
     (r'^products_by_name/(?P<name>[-\w ]*)', 'explorer.views.list_products_by_name'),    
     (r'^get_ssp/(?P<jsonstr>.*)','explorer.views.get_screened_sorted_products'),
-    (r'^products_sorted/(?P<jsonstr>.*)','explorer.views.sorted_view'),
+    (r'^sorted_products/(?P<jsonstr>.*)','explorer.views.sorted_view'),
 
     
 )

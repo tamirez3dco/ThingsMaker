@@ -46,7 +46,7 @@ function getJSONableStringFromURLString(urlStr)
 
 function initImages(sorterName)
 {
-	var strs = window.location.href.split("products_sorted/");
+	var strs = window.location.href.split("sorted_products/");
 	var urlStr = strs[1];
 	var jsonobj = JSON.parse(getJSONableStringFromURLString(urlStr));
 	if (sorterName != undefined) 

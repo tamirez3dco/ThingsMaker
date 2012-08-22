@@ -651,6 +651,7 @@ $.fn.exists = function() {
 			this.element.find(".jw-last").html(new_last_div);
 			var wizard = this;
 			if(new_history_div != null) {
+				new_history_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 				this.element.find(".jw-history").append(new_history_div);
 				$(new_history_div).click(function() {
 					wizard._itemId = $(this).data('itemId');
@@ -661,6 +662,16 @@ $.fn.exists = function() {
 					wizard._appendHistory(this);
 					wizard._changeStep(wizard._stepIndex);
 				});
+				
+				$(new_history_div).find('button').click(function() {
+					wizard._itemId = $(this).parent().data('itemId');
+					wizard._appendHistory($(this).parent());
+					wizard._addProductVariant();
+					//$("#create-finish-dialog").dialog('close');
+					$("#create-makeit-dialog").dialog('open');
+					return false;
+				});
+				
 				$(".jw-history").animate({
 					scrollLeft : $(".jw-history")[0].scrollWidth
 				}, 4000);

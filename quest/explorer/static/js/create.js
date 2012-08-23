@@ -258,6 +258,11 @@ $.fn.exists = function() {
 		 * @return void
 		 */
 		nextStep : function() {
+			var $steps = this.element.find(".jw-step");
+			if(this._stepIndex == $steps.length - 1) {
+				this._onLastStep();
+				return;
+			}
 			var options = {
 				wizard : this.element,
 				currentStepIndex : this._stepIndex,
@@ -1067,24 +1072,27 @@ $.fn.exists = function() {
 		 */
 		_updateButtons : function() {
 			var $steps = this.element.find(".jw-step"), $previous = this.element.find(".jw-button-previous"), $next = this.element.find(".jw-button-next"), $finish = this.element.find(".jw-button-finish");
-
+			var $trPrevious = this.element.find(".triangle-button-left");
 			switch ($steps.index($steps.filter(":visible"))) {
 				case 0:
 					$previous.hide();
 					$next.show();
 					$finish.hide();
+					$trPrevious.hide();
 					break;
 
 				case $steps.length - 1:
 					$previous.show();
 					$next.hide();
 					$finish.show();
+					$trPrevious.show();
 					break;
 
 				default:
 					$previous.show();
 					$next.show();
 					$finish.hide();
+					$trPrevious.show();
 					break;
 			}
 		},

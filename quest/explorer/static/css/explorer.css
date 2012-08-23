@@ -376,8 +376,10 @@
 	margin-left: 20px;
 	/*height: 190px;*/
 }
-
-
+#create-makeit-dialog-right .button {
+	margin-top: 10px;
+	margin-left: 250px;
+}
 /* = STEPS CONTAINER
 ----------------------------*/
 .wizard-steps {

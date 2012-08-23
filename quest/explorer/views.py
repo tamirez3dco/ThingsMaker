@@ -52,7 +52,7 @@ def designers(request, template_name="explorer/create.html"):
     return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
 def explore(request):
-    cb = request.GET.get('callback','')
+    #cb = request.GET.get('callback','')
     model_types = request.GET.get('show_definitions', False)
     param_index = int(request.GET.get('param_index', 0)) 
     explore_type = request.GET.get('explore_type', 'explore')
@@ -60,6 +60,7 @@ def explore(request):
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
     text = request.GET.get('text', '')
+    text = text.strip()
       
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)

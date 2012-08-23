@@ -97,7 +97,6 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    "explorer",
     "lfstheme",
     "compressor",
     "django.contrib.admin",
@@ -153,7 +152,8 @@ INSTALLED_APPS = (
     'djcelery',
     'kombu.transport.django',
     'south',
-    'storages'
+    'storages',
+    'explorer'
 )
 
 FORCE_SCRIPT_NAME=""
@@ -287,12 +287,7 @@ CELERYBEAT_SCHEDULE = {
         "task": "explorer.tasks.get_ready_images",
         "schedule": timedelta(seconds=1),
         "args": ()
-    },
-    "manage-servers": {
-        "task": "explorer.tasks.manage_servers",
-        "schedule": timedelta(seconds=60),
-        "args": ()
-    },
+    }
 }
 
 AWS_ACCESS_KEY_ID = 'AKIAJ4FEEKD3KIPZASTQ'

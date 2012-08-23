@@ -49,10 +49,6 @@
         {{ product_inline|safe }}
     </div>
 
-    <a name="reviews"></a>
-
-    {% reviews_for_instance product %}
-
     {% tags_for_object product as tags %}
     {% if tags %}
         <div class="tags">

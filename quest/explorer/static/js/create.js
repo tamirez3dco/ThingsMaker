@@ -640,6 +640,7 @@ $.fn.exists = function() {
 			}
 		},
 		_appendHistory : function(image_parent) {
+			var wizard = this;
 			var last_image_clone = $(".jw-last").find(':first-child').find(':first-child').clone();
 			//console.log(last_image_clone);
 			var new_history_div;
@@ -653,19 +654,24 @@ $.fn.exists = function() {
 			$('#create-finish-dialog-left').html(cur_image_clone2);
 			$('#create-makeit-dialog-left').html(cur_image_clone3);
 			var new_last_div = $('<div />').append(cur_image_clone1);
-			//this._copyItemData($(".jw-last").find(':first-child')[0], new_history_div);
+			new_last_div.append('<button class="explorer-image-button" type="button">Make It</button>');
+			$(new_last_div).find('button').click(function() {
+				wizard._itemId = $(this).parent().data('itemId');
+				wizard._appendHistory($(this).parent());
+				wizard._addProductVariant();
+				//$("#create-finish-dialog").dialog('close');
+				$("#create-makeit-dialog").dialog('open');
+				return false;
+			});
 			this._copyItemData(image_parent, new_last_div);
 			this.element.find(".jw-last").html(new_last_div);
-			var wizard = this;
+
 			if(new_history_div != null) {
 				new_history_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 				this.element.find(".jw-history").append(new_history_div);
 				$(new_history_div).click(function() {
 					wizard._itemId = $(this).data('itemId');
 					wizard._material = $(this).data('material');
-					//var clone = $(this).find(':first-child').clone();
-					//var new_last_div = $('<div />').append(clone);
-					//wizard.element.find(".jw-last").html(new_last_div);
 					wizard._appendHistory(this);
 					wizard._changeStep(wizard._stepIndex);
 				});

@@ -295,6 +295,13 @@
 	padding: 4px;
 	margin-left: 4px;
 }
+.jw-last .explorer-image-button {
+	width: 120px;
+	margin: 0px;
+}
+.jw-last div:hover .explorer-image-button {
+	visibility:visible;
+}
 .jw-last img {
 	height: 120px;
 	width: 120px;

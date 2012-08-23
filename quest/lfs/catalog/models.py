@@ -1099,7 +1099,19 @@ class Product(models.Model):
             name = self.name
 
         return name
+    
+    def get_full_name(self):
+        if self.is_variant():
+            if self.active_name:
+                name = self.name
+                name = name.replace("%P", self.parent.name)
+                name = "%s (%s)" % (name, self.parent.name)
+            else:
+                name = self.parent.name
+        else:
+            name = self.name
 
+        return name        
     def get_option(self, property_id):
         """
         Returns the id of the selected option for property with passed id.

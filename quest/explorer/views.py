@@ -115,6 +115,22 @@ def add_lover_to_product(request):
     }, cls=LazyEncoder)
     return HttpResponse(result)
 
+def set_product_name(request):  
+    result = simplejson.dumps({
+        "html": "Hi",
+        "message": "Hi",
+    }, cls=LazyEncoder)    
+    new_name = request.GET.get('new_name','') 
+    if new_name == "":
+        return HttpResponse(result)
+    
+    slug = request.GET.get('slug','') 
+    p = Product.objects.get(slug=slug)
+    p.name = new_name
+    p.active_name = True
+    p.save()
+    return HttpResponse(result)
+
 def add_product_variant(request):
     result = simplejson.dumps({
         "html": "Hi",

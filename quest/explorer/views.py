@@ -59,11 +59,7 @@ def explore(request):
     iterate_type = request.GET.get('iterate_type', 'linear')
     page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
-    text = request.GET.get('text', 'naama')
-    #logging.error(text)
-    if text == "":
-        text = 'naama'
-    #logging.error(text)
+    text = request.GET.get('text', '')
       
     controller = Controller(request.GET.get('distance', 'near'), material, page_size)
     start_product = request.GET.get('start_product', None)

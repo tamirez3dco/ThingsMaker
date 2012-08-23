@@ -146,8 +146,6 @@ class Base:
         return p
         
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
-        #text = "ZOHAR"
-        logging.error(item_id)
         self.root = Item.objects.get(uuid=item_id)
         self.param_index = int(param_index)
         self.definition = self.root.definition
@@ -155,6 +153,7 @@ class Base:
         self.iterate_type = iterate_type
         if self.definition.accepts_text_params == False:
             text = ""
+        
         self.text = text
         if self.deep:
             return self._explore_deep()
@@ -193,7 +192,8 @@ class Base:
         else:
             root = Item.objects.get(uuid=parent_id)
             definition = root.definition
-            text = root.textParam
+            if text == "":
+                text = root.textParam
             
         if definition.accepts_text_params == False:
             text = ""    

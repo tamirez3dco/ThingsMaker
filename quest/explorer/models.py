@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import simplejson as pickle
 from south.modelsinspector import add_introspection_rules
 #from lfs.catalog.models import Product
+#from lfs.catalog.models import Product
 
 class PickledObject(str):
     """A subclass of string so it can be told whether a string is
@@ -74,6 +75,7 @@ class DefinitionParam(models.Model):
     stage = models.IntegerField()
     active = models.BooleanField()
     def __unicode__(self):
+        #p = Product.objects.get(pk=self.definition.product)
         return "%s - %s" % (self.definition.id, self.readable_name)
     
 class Item(models.Model):

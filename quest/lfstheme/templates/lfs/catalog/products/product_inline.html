@@ -260,38 +260,13 @@
         <span class='st_sharethis_large' st_image="{{ product.get_item_image }}" displayText='ShareThis'></span>
 		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
 		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
+		<span class='st_twitter_large' st_image="{{ product.get_item_image }}" displayText='Tweet'></span>
+		<span class='st_email_large' st_image="{{ product.get_item_image }}" displayText='Email'></span>
 	</div>
     {% if product.is_deliverable %}
         <table align="right" class="buttons">
             <tr>
-                {% if product.get_active_packing_unit %}
-                    <td>
-                        <div class="product-quantity packing-unit"
-                            id="packing-url"
-                            data="{% url lfs_calculate_packing product.id %}">
-                            <input class="number quantity"
-                                   name="quantity"
-                                   size="3"
-                                   type="text"
-                                   value="{{ quantity }}" /> {{ unit }}
-                        </div>
-                    </td>
-                {% else %}
-                    <td>
-                        {% if unit %}
-                            {{ unit }}:
-                        {% else %}
-                            {% trans "Quantity" %}:
-                        {% endif %}
-                    </td>
-                    <td class="product-quantity">
-                        <input class="number"
-                               name="quantity"
-                               size="3"
-                               type="text"
-                               value="{{ quantity }}" />
-                    </td>
-                {% endif %}
+         
                 <td nowrap="nowrap">
                     <button class="emphasized"
                            type="submit"

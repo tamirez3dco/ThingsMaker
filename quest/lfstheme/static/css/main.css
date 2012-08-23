@@ -401,7 +401,7 @@ ul.breadcrumbs li {
 }
 
 .middle-slot ul {
-    margin: 10px 0 10px 30px;
+    margin: 10px 0 10px 9px;
 }
 
 .middle-slot li {
@@ -540,6 +540,8 @@ ___________________________________________________________________________ */
 
 #product-inline {
     padding-top: 10px;
+    width: 680px;
+    margin-left: 120px;
 }
 
 .product .main-image {
@@ -553,6 +555,11 @@ ___________________________________________________________________________ */
 
 .product-share {
 	float: left;
+	width: 32px;
+	margin-top: 4px;
+}
+.product-share SPAN {
+	margin-bottom: 5px;
 }
 
 .product-images .main-image {
@@ -1352,4 +1359,14 @@ button.emphasized:hover {
 .small_tabs li p:hover {
     background: url(../img/menu_bg_selected.jpg);
     color: white !important;
+}
+
+.ad-gallery .ad-image-wrapper {
+	height: 350px;
+}
+.ad-gallery .ad-thumbs li {
+	margin-right: 10px;
+}
+.ad-gallery .ad-nav .ad-thumbs {
+	padding-left 0px;
 }

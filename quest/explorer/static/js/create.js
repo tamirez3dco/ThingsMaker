@@ -485,7 +485,9 @@ $.fn.exists = function() {
 					nextStep.children(".create-image-container").html('');
 					//wizard._loadImages(nextStep, this._stepIndex);
 				}
-				wizard._loadImages(nextStep, this._stepIndex, false);
+				if(nextStep.data('paramType') != 'text') {
+					wizard._loadImages(nextStep, this._stepIndex, false);
+				}
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {

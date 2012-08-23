@@ -87,7 +87,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     image_url = models.CharField(max_length=100, null=True)
     parent = models.ForeignKey('self', null=True, db_index=True)
-    definition = models.ForeignKey(GhDefinition)
+    definition = models.ForeignKey(GhDefinition, db_index=True)
     created = models.DateTimeField(auto_now_add=True)
     params = PickledObjectField(null=True)
     textParam = models.CharField(max_length=100, null=True)
@@ -96,7 +96,7 @@ class Item(models.Model):
     uuid = models.CharField(max_length=100, null=True)
     parent_distance = models.CharField(max_length=20)
     material = models.CharField(max_length=20, default="Gold")
-    param_hash = models.CharField(max_length=100, null=True)
+    param_hash = models.CharField(max_length=100, null=True, db_index=True)
     
     
     def __unicode__(self):

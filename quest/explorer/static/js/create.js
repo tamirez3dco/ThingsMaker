@@ -496,7 +496,7 @@ $.fn.exists = function() {
 					if(($currentStep.data('paramType') != 'text')) {
 						$currentStep.children(".create-image-container").html('');
 					}
-					wizard._addImagesToStep(nextStep, this._stepIndex);
+					wizard._addImagesToStep(nextStep, wizard._stepIndex);
 					nextStep.css({
 						opacity : 1.0
 					}).show();

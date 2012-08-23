@@ -6,7 +6,7 @@ from django.utils import simplejson
 from datetime import datetime
 #from explorer.explore.image_generator import Generator
 from explorer.explore.renderer import Renderer
-from explorer.models import Item, GhDefinition, ExplorerConfig
+from explorer.models import Item, GhDefinition, ExplorerConfig, DefinitionMaterial
 import explorer.tasks
 from explorer.explore.algo import Axis, Explore, Iterate
 from django.conf import settings
@@ -188,7 +188,7 @@ class Base:
     def render_materials(self, materials, parent_id, definition_id, text):
         if parent_id == None:
             root = None
-            definition = GhDefinition.objects.get(pk=definition_id) 
+            definition = GhDefinition.objects.get(pk=definition_id)
         else:
             root = Item.objects.get(uuid=parent_id)
             definition = root.definition
@@ -200,6 +200,7 @@ class Base:
             
         self.iterate_type = 'linear'
         self.explore_type = 'iterate'
+        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
         
         #uuids = map(lambda x: str(uuid.uuid1()), range(len(materials)))
        

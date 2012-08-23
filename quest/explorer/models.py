@@ -48,7 +48,9 @@ add_introspection_rules([], ["^explorer\.models\.PickledObjectField"])
 class Material(models.Model):
     name = models.CharField(max_length=100)
     readable_name = models.CharField(max_length=200)
-
+    def __unicode__(self):
+        return self.name
+    
 class GhDefinition(models.Model):
     id = models.AutoField(primary_key=True)
     file_name = models.CharField(max_length=100, null=True)
@@ -65,7 +67,9 @@ class GhDefinition(models.Model):
 class DefinitionMaterial(models.Model):
     definition = models.ForeignKey(GhDefinition)
     material = models.ForeignKey(Material)
-    
+    def __unicode__(self):
+        return "%s %s %s" % (self.definition.file_name, self.definition.id, self.material.name)
+        
 class DefinitionParam(models.Model):
     name = models.CharField(max_length=100)
     readable_name = models.CharField(max_length=200)

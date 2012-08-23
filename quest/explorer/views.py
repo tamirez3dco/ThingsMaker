@@ -69,6 +69,7 @@ def explore(request):
         if product.is_variant() == False:
             gh_def = GhDefinition.objects.filter(product=product.id, active=True)[0]
             if material == 'Available':
+                #material_list = DefinitionMaterial.
                 items = controller.render_materials(['Gold', 'Silver'], None, gh_def.id, text)
             else:
                 items = controller.start_iterate(gh_def.id, param_index, text)

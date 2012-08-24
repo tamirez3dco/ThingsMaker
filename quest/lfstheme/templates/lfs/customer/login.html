@@ -1,29 +1,7 @@
-{% extends "lfs/base.html" %}
 {% load i18n %}
 {% load lfs_tags %}
-
-{% block title %}
-    {% trans 'Login' %} - {{ block.super }}
-{% endblock %}
-
-{% block section %}customer-login{% endblock %}
-
-{% block breadcrumbs %}
-    {% breadcrumbs _("Login") %}
-{% endblock %}
-
-{% block wrapper %}
-    <h1>
-        {% trans 'Soon...' %}
-    </h1>
-
-    <div class="login">
-        <h2 class="authenticate">{% trans 'Login' %}</h2>
-
-        <div class="description">
-            {% trans 'If you are already customer you can login. Your address data will be stored in your account.' %}
-        </div>
-
+<body style="background-size: 100%; background-image:url('/static/images/snow_drifts_7284910.jpg');"></body>
+<div>
         <form class="authenticate"
               action="{% url lfs_login %}"
               method="post">
@@ -32,12 +10,6 @@
             <div class="form">
                 <table>
                     {{ login_form }}
-                    <tr>
-                        <td></td>
-                        <td>
-                            <a href="{% url lfs_password_reset %}">{% trans 'Forgot password?' %}</a>
-                        </td>
-                    </tr>
                 </table>
             </div>
 
@@ -52,10 +24,4 @@
             <button type="submit"
                     class="button login-button emphasized left">{% trans 'Login' %}</button>
         </form>
-    </div>
-
-<script type="text/javascript">
-$("#id_username").focus();
-</script>
-{% endblock %}
-
+</div>

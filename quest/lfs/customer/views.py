@@ -53,12 +53,14 @@ def login(request, template_name="lfs/customer/login.html"):
 
     # Using Djangos default AuthenticationForm
     login_form = AuthenticationForm()
-    login_form.fields["username"].label = _(u"E-Mail")
+    login_form.fields["username"].label = ""
+    login_form.fields["password"].label =""
     register_form = RegisterForm()
 
     if request.POST.get("action") == "login":
         login_form = AuthenticationForm(data=request.POST)
-        login_form.fields["username"].label = _(u"E-Mail")
+        login_form.fields["username"].label =""
+        login_form.fields["password"].label = ""
 
         if login_form.is_valid():
             redirect_to = request.POST.get("next")

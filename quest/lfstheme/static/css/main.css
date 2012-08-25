@@ -1370,3 +1370,14 @@ button.emphasized:hover {
 .ad-gallery .ad-nav .ad-thumbs {
 	padding-left 0px;
 }
+
+.authenticate INPUT {
+	border-radius: 0px;
+	font-size: 14px;
+	width: 100px;
+}
+.authenticate BUTTON {
+	border-radius: 0px;
+	font-size: 12px;
+	margin-left: 8px;
+}

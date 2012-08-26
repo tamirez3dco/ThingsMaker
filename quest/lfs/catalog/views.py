@@ -443,10 +443,11 @@ def all_products(request, template_name="lfs/catalog/products.html"):
     raw_products = lfs.catalog.utils.get_all_products()
     products = []
     for product in raw_products:
-        products.append({
-            'name': product.name,
-            'description': product.description
-        })
+        if product.active:
+            products.append({
+                'name': product.name,
+                'description': product.description
+            })
     result = render_to_response(template_name, RequestContext(request, {
         "name_of_p": 'amit',
         "products": raw_products

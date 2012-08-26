@@ -491,8 +491,9 @@ $.fn.exists = function() {
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {
+					wizard._setAddress();
 					$currentStep.hide();
-					//this._effect($currentStep, "step", "hide", "hide", function() {
+					
 					if(($currentStep.data('paramType') != 'text')) {
 						$currentStep.children(".create-image-container").html('');
 					}
@@ -500,14 +501,15 @@ $.fn.exists = function() {
 					nextStep.css({
 						opacity : 1.0
 					}).show();
-					//wizard._effect(nextStep, "step", "show", "show", function() {
+					
 					wizard._showImages();
 					wizard._enableButtons();
 					wizard._updateNavigation(firstStep);
-					//});
+					
 				});
 			} else {
 				this._stepIndex = $steps.index(nextStep);
+				this._setAddress();
 				this._updateTitle(firstStep);
 				this._updateNavigation(firstStep);
 				if(nextStep.data('paramType') != 'text') {
@@ -516,6 +518,10 @@ $.fn.exists = function() {
 					wizard._showImages();
 				}
 			}
+		},
+		_setAddress: function() {
+			//console.log(this._stepIndex);
+			$.address.value(this._stepIndex);
 		},
 		_waitImage : function(imgsrc, imageId, imageTitle, count) {
 			var img = new Image();
@@ -745,11 +751,11 @@ $.fn.exists = function() {
 				//dialogClass: 'alert'
 			});
 			$("#create-makeit-dialog").find("button").click(function() {
-				wizard.makeIt();
+				wizard._makeIt();
 				$("#create-makeit-dialog").dialog('close');
 			});
 		},
-		makeIt : function() {
+		_makeIt : function() {
 			var url = '/explorer/set_product_name';
 			var name = $('#new-product-name').val();
 			var params = {
@@ -1269,6 +1275,7 @@ $(document).ready(function() {
 			}
 		},
 	});
+	
 	$('#text-next').click(function() {
 		$("#wizard").jWizard("nextStep");
 	});

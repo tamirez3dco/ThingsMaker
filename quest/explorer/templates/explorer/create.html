@@ -66,6 +66,8 @@
 	</div>
 </div>
 <div style="display: none">
-	<img id="start-product-img" src="{{ product.get_item_image }}" />
+	{% if product.is_variant %}
+		<img id="start-product-img" src="{{ product.get_item_image }}" />
+	{% endif %}
 </div>
 {% endblock %}

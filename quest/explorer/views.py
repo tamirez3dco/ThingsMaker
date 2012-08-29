@@ -32,7 +32,7 @@ def create(request, template_name="explorer/create.html"):
     product = Product.objects.get(slug=start_product)
     if product.is_variant() == False:
         logging.error('here')
-        gh_def = GhDefinition.objects.filter(product=product.id)[0]
+        gh_def = GhDefinition.objects.filter(product=product.id, active=True)[0]
         logging.error(gh_def.file_name)
     else:
         item = Item.objects.filter(uuid=start_product)[0]

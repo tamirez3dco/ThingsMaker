@@ -21,7 +21,7 @@
     {% for cart_item in cart_items %}
         <tr>
             <td class="image">
-                <img src="{{ cart_item.product.get_image.image.url_60x60 }}"
+                <img class="large_thumbnail" src="{{ cart_item.product.get_item_image}}"
                      alt="{{ cart_item.product.get_name }}"/>
             </td>
             <td>

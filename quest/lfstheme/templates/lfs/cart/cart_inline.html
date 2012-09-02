@@ -48,10 +48,12 @@
             {% for cart_item in cart_items %}
                 <tr>
                     <td class="image">
-                        {% if cart_item.product.get_image.image %}
+                        {% if cart_item.product.get_item_image %}
                             <a href="{{ cart_item.product.get_absolute_url }}">
-                                <img src="{{ cart_item.product.get_image.image.url_60x60 }}"
-                                     alt="{{ cart_item.product.get_name }}"/>
+<!--	                           	<div class="large_thumbnail"> -->
+    	                            <img class="large_thumbnail" src="{{ cart_item.product.get_item_image }}"
+        	                             alt="{{ cart_item.product.get_name }}"/>
+<!--                            	</div> -->
                             </a>
                         {% endif %}
                     </td>

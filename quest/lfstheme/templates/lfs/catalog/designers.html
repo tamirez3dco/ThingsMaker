@@ -18,7 +18,7 @@
 		{% for designer in designers %}
 			<div class="designer">
 				<img src="{{ designer.image_url }}">
-				<h3>{{ designer.user.username }}</h3>
+				<h3>{{ designer.user.first_name }} {{ designer.user.last_name }}</h3>
 				<p class="product-description">
         			{{ designer.bio|safe}}
     			</p>

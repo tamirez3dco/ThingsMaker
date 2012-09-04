@@ -969,7 +969,10 @@ class Product(models.Model):
 
     def get_random_variants(self, num):
         return self.variants.filter(active=True).order_by('?')[:num]
-        
+    
+    def get_xrandom_variants(self):
+        return self.variants.filter(active=True).order_by('?')[:4]        
+    
     def get_default_material(self):
         pass
     

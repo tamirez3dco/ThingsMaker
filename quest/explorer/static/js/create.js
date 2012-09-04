@@ -457,7 +457,7 @@ $.fn.exists = function() {
 		 * @return void
 		 */
 		_changeStep : function(nextStep, firstStep) {
-			if (this._firstStep == true) {
+			if(this._firstStep == true) {
 				firstStep = true;
 				this._firstStep = false;
 			} else {
@@ -468,7 +468,9 @@ $.fn.exists = function() {
 				reloadStep = true;
 			}
 			var wizard = this, $steps = this.element.find(".jw-step"), $currentStep = $steps.eq(this._stepIndex);
-
+			//if(wizard._userText != null) {
+			//			$(element).find("#create-param-text-input").val(wizard._userText);
+			//}
 			if($('#create-param-text-input').length) {
 				this._userText = $('#create-param-text-input').val();
 			}
@@ -503,7 +505,7 @@ $.fn.exists = function() {
 				}, 2000, 'linear', function() {
 					wizard._setAddress();
 					$currentStep.hide();
-					
+
 					if(($currentStep.data('paramType') != 'text')) {
 						$currentStep.children(".create-image-container").html('');
 					}
@@ -511,11 +513,11 @@ $.fn.exists = function() {
 					nextStep.css({
 						opacity : 1.0
 					}).show();
-					
+
 					wizard._showImages();
 					wizard._enableButtons();
 					wizard._updateNavigation(firstStep);
-					
+
 				});
 			} else {
 				this._stepIndex = $steps.index(nextStep);
@@ -523,7 +525,8 @@ $.fn.exists = function() {
 				this._updateTitle(firstStep);
 				this._updateNavigation(firstStep);
 				if(nextStep.data('paramType') != 'text') {
-					if (!reloadStep) $currentStep.hide();
+					if(!reloadStep)
+						$currentStep.hide();
 					wizard._loadImages(nextStep, this._stepIndex, true);
 					//wizard._addImagesToStep(nextStep, wizard._stepIndex);
 					nextStep.css({
@@ -531,6 +534,14 @@ $.fn.exists = function() {
 					}).show();
 					wizard._showImages();
 				}
+			}
+		},
+		_updateStateFromItem : function(item) {
+			this._itemId = $(item).data('itemId');
+			this._material = $(item).data('material');
+			this._userText = $(item).data('text');
+			if(this._userText != null) {
+				this.element.find("#create-param-text-input").val(this._userText);
 			}
 		},
 		_waitImage : function(imgsrc, imageId, imageTitle, count) {
@@ -585,20 +596,19 @@ $.fn.exists = function() {
 				var id = stepidx + '-' + i;
 				var html = '<div class="explorer-image" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
 				step.children(".create-image-container").append(html);
+				console.log(data[i]);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
+				$("#explorer-image-" + id).data('text', data[i].text);
 				$("#explorer-image-" + id).click(function() {
-					wizard._itemId = $(this).data('itemId');
-					wizard._material = $(this).data('material');
+					wizard._updateStateFromItem(this);
 					wizard._imageClick(this);
 				});
 				$("#explorer-image-" + id + " button").click(function() {
 					wizard._itemId = $(this).parent().data('itemId');
 					wizard._appendHistory($(this).parent());
 					wizard._addProductVariant();
-					//$("#create-finish-dialog").dialog('close');
 					$("#create-makeit-dialog").dialog('open');
-					//wizard.makeIt();
 					return false;
 				});
 				wizard._waitImage(data[i].image_url, id, 'hi', 0);
@@ -685,8 +695,7 @@ $.fn.exists = function() {
 				new_history_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 				this.element.find(".jw-history").append(new_history_div);
 				$(new_history_div).click(function() {
-					wizard._itemId = $(this).data('itemId');
-					wizard._material = $(this).data('material');
+					wizard._updateStateFromItem(this);
 					wizard._appendHistory(this);
 					wizard._changeStep(wizard._stepIndex);
 				});
@@ -706,7 +715,7 @@ $.fn.exists = function() {
 			}
 		},
 		_copyItemData : function(from, to) {
-			var props = ['itemId', 'material', 'itemText'];
+			var props = ['itemId', 'material', 'text'];
 			for(var i = 0; i < props.length; i++) {
 				$(to).data(props[i], $(from).data(props[i]));
 			}
@@ -776,7 +785,7 @@ $.fn.exists = function() {
 				window.location = '/product/' + wizard._itemId + "?waitImages=true"
 			});
 		},
-		_setAddress: function() {
+		_setAddress : function() {
 			//console.log(this._stepIndex);
 			//$.address.value(this._stepIndex);
 			console.log(this._itemId);
@@ -785,15 +794,15 @@ $.fn.exists = function() {
 			$.address.parameter('item', this._itemId);
 			$.address.update();
 			$.address.autoUpdate(true);
-			
+
 		},
-		_initAddress: function() {
+		_initAddress : function() {
 			var wizard = this;
 			//$.address.autoUpdate(false);
-			$.address.externalChange(function(evt){
-				var stepIndex = parseInt($.address.parameter('step'),10)
-				if(isNaN(stepIndex)||(stepIndex==-1)){
-					stepIndex=0;
+			$.address.externalChange(function(evt) {
+				var stepIndex = parseInt($.address.parameter('step'), 10)
+				if(isNaN(stepIndex) || (stepIndex == -1)) {
+					stepIndex = 0;
 				}
 				wizard._itemId = $.address.parameter('item');
 				wizard._changeStep(stepIndex);
@@ -1306,7 +1315,7 @@ $(document).ready(function() {
 			}
 		},
 	});
-	
+
 	$('#text-next').click(function() {
 		$("#wizard").jWizard("nextStep");
 	});

@@ -105,8 +105,13 @@ class Base:
         variants = product.get_random_variants(6)
         print len(variants)
         items = map(lambda x: x.get_item(), variants)
-        result = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(items, range(len(items))))
-        return result
+        return self._make_res_from_items(items)
+    
+    def _make_res_from_items(self, items):
+        materials = map(lambda x: x.material, items)
+        all_uuids = map(lambda x: str(x.uuid), items)
+        textParams = map(lambda x: str(x.textParam), items)
+        return self._make_result(all_uuids, materials, textParams)
     
     def start_iterate(self, definition_id, param_index, text):
         #logging.error(param_index)
@@ -189,7 +194,7 @@ class Base:
         
         self.root.selected=True
         self.root.save()
-        return self._make_result(all_uuids, materials)
+        return self._make_result(all_uuids, materials, [self.text for i in range(len(all_uuids))])
         
     def render_materials(self, materials, parent_id, definition_id, text):
         if parent_id == None:
@@ -220,7 +225,7 @@ class Base:
         #for i in range(len(materials)):
         #    explorer.tasks.send_jobs.apply_async(args=[definition, [uuids[i]], root, 1, self.distance, 1, -1, 'noop', self.iterate_type, materials[i], text], countdown=0)
         
-        return self._make_result(all_uuids, materials)
+        return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))])
     
     
     def _explore_deep(self):
@@ -323,10 +328,10 @@ class Base:
         job['view_name'] = view_name
         return job
     
-    def _make_result(self, uuids, materials):
+    def _make_result(self, uuids, materials, textParams):
         def do(x):
-            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1], "material": x[2]}
-        return map(do, zip(uuids, range(len(uuids)), materials))
+            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1], "material": x[2], "text": x[3]}
+        return map(do, zip(uuids, range(len(uuids)), materials, textParams))
         
     def _prepare_result_item(self, item, index):
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}

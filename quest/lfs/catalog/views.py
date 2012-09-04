@@ -25,6 +25,7 @@ from lfs.cart.views import add_to_cart
 from lfs.catalog.models import Category, Property
 from lfs.catalog.models import File
 from lfs.catalog.models import Product
+from lfs.catalog.models import Designer
 from lfs.catalog.models import ProductPropertyValue
 from lfs.catalog.models import PropertyOption
 from lfs.catalog.models import ProductAttachment
@@ -449,11 +450,16 @@ def all_products(request, template_name="lfs/catalog/products.html"):
                 'description': product.description
             })
     result = render_to_response(template_name, RequestContext(request, {
-        "name_of_p": 'amit',
         "products": raw_products
     }))
     return result
 
+def designers(request, template_name="lfs/catalog/designers.html"):
+    designers = Designer.objects.all()
+    result = render_to_response(template_name, RequestContext(request, {
+        "designers": designers
+    }))
+    return result
     
 def product_view(request, slug, template_name="lfs/catalog/product_base.html"):
     """Main view to display a product.

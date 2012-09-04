@@ -13,7 +13,7 @@ from lfs.catalog.models import PropertyGroup
 from lfs.catalog.models import ProductPropertyValue
 from lfs.catalog.models import StaticBlock
 from lfs.catalog.models import DeliveryTime
-
+from lfs.catalog.models import Designer
 
 class CategoryAdmin(admin.ModelAdmin):
     """
@@ -56,3 +56,5 @@ admin.site.register(Property)
 admin.site.register(PropertyOption)
 admin.site.register(ProductPropertyValue)
 admin.site.register(FilterStep)
+
+admin.site.register(Designer)

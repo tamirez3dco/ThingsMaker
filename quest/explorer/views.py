@@ -153,7 +153,7 @@ def add_product_variant(request):
     price = product.price
     name = product.name
     variants_count = product.variants.count()
-    variant = Product(name=name, slug=slug, sku=sku, parent=product, price=price, 
+    variant = Product(name=name, slug=slug, sku=sku, parent=product, price=price, item=item, 
                       active=True, active_images=True, active_sku=True, active_price=True, active_name=False,
                       variant_position=(variants_count + 1), sub_type=VARIANT)  
     

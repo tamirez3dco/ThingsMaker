@@ -7,6 +7,7 @@ import logging
 # django imports
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
@@ -688,6 +689,9 @@ class Product(models.Model):
     objects = ActiveManager()
 
     uid = models.CharField(max_length=50, editable=False, unique=True, default=get_unique_id_str)
+    
+    # Explorer additions
+    item = models.ForeignKey(Item, blank=True, null=True)
 
     class Meta:
         ordering = ("name", )
@@ -2662,3 +2666,8 @@ class ProductAttachment(models.Model):
         if self.file.url:
             return self.file.url
         return None
+
+class Designer(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True)
+    bio = models.TextField(_(u"Biography"), blank=True)
+    image_url = models.CharField(_(u"image_url"), blank=True, max_length=300)

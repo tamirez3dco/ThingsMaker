@@ -13,7 +13,7 @@ import cStringIO
 from django.core.files.base import ContentFile
 from django.db.models import ImageField
 from django.db.models.fields.files import ImageFieldFile
-
+from south.modelsinspector import add_introspection_rules
 # lfs imports
 from lfs.utils.images import scale_to_max_size
 
@@ -153,3 +153,4 @@ class ImageWithThumbsField(ImageField):
                                                    **kwargs)
         self.sizes = sizes
 
+add_introspection_rules([], ["^lfs\.core\.fields\.thumbs\.ImageWithThumbsField"])

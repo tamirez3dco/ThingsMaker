@@ -225,3 +225,22 @@
 	text-align: center;
 	width: 160px; 
 }
+
+
+.designer {
+	position: relative;
+	float:left;
+	width:98%;
+	margin: 0px 7px 10px 7px; 
+	padding: 4px 4px 4px 4px;
+	border: 1px;
+	border-style:solid;
+	border-color: #ECECEC;	
+}
+
+.designer IMG {
+	width: 100px; 
+	height: 100px;	
+	float: left;
+	margin-right: 20px;
+}

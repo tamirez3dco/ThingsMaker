@@ -1,0 +1,33 @@
+{% extends "lfs/base.html" %}
+{% load i18n %}
+
+{% block head %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumbs">
+        <li>
+            {% trans 'Designers' %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+	<h1>Designers</h1>
+	<div id="products">
+		{% for designer in designers %}
+			<div class="designer">
+				<img src="{{ designer.image_url }}">
+				<h3>{{ designer.user.username }}</h3>
+				<p class="product-description">
+        			{{ designer.bio|safe}}
+    			</p>
+			</div>
+		{% endfor %}
+		<div class="designer">
+			<h2>We are looking for parametric designers</h2>
+			<h3>This is your chance to express yourselves and interact with your customers</h3>
+			<h3><a>Contact us</a> or visit our <a>design guidlines</a></h3>
+		</div>
+	</div>
+{% endblock %}

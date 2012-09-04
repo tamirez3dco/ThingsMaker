@@ -23,6 +23,11 @@
 
 {% block content %}
 <div id="wizard">
+	{% if not product.is_variant %}
+	<div title="Start Model" id="create-param-start">
+		<div class="create-image-container"></div>
+	</div>
+	{% endif %}
 	{% if definition.accepts_text_params %}
     <div title="Text" id="create-param-text">
     	<div><p>Enter text to be part of your design</p></div>

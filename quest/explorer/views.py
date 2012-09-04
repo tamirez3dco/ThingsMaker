@@ -72,7 +72,8 @@ def explore(request):
                 #material_list = DefinitionMaterial.
                 items = controller.render_materials(['Gold', 'Silver'], None, gh_def.id, text)
             else:
-                items = controller.start_iterate(gh_def.id, param_index, text)
+                items = controller.get_random_items(product)
+                #items = controller.start_iterate(gh_def.id, param_index, text)
             logging.error(gh_def.file_name)
         else:
             if material == 'Available':

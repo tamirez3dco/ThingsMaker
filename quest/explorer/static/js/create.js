@@ -1,7 +1,10 @@
 $.extend({
 	getUrlVars : function() {
 		var vars = [], hash;
-		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		//var base = $.address.queryString();
+		var base = $.address.baseURL();
+		console.log(base);
+		var hashes = base.slice(base.indexOf('?') + 1).split('&');
 		for(var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
 			vars.push(hash[0]);
@@ -44,6 +47,7 @@ $.fn.exists = function() {
 		_productType : null,
 		_stepAfterLast : 0,
 		_material : null,
+		_firstStep : true,
 		/**
 		 * @description Initializes jWizard
 		 * @return void
@@ -80,8 +84,8 @@ $.fn.exists = function() {
 					$(this).removeClass("ui-state-hover");
 				}
 			});
-
-			this._changeStep(this._stepIndex, true);
+			this._initAddress();
+			//this._changeStep(this._stepIndex, true);
 		},
 		/**
 		 * @private
@@ -453,6 +457,12 @@ $.fn.exists = function() {
 		 * @return void
 		 */
 		_changeStep : function(nextStep, firstStep) {
+			if (this._firstStep == true) {
+				firstStep = true;
+				this._firstStep = false;
+			} else {
+				firstStep = false;
+			}
 			var reloadStep = false;
 			if(nextStep == this._stepIndex) {
 				reloadStep = true;
@@ -513,15 +523,15 @@ $.fn.exists = function() {
 				this._updateTitle(firstStep);
 				this._updateNavigation(firstStep);
 				if(nextStep.data('paramType') != 'text') {
-					nextStep.children(".create-image-container").html('');
+					if (!reloadStep) $currentStep.hide();
 					wizard._loadImages(nextStep, this._stepIndex, true);
+					//wizard._addImagesToStep(nextStep, wizard._stepIndex);
+					nextStep.css({
+						opacity : 1.0
+					}).show();
 					wizard._showImages();
 				}
 			}
-		},
-		_setAddress: function() {
-			//console.log(this._stepIndex);
-			$.address.value(this._stepIndex);
 		},
 		_waitImage : function(imgsrc, imageId, imageTitle, count) {
 			var img = new Image();
@@ -541,7 +551,6 @@ $.fn.exists = function() {
 			var wizard = this;
 			//wizard._showNextImage = true;
 			wizard._showImagesTask = setInterval(function() {
-				console.log('showImagesTask');
 				if(wizard._showNextImage != true)
 					return;
 				var done = 0;
@@ -767,6 +776,27 @@ $.fn.exists = function() {
 				window.location = '/product/' + wizard._itemId + "?waitImages=true"
 			});
 		},
+		_setAddress: function() {
+			//console.log(this._stepIndex);
+			//$.address.value(this._stepIndex);
+			//$.address.autoUpdate(false);
+			$.address.parameter('step', this._stepIndex.toString());
+			//$.address.parameter('item', this._itemId);
+			//$.address.update();
+			//$.address.autoUpdate(true);
+			
+		},
+		_initAddress: function() {
+			var wizard = this;
+			//$.address.autoUpdate(false);
+			$.address.externalChange(function(evt){
+				var stepIndex = parseInt($.address.parameter('step'),10)
+				if(isNaN(stepIndex)||(stepIndex==-1)){
+					stepIndex=0;
+				}
+				wizard._changeStep(stepIndex);
+			});
+		},
 		/**
 		 * @private
 		 * @description Initializes the menu
@@ -928,7 +958,6 @@ $.fn.exists = function() {
 		_updateTopMenu : function(firstStep) {
 			var wizard = this, currentStep = this._stepIndex, $menu = this.element.find(".wizard-steps");
 			$menu.children().each(function(x) {
-				console.log(x);
 				var $d = $(this), iStep = parseInt($d.attr("step"), 10);
 				//console.log(iStep);
 				var sClass = "";

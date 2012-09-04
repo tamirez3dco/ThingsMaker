@@ -319,6 +319,10 @@
 	margin: 0px 10px 10px 0px;
 	float: left;
 }
+.explorer-image img {
+	width:180px;
+	height:180px;
+}
 .explorer-image:hover {
 	cursor: pointer;
 }

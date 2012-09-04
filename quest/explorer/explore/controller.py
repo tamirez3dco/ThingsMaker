@@ -101,6 +101,12 @@ class Base:
         items = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(copies, range(len(copies))))
         return items
     
+    def get_random_items(self, product):
+        variants = product.get_random_variants(6)
+        print len(variants)
+        items = map(lambda x: x.get_item(), variants)
+        result = map(lambda x: self._prepare_result_item(x[0], x[1]), zip(items, range(len(items))))
+        return result
     
     def start_iterate(self, definition_id, param_index, text):
         #logging.error(param_index)

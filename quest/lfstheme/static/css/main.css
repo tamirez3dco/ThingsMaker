@@ -1302,7 +1302,7 @@ button.emphasized:hover {
 }
 
 #contactable form#contactForm #loading {
-	background: url(images/ajax-loader.gif) no-repeat;
+	background: url(/static/images/large-loading.gif) no-repeat;
 	width:55px;
 	height:55px;
 	margin: 100px auto;
@@ -1372,9 +1372,11 @@ button.emphasized:hover {
 }
 
 .authenticate INPUT {
-	border-radius: 0px;
-	font-size: 14px;
-	width: 100px;
+	border-radius: 8px;
+	font-size: 22px;
+	width: 200px;
+	background:transparent;
+	border: 1px solid white;
 }
 .authenticate BUTTON {
 	border-radius: 0px;

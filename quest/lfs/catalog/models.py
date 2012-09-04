@@ -963,7 +963,13 @@ class Product(models.Model):
             return item
         except IndexError:
             return None
+    
+#    def get_definition(self):
+#        definition = GhDefinition.objects.filter()
 
+    def get_random_variants(self, num):
+        return self.variants.filter(active=True).order_by('?')[:num]
+        
     def get_default_material(self):
         pass
     

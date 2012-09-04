@@ -10,6 +10,8 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import loader
 from django.template import RequestContext
+from django.utils import simplejson
+from django.core.mail import send_mail
 
 # lfs imports
 from lfs.caching.utils import lfs_get_object_or_404
@@ -28,6 +30,13 @@ def shop_view(request, template_name="lfs/shop/shop.html"):
         "shop": shop
     }))
 
+def lfs_feedback(request):
+    #send_mail('Subject here', 'Here is the message.', 'from@example.com', ['amit@ez3d.co'])
+    mail = EmailMessage(
+            subject="Error LFS", body='Here is the message.', from_email='amit@ez3d.co', to=['amit@ez3d.co'])
+    mail.send(fail_silently=False)
+    result = "success"#simplejson.dumps("success)
+    return HttpResponse(result)
 
 def server_error(request):
     """Own view in order to pass RequestContext and send an error message.

@@ -19,7 +19,8 @@ TESTING = False
 DEFAULT_FROM_EMAIL = 'your_email@domain.com'
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Amit Aviv', 'amit@ez3d.co'),
+    ('Tamir Levy', 'tamir@ez3d.co')
 )
 
 MANAGERS = ADMINS
@@ -185,9 +186,11 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "lfs"
 # CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 CACHE_BACKEND = 'dummy:///'
 
-EMAIL_HOST = ""
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_USER = os.environ['SENDGRID_USERNAME']
+EMAIL_HOST= 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
 
 PAYPAL_RECEIVER_EMAIL = "info@yourbusiness.com"
 PAYPAL_IDENTITY_TOKEN = "set_this_to_your_paypal_pdt_identity_token"

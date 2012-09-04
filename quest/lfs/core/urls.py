@@ -22,6 +22,7 @@ urlpatterns += patterns("django.contrib.sitemaps.views",
 # Shop
 urlpatterns += patterns('lfs.core.views',
     url(r'^$', "shop_view", name="lfs_shop_view"),
+    url(r'^feedback$', "lfs_feedback"),
 )
 
 # Cart

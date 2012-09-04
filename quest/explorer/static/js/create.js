@@ -519,7 +519,7 @@ $.fn.exists = function() {
 				});
 			} else {
 				this._stepIndex = $steps.index(nextStep);
-				this._setAddress();
+				//this._setAddress();
 				this._updateTitle(firstStep);
 				this._updateNavigation(firstStep);
 				if(nextStep.data('paramType') != 'text') {
@@ -779,11 +779,12 @@ $.fn.exists = function() {
 		_setAddress: function() {
 			//console.log(this._stepIndex);
 			//$.address.value(this._stepIndex);
-			//$.address.autoUpdate(false);
+			console.log(this._itemId);
+			$.address.autoUpdate(false);
 			$.address.parameter('step', this._stepIndex.toString());
-			//$.address.parameter('item', this._itemId);
-			//$.address.update();
-			//$.address.autoUpdate(true);
+			$.address.parameter('item', this._itemId);
+			$.address.update();
+			$.address.autoUpdate(true);
 			
 		},
 		_initAddress: function() {
@@ -794,6 +795,7 @@ $.fn.exists = function() {
 				if(isNaN(stepIndex)||(stepIndex==-1)){
 					stepIndex=0;
 				}
+				wizard._itemId = $.address.parameter('item');
 				wizard._changeStep(stepIndex);
 			});
 		},

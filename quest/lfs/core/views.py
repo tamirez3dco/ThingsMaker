@@ -31,11 +31,11 @@ def shop_view(request, template_name="lfs/shop/shop.html"):
     }))
 
 def lfs_feedback(request):
-    #send_mail('Subject here', 'Here is the message.', 'from@example.com', ['amit@ez3d.co'])
-    mail = EmailMessage(
-            subject="Error LFS", body='Here is the message.', from_email='amit@ez3d.co', to=['amit@ez3d.co'])
-    mail.send(fail_silently=False)
-    result = "success"#simplejson.dumps("success)
+    name = request.POST.get('name', "")
+    emailAddr = request.POST.get('email', "amit@ez3d.co")
+    message = request.POST.get('message', "No Message")
+    send_mail('Feedback from %s' % name, message, emailAddr, ['amit@ez3d.co'])
+    result = "success"
     return HttpResponse(result)
 
 def server_error(request):

@@ -1377,11 +1377,9 @@ button.emphasized:hover {
 }
 
 .authenticate INPUT {
-	border-radius: 8px;
-	font-size: 22px;
-	width: 200px;
-	background:transparent;
-	border: 1px solid white;
+	border-radius: 0px;
+	font-size: 14px;
+	width: 100px;
 }
 .authenticate BUTTON {
 	border-radius: 0px;

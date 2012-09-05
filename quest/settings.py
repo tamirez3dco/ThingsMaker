@@ -306,9 +306,9 @@ AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 #AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-LOGIN_REQUIRED_URLS = (
-    r'/(.*)$',
-)
+#LOGIN_REQUIRED_URLS = (
+#    r'/(.*)$',
+#)
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$', 
     r'/logout(.*)$',

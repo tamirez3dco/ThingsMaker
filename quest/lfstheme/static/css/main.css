@@ -1205,7 +1205,7 @@ button.emphasized:hover {
 
 /*Feedback */
 #contactable #contactable_inner {
-	background-image:url(../img/feeback.png);
+	background-image:url(/static/images/feeback.png);
 	color:#FFFFFF;
 	background-color:#333333;
 	cursor:pointer;

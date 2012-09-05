@@ -61,10 +61,12 @@ function getProductList(url, element) {
 	$.getJSON(url, function(data) {
 		var items = [];
 		for(var i = 0; i < data.products.length; i++) {
+			console.log(data.products[i]);
 			html = '<div class="home-product"><a class="home-product-pointer" href="' + data.products[i].product_url + '">'+
 				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" />'+
 				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
 				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"><small>' + data.products[i].lovers +'</small></div>'+
+				   '<div class="home-product-customize"><a href="create?start_product='+ data.products[i].slug + '&material=' + data.products[i].material + '&textParam=' + data.products[i].text + '&product_type=variant" class="button">Customize</a></div>'+
 				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + '</a>' +
 				   '</div>';
 			$(html, {

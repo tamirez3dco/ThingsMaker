@@ -160,40 +160,6 @@ def add_product_variant(request):
     variant.save()
     return HttpResponse(result)
 
-def get_recent_products(request):
-    shop = lfs_get_object_or_404(Shop, pk=1)
-    products = shop.get_recent_products()
-    res = []
-    for product in products:
-        res.append({"image_url": product.get_item_image(), 
-                    "name": product.name,
-                    "price": product.price,
-                    "product_url": "/product/" + product.slug,
-                    "slug" : product.slug,
-                    "lovers" : product.stock_amount})
-    result = simplejson.dumps({
-        "products": res
-    }, cls=LazyEncoder)
-
-    return HttpResponse(result)    
-
-def get_top_inspirations(request):
-    shop = lfs_get_object_or_404(Shop, pk=1)
-    products = shop.get_top_inspirations()
-    res = []
-    for product in products:
-        res.append({"image_url": product.get_item_image(), 
-                    "name": product.name,
-                    "price": product.price,
-                    "product_url": "/product/" + product.slug,
-                    "slug" : product.slug,
-                    "lovers" : product.stock_amount})
-    result = simplejson.dumps({
-        "products": res
-    }, cls=LazyEncoder)
-
-    return HttpResponse(result)    
-
 def list_products_by_name(request, name, template_name="lfs/catalog/products/products_by_name.html"):
     raw_products = Product.objects.filter(sub_type = VARIANT, name=name, active=True).order_by('-stock_amount')
     products = []
@@ -237,9 +203,12 @@ def get_screened_sorted_products(request,jsonstr):
     products = shop.get_ssp(screener,sorter,lower_limit,upper_limit)
     res = []
     for product in products:
+        item = product.get_item()   
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
                     "price": product.price,
+                    "material": item.material,
+                    "text" : item.textParam,
                     "product_url": "/product/" + product.slug,
                     "slug" : product.slug,
                     "lovers" : product.stock_amount})

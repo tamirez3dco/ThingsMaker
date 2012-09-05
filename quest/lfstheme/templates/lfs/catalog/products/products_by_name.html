@@ -32,6 +32,9 @@
         				{{ product.name }}
     				</p>
 					<div class="home-product-lovemeImage" slug="{{ product.slug }}" onclick="return hart_clicked(this)" alt="loveme"><small>{{ product.get_product_lovers }}</small></div>
+					<div class="home-product-customize">
+						<a href="/create?start_product={{ product.slug }}&material={{ product.item.material }}&textParam={{ product.item.textParam }}&product_type=variant" class="button">Customize</a>
+						</div>
 					<p class="home-product-price">
         				{{ product.get_price_formatted }}
     				</p>

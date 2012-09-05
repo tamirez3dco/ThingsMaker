@@ -1,6 +1,7 @@
 $(function(){
-	$('#contactable').contactable({
+	$('#feedback').contactable({
 		subject: 'feedback URL:'+location.href,
-		url: '/feedback'
+		url: '/feedback',
+		center: false
 	});
 });

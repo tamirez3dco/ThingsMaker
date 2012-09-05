@@ -1203,8 +1203,8 @@ button.emphasized:hover {
 }
 
 
-/*Feedback */
-#contactable #contactable_inner {
+/*.contactableack */
+.contactable-inner {
 	background-image:url(/static/images/feeback.png);
 	color:#FFFFFF;
 	background-color:#333333;
@@ -1222,8 +1222,10 @@ button.emphasized:hover {
 	width:44px;
 	z-index:100000;
 }
-
-#contactable #contactForm {
+.center .contactable-inner {
+	display: none;	
+}
+.contactable-form {
 	background-color:#333333;
 	border:2px solid #FFFFFF;
 	color:#FFFFFF;
@@ -1241,7 +1243,15 @@ button.emphasized:hover {
 	z-index:99;
 }
 
-#contactable form#contactForm input, textarea {
+.center .contactable-form {
+	top:50%;
+	left:50%;
+	margin-left:-180px;
+	margin-top:-225px;
+	display: none;	
+}
+
+form.contactable-form input, textarea {
 	background:#FFFFFF none repeat scroll 0 0;
 	outline-style:none;
 	outline-width:medium;
@@ -1253,7 +1263,7 @@ button.emphasized:hover {
 	margin-bottom:10px;
 }
 
-#contactable form#contactForm .submit {
+form.contactable-form .submit {
 	background: #F5410F none repeat scroll 0 0;
 	outline-style:none;
 	outline-width:medium;
@@ -1271,42 +1281,29 @@ button.emphasized:hover {
 	margin-top:10px;
 }
 
-#contactable form#contactForm p {
+form.contactable-form p {
 	width:325px;
 	font-size:0.9em;
 }
 
-#contactable form#contactForm .disclaimer {
+form.contactable-form .disclaimer {
 	*margin-left:20px;
 }
 
-#contactable #contactForm .red {
+.contactable-form .contactable-red {
 	color:	#F5410F;
 }
 
-#contactable #overlay {
-	background-color:#666666;
-	display:none;
-	height:100%;
-	left:0;
-	margin:0;
-	padding:0;
-	position:absolute;
-	top:0;
-	width:100%;
-	z-index:0;
-} 
-#contactable .error { background-color: #EDBE9C; }
+.contactable .error { background-color: #EDBE9C; }
 
-#contactable #name.error { background-color: #EDBE9C; } 
-#contactable #email.error { background-color: #EDBE9C; }
-#contactable #comment.error { background-color: #EDBE9C; }
+.contactable .contactable-name.error { background-color: #EDBE9C; } 
+.contactable .contactable-email.error { background-color: #EDBE9C; }
 
-#contactable form#contactForm label{
+.contactable form.contactable-form label{
 	*margin-left:20px;
 }
 
-#contactable form#contactForm #loading {
+.contactable form.contactable-form .contactable-loading {
 	background: url(/static/images/large-loading.gif) no-repeat;
 	width:55px;
 	height:55px;
@@ -1314,7 +1311,7 @@ button.emphasized:hover {
 	display:none;
 }
 
-#contactable #callback {
+.contactable .contactable-callback {
 	font-family: georgia;
 	font-size:1.1em;
 	color: #FFF;
@@ -1324,7 +1321,7 @@ button.emphasized:hover {
 }
 
 
-#contactable .holder {
+.contactable .contactable-holder {
 	margin:0 auto;
 	*margin-left:20px;
 	padding-top:20px;	

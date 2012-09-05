@@ -16,7 +16,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
-DEFAULT_FROM_EMAIL = 'your_email@domain.com'
+DEFAULT_FROM_EMAIL = 'amit@ez3d.co'
 
 ADMINS = (
     ('Amit Aviv', 'amit@ez3d.co'),

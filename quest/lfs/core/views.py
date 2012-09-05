@@ -32,9 +32,10 @@ def shop_view(request, template_name="lfs/shop/shop.html"):
 
 def lfs_feedback(request):
     name = request.POST.get('name', "")
-    emailAddr = request.POST.get('email', "amit@ez3d.co")
+    emailAddr = request.POST.get('email', settings.ADMINS[0][1])
     message = request.POST.get('message', "No Message")
-    send_mail('Feedback from %s' % name, message, emailAddr, ['amit@ez3d.co'])
+    to_emails = [a[1] for a in settings.ADMINS]
+    send_mail('Feedback from %s' % name, message, emailAddr, to_emails)
     result = "success"
     return HttpResponse(result)
 

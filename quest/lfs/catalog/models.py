@@ -434,6 +434,12 @@ class Category(models.Model):
         return CONTENT_PRODUCTS
 
 
+class Designer(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True)
+    bio = models.TextField(_(u"Biography"), blank=True)
+    image_url = models.CharField(_(u"image_url"), blank=True, max_length=300)
+
+
 class Product(models.Model):
     """
     A product is sold within a shop.
@@ -692,6 +698,7 @@ class Product(models.Model):
     
     # Explorer additions
     item = models.ForeignKey(Item, blank=True, null=True)
+    designer = models.ForeignKey(Designer, blank=True, null=True)
 
     class Meta:
         ordering = ("name", )
@@ -2667,7 +2674,3 @@ class ProductAttachment(models.Model):
             return self.file.url
         return None
 
-class Designer(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True)
-    bio = models.TextField(_(u"Biography"), blank=True)
-    image_url = models.CharField(_(u"image_url"), blank=True, max_length=300)

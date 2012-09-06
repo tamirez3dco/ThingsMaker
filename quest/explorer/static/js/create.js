@@ -781,8 +781,8 @@ $.fn.exists = function() {
 			var services = [
 				{cname: 'facebook', text: 'Facebook'},
 				{cname: 'googleplus', text: 'Google +'},
-				{cname: 'twitter', text: 'Twitter'},
 				{cname: 'pinterest', text: 'Pinterest'},
+				{cname: 'twitter', text: 'Twitter'},
 				{cname: 'email', text: 'Email'},
 			];
 			var summary = "I made this at ThingsMaker";

@@ -679,7 +679,7 @@ $.fn.exists = function() {
 			
 			$('#create-finish-dialog-left').html(cur_image_clone2);
 			$('#create-makeit-dialog-left').html(cur_image_clone3);
-			this._replaceShareButtons(cur_image_clone3.attr('src'), document.domain + '/product/' + wizard._itemId) 
+			this._replaceShareButtons(cur_image_clone3.attr('src'), 'http://' + document.domain + '/product/' + wizard._itemId) 
 			var new_last_div = $('<div />').append(cur_image_clone1);
 			new_last_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 			$(new_last_div).find('button').click(function() {

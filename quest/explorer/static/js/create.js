@@ -676,8 +676,10 @@ $.fn.exists = function() {
 			var cur_image_clone1 = $(image_parent).find(':first-child').clone();
 			var cur_image_clone2 = $(cur_image_clone1).clone();
 			var cur_image_clone3 = $(cur_image_clone1).clone();
+			
 			$('#create-finish-dialog-left').html(cur_image_clone2);
 			$('#create-makeit-dialog-left').html(cur_image_clone3);
+			this._replaceShareButtons(cur_image_clone3.attr('src'), document.domain + '/product/' + wizard._itemId) 
 			var new_last_div = $('<div />').append(cur_image_clone1);
 			new_last_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 			$(new_last_div).find('button').click(function() {
@@ -749,6 +751,7 @@ $.fn.exists = function() {
 				$("#create-makeit-dialog").dialog('open');
 			});
 		},
+		
 		_addProductVariant : function() {
 			var url = '/explorer/add_product_variant';
 			var params = {
@@ -772,6 +775,29 @@ $.fn.exists = function() {
 				wizard._makeIt();
 				$("#create-makeit-dialog").dialog('close');
 			});
+		},
+		_replaceShareButtons : function(image_url, product_url) {
+			$(".product-share-popup").html('');
+			var services = [
+				{cname: 'facebook', text: 'Facebook'},
+				{cname: 'twitter', text: 'Twitter'},
+				{cname: 'pinterest', text: 'Pinterest'},
+				{cname: 'email', text: 'Email'},
+			];
+			for(var i=0; i<services.length; i++) {
+				$(".product-share-popup").append('<span id="'+ services[i].cname+ '-share" class="' + services[i].cname + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
+				stWidget.addEntry({
+                 	"service": services[i].cname,
+                 	"element": document.getElementById(services[i].cname +'-share'),
+                 	"url": product_url,
+                 	"title": "ThingsMaker",
+                 	"type":"large",
+                 	"text": services[i].text,
+                 	"image": image_url,
+                 	"summary": "I made this at ThingsMaker"
+        		});
+			}
+			
 		},
 		_makeIt : function() {
 			var url = '/explorer/set_product_name';

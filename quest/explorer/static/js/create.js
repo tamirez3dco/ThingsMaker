@@ -780,6 +780,7 @@ $.fn.exists = function() {
 			$(".product-share-popup").html('');
 			var services = [
 				{cname: 'facebook', text: 'Facebook'},
+				{cname: 'googleplus', text: 'Google +'},
 				{cname: 'twitter', text: 'Twitter'},
 				{cname: 'pinterest', text: 'Pinterest'},
 				{cname: 'email', text: 'Email'},

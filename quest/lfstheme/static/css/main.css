@@ -1294,6 +1294,16 @@ form.contactable-form .disclaimer {
 	color:	#F5410F;
 }
 
+.contactable-close {
+	width: 24px;
+	height: 24px;
+	display: none;
+}
+
+.center .contactable-close {
+	display: block;
+}
+
 .contactable .error { background-color: #EDBE9C; }
 
 .contactable .contactable-name.error { background-color: #EDBE9C; } 

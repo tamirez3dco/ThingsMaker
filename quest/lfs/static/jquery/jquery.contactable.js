@@ -40,6 +40,7 @@
 			//construct the form
 			var this_id_prefix = '#'+this.id+' ';
 			$(this).html('<div class="contactable-inner"></div><form class="contactable-form" method="" action="">'+
+						 '<button class="contactable-close">X</button>'+
 			             '<div class="contactable-loading"></div><div class="contactable-callback">'+
 			             '</div><div class="contactable-holder"><p><label for="name">'+options.name+
 			             '<span class="contactable-red"> * </span></label><br />'+
@@ -62,6 +63,11 @@
 			function() {
 				$(this_id_prefix+'.contactable-form').animate({"marginLeft": "-=390px"}, "slow");
 				$(this).animate({"marginLeft": "-=387px"}, "slow").animate({"marginLeft": "+=5px"}, "fast"); 
+			});
+			
+			$(this_id_prefix+'.contactable-close').click(function(){
+				$(this_id_prefix+'.contactable-form').css({'display': 'none'});
+				return false;
 			});
 			
 			//validate the form 

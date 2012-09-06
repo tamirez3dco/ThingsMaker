@@ -605,11 +605,7 @@ $.fn.exists = function() {
 					wizard._imageClick(this);
 				});
 				$("#explorer-image-" + id + " button").click(function() {
-					wizard._itemId = $(this).parent().data('itemId');
-					wizard._appendHistory($(this).parent());
-					wizard._addProductVariant();
-					$("#create-makeit-dialog").dialog('open');
-					return false;
+					return wizard._makeItClick(this);	
 				});
 				wizard._waitImage(data[i].image_url, id, 'hi', 0);
 			}
@@ -683,12 +679,7 @@ $.fn.exists = function() {
 			var new_last_div = $('<div />').append(cur_image_clone1);
 			new_last_div.append('<button class="explorer-image-button" type="button">Make It</button>');
 			$(new_last_div).find('button').click(function() {
-				wizard._itemId = $(this).parent().data('itemId');
-				wizard._appendHistory($(this).parent());
-				wizard._addProductVariant();
-				//$("#create-finish-dialog").dialog('close');
-				$("#create-makeit-dialog").dialog('open');
-				return false;
+				return wizard._makeItClick(this);	
 			});
 			this._copyItemData(image_parent, new_last_div);
 			this.element.find(".jw-last").html(new_last_div);
@@ -703,18 +694,21 @@ $.fn.exists = function() {
 				});
 
 				$(new_history_div).find('button').click(function() {
-					wizard._itemId = $(this).parent().data('itemId');
-					wizard._appendHistory($(this).parent());
-					wizard._addProductVariant();
-					//$("#create-finish-dialog").dialog('close');
-					$("#create-makeit-dialog").dialog('open');
-					return false;
+					return wizard._makeItClick(this);
 				});
 
 				$(".jw-history").animate({
 					scrollLeft : $(".jw-history")[0].scrollWidth
 				}, 4000);
 			}
+		},
+		_makeItClick: function(item) {
+			this._itemId = $(item).parent().data('itemId');
+			this._appendHistory($(item).parent());
+			this._addProductVariant();
+			this._replaceShareButtons($(item).attr('src'), 'http://' + document.domain + '/product/' + this._itemId);
+			$("#create-makeit-dialog").dialog('open');
+			return false;
 		},
 		_copyItemData : function(from, to) {
 			var props = ['itemId', 'material', 'text'];

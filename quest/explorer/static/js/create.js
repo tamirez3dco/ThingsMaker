@@ -784,8 +784,9 @@ $.fn.exists = function() {
 				{cname: 'pinterest', text: 'Pinterest'},
 				{cname: 'email', text: 'Email'},
 			];
+			var summary = "I made this at ThingsMaker";
 			for(var i=0; i<services.length; i++) {
-				$(".product-share-popup").append('<span id="'+ services[i].cname+ '-share" class="' + services[i].cname + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
+				$(".product-share-popup").append('<span id="'+ services[i].cname+ '-share" class="' + services[i].cname + '" st_summary="' + summary + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
 				stWidget.addEntry({
                  	"service": services[i].cname,
                  	"element": document.getElementById(services[i].cname +'-share'),
@@ -794,7 +795,7 @@ $.fn.exists = function() {
                  	"type":"large",
                  	"text": services[i].text,
                  	"image": image_url,
-                 	"summary": "I made this at ThingsMaker"
+                 	"summary": summary
         		});
 			}
 			

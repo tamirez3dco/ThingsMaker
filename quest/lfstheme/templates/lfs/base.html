@@ -107,22 +107,21 @@
 
         <div id="footer">
             <div class="container">
+            	  <div id="colophon">
+           		<div>
+	                {% block colophon %}
+	                    <p>
+	                        &copy; 2012 {% trans 'by' %} ThingsMaker LTD &mdash; {% trans 'All rights reserved' %}
+	                    </p>
+	                {% endblock %}
+	            </div>
+	            </div>
                 {% block footer %}
                     {% actions Footer %}
                     {% for action in actions %}
                         <a href="{{ action.link }}">{{ action.title }}</a>
                         {% if not forloop.last %}|{% endif %}
                     {% endfor %}
-                {% endblock %}
-            </div>
-        </div>
-
-        <div id="colophon">
-            <div class="container">
-                {% block colophon %}
-                    <p>
-                        &copy; 2012 {% trans 'by' %} EZ3D &mdash; {% trans 'All rights reserved' %}
-                    </p>
                 {% endblock %}
             </div>
         </div>

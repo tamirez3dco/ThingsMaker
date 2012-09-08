@@ -46,6 +46,29 @@ def cart(request, template_name="lfs/cart/cart.html"):
         "cart_inline": cart_inline(request),
     }))
 
+def get_cart_items_for_paypal(request):
+    cart = cart_utils.get_cart(request)
+    cart_items = []
+    for cart_item in cart.get_items():
+        product = cart_item.product
+        ouritem = product.get_item()
+        quantity = product.get_clean_quantity(cart_item.amount)
+        cart_items.append({
+            #"obj": cart_item,
+            "quantity": quantity,
+            #"product": product,
+            "product_price_per_item" : product.get_price_formatted(),
+            "product_price_net": cart_item.get_price_net(request),
+            "product_price_gross": cart_item.get_price_gross(request),
+            "product_tax": cart_item.get_tax(request),
+            "product_name": product.name,
+            "image_url" : product.get_item_image()
+        })
+    result = simplejson.dumps({
+        "items": cart_items
+    }, cls=LazyEncoder)
+
+    return HttpResponse(result)    
 
 def cart_inline(request, template_name="lfs/cart/cart_inline.html"):
     """

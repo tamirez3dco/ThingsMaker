@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load lfs_tags %}
 
+{% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/paypal.js"></script>
+{% endblock %}
+
 {% block title %}
     {% trans 'Cart' %} - {{ block.super }}
 {% endblock %}
@@ -17,4 +21,14 @@
     <div id="cart-inline">
         {{cart_inline}}
     </div>
+    <!--
+    	<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" onclick="paypal_checkout(this)"></img>
+    -->
+<!--
+    <div id="paypal_button">
+    // wrap your encrypted paypal button in a div
+</div>
+-->
+   
+    
 {% endblock %}

@@ -1,6 +1,7 @@
 {% load i18n lfs_tags %}
 
 {% if cart_items %}
+<!--
     <h1 class="first-heading">
         {% trans "Voucher" %}
     </h1>
@@ -16,7 +17,7 @@
             {{ voucher_message }}
         </span>
     {% endif %}
-
+-->
     <h1 class="title">
         {% trans 'Your Cart' %}
     </h1>
@@ -285,10 +286,14 @@
             <tr>
                 <td colspan="8">
                     <div class="buttons">
+                    	<!--
                         <a class="button checkout-button emphasized"
                            href="{% url lfs_checkout_dispatcher %}">
                            {% trans 'Checkout' %}
                         </a>
+                       -->
+                       	<img  style="float:right;" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" onclick="paypal_checkout(this)"></img>
+                       	
                         <a class="button shopping-button"
                            href="{{ shopping_url }}">
                             {% trans 'Go on shopping' %}

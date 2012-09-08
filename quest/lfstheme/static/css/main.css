@@ -342,7 +342,7 @@ table.search-results {
 	position: relative;
     height: 60px;
     padding: 0;
-    /*background: url(../img/menu_bg.jpg) repeat;*/
+    /*background: url(/static/img/menu_bg.jpg) repeat;*/
    /*background-color: #ECECEC;*/
 }
 
@@ -367,7 +367,7 @@ table.search-results {
 
 .tabs li.selected a,
 .tabs li a:hover {
-    background: url(../img/menu_bg_selected.jpg) repeat-x;
+    background: url(/static/img/menu_bg_selected.jpg) repeat-x;
     color: white !important;
 }
 
@@ -474,7 +474,7 @@ div.product-quantity {
 }
 
 .sorting {
-    background: url(../img/portlet_header_bg.jpg) no-repeat right;
+    background: url(/static/img/portlet_header_bg.jpg) no-repeat right;
     text-align: right;
     padding-right: 5px;
 }
@@ -635,7 +635,7 @@ ___________________________________________________________________________ */
 .overview {
     text-align: right;
     padding: 10px 30px 10px 0;
-    background: url("../img/portlet_header_bg.jpg") right no-repeat;
+    background: url("/static/img/portlet_header_bg.jpg") right no-repeat;
     font-size: 80%;
     font-weight: bold;
 }
@@ -755,7 +755,7 @@ ___________________________________________________________________________ */
 }
 
 h2.authenticate {
-    background: url(../img/menu_bg.jpg) repeat-x;
+    background: url(/static/img/menu_bg.jpg) repeat-x;
     padding: 10px;
 }
 
@@ -808,7 +808,7 @@ ___________________________________________________________________________ */
 .star-rating a:active,
 .star-rating a:focus,
 .star-rating .current-rating {
-    background: url(../img/star.gif) left -1000px repeat-x;
+    background: url(/static/img/star.gif) left -1000px repeat-x;
 }
 
 .star-rating {
@@ -861,7 +861,7 @@ ___________________________________________________________________________ */
 .small-star a:active,
 .small-star a:focus,
 .small-star .current-rating {
-    background-image: url(../img/star_small.gif);
+    background-image: url(/static/img/star_small.gif);
     line-height: 10px;
     height: 10px;
 }
@@ -935,7 +935,7 @@ ___________________________________________________________________________ */
 .portlet-footer a {
     padding-left: 25px;
     text-decoration: none;
-    background: url("../img/portlet-bullet.gif") left center no-repeat;
+    background: url("/static/img/portlet-bullet.gif") left center no-repeat;
 }
 
 .portlet .for-sale-standard-price {
@@ -1020,13 +1020,13 @@ ___________________________________________________________________________ */
 
 .categories-portlet li.level-0 a {
     padding-left: 15px;
-    background: transparent url("../img/bullet_light.jpg") left 5px no-repeat;
+    background: transparent url("/static/img/bullet_light.jpg") left 5px no-repeat;
     display: block;
 }
 
 .categories-portlet li.level-0 a.current,
 .categories-portlet li.level-0 a:hover {
-    background: transparent url("../img/bullet_dark.jpg") left 5px no-repeat;
+    background: transparent url("/static/img/bullet_dark.jpg") left 5px no-repeat;
 }
 
 .categories-portlet li.level-1,
@@ -1080,7 +1080,7 @@ ___________________________________________________________________________ */
     padding: 10px;
     padding-bottom: 0px;
     color: #58585a;
-    background: url(../img/menu_bg.jpg) repeat-x;
+    background: url(/static/img/menu_bg.jpg) repeat-x;
     margin-bottom: 0px;
     font-size: 90%;
     clear: none;
@@ -1346,7 +1346,7 @@ form.contactable-form .disclaimer {
 .small_tabs ul {
 	position: relative;
     margin: 0;
-    /*background: url(../img/menu_bg.jpg) repeat;*/
+    /*background: url(/static/img/menu_bg.jpg) repeat;*/
    /*background-color: #ECECEC;*/
 }
 
@@ -1371,7 +1371,7 @@ form.contactable-form .disclaimer {
 
 .small_tabs li.selected p,
 .small_tabs li p:hover {
-    background: url(../img/menu_bg_selected.jpg);
+    background: url(/static/img/menu_bg_selected.jpg);
     color: white !important;
 }
 

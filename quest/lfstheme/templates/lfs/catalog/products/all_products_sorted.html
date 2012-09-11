@@ -25,7 +25,11 @@
 
 
 {% block content %}
-<h1>Popular</h1>
+{% if page_name %}
+<div class="content-title container">
+<img src="/static/img/IconNormal{{ page_name }}Big.png" /><h1>{{ page_name }}</h1>
+</div>
+{% endif %}
 <div id="small_tabs">
 	    <div class="container" height="40px">
 	    <div class="small_tabs">

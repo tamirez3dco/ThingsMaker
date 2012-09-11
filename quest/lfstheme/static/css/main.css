@@ -509,7 +509,7 @@ ul.breadcrumbs li {
 
 /* Content ################################################################# */
 #content {
-    padding-top: 36px;
+    padding-top: 44px;
     background-image: url(/static/img/content-bg.jpg);
 	background-repeat: repeat;
 	padding-bottom: 60px; 
@@ -517,6 +517,24 @@ ul.breadcrumbs li {
 	border-bottom: 1px solid #ffffff;
 }
 
+.content-title {
+	width: 100%;
+	clear: both;
+}
+.content-title img {
+	float: left;
+	margin-right: 6px;
+	/*margin-bottom: 30px;*/
+}
+.content-title h1 {
+	float: left;
+	position: relative;
+	top: -8px;
+	margin-bottom: 0px;
+	clear: right;
+	/*margin-right: 6px;*/
+	/*margin-bottom: 30px;*/
+}
 .left-slot {
     padding-right: 5px;
     border-right: 1px solid #dfd7d3;

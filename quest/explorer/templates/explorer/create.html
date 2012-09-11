@@ -22,7 +22,9 @@
 {% endblock %}
 
 {% block content %}
-<h1>Create</h1>
+	<div class="content-title container">
+<img src="/static/img/IconNormalCreateBig.png" /><h1>Create</h1>
+</div>
 <div id="wizard">
 	{% if not product.is_variant %}
 	<div title="Start Model" id="create-param-start">
@@ -50,7 +52,7 @@
 <div id="create-finish-dialog">
 	<div id="create-finish-dialog-left"></div>
 	<div id="create-finish-dialog-right">
-		<h1>Your new {{ product.name|lower }} is ready.</h1>
+		<h3>Your new {{ product.name|lower }} is ready.</h3>
 		<button type="button" class="button left" id="create-show-details">Make It</input>
 		<button type="button" class="button left" id="create-continue-creating">Continue Creating</input>
 	</div>
@@ -58,9 +60,9 @@
 <div id="create-makeit-dialog">
 	<div id="create-makeit-dialog-left"></div>
 	<div id="create-makeit-dialog-right">
-		<h1>You made it, You can name it..</h1>
+		<h3>You made it, You can name it..</h3>
 		<input type="text" id="new-product-name" value="My precious" />
-		<h1>Share your creation</h1>
+		<h3>Share your creation</h3>
 		<div class="product-share-popup" style="clear: both">
 		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
 		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>

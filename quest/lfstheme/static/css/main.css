@@ -408,13 +408,15 @@ table.search-results {
 #cart-tab A {
 	/*padding: 0px 0px 20px 8px;*/
 	width: 80px;	
+	height: 20px;
 }
 #cart-tab-img {
-	/*position: absolute;
-	right: 0px;
-	top: 16px;*/
+	position: absolute;
+	left: 56px;
+	top: 5px;
 	/*margin-top: 24px;*/
-	width: 30px;	
+	/*width: 30px;	*/
+	
 }
 
 #home-tab A {
@@ -1157,7 +1159,7 @@ ___________________________________________________________________________ */
     clear: none;
 }
 
-#footer .container a:visited {
+#footer .container a {
 	color: #ffffff;
 }
 

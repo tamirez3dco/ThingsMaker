@@ -5,10 +5,18 @@
 	height: 100px;
 }
 
+html {
+    height : auto !important;
+	height: 100%;  
+	min-height : 100%;	
+}
 body {
     color: #58585a;
     font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     font-size: 12px;
+    height : auto !important;
+	height: 100%;  
+	min-height : 100%;
 }
 
 a,
@@ -363,12 +371,12 @@ table.search-results {
     position: relative;
     float: left;
     font-size: 18px;
-    padding: 20px 0px 10px 0px;
+    padding: 20px 0px 0px 6px;
     margin-top: 16px;
     width: 170px;
     border-left: 1px solid #dadada;
     line-height: 20px;
-    text-align: center;
+    text-align: left;
     background: transparent;
     text-decoration: none;
   
@@ -380,6 +388,51 @@ table.search-results {
     color: #0c80d1 !important;
 }
 
+.tabs span {
+	height: 24px;
+	padding-left: 26px;
+	display: inline;
+	position: absolute;
+	top: -5px;
+}
+.tabs div {
+	position:relative;
+	float: left;
+	display: block;
+	overflow: hidden;
+	width: 80px;
+	height: 30px;
+	clear: none;
+}
+.tabs .icon {
+	width: 28px;
+	height: 20px;
+	margin-left: 32px;
+}
+
+#tab-Create span {
+	background-image: url(/static/img/create_icon_tabs.png);
+}
+.tabs li.selected #tab-Create span,
+#tab-Create:hover span {
+    background-image: url(/static/img/create_icon_tabs_hover.png);
+}
+
+#tab-Popular span {
+	background-image: url(/static/img/popular_icon_tabs.png);
+}
+.tabs li.selected #tab-Popular span,
+#tab-Popular:hover span {
+    background-image: url(/static/img/popular_icon_tabs_hover.png);
+}
+
+#tab-Recent span {
+	background-image: url(/static/img/recent_icon_tabs.png);
+}
+.tabs li.selected #tab-Recent span,
+#tab-Recent:hover span {
+    background-image: url(/static/img/recent_icon_tabs_hover.png);
+}
 
 #home-tab {
 	border-top-left-radius: 6px;
@@ -408,7 +461,7 @@ table.search-results {
 #cart-tab A {
 	/*padding: 0px 0px 20px 8px;*/
 	width: 80px;	
-	height: 20px;
+	height: 30px;
 }
 #cart-tab-img {
 	position: absolute;
@@ -452,7 +505,12 @@ ul.breadcrumbs li {
     padding-top: 14px;
     background-image: url(/static/img/content-bg.jpg);
 	background-repeat: repeat;
-	padding-bottom: 30px;   
+	padding-bottom: 30px; 
+	border-top: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	height: 100%;  
+	height : auto !important;
+	min-height : 100%;	
 }
 
 .left-slot {

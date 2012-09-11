@@ -509,10 +509,10 @@ ul.breadcrumbs li {
 
 /* Content ################################################################# */
 #content {
-    padding-top: 14px;
+    padding-top: 36px;
     background-image: url(/static/img/content-bg.jpg);
 	background-repeat: repeat;
-	padding-bottom: 30px; 
+	padding-bottom: 60px; 
 	border-top: 1px solid #ffffff;
 	border-bottom: 1px solid #ffffff;
 }
@@ -1346,21 +1346,21 @@ button.emphasized:hover {
 
 /*.contactableack */
 .contactable-inner {
-	background-image:url(/static/images/feeback.png);
+	background-image:url(/static/img/FeedbackBTN.png);
 	color:#FFFFFF;
-	background-color:#333333;
+	background-color:transparent;
 	cursor:pointer;
-	height:102px;
+	height:101px;
 	left:0;
-	margin-left:-5px; 
+	margin-left:0px; 
 	*margin-left:-5px; 
 	overflow:hidden;
 	position:fixed;
 	*position:absolute;
 	text-indent:-100000px;
-	top:102px;
+	top:312px;
 	*margin-top:10px;
-	width:44px;
+	width:34px;
 	z-index:100000;
 }
 .center .contactable-inner {
@@ -1378,7 +1378,7 @@ button.emphasized:hover {
 	overflow:hidden;
 	padding-left:30px;
 	position:fixed;
-	top:200px;
+	top:312px;
 	width:360px;
 	*width:394px;
 	z-index:99;
@@ -1637,6 +1637,7 @@ form.contactable-form .disclaimer {
 	border: 1px;
 	border-style:solid;
 	border-color: #ECECEC;
+	background-color: #ffffff;
 }
 
 .home-product:hover .home-product-lovemeImage {

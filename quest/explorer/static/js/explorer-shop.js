@@ -42,8 +42,9 @@ function hart_clicked(element)
 	// first increase the number in element
 	var currentNum = parseInt(element.innerText);
 	currentNum += 1;
-	element.innerHTML = "<small>"+currentNum +"<\small>";
-	
+	element.innerHTML = "<span>"+currentNum +"<\span>";
+	$(element).removeClass('empty');
+	console.log($(element).parent());
 	// next send the AJAX
 	myslug = element.getAttribute("slug");
 
@@ -66,13 +67,19 @@ function getProductList(url, element) {
 				console.log('last');
 				addClass = 'home-product last';
 			}
+			var likeClass = "home-product-like empty";
+			if (data.products[i].lovers > 0) {
+				likeClass = "home-product-like";
+			}
 			html = '<div class="'+ addClass +'"><a class="home-product-pointer" href="' + data.products[i].product_url + '">'+
 				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" />'+
 				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
 				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + '</p></a>' +
-				   '<div class="home-product-lovemeImage" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"><small>' + data.products[i].lovers +'</small></div>'+
-				   '<div class="home-product-customize"><a href="/create?start_product='+ data.products[i].slug + '&material=' + data.products[i].material + '&textParam=' + data.products[i].text + '&product_type=variant" class="button">Customize</a></div>'+
-				    + '</div>';
+				   '<div class="home-product-hover">'+
+				   '<div class="'+ likeClass +'" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"><span>' + data.products[i].lovers +'</span></div>'+
+				   '<div class="home-product-customize"><a href="/create?start_product='+ data.products[i].slug + '&material=' + data.products[i].material + '&textParam=' + data.products[i].text + '&product_type=variant">Customize</a></div>'+
+				   '</div>'+
+				   + '</div>';
 			$(html, {
 				'class' : 'home-product-list',
 				html : ''

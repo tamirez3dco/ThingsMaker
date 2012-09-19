@@ -1648,6 +1648,7 @@ form.contactable-form .disclaimer {
 }
 
 .home-product {
+	position: relative;
 	float: left; 
 	width: 167px;
 	padding: 6px 6px 0px 6px; 
@@ -1658,6 +1659,19 @@ form.contactable-form .disclaimer {
 }
 .home-product .last {
 	margin: 0px 0px 10px 1px; 
+}
+
+.home-product:hover .home-product-hover {
+	visibility:visible;
+}
+
+.home-product-hover {
+	visibility:hidden;
+	height: 23px;
+	width: 167px;
+	position: absolute;
+	top: 6px;
+	left: 6px;
 }
 
 .home-product:hover .home-product-lovemeImage {
@@ -1681,31 +1695,59 @@ form.contactable-form .disclaimer {
 
 .home-product-lovemeImage:hover {background-image: url("/static/images/Hart.png");}
 
-
-.home-product:hover .home-product-customize {
-	visibility:visible;
+.home-product-customize, .home-product-customize:visited .home-product-customize:hover {
+	width: 79px; 
+	height: 23px;
+	background-color: rgba(0,0,0,0.1);
+	float: right;
+	clear: none;
+	color: #ffffff;
+	/*padding-top: 5px;*/
 }
 
-.home-product-customize {
-	display:none;
-	position:relative;
-	float:left;
-	width: 60px; 
-	height: 24px;
-	top : -212px;
-	left : 28px; 
-	visibility: hidden;
-	text-align:center;
-	border-radius: 3px;
+.home-product-customize a, 
+.home-product-customize a:visited, 
+.home-product-customize a:hover
+.home-product-customize:hover a {
+	font: 13px Arial;
+	color: #ffffff !important;
+	/*padding-top: 7px;*/
+	text-decoration: none;
+	margin-left: 7px;
+	margin-top: 4px;
+	display: block;
 }
 
-.home-product-customize a {
-	border-radius: 4px;
-	width: 70px; 
-	height: 14px;
-	font-size:11px;
-	padding: 2px;
-	line-height:12px;	
+
+.home-product-like {
+	width: 42px; 
+	height: 23px;
+	float: left;
+	clear:none;
+	background-color: rgba(0,0,0,0.1);
+	background-image: url("/static/img/HeartRed+BG.png");
+	background-repeat: no-repeat;
+	padding:0px;
+	text-decoration: none;
+}
+.home-product-like:hover {
+	cursor: pointer;
+}
+.home-product-like.empty {
+	/*color: #000000;*/
+	background-image: url("/static/img/HeartWhite+BG.png");
+}
+
+.home-product-like span {
+	font: 13px Arial;
+	color: #ff0000;
+	line-height: 23px;
+	padding:0px;
+	text-decoration: none;
+	margin-left: 23px;
+}
+.home-product-like.empty span {
+	color: #ffffff;
 }
 
 

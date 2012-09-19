@@ -1567,14 +1567,14 @@ form.contactable-form .disclaimer {
 
 #home-img  {
 	position: relative;
-	padding: 12px 12px 12px 12px;
+	padding: 6px;
 	border-radius: 4px;
 	border:1px solid;
 	border-color: #ECECEC;
-	background-color: #f3fffe;
+	background-color: #ffffff;
 }
 #home-img IMG {
-	width: 924px;
+	width: 948px;
 	border-radius: 4px;
 	border: 0px solid;
 }
@@ -1650,12 +1650,14 @@ form.contactable-form .disclaimer {
 .home-product {
 	float: left; 
 	width: 167px;
-	padding: 7px 7px 3px 7px; 
-	margin: 0px 7px 10px 0px; 
-	border: 1px;
-	border-style:solid;
-	border-color: #ECECEC;
+	padding: 6px 6px 0px 6px; 
+	margin: 0px 13px 10px 1px; 
+	border: 1px solid #E6E6E6;
 	background-color: #ffffff;
+	box-shadow: 0px 0px 2px #cfcfcf;
+}
+.home-product .last {
+	margin: 0px 0px 10px 1px; 
 }
 
 .home-product:hover .home-product-lovemeImage {
@@ -1674,6 +1676,7 @@ form.contactable-form .disclaimer {
 	text-align:center;
 	line-height:25px;
 	color:white;
+	display:none;
 }
 
 .home-product-lovemeImage:hover {background-image: url("/static/images/Hart.png");}
@@ -1684,6 +1687,7 @@ form.contactable-form .disclaimer {
 }
 
 .home-product-customize {
+	display:none;
 	position:relative;
 	float:left;
 	width: 60px; 
@@ -1708,8 +1712,7 @@ form.contactable-form .disclaimer {
 .home-product-mainImage {
 	width: 167px; 
 	height: 167px;
-	margin: 0px 0px 3px 0px; 
-	padding: 0px 2px;
+	margin: 0px 0px 0px 0px; 
 	float: left;
 	/*hover: .home-product-lovemeImage{display:block};*/
 }
@@ -1719,21 +1722,24 @@ form.contactable-form .disclaimer {
 }
 
 .home-product-name {
-	width: 120px; 
-	height: 20px;
-	padding: 0px 0px 0px 4px;
-	margin: 0px;
+	height: 22px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+	font: bold 14px Arial;
+	color: #4d4d4d;
 	float: left; 
+	clear: none;
 }
 
 .home-product-price {
 	text-align:right;
-	width: 80px; 
-	height: 20px;
-	padding: 0px 4px 0px 0px;
+	width: 50px; 
+	height: 21px;
 	float: right; 
-	margin: 0px;
-	color: green;
+	margin-top: 7px;
+	margin-bottom: 0px;
+	font: 13px Arial;
+	color: #f9941f;
 }
 
 .home-product-price a{

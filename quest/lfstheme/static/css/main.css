@@ -1702,6 +1702,7 @@ form.contactable-form .disclaimer {
 	float: right;
 	clear: none;
 	color: #ffffff;
+	background-image: url("/static/img/CustomizeBG.png");
 	/*padding-top: 5px;*/
 }
 

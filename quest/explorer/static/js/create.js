@@ -727,7 +727,7 @@ $.fn.exists = function() {
 			var wizard = this;
 			$("#create-finish-dialog").dialog({
 				autoOpen : false,
-				width : 570,
+				width : 640,
 				height : 200,
 				//position: [300, 300],
 				resizable : false,
@@ -758,7 +758,7 @@ $.fn.exists = function() {
 			var wizard = this;
 			$("#create-makeit-dialog").dialog({
 				autoOpen : false,
-				width : 570,
+				width : 640,
 				height : 200,
 				//position: [300, 300],
 				resizable : false,

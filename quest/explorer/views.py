@@ -171,8 +171,7 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
             "product_url": "/product/" + product.slug
         })
     result = render_to_response(template_name, RequestContext(request, {
-        "name_of_p": 'amit',
-       "products": raw_products
+            "products": raw_products
     }))
     return result
 
@@ -180,6 +179,7 @@ def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_produc
     myobj = simplejson.loads(jsonstr)
     shop = lfs_get_object_or_404(Shop, pk=1)
     myobj["shop"]=shop
+    #logging.error(myobj["myname"])
     return render_to_response(template_name, RequestContext(request, myobj))
 
 def get_screened_sorted_products(request,jsonstr):
@@ -204,6 +204,7 @@ def get_screened_sorted_products(request,jsonstr):
     res = []
     for product in products:
         item = product.get_item()   
+        if item == None: continue
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
                     "price": product.price,

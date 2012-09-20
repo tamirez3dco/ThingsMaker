@@ -27,16 +27,21 @@
 {% block content %}
 {% if page_name %}
 <div class="content-title container">
-<img src="/static/img/IconNormal{{ page_name }}Big.png" /><h1>{{ page_name }}</h1>
+{% if icon != "false" %}
+<img src="/static/img/IconNormal{{ page_name }}Big.png" />
+{% endif %}
+<h1>{{ page_name }}</h1>
 </div>
 {% endif %}
+<hr style="margin: 0px; background-color: rgba(0,0,0, 0.1);">
+<hr style="margin-top: 0px; background-color: rgba(255,255,255, 0.9);">
 <div id="small_tabs">
 	    <div class="container" height="40px">
 	    <div class="small_tabs">
     <ul>
             <li name="one_small_tab"onclick="return tab_clicked(this)" sorterName="creation_date">
                 <p>
-                    By Creation time
+                    By Date
                 </p>                                
             </li>            
             <li name="one_small_tab" onclick="return tab_clicked(this)" sorterName="stock_amount">

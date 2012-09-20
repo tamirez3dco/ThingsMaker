@@ -65,7 +65,7 @@ $.fn.exists = function() {
 			if(this.options.menuEnable) {
 				//this._buildMenu();
 				//this._buildTopMenu();
-				this._buildTriangleButtons();
+				//this._buildTriangleButtons();
 				this._buildTopMenu();
 			}
 
@@ -926,6 +926,48 @@ $.fn.exists = function() {
 				style: 'width: '+ stepWidth + 'px;',
 				html: '<span>'+ (x+1).toString() + '</span>' + '<div class="'+ sClass +'">' + menuTitle + '</div>'
 				})
+				})[0]);
+			});
+			$menu = $("<div />", {
+				"class" : "wizard-steps",
+				html : $(list)
+			});
+
+			//console.log($menu);
+
+			this.element.find(".jw-content").prepend($menu);
+
+			/*if(this.options.effects.enable || this.options.effects.menu.enable) {
+			 $menu.find("li").addClass("jw-animated");
+			 }
+			 */
+			$menu.find("a").click($.proxy(function(event) {
+				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
+				console.log('click');
+				console.log(parent);
+				if($(parent).hasClass("completed-step")) {
+					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
+				}
+			}, this));
+		},
+		_buildTopMenuNew : function() {
+			var list = [], $menu, $anchors;
+			var $steps = this.element.find(".jw-step");
+			var constWidth = 0;//26 * $steps.size();
+			var stepWidth = Math.floor((962 - constWidth) / $steps.size());
+			this.element.addClass("jw-hastopmenu");
+			$steps.each(function(x) {
+				var sClass = "wizard-steps-inner";
+				var l = $(this).attr("title").split(' ');
+				if(l.length == 1) {
+					sClass = "wizard-steps-inner-ol";
+				}
+				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");
+				list.push($("<div />",{
+				"class": "completed-step",
+				step: x,
+				html: '<div class="wizard-step-line"></div><div class="wizard-step-number">A</div>',
+				style: 'width: '+ stepWidth + 'px;',
 				})[0]);
 			});
 			$menu = $("<div />", {

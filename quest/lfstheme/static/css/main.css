@@ -1508,19 +1508,24 @@ form.contactable-form .disclaimer {
 }
 
 .small_tabs li{
-    height: 30px;
+    height: 25px;
     list-style-type: none;
-    float: left;
-    background-color: #ECECEC;
+    float: right;
+    background-color: #c9c9c9;
+    border-radius: 13px;
+    margin-left: 5px;
 }
 
+.small_tabs li.selected {
+	background-color: #f9941f;
+}
 
 .small_tabs li p {
     display: block;
     position: relative;
     float: left;
     padding: 0 20px;
-    line-height: 30px;
+    line-height: 25px;
     text-align: center;
     background: transparent;
     text-decoration: none;
@@ -1528,7 +1533,7 @@ form.contactable-form .disclaimer {
 
 .small_tabs li.selected p,
 .small_tabs li p:hover {
-    background: url(/static/img/menu_bg_selected.jpg);
+    /*background: url(/static/img/menu_bg_selected.jpg);*/
     color: white !important;
 }
 
@@ -1652,7 +1657,7 @@ form.contactable-form .disclaimer {
 	float: left; 
 	width: 167px;
 	padding: 6px 6px 0px 6px; 
-	margin: 0px 13px 10px 1px; 
+	margin: 0px 13px 14px 1px; 
 	border: 1px solid #E6E6E6;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 2px #cfcfcf;
@@ -1841,10 +1846,10 @@ form.contactable-form .disclaimer {
 /* From explorer */
 /* jWizard-specific configuration */
 .jw-widget {
-	margin-left: 20px;
-	margin-right: 20px;
+	margin-left: 0px;
+	margin-right: 0px;
 	overflow: hidden;
-	border: solid 1px #ECECEC;
+	border: solid 0px #ECECEC;
 }
 .jw-header {
 	display: none;
@@ -1863,26 +1868,33 @@ form.contactable-form .disclaimer {
 }
 .jw-content {
 	padding: 0.8em 0 0 0.2em;
+	padding:0;
 	border: 0px solid;
-	border-bottom: solid 1px #ECECEC;
+	border-bottom: solid 0px #ECECEC;
+	background-color: transparent;
+	background-image: none;
 }
 .jw-left-menu-wrap {
+	display: none;
 	width: 9em;
 	clear: left;
 	float: left;
 	position: relative;
+	background-color: transparent;
 }
 .jw-left-menu {
 	margin: 0 .5em;
 	position: absolute;
 	top: 180px;
 	left: 78px;
+	background-color: transparent;
 }
 .triangle-button-left {
 	height: 0;
     width: 0;
     font-size: 0;
     line-height: 0;
+    background-color: transparent;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
     border-right: 40px solid #EEE;
@@ -1931,29 +1943,31 @@ form.contactable-form .disclaimer {
 	margin-left: 15em;
 }
 .jw-hastopmenu .jw-steps-wrap {
-	margin-top: 3.3em;
+	margin-top: 38px;
 }
 .jw-steps-wrap {
-	height: 30em;
-	width: 42.5em;
+	/*display:none;*/
+	height: 430px;
+	width: 610px;
 	overflow: auto;
-	padding: 1.5em 3em 0em 3em;
-	margin-left: 10em;
-	margin-bottom: 1em;
-	background-color: #F6F6FF;
-	border-radius: 4px;
+	/*padding: 0em 3em 0em 3.3em;*/
+	padding:0px;
+	margin:0px;
+	margin-left: 183px;
+	background-color: transparent;
 }
 .jw-content p {
 	margin-top: 0;
 }
-.jw-content div.jw-step {
+.jw-step {
+	background-color: transparent;
 }
 .jw-footer {
 	padding: 1em;
 	padding-top: 0.1em;
-	/*display: none;*/
 }
 .jw-counter {
+	display: none;
 	float: left;
 	padding: .2em;
 }
@@ -1991,6 +2005,7 @@ form.contactable-form .disclaimer {
 	float: left;
 }
 .jw-buttons {
+	display: none;
 	text-align: right;
 }
 .jw-buttons button {
@@ -2060,14 +2075,17 @@ form.contactable-form .disclaimer {
 .explorer-image {
 	visibility: hidden;
 	position: relative;
-	width:180px;
-	height:180px;
+	width:188px;
+	height:188px;
 	margin: 0px 10px 10px 0px;
 	float: left;
+	border: 1px solid rgb(207,207,207); 
+	
 }
 .explorer-image img {
-	width:180px;
-	height:180px;
+	width:186px;
+	height:186px;
+	border: 1px solid white; 
 }
 .explorer-image:hover {
 	cursor: pointer;
@@ -2098,7 +2116,7 @@ form.contactable-form .disclaimer {
 }
 .create-image-container {
 	float: left;
-	width: 570px;
+	width: 610px;
 }
 .create-button-container {
 	float: left;
@@ -2133,16 +2151,44 @@ form.contactable-form .disclaimer {
 /* = STEPS CONTAINER
 ----------------------------*/
 .wizard-steps {
-    margin:0px 0px 20px 23px;
-    padding:0px;
+    margin:0px 0px 0px 0px;
+    padding: 28px 0px 0px 45px;
+    height: 60px;
+    border: 1px solid white;
+    border-radius: 8px; 
     position: relative;
     clear:both;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: rgba(220,220,220,0.9);
     font-weight: bold;
+    overflow: hidden;
     /*display: none;*/
 }
 .wizard-steps div {
     position:relative;
+    float: left;
+    clear: none;
+    text-align: center;
+}
+.wizard-step-line {
+	margin-top: 20px;
+    height: 5px;
+    width: 100%;
+    border-top: 3px groove white;
+    border-bottom: 3px inset white;
+    background-color: #0c80d1;
+}
+.wizard-step-number {
+	margin-top: -21px;
+	margin-left: 20px;
+	height: 25px;
+	width: 30px;
+	background-color: #0c80d1;
+	border: 3px solid white;
+	box-shadow: 0px 0px 2px rgba(0,0,0, 0.8);
+	border-radius: 17px;
+	padding-top: 5px;
+	
 }
 /* = STEP NUMBERS
 ----------------------------*/

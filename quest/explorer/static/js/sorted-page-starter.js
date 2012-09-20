@@ -9,11 +9,12 @@ function tab_clicked(element)
 		if (one_tab == element)
 		{
 			sorterName = one_tab.getAttribute("sorterName");
-			one_tab.style.backgroundColor="silver";
+			$(one_tab).addClass('selected');
 		}
 		else
 		{
-			one_tab.style.backgroundColor="white";
+			//one_tab.style.backgroundColor="white";
+			$(one_tab).removeClass('selected');
 			
 		}
 	}

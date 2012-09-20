@@ -2099,12 +2099,15 @@ form.contactable-form .disclaimer {
 .explorer-image-button {
 	visibility: hidden;
 	position: absolute;
+	
 }
 .explorer-image button {
-	left: -6px;
-	top: 133px;
+	left: -5px;
+	top: 142px;
 	width: 80px;
 	opacity: 0.7;
+	font-size: 12px;
+	border: 0px solid white;
 }
 
 .explorer-image:hover .explorer-image-button {

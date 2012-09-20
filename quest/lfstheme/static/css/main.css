@@ -1514,6 +1514,7 @@ form.contactable-form .disclaimer {
     background-color: #c9c9c9;
     border-radius: 13px;
     margin-left: 5px;
+    cursor: pointer;
 }
 
 .small_tabs li.selected {
@@ -1524,11 +1525,13 @@ form.contactable-form .disclaimer {
     display: block;
     position: relative;
     float: left;
-    padding: 0 20px;
+    padding: 5px 20px;
     line-height: 25px;
     text-align: center;
     background: transparent;
     text-decoration: none;
+    color: white !important;
+    font: 13px Arial;
 }
 
 .small_tabs li.selected p,

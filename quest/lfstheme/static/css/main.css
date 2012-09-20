@@ -32,7 +32,7 @@ a:visited {
 }
 
 a:hover {
-    color: black !important;
+    color: #62bfff !important;
 }
 
 h1 {
@@ -1338,7 +1338,7 @@ button:hover,
 a.button:hover {
   background-color: #beb5b0;
   border: 1px solid #dfd7d3;
-  color:black !important;
+  color: #0c80d1 !important;
 }
 
 /* Positive */
@@ -1591,15 +1591,14 @@ form.contactable-form .disclaimer {
 	border: 0px solid;
 }
 #home-img A {
-	border-radius: 8px;
-	border: 1px solid;
+	border-radius: 24px;
+	border: 0px solid;
 	position: absolute;
-	padding: 3px 12px 6px 12px;
-	top: 388px;
-	left: 418px;
-	font-size: 24px;
-	background-color: green;
-	color: black;
+	padding: 8px 12px 6px 12px;
+	top: 380px;
+	left: 700px;
+	font-size: 28px;
+	background-color: #f9941f;
 }
 
 #slideshow {

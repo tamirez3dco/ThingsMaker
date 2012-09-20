@@ -1598,57 +1598,11 @@ form.contactable-form .disclaimer {
 	border-radius: 24px;
 	border: 0px solid;
 	position: absolute;
-	padding: 8px 12px 6px 12px;
+	padding: 8px 60px 6px 60px;
 	top: 380px;
-	left: 700px;
+	left: 610px;
 	font-size: 28px;
 	background-color: #f9941f;
-}
-
-#slideshow {
-    position:relative;
-    height:350px;
-    width: 700px;
-    margin-left: auto;
-  	margin-right: auto;
-}
-
-#slideshow IMG {
-    position:absolute;
-    top:0;
-    left:0;
-    height:350px;
-    width: 350px;
-    z-index:8;
-}
-
-#slideshow IMG.active-img {
-    z-index:10;
-}
-
-#slideshow IMG.last-active-img {
-    z-index:9;
-}
-
-#slideshow DIV {
-    position:absolute;
-    top:0;
-    left:350px;
-    z-index:8;
-    width: 338px;
-    height: 350px;
-    padding: 30px;
-    font-size: 17px;
-    color: #58585A;
-    background-color: #EEE;
-}
-
-#slideshow  DIV.active-txt {
-    z-index:10;
-}
-
-#slideshow DIV.last-active-txt {
-    z-index:9;
 }
 
 #recent-products {
@@ -1808,8 +1762,7 @@ form.contactable-form .disclaimer {
 .products-product {
 	position: relative;
 	float:left;
-	
-	margin: 0px 10px 14px 0px; 
+	margin: 0px 9px 14px 1px; 
 	padding: 0px;
 	border: 0px;
 	border-style:solid;
@@ -1817,7 +1770,7 @@ form.contactable-form .disclaimer {
 	overflow: hidden;
 }
 .products-product:nth-child(3n+3) {
-	margin: 0px 0px 14px 0px; 
+	margin: 0px 0px 14px 1px; 
 }
 .products-product h3 {
 	font-size: 18px;
@@ -1830,6 +1783,7 @@ form.contactable-form .disclaimer {
 	border-color: #ECECEC;	
 	overflow: hidden;
 	background-color: white;
+	box-shadow: 0px 0px 2px #cfcfcf;
 }
 
 .products-product-inner IMG {

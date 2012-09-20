@@ -51,15 +51,18 @@ h1.section {
 }
 
 h2 {
-    font-size: 116%;
-    font-weight: bold;
-    margin: 10px 0;
+    font-size: 24px;
+    font-weight: normal;
+    /*margin: 10px 0;*/
 }
 
 h3 {
-    font-size: 100%;
+	font-size: 22px;
+    font-weight: normal;
+    font-family: Arial;
+    /*font-size: 100%;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 10px 0;*/
 }
 
 img {
@@ -1813,10 +1816,13 @@ form.contactable-form .disclaimer {
 .products-product:nth-child(3n+3) {
 	margin: 0px 0px 14px 0px; 
 }
-
+.products-product h3 {
+	font-size: 18px;
+}
 .products-product-inner {
 	padding: 6px;
 	border: 1px;
+	margin-top: 4px;
 	border-style:solid;
 	border-color: #ECECEC;	
 	overflow: hidden;
@@ -1850,8 +1856,9 @@ form.contactable-form .disclaimer {
 .products-product .button:hover {
 	text-align: center;
 	width: 300px; 
-	padding: 4px 0 !important;
+	padding: 8px 0 !important;
 	margin: 0px !important;
+	height: 14px;
 	background-color: #f9941f;
 	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     font-size: 15px;

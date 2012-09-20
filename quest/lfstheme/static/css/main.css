@@ -384,6 +384,7 @@ table.search-results {
     position: relative;
     float: left;
     font-size: 18px;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     padding: 20px 0px 0px 6px;
     margin-top: 16px;
     width: 170px;
@@ -1870,6 +1871,7 @@ form.contactable-form .disclaimer {
 .products-product-link {
 	float: right;
 	margin-top: 8px;
+	font-size: 12px;
 	text-decoration: none;
 	color: #4a96f5 !important;
 	

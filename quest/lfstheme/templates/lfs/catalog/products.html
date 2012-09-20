@@ -19,19 +19,21 @@
 	<div id="products">
 		{% for product in products %}
 			<div class="products-product">
-				<img src="{{ product.get_image }}">
-				<h3>{{ product.name }}</h3>
-				<p class="product-description">
-        			{{ product.get_description|safe}}
-    			</p>
-    			<div class="buttons">
-	    			<a class="button left" href="/create?start_product={{ product.slug }}">
-	           			{% trans 'Make yours' %}
-	       			</a>
-	       			<a class="button left" href="sorted_products/{%22limits%22:%220-20%22,%22screener%22:%22{{ product.name }}%22,%22sorter%22:%22stock_amount%22,%22icon%22:%22false%22,%22page_name%22:%22What Others Made%22}">
-	           			{% trans 'See what others made' %}
-	       			</a>
+				<h2>{{ product.name }}</h2>
+				<div class="products-product-inner">
+					<img src="{{ product.get_image }}">
+					<p class="product-description">
+	        			{{ product.get_description|safe}}
+	    			</p>
+	    			<div class="buttons">
+		    			<a class="button left" href="/create?start_product={{ product.slug }}">
+		           			{% trans 'Make yours' %}
+		       			</a>
+	       			</div>
        			</div>
+       			<a class="products-product-link" href="sorted_products/{%22limits%22:%220-20%22,%22screener%22:%22{{ product.name }}%22,%22sorter%22:%22stock_amount%22,%22icon%22:%22false%22,%22page_name%22:%22What Others Made%22}">
+		           			{% trans 'See what others made' %}
+		       	</a>
 			</div>
 		{% endfor %}
 	</div>

@@ -520,6 +520,7 @@ ul.breadcrumbs li {
 .content-title {
 	width: 100%;
 	clear: both;
+	overflow: hidden;
 }
 .content-title img {
 	float: left;
@@ -1801,32 +1802,69 @@ form.contactable-form .disclaimer {
 .products-product {
 	position: relative;
 	float:left;
-	width:98%;
-	margin: 0px 7px 10px 7px; 
-	padding: 4px 4px 4px 4px;
+	
+	margin: 0px 10px 14px 0px; 
+	padding: 0px;
+	border: 0px;
+	border-style:solid;
+	border-color: #ECECEC;	
+	overflow: hidden;
+}
+.products-product:nth-child(3n+3) {
+	margin: 0px 0px 14px 0px; 
+}
+
+.products-product-inner {
+	padding: 6px;
 	border: 1px;
 	border-style:solid;
 	border-color: #ECECEC;	
+	overflow: hidden;
+	background-color: white;
 }
 
-.products-product IMG {
+.products-product-inner IMG {
 	width: 300px; 
 	height: 200px;	
 	float: left;
-	margin-right: 20px;
+	clear: both;
+	/*margin-right: 20px;*/
+}
+
+.products-product P {
+	display: none;
 }
 
 .products-product .buttons {
+	float: left;
+	clear: both;
+	margin-top: 6px;
+	/*padding: 0px !important;*/
+	/*display: none;
 	position: absolute;
 	bottom: -3px;
-	left: 320px;
+	left: 320px;*/
 }
 
-.products-product .button {
+.products-product .button,
+.products-product .button:hover {
 	text-align: center;
-	width: 160px; 
+	width: 300px; 
+	padding: 4px 0 !important;
+	margin: 0px !important;
+	background-color: #f9941f;
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-size: 15px;
+    font-weight: bold; 
+    border-width: 0px;
 }
-
+.products-product-link {
+	float: right;
+	margin-top: 8px;
+	text-decoration: none;
+	color: #4a96f5 !important;
+	
+}
 
 .designer {
 	position: relative;

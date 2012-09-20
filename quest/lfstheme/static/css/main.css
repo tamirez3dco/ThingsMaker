@@ -1338,7 +1338,7 @@ button:hover,
 a.button:hover {
   background-color: #beb5b0;
   border: 1px solid #dfd7d3;
-  color: #0c80d1 !important;
+  color: #ECECEC !important;
 }
 
 /* Positive */

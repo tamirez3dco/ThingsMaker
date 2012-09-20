@@ -8,9 +8,9 @@
 html {
 }
 body {
-    color: #58585a;
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-size: 12px;
+    color: #4d4d4d;
+    font-family: Arial;
+    font-size: 14px;
 }
 
 html,
@@ -36,11 +36,13 @@ a:hover {
 }
 
 h1 {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     font-size: 30px;
     margin: 10px 0;
 }
 
 h1.first-heading {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     margin: 0 0 10px 0;
 }
 
@@ -51,6 +53,7 @@ h1.section {
 }
 
 h2 {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     font-size: 24px;
     font-weight: normal;
     /*margin: 10px 0;*/

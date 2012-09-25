@@ -906,7 +906,7 @@ $.fn.exists = function() {
 				wizard.previousStep();
 			});
 		},
-		_buildTopMenu : function() {
+		_buildTopMenuOld : function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
 			var constWidth = 26 * $steps.size();
@@ -950,29 +950,35 @@ $.fn.exists = function() {
 				}
 			}, this));
 		},
-		_buildTopMenuNew : function() {
+		_buildTopMenu : function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
-			var constWidth = 0;//26 * $steps.size();
-			var stepWidth = Math.floor((962 - constWidth) / $steps.size());
+			var constWidth = 42 * $steps.size();
+			var stepWidth = Math.floor((853 - constWidth) / (2*($steps.size()-1)));
 			this.element.addClass("jw-hastopmenu");
 			$steps.each(function(x) {
-				var sClass = "wizard-steps-inner";
-				var l = $(this).attr("title").split(' ');
-				if(l.length == 1) {
-					sClass = "wizard-steps-inner-ol";
-				}
-				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");
+				var menuTitle = $(this).attr("title").replace(/ /g, " ");
 				list.push($("<div />",{
 				"class": "completed-step",
 				step: x,
-				html: '<div class="wizard-step-line"></div><div class="wizard-step-number">A</div>',
-				style: 'width: '+ stepWidth + 'px;',
+				html: '<div class="wizard-step-pre" style="width: '+ 
+				stepWidth +'px;"></div><div class="wizard-step-circle"><div class="wizard-step-circle-inner">'+ (x+1)
+				+'</div></div><div class="wizard-step-post" style="width: '+ 
+				stepWidth +'px;"></div><div class="wizard-step-text">'+menuTitle+'</div>',
+				//style: 'width: '+ stepWidth + 'px;',
 				})[0]);
 			});
+			var margin = 'margin-left: -' + (stepWidth-55) + 'px'
+			if (stepWidth<=55) {
+				margin = 'margin-left: ' + (55 - stepWidth) + 'px';
+			} 
 			$menu = $("<div />", {
 				"class" : "wizard-steps",
-				html : $(list)
+				html : $("<div />", {
+				"class" : "wizard-steps-inner",
+				html : $(list),
+				style: margin
+			})
 			});
 
 			//console.log($menu);
@@ -983,8 +989,9 @@ $.fn.exists = function() {
 			 $menu.find("li").addClass("jw-animated");
 			 }
 			 */
-			$menu.find("a").click($.proxy(function(event) {
-				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
+			$menu.find(".wizard-step-circle").click($.proxy(function(event) {
+				console.log('click1');
+				var $target = $(event.target), parent = $target.parents('.completed-step')[0], nextStep = parseInt($(parent).attr("step"), 10);
 				console.log('click');
 				console.log(parent);
 				if($(parent).hasClass("completed-step")) {
@@ -1031,7 +1038,7 @@ $.fn.exists = function() {
 			});
 		},
 		_updateTopMenu : function(firstStep) {
-			var wizard = this, currentStep = this._stepIndex, $menu = this.element.find(".wizard-steps");
+			var wizard = this, currentStep = this._stepIndex, $menu = this.element.find(".wizard-steps-inner");
 			$menu.children().each(function(x) {
 				var $d = $(this), iStep = parseInt($d.attr("step"), 10);
 				//console.log(iStep);

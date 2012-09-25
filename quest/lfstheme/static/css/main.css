@@ -1596,7 +1596,7 @@ form.contactable-form .disclaimer {
 }
 #home-img A {
 	border-radius: 24px;
-	border: 0px solid;
+	border: 1px solid #fe9922;
 	position: absolute;
 	padding: 8px 60px 6px 60px;
 	top: 380px;
@@ -2101,6 +2101,7 @@ form.contactable-form .disclaimer {
 	position: absolute;
 	
 }
+
 .explorer-image button {
 	left: -5px;
 	top: 142px;
@@ -2161,8 +2162,8 @@ form.contactable-form .disclaimer {
 ----------------------------*/
 .wizard-steps {
     margin:0px 0px 0px 0px;
-    padding: 28px 0px 0px 45px;
-    height: 60px;
+    padding: 12px 0px 0px 0px;
+    /*height: 60px;*/
     border: 1px solid white;
     border-radius: 8px; 
     position: relative;
@@ -2173,13 +2174,96 @@ form.contactable-form .disclaimer {
     overflow: hidden;
     /*display: none;*/
 }
-.wizard-steps div {
+.wizard-steps-inner {
+	width: 2500px;
+	/*margin-left: -200px;*/
+	overflow: visible;
+}
+.wizard-steps .completed-step {
+	height:76px;
     position:relative;
     float: left;
     clear: none;
     text-align: center;
+    overflow: hidden;	
 }
+
+.completed-step:first-child .wizard-step-pre {
+	/*display: none;*/
+	visibility: hidden;
+}
+.completed-step:last-child .wizard-step-post {
+	/*display: none;*/
+	visibility: hidden;
+}
+
+.wizard-step-pre,
+.wizard-step-post{
+	float: left;
+	clear: none;
+	background-image: url(/static/img/CreateStepsLineFull.png);
+	background-repeat:repeat-x;
+	height:44px;
+}
+.wizard-step-circle{
+	float: left;
+	clear: none;
+	background-image: url(/static/img/CreateStepsCircleBG.png);
+	background-repeat: no-repeat;
+	width: 42px;
+	height:44px;
+}
+.wizard-step-circle:hover{
+	cursor: pointer;
+}
+.completed-step:first-child .wizard-step-circle {
+	/*margin-left: 5px;*/
+	background-image: url(/static/img/CreateStepsCircleLeftBG.png);
+}
+.completed-step:last-child .wizard-step-circle {
+	/*margin-left: 5px;*/
+	background-image: url(/static/img/CreateStepsCircleRightBG.png);
+}
+.wizard-step-circle-inner{
+	height: 32px;
+	width: 42px;
+	margin-left: 0px;
+	margin-top: 6px;
+	background-image: url(/static/img/CreateStepsCircleBoth.png);
+	background-repeat: no-repeat;	
+	line-height: 30px;
+	color: #ffffff;
+}
+.completed-step:first-child.active-step .wizard-step-circle-inner,
+.completed-step:last-child.active-step .wizard-step-circle-inner,
+.active-step .wizard-step-circle-inner{
+	background-image: url(/static/img/CreateCircleOrange.png);
+}
+
+.completed-step:first-child .wizard-step-circle-inner {
+	/*margin-left: 5px;*/
+	background-image: url(/static/img/CreateStepsCircleLeft.png);
+}
+.completed-step:last-child .wizard-step-circle-inner {
+	/*margin-left: 5px;*/
+	background-image: url(/static/img/CreateStepsCircleRight.png);
+}
+.wizard-step-text {
+	height: 30px;
+    width: 100%;
+    margin-top: 50px;
+    color: #4d4d4d;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.active-step .wizard-step-text {
+    font-weight: bold;
+}
+/*
 .wizard-step-line {
+	display: none;
 	margin-top: 20px;
     height: 5px;
     width: 100%;
@@ -2187,7 +2271,9 @@ form.contactable-form .disclaimer {
     border-bottom: 3px inset white;
     background-color: #0c80d1;
 }
+
 .wizard-step-number {
+	display: none;
 	margin-top: -21px;
 	margin-left: 20px;
 	height: 25px;
@@ -2199,6 +2285,7 @@ form.contactable-form .disclaimer {
 	padding-top: 5px;
 	
 }
+*/
 /* = STEP NUMBERS
 ----------------------------*/
 .wizard-steps span {
@@ -2236,12 +2323,12 @@ form.contactable-form .disclaimer {
     text-decoration:none;
     text-shadow:1px 1px 1px rgba(255,255,255, 0.8);
 }
-.wizard-steps-inner {
-	/*padding-top: 3px;*/
+/*.wizard-steps-inner {
+	padding-top: 3px;
 	position: absolute;
 	top: 3px;
 	left: -1px;
-}
+}*/
 .wizard-steps-inner-ol {
 	/*padding-top: 8px;*/
 	position: absolute;

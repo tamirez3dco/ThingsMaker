@@ -3,7 +3,8 @@ var step = 0;
 var myInterval;
 var waitImages = false;
 $(document).ready(function() {
-	var slug = ((this.URL.split('product/')[1]).split('#'))[0];
+	var slug = ((this.URL.split('product/')[1]).split('?'))[0];
+	slug=slug.split('#')[0]
 	console.log("slllug "+ slug)
 	waitImages = (this.URL.indexOf("waitImages") != -1);
 	if(waitImages) {

@@ -2299,6 +2299,10 @@ form.contactable-form .disclaimer {
 .jw-history .explorer-image-button {
 	width: 93px;
 	margin: 0px;
+	font-size: 12px;
+	border: 0px solid white;
+	padding: 2px 3px;
+	background-color: rgba(160,160,160, 0.7);
 }
 .jw-last {
 	display:none;
@@ -2356,12 +2360,15 @@ form.contactable-form .disclaimer {
 }
 
 .explorer-image button {
-	left: -5px;
-	top: 142px;
+	top: 159px;
+	left: 1px;
 	width: 80px;
-	opacity: 0.7;
+	/*opacity: 0.7;*/
 	font-size: 12px;
 	border: 0px solid white;
+	margin:0px;
+	padding: 2px 3px;
+	background-color: rgba(160,160,160, 0.7);
 }
 
 .explorer-image:hover .explorer-image-button {
@@ -2386,11 +2393,28 @@ form.contactable-form .disclaimer {
 }
 
 .ui-dialog-titlebar {display:none}
-#create-finish-dialog BUTTON {
+#create-finish-dialog BUTTON,
+#create-makeit-dialog-right .button {
 	width: 180px;
-	margin: 109px 10px 0px 10px;
+	margin: 115px 10px 0px 10px;
+display:block;
+  padding:5px 10px 2px 10px;   /* Links */
+  font-size: 15px;
+  line-height: 24px;
+  text-decoration:none;
+  text-align: center;
+  font-weight:bold;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  cursor:pointer;
+  background-color: rgb(60,60,60);
+  border: 0px solid #dfd7d3;
+  color: #fff !important;
+	/*padding-top:*/ 
 }
-
+#create-finish-dialog {
+	background-image: url(/static/img/content-bg.jpg);
+	border: 0px solid white;
+}
 #create-finish-dialog-left {
 	float: left;
 }
@@ -2407,9 +2431,21 @@ form.contactable-form .disclaimer {
 	margin-left: 20px;
 	/*height: 190px;*/
 }
+#create-makeit-dialog-right h3 {
+	margin-bottom: 6px;
+	/*height: 190px;*/
+}
+#create-makeit-dialog-right input{
+	margin-bottom: 10px;
+	/*height: 190px;*/
+}
+
 #create-makeit-dialog-right .button {
-	margin-top: 10px;
-	margin-left: 250px;
+	margin-top: 0px;
+	margin-top: 18px;
+	margin-right: 0px;
+	margin-left: 225px;
+	/*float: right;*/
 }
 /* = STEPS CONTAINER
 ----------------------------*/
@@ -2670,4 +2706,11 @@ form.contactable-form .disclaimer {
 }
 .wizard-steps .completed-step:hover a:after, .wizard-steps .active-step:hover a:after {
     border-left: 16px solid #8F061E;
+}
+
+
+.ui-dialog {
+	border: 0px solid white;
+   	background-image: url(/static/img/content-bg.jpg);
+	background-repeat: repeat;
 }

@@ -1823,7 +1823,7 @@ form.contactable-form .disclaimer {
 .popular-variants {
 	margin-top: 30px;
 }
-.popular-variants *:first-child {
+.popular-variants>*:first-child {
 	margin-bottom: 12px;
 }
 

@@ -608,7 +608,7 @@ table.cp-properties td {
 	/*width: 420px;*/
 	margin-top: 95px;
 	margin-bottom: 39px;
-	margin-right: 100px;
+	margin-right: 30px;
 	/*clear: both;*/
 }
 .product-buttons a {
@@ -616,6 +616,11 @@ table.cp-properties td {
 	/*height: 31px !important;
 	padding: 0 10px !important;
 	margin: 0 !important;*/
+}
+.product-buttons a,
+.product-buttons button {
+	padding-left: 20px !important;
+	padding-right: 20px !important;
 }
 .product-price {
     text-align: right;
@@ -786,6 +791,22 @@ ___________________________________________________________________________ */
     clear: both;
 }
 
+.product .cart-image {
+	background-image: url(/static/img/add_to_cart.jpg);
+	height: 24px;
+	width: 30px;
+	clear: none;
+	float: left;
+	margin-right: 5px;
+}
+.product .customize-image {
+	background-image: url(/static/img/IconNormalCustomize.png);
+	height: 18px;
+	width: 20px;
+	clear: none;
+	float: left;
+	margin-right: 5px;
+}
 .product .deliverable {
     color: green;
 }

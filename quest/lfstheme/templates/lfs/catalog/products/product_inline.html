@@ -158,9 +158,11 @@
     {% if product.is_deliverable %}
     	<div class="product-buttons"> 
 	        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}&product_type=variant">
+	           <div class="customize-image"></div>
 	           {% trans 'Customize' %}
 	        </a>        
 	        <button class="emphasized left" type="submit" name="add-to-cart">
+	        	<div class="cart-image"></div>
 	         	{% trans 'Add to Cart' %}
 	        </button>  
        </div>

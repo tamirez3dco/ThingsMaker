@@ -189,11 +189,8 @@
     {# Variants #}
     {% if product.is_variant %}
     	<div class="popular-variants">
-    	<h2>Popular variants</h2>
-    	{% for pr in product.parent.get_xrandom_variants %}
-    		<a href="/product/{{ pr.slug }}"><img src="{{ pr.get_item_image }}"/></a>
-    	{% endfor %}
-    	</div>
+    	<h2>Popular Variants</h2>
+       	</div>
     {% endif %}
 
     {# Attachments #}

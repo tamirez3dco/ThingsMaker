@@ -1,42 +1,22 @@
-function slideSwitch() {
-	var $active = $('#slideshow IMG.active-img');
+function create_product_html(product)
+{
+	var likeClass = "home-product-like empty";
+	if(product.lovers > 0) {
+		likeClass = "home-product-like";
+	}
 
-	if($active.length == 0)
-		$active = $('#slideshow IMG:last');
-
-	var $next = $active.next('IMG').length ? $active.next('IMG') : $('#slideshow IMG:first');
-
-	$active.addClass('last-active-img');
-
-	$next.css({
-		opacity : 0.0
-	}).addClass('active-img').animate({
-		opacity : 1.0
-	}, 1000, function() {
-		$active.removeClass('active-img last-active-img');
-	});
+	var addClass = 'home-product';
+	var	html = '<div class="'+ addClass +'"><a class="home-product-pointer" href="' + product.product_url + '">'+
+			   '<img class="home-product-mainImage" src="' + product.image_url + '" />'+
+			   '<p class="home-product-name">'+ product.name +'</p>' +
+			   '<p class="home-product-price">$'+ product.price.toFixed(2) + '</p></a>' +
+			   '<div class="home-product-hover">'+
+			   '<div class="'+ likeClass +'" slug="' + product.slug + '" onclick="return hart_clicked(this)" alt="loveme"><span>' + product.lovers +'</span></div>'+
+			   '<div class="home-product-customize"><a href="/create?start_product='+ product.slug + '&material=' + product.material + '&textParam=' + product.text + '&product_type=variant">Customize</a></div>'+
+			   '</div>'+
+			   + '</div>';	
+	return html;
 }
-
-function textSwitch() {
-	//console.log('hi');
-	var $active1 = $('#slideshow DIV.active-txt');
-	//console.log($active1);
-	if($active1.length == 0)
-		$active1 = $('#slideshow DIV:last');
-
-	var $next1 = $active1.next('DIV').length ? $active1.next('DIV') : $('#slideshow DIV:first');
-
-	$active1.addClass('last-active-txt');
-
-	$next1.css({
-		opacity : 0.0
-	}).addClass('active-txt').animate({
-		opacity : 1.0
-	}, 1000, function() {
-		$active1.removeClass('active-txt last-active-txt');
-	});
-}
-
 function hart_clicked(element)
 {
 	// first increase the number in element
@@ -61,29 +41,10 @@ function hart_clicked(element)
 function getProductList(url, element) {
 	$.getJSON(url, function(data) {
 		var items = [];
+		var productList = $('<div class="home-product-list"></div>').appendTo(element);
 		for(var i = 0; i < data.products.length; i++) {
-			var addClass = 'home-product';
-			if (((i+1)%5) == 0) {
-				console.log('last');
-				addClass = 'home-product last';
-			}
-			var likeClass = "home-product-like empty";
-			if (data.products[i].lovers > 0) {
-				likeClass = "home-product-like";
-			}
-			html = '<div class="'+ addClass +'"><a class="home-product-pointer" href="' + data.products[i].product_url + '">'+
-				   '<img class="home-product-mainImage" src="' + data.products[i].image_url + '" />'+
-				   '<p class="home-product-name">'+ data.products[i].name +'</p>' +
-				   '<p class="home-product-price">$'+ data.products[i].price.toFixed(2) + '</p></a>' +
-				   '<div class="home-product-hover">'+
-				   '<div class="'+ likeClass +'" slug="' + data.products[i].slug + '" onclick="return hart_clicked(this)" alt="loveme"><span>' + data.products[i].lovers +'</span></div>'+
-				   '<div class="home-product-customize"><a href="/create?start_product='+ data.products[i].slug + '&material=' + data.products[i].material + '&textParam=' + data.products[i].text + '&product_type=variant">Customize</a></div>'+
-				   '</div>'+
-				   + '</div>';
-			$(html, {
-				'class' : 'home-product-list',
-				html : ''
-			}).appendTo(element);
+			var html = create_product_html(data.products[i]);
+			$(html, {}).appendTo(productList);
 		}
 	});	
 }

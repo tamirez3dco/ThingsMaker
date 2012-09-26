@@ -241,19 +241,14 @@ class Shop(models.Model):
         """
         return self.meta_description.replace("<name>", self.name)
 
-    def get_recent_products(self):
-        limit = settings.LFS_RECENT_PRODUCTS_LIMIT
-        products = Product.objects.filter(sub_type=VARIANT).order_by('-creation_date')[:limit] 
-        return products 
-    
-    def get_top_inspirations(self):
-        limit = settings.LFS_RECENT_PRODUCTS_LIMIT
-        products = Product.objects.filter(sub_type=VARIANT).order_by('-stock_amount')[:limit] 
-        return products
-     
     def get_ssp(self,screener,sorter,lower_limit,upper_limit):
         if (screener != None):
-            products = Product.objects.filter(sub_type=VARIANT,name=screener).order_by('-' + sorter)[lower_limit:upper_limit]
+            product = Product.objects.filter(slug=screener)
+            if len(product)>0:
+                parent = product[0].parent
+                products = Product.objects.filter(sub_type=VARIANT,parent=parent).order_by('?')[lower_limit:upper_limit]
+            else:
+                products = Product.objects.filter(sub_type=VARIANT,name=screener).order_by('-' + sorter)[lower_limit:upper_limit]
         else:
             products = Product.objects.filter(sub_type=VARIANT).order_by('-' + sorter)[lower_limit:upper_limit]
         return products

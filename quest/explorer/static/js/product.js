@@ -3,6 +3,8 @@ var step = 0;
 var myInterval;
 var waitImages = false;
 $(document).ready(function() {
+	var slug = ((this.URL.split('product/')[1]).split('#'))[0];
+	console.log("slllug "+ slug)
 	waitImages = (this.URL.indexOf("waitImages") != -1);
 	if(waitImages) {
 		console.log("waitImages");
@@ -12,6 +14,7 @@ $(document).ready(function() {
 		console.log("Dont waitImages");
 		dontWaitImages();
 	}
+	getProductList('/get_ssp/%7B"limits":"0-5","screener":"'+ slug +'","sorter":"stock_amount"%7D', '.popular-variants');
 });
 function waitImage(imgsrc, imageId, imageTitle) {
 	var img = new Image();

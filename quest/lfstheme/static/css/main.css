@@ -1798,10 +1798,18 @@ form.contactable-form .disclaimer {
 	font-size: 12px;
 	margin-left: 8px;
 }
-.popular-variants IMG {
+
+.popular-variants {
+	margin-top: 30px;
+}
+.popular-variants *:first-child {
+	margin-bottom: 12px;
+}
+
+/*.popular-variants IMG {
 	width: 150px;
 	height: 150px;
-}
+}*/
 
 
 /* From explorer-shop */
@@ -1828,9 +1836,9 @@ form.contactable-form .disclaimer {
 	border-radius: 24px;
 	border: 1px solid #fe9922;
 	position: absolute;
-	padding: 8px 60px 6px 60px;
-	top: 380px;
-	left: 610px;
+	padding: 8px 40px 6px 40px;
+	top: 405px;
+	left: 640px;
 	font-size: 28px;
 	background-color: #f9941f;
 }
@@ -1856,7 +1864,7 @@ form.contactable-form .disclaimer {
 	background-color: #ffffff;
 	box-shadow: 0px 0px 2px #cfcfcf;
 }
-.home-product .last {
+.home-product:nth-of-type(5n+5)  {
 	margin: 0px 0px 10px 1px; 
 }
 

@@ -1185,7 +1185,7 @@ $.fn.exists = function() {
 				});
 			}
 
-			this.element.append($footer.append('<div class="jw-history" /><div class="jw-last" />'));
+			this.element.append($footer.append('<h3>History</h3><div class="jw-history" /><div class="jw-last" />'));
 			if(this._productType == 'variant') {
 				var new_div = $('<div />').append($("#start-product-img").clone());
 				this.element.find(".jw-last").html(new_div);

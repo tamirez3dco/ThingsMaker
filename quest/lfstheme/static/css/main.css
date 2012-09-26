@@ -2218,8 +2218,8 @@ form.contactable-form .disclaimer {
 	background-color: transparent;
 }
 .jw-footer {
-	padding: 1em;
-	padding-top: 0.1em;
+	/*padding: 1em;
+	padding-top: 0.1em;*/
 }
 .jw-counter {
 	display: none;
@@ -2269,12 +2269,15 @@ form.contactable-form .disclaimer {
 }
 .jw-history {
 	float: left;
-	width: 710px;
+	width: 925px;
 	height: 120px;
+	margin-top: 6px;
 	overflow: auto;
-	padding-top:13px;
+	padding: 19px 19px 0 19px;
+	border-radius: 8px;
 	white-space: nowrap;
-	text-align: right;
+	text-align: left;
+	background-color: rgba(220,220,220,0.7);
 }
 .jw-history div {
 	display: inline-block;
@@ -2298,6 +2301,7 @@ form.contactable-form .disclaimer {
 	margin: 0px;
 }
 .jw-last {
+	display:none;
 	float: left;
 	width: 130px;
 	height: 130px;
@@ -2418,7 +2422,7 @@ form.contactable-form .disclaimer {
     position: relative;
     clear:both;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: rgba(220,220,220,0.9);
+    background-color: rgba(220,220,220,0.7);
     font-weight: bold;
     overflow: hidden;
     /*display: none;*/

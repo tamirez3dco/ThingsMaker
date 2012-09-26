@@ -9,7 +9,7 @@ import lfs.core.settings as lfs_settings
 from lfs.checkout.settings import CHECKOUT_TYPES
 from lfs.checkout.settings import CHECKOUT_TYPE_SELECT
 from lfs.core.fields.thumbs import ImageWithThumbsField
-from lfs.catalog.models import StaticBlock, Product, VARIANT
+from lfs.catalog.models import StaticBlock, Product, VARIANT, PRODUCT_WITH_VARIANTS
 
 
 class Country(models.Model):
@@ -246,9 +246,10 @@ class Shop(models.Model):
             product = Product.objects.filter(slug=screener)
             if len(product)>0:
                 parent = product[0].parent
-                products = Product.objects.filter(sub_type=VARIANT,parent=parent).order_by('?')[lower_limit:upper_limit]
+                products = Product.objects.filter(sub_type=VARIANT, parent=parent).order_by('?')[lower_limit:upper_limit]
             else:
-                products = Product.objects.filter(sub_type=VARIANT,name=screener).order_by('-' + sorter)[lower_limit:upper_limit]
+                parent = Product.objects.filter(sub_type=PRODUCT_WITH_VARIANTS,name=screener)[0]
+                products = Product.objects.filter(parent=parent).order_by('-' + sorter)[lower_limit:upper_limit]
         else:
             products = Product.objects.filter(sub_type=VARIANT).order_by('-' + sorter)[lower_limit:upper_limit]
         return products

@@ -231,6 +231,13 @@ td.padding-left {
     text-decoration: none;
 }
 
+.separator {
+	border-top: 1px solid;
+	border-top-color: rgba(0,0,0, 0.1);
+	border-bottom: 1px solid;
+	border-bottom-color: rgba(255,255,255, 0.9);
+	width: 100%;
+}
 /* Header */
 #header {
     padding: 20px 0 2px 0;
@@ -593,9 +600,23 @@ table.cp-properties td {
 }
 
 .product-properties {
+	display: none;
     padding-bottom:  10px;
 }
-
+.product-buttons {
+	float: left;
+	/*width: 420px;*/
+	margin-top: 95px;
+	margin-bottom: 39px;
+	margin-right: 100px;
+	/*clear: both;*/
+}
+.product-buttons a {
+	margin-right: 25px !important;
+	/*height: 31px !important;
+	padding: 0 10px !important;
+	margin: 0 !important;*/
+}
 .product-price {
     text-align: right;
     padding: 10px 10px 0 0;
@@ -699,9 +720,13 @@ a.current, span.current {
 ___________________________________________________________________________ */
 
 #product-inline {
-    padding-top: 10px;
-    width: 680px;
-    margin-left: 120px;
+    padding-top: 23px;
+    /*width: 680px;*/
+    /*margin-left: 120px;*/
+}
+
+#product-inline .right-wrapper {
+	overflow: hidden;
 }
 
 .product .main-image {
@@ -715,13 +740,17 @@ ___________________________________________________________________________ */
 
 .product-share {
 	float: left;
-	width: 32px;
-	margin-top: 4px;
+	/*width: 32px;*/
+	margin-right: 4px;
+	background-color: rgba(0,0,0,0.1);
+	padding: 14px 20px 9px 20px;
 }
-.product-share SPAN {
-	margin-bottom: 5px;
+.product-share>SPAN {
+	margin-right: 21px;
 }
-
+.product-share>SPAN:last-child {
+	margin-right: 0px;
+}
 .product-images .main-image {
     margin-right: 25px;
     width: 200px;
@@ -741,11 +770,18 @@ ___________________________________________________________________________ */
 }
 
 .product-title {
-    /*font-size: 100%;*/
-    font-weight: bold;
-    padding-bottom: 5px;
+    /*padding-bottom: 5px;*/
+    font-size: 26px;
+    margin: 0px;
 }
-
+.product-designer {
+    font-size: 20px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+.product-designer a {
+    color: #0c80d1;
+}
 .product .product-description {
     clear: both;
 }
@@ -759,15 +795,16 @@ ___________________________________________________________________________ */
 }
 
 .product .prices {
-    padding: 30px 0 0 0;
-    text-align: right;
+    padding: 20px 0 0 0;
+    /*text-align: right;*/
 }
 
 .product .for-sale-price,
 .product .standard-price {
-    font-size: 200%;
+    font-size: 22px;
     font-weight: bold;
     margin: 0 0 2px 0;
+    color: #f9941f;
 }
 
 .product .for-sale-standard-price {
@@ -1252,8 +1289,16 @@ ___________________________________________________________________________ */
 
 #footer .container a {
 	color: #ffffff;
+	text-decoration: none;
+	border-right: 1px solid #ffffff;
+	padding: 0 15px; 
 }
-
+#footer .container a:last-child {
+	border-right: 0px solid #ffffff;
+}
+#footer .container a:first-of-type {
+	padding: 0 15px 0 0; 	
+}
 /* Colophon
 ___________________________________________________________________________ */
 
@@ -1293,38 +1338,30 @@ ___________________________________________________________________________ */
 a.button,
 button {
   display:block;
-  margin: 0.7em 8px 0.7em 0.5em;
+  margin: 0;
   float: right;
-  padding:5px 10px 5px 10px;   /* Links */
-  font-size: 100%;
-  line-height: 130%;
+  padding:5px 10px 2px 10px;   /* Links */
+  font-size: 15px;
+  line-height: 24px;
   text-decoration:none;
+  text-align: center;
   font-weight:bold;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   cursor:pointer;
-  background-color: #beb5b0;
-  border: 1px solid #dfd7d3;
+  background-color: rgb(60,60,60);
+  border: 0px solid #dfd7d3;
   color: #fff !important;
 }
 
 a.button.left,
 button.left {
-  margin: 0.7em 0.5em 0.7em 0em;
+  /*margin: 0.7em 0.5em 0.7em 0em;*/
   float:left;
 }
 
 button {
   width:auto;
   overflow:visible;
-  padding:4px 10px 3px 7px;   /* IE6 */
-}
-
-button[type] {
-  padding:4px 10px 4px 7px;   /* Firefox */
-  line-height:17px;           /* Safari */
-}
-
-*:first-child+html button[type] {
-  padding:4px 10px 3px 7px;   /* IE7 */
 }
 
 button img,
@@ -1340,22 +1377,22 @@ a.button img {
 /* Standard */
 button:hover,
 a.button:hover {
-  background-color: #beb5b0;
-  border: 1px solid #dfd7d3;
+  /*background-color: #beb5b0;*/
+  /*border: 1px solid #dfd7d3;*/
   color: #ECECEC !important;
 }
 
 /* Positive */
 body .emphasized {
-  color:white;
-  background-color:#7e6b60;
+  /*color:white;*/
+  background-color:#f9941f;
 }
 
 a.emphasized:hover,
 button.emphasized:hover {
-  background-color:#7e6b60;
-  border:1px solid #dfd7d3;
-  color:black !important;
+  /*background-color:#7e6b60;
+  border:1px solid #dfd7d3;*/
+  color: #ECECEC!important;
 }
 
 .image-title {
@@ -1548,14 +1585,207 @@ form.contactable-form .disclaimer {
     color: white !important;
 }
 
-.ad-gallery .ad-image-wrapper {
-	height: 350px;
+/*ad gallery*/
+.ad-gallery {
+  width: 530px;
+  float :left;
 }
-.ad-gallery .ad-thumbs li {
-	margin-right: 10px;
+.ad-gallery, .ad-gallery * {
+  margin: 0;
+  padding: 0;
+}
+.ad-gallery .ad-image-padder {
+	width:350px;
+    height: 350px;
+    border: 2px solid #ECECEC;
+    border-radius: 3px;
+    padding: 6px;
+    background-color: white;
+    overflow: hidden;	
+    clear: none;
+    float: left;    
+}
+
+.ad-gallery .ad-image-wrapper {
+	/*width: 100%;*/
+	width: 350px;
+	height: 350px;
+	margin-bottom: 10px;
+	position: relative;
+	overflow: hidden;
+	clear: none;
+	float: left;
+}
+.ad-gallery .ad-image-wrapper .ad-loader {
+	position: absolute;
+	z-index: 10;
+	top: 48%;
+	left: 48%;
+	border: 1px solid #CCC;
+}
+.ad-gallery .ad-image-wrapper .ad-next {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 25%;
+	height: 100%;
+	cursor: pointer;
+	display: block;
+	z-index: 200;
+}
+.ad-gallery .ad-image-wrapper .ad-prev {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5%;
+	height: 100%;
+	cursor: pointer;
+	display: block;
+	z-index: 200;
+}
+.ad-gallery .ad-image-wrapper .ad-prev, .ad-gallery .ad-image-wrapper .ad-next {
+	/* Or else IE will hide it */
+	background: url(trans.gif);
+}
+.ad-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
+	background: url(ad_prev.png);
+	width: 30px;
+	height: 30px;
+	display: none;
+	position: absolute;
+	top: 47%;
+	left: 0;
+	z-index: 101;
+}
+.ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
+	background: url(ad_next.png);
+	width: 30px;
+	height: 30px;
+	right: 0;
+	left: auto;
+}
+.ad-gallery .ad-image-wrapper .ad-image {
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+
+.ad-gallery .ad-image-wrapper .ad-image a img {
+	border: 0;
+}
+.ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	padding: 7px;
+	text-align: left;
+	width: 100%;
+	z-index: 2;
+	background: url(opa75.png);
+	color: #000;
+}
+* html .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
+	background: none;
+	/*        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='opa75.png');*/
+}
+.ad-gallery .ad-image-wrapper .ad-image .ad-image-description .ad-description-title {
+	display: block;
+}
+.ad-gallery .ad-controls {
+	height: 20px;
+}
+.ad-gallery .ad-info {
+	float: left;
+}
+.ad-gallery .ad-slideshow-controls {
+	float: right;
+}
+
+.ad-gallery .ad-slideshow-controls .ad-slideshow-start, .ad-gallery .ad-slideshow-controls .ad-slideshow-stop {
+	padding-left: 5px;
+	cursor: pointer;
+}
+.ad-gallery .ad-slideshow-controls .ad-slideshow-countdown {
+	padding-left: 5px;
+	font-size: 0.9em;
+}
+.ad-gallery .ad-slideshow-running .ad-slideshow-start {
+	cursor: default;
+	font-style: italic;
+}
+.ad-gallery .ad-nav {
+	width: 120px;
+	position: relative;
+	clear: none;
+	float: left;
+}
+.ad-gallery .ad-forward, .ad-gallery .ad-back {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	z-index: 10;
+}
+/* IE 6 doesn't like height: 100% */
+* html .ad-gallery .ad-forward, .ad-gallery .ad-back {
+	height: 100px;
+}
+
+.ad-gallery .ad-back {
+	cursor: pointer;
+	left: -20px;
+	width: 13px;
+	display: block;
+	background: url(ad_scroll_back.png) 0px 22px no-repeat;
+}
+.ad-gallery .ad-forward {
+	cursor: pointer;
+	display: block;
+	right: -20px;
+	width: 13px;
+	background: url(ad_scroll_forward.png) 0px 22px no-repeat;
 }
 .ad-gallery .ad-nav .ad-thumbs {
-	padding-left 0px;
+	overflow: hidden;
+	width: 100%;
+	padding-left: 0px;
+	margin: 0 0 0 18px;
+}
+.ad-gallery .ad-thumbs .ad-thumb-list {
+	float: left;
+	width: 9000px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+.ad-gallery .ad-thumbs li {
+	float: left;
+	padding-right: 5px;
+	list-style: none;
+	margin: 0 0 18px 0;
+}
+.ad-gallery .ad-thumbs li a {
+	display: block;
+}
+
+.ad-gallery .ad-thumbs li a img {
+	border: 2px solid #CECECE;
+	padding: 5px;
+	display: block;
+}
+
+.ad-gallery .ad-thumbs li a.ad-active img {
+	border: 2px solid #f9941f;
+}
+
+/* Can't do display none, since Opera won't load the images then */
+.ad-preloads {
+  position: absolute;
+  left: -9000px;
+  top: -9000px;
 }
 
 .authenticate INPUT {
@@ -1809,18 +2039,8 @@ form.contactable-form .disclaimer {
 	left: 320px;*/
 }
 
-.products-product .button,
-.products-product .button:hover {
-	text-align: center;
-	width: 300px; 
-	padding: 8px 0 !important;
-	margin: 0px !important;
-	height: 14px;
-	background-color: #f9941f;
-	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-size: 15px;
-    font-weight: bold; 
-    border-width: 0px;
+.products-product .button {
+	width: 280px; 
 }
 .products-product-link {
 	float: right;

@@ -303,6 +303,7 @@
       );
     },
     _setThumbListWidth: function(wrapper_width) {
+    	//return;
       wrapper_width -= 100;
       var list = this.nav.find('.ad-thumb-list');
       list.css('width', wrapper_width +'px');
@@ -401,6 +402,8 @@
       var image = this.images[index];
       this.images.splice(index, 1);
       var thumb_link = image.thumb_link;
+      var thumb_li = thumb_link[0].parentNode;
+      $(thumb_li).remove();
       var thumb_width = thumb_link[0].parentNode.offsetWidth;
       this.thumbs_wrapper_width -= thumb_width;
       thumb_link.remove();
@@ -457,15 +460,15 @@
           // If the browser tells us that the image is loaded, but the width
           // is still 0 for some reason, we default to 100px width.
           // It's not very nice, but it's better than 0.
-          thumb_width = 100;
+          thumb_width = 96;
         };
         
         
-        context.thumbs_wrapper_width += thumb_width;
-        context._setThumbListWidth(context.thumbs_wrapper_width);
+        //context.thumbs_wrapper_width += thumb_width;
+        //context._setThumbListWidth(context.thumbs_wrapper_width);
       });
 
-      this.resize_image(thumb[0],100,100);
+      this.resize_image(thumb[0],96,96);
 
       var i = this.images.length;
       link.data("ad-i", i);
@@ -722,6 +725,7 @@
         };
         this.image_wrapper.prepend(img_container);
         var size = this._getContainedImageSize(image.size.width, image.size.height);
+        size = {'width': 350, 'height': 350}
         img.attr('width', size.width);
         img.attr('height', size.height);
         img_container.css({width: size.width +'px', height: size.height +'px'});

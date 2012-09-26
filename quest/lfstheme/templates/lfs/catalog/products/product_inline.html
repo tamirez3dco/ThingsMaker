@@ -7,116 +7,13 @@
       data="{% url lfs_select_variant_from_properties %}"
       method="post">
     {% csrf_token %}
-<script>
-    var galleries;
-	var step = 0;
-	var myInterval;
-	var waitImages = false;
-    $(document).ready(function () {
-    	waitImages = (this.URL.indexOf("waitImages") != -1);
-    	if (waitImages)
-    	{
-    		console.log("waitImages");
-        	waitForImages();
-        	myInterval = setInterval(chooseRenderImage2,500);
-    	}
-    	else
-    	{
-    		console.log("Dont waitImages");
-    		dontWaitImages();
-    	}
-    });
-    
-	function waitImage(imgsrc, imageId, imageTitle) {
-		var img = new Image();
 
-		img.onerror = function (evt) {
-  		    console.log(this.src + " can't be loaded.");
-  			setTimeout(waitImage(imgsrc,imageId,imageTitle),3000);
-  		}
-		img.onload = function (evt) {
-  			console.log(this.src + " is loaded.");
-			galleries[0].tamir_addImage(imgsrc, imageId, imageTitle);	
-  		}
-		img.src = imgsrc;
-	}
-	function chooseRenderImage2()
-	{
-		for (var i = 0 ; i < this.galleries[0].images.length ; i++)
-		{
-			if (galleries[0].images[i].image.indexOf("Render") != -1)
-			{
-				console.log("i="+i);
-				if (step == 0)
-				{
-					galleries[0].removeImage(0);
-					step++;
-				}
-				else if (step == 1)
-				{
-		    	    galleries[0].in_transition = false;
-		    	    galleries[0].current_index = -1;
-					galleries[0].showImage(i,undefined);
-					clearInterval(myInterval);
-				}
-				return;
-			}
-		}
-	}
-
-    function waitForImages()
-	{
-		var tamir_element = document.getElementById('tamir-label');
-		var urlTop = tamir_element.getAttribute("urlTop");
-		var urlFront = tamir_element.getAttribute("urlFront");
-		var urlRender = tamir_element.getAttribute("urlRender");
-		var urlSmall = tamir_element.getAttribute("urlSmall");
-		var statics = tamir_element.getAttribute("statics");
-		
-		console.log("Top=" + urlTop);
-		console.log("Front=" + urlFront);
-		console.log("Render=" + urlRender);
-		
-		
- 		galleries = $('.ad-gallery').adGallery({'loader_image':statics+"adgalery/loader.gif"});
- 		galleries[0].settings.description_wrapper = $('#descriptions');
-/* 		
-    	galleries[0].tamir_addImage(urlSmall, "Small_ID", "Small Title");
-    	galleries[0].tamir_addImage(urlRender, "Render_ID", "Render Title");
-    	galleries[0].tamir_addImage(urlTop, "Top_ID", "Top Title");
-    	galleries[0].tamir_addImage(urlFront, "Front_ID", "Front Title");
-*/    	
-    	waitImage(urlRender,"RenderID","Render Title");
-    	waitImage(urlTop, "TopID","Top Title");
-    	waitImage(urlFront,"FrontID","Front Title");
-
-    	console.log(galleries[0].images);
-	}
-    function dontWaitImages()
-	{
-		var tamir_element = document.getElementById('tamir-label');
-		var urlTop = tamir_element.getAttribute("urlTop");
-		var urlFront = tamir_element.getAttribute("urlFront");
-		var urlRender = tamir_element.getAttribute("urlRender");
-		var statics = tamir_element.getAttribute("statics");
-		
-		
- 		galleries = $('.ad-gallery').adGallery({'loader_image':statics+"adgalery/loader.gif"});
- 		galleries[0].settings.description_wrapper = $('#descriptions');
- 		galleries[0].removeAllImages();
-    	galleries[0].tamir_addImage(urlTop, "Top_ID", "Top Title");
-    	galleries[0].tamir_addImage(urlFront, "Front_ID", "Front Title");
-    	galleries[0].tamir_addImage(urlRender, "Render_ID", "Render Title");
-    	galleries[0].in_transition = false;
-		galleries[0].showImage(2,undefined);
-    	console.log(galleries[0].images);
-	}
-
-</script>
     <label id="tamir-label" urlRender="{{ product.get_item_large_image }}" urlTop="{{ product.get_item_Top_image }}" urlFront="{{ product.get_item_Front_image }}" urlSmall="{{ product.get_item_image }}" statics="{{ STATIC_URL }}"></label>
     {# Images #}
    <div id="gallery" class="ad-gallery">
+   	<div class="ad-image-padder">
       <div class="ad-image-wrapper">
+      </div>
       </div>
 <!--      <div class="ad-controls">
   </div> -->
@@ -134,13 +31,14 @@
     </div>    
     
   
-		
+	<div class="right-wrapper">
     <h1 class="product-title">
         {{ product.get_full_name }}
     </h1>
-    <h2 class="product-designer">
+    <h3 class="product-designer">
         By <a href="/designers#product.parent.designer.id">{{ product.parent.designer.user.first_name }} {{ product.parent.designer.user.last_name }}</a> and You
-    </h2>
+    </h3>
+    <div class="separator"></div>
 <!--
     {# Displayed Properties #}
     <div class="product-properties">
@@ -152,10 +50,7 @@
     </div>   
     {% shipping product %}
 --> 
-        <div class="product-properties">
-        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}&product_type=variant">
-           {% trans 'Customize' %}
-        </a>
+    <div class="product-properties">   
     </div>
     {% average_for_instance product %}
 
@@ -177,31 +72,31 @@
             </div>
             {% if product.get_active_base_price %}
                 <div class="base-price">
-                    {{ product|get_base_price_gross:request|currency:request }} / {{ product.get_base_price_unit }}*
+                    {{ product|get_base_price_gross:request|currency:request }} / {{ product.get_base_price_unit }}
                 </div>
             {% endif %}
             <div class="price-disclaimer">
                 {% if price_includes_tax %}
-                    {% trans '*inc. VAT' %}
+                    {% trans 'inc. VAT' %}
                 {% else  %}
-                    {% trans '*exc. VAT' %}
+                    {% trans 'exc. VAT' %}
                 {% endif %}
             </div>
         {% else %}
             <div class="standard-price"
                   nowrap="nowrap">
-                  <span class="standard-price-value">{{ product|get_price_gross:request|currency:request }}</span>* {% if price_unit %}/ {{ price_unit }}{% endif %}
+                  <span class="standard-price-value">{{ product|get_price_gross:request|currency:request }}</span> {% if price_unit %}/ {{ price_unit }}{% endif %}
             </div>
             {% if product.get_active_base_price %}
                 <div class="base-price">
-                    {{ product|get_base_price_gross:request|currency:request }} / {{ product.get_base_price_unit }}*
+                    {{ product|get_base_price_gross:request|currency:request }} / {{ product.get_base_price_unit }}
                 </div>
             {% endif %}
             <div class="price-disclaimer">
                 {% if price_includes_tax %}
-                    {% trans '*inc. VAT' %}
+                    {% trans 'inc. VAT' %}
                 {% else  %}
-                    {% trans '*exc. VAT' %}
+                    {% trans 'exc. VAT' %}
                 {% endif %}
             </div>
         {% endif %}
@@ -259,24 +154,23 @@
     {% endif %}
 
 <!--    <br clear="both"> -->
-    <div class="product-share">
+    
+    {% if product.is_deliverable %}
+    	<div class="product-buttons"> 
+	        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}&product_type=variant">
+	           {% trans 'Customize' %}
+	        </a>        
+	        <button class="emphasized left" type="submit" name="add-to-cart">
+	         	{% trans 'Add to Cart' %}
+	        </button>  
+       </div>
+         <div class="product-share">
 		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
 		<span class='st_googleplus_large' st_image="{{ product.get_item_image }}" displayText='Google +'></span>
 		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
 		<span class='st_twitter_large' st_image="{{ product.get_item_image }}" displayText='Tweet'></span>
 		<span class='st_email_large' st_image="{{ product.get_item_image }}" displayText='Email'></span>
 	</div>
-    {% if product.is_deliverable %}
-        <table align="right" class="buttons">
-            <tr>
-         
-                <td nowrap="nowrap">
-                    <button class="emphasized"
-                           type="submit"
-                           name="add-to-cart">{% trans 'Add to cart' %}</button>
-                </td>
-            </tr>
-        </table>
         <div class="packing-result">
             {{ packing_result }}
         </div>
@@ -285,6 +179,8 @@
                 onclick="window.location='{% url lfs_contact_form %}'; return false"
                 name="">{% trans 'Send request' %}</button>
     {% endif %}
+
+	</div>
 
     <p class="product-description">
         {{ product.get_description|safe}}

@@ -137,7 +137,7 @@ table.lfs-default td {
 }
 
 table.lfs-default th {
-    background-color: #9f8d83;
+    background-color: rgb(45,142,226);
     color: white;
     font-weight: bold;
     padding: 4px 6px;

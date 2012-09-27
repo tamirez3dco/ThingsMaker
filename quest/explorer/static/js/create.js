@@ -406,8 +406,11 @@ $.fn.exists = function() {
 			var wizard = this;
 			$steps.each(function(index, element) {
 				var param = element.id.replace('create-param-', '');
+				if(param == 'start') {
+					afterLast = index+1;
+				}
 				if(param == 'text') {
-					afterLast = 1;
+					afterLast = index+1;
 					if(wizard._userText != null) {
 						$(element).find("#create-param-text-input").val(wizard._userText);
 					}

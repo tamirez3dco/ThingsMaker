@@ -774,7 +774,7 @@ ___________________________________________________________________________ */
    clear: both;
 }
 
-.product-title {
+.product .product-title {
     /*padding-bottom: 5px;*/
     font-size: 26px;
     margin: 0px;

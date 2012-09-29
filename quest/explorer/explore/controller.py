@@ -185,7 +185,7 @@ class Base:
     
     def get_stl(self, item_id):
         item = Item.objects.get(uuid=item_id)
-        job = self._prepare_job(item.definition, item.uuid, item.params, item.textParam,"Render", item.material, 180, True)
+        job = self._prepare_job(item.definition, item.uuid+ '-sw', item.params, item.textParam,"Render", item.material, 674, True)
         self.renderer.request_images_async([job]) 
     
     def _explore(self):

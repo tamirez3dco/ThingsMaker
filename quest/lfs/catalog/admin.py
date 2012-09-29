@@ -14,6 +14,16 @@ from lfs.catalog.models import ProductPropertyValue
 from lfs.catalog.models import StaticBlock
 from lfs.catalog.models import DeliveryTime
 from lfs.catalog.models import Designer
+import explorer.tasks
+from explorer.explore.controller import Base as Controller
+
+def get_stl(modeladmin, request, queryset):
+    #queryset.update(status='p')
+    item = queryset[0].get_item()
+    controller = Controller('near', 'Default', 1)
+    controller.get_stl(item.uuid)
+get_stl.short_description = "Get STL"
+      
 
 class CategoryAdmin(admin.ModelAdmin):
     """
@@ -25,6 +35,8 @@ admin.site.register(Category, CategoryAdmin)
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", )}
     list_display = ('id','name','slug','sub_type')
+    actions = [get_stl]
+    
 admin.site.register(Product, ProductAdmin)
 
 

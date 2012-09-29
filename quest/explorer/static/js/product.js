@@ -15,6 +15,12 @@ $(document).ready(function() {
 		console.log("Dont waitImages");
 		dontWaitImages();
 	}
+	$('#get-stl-button').click(function(){
+		console.log('click');
+		$.getJSON('/explorer/get_stl',{product: slug}, function(data) {
+			console.log(data);
+		});	
+	});
 	getProductList('/get_ssp/%7B"limits":"0-5","screener":"'+ slug +'","sorter":"stock_amount"%7D', '.popular-variants');
 });
 function waitImage(imgsrc, imageId, imageTitle) {

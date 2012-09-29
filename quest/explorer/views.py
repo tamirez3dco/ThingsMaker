@@ -217,4 +217,37 @@ def get_screened_sorted_products(request,jsonstr):
         "products": res
     }, cls=LazyEncoder)
 
-    return HttpResponse(result)    
+    return HttpResponse(result)  
+
+def s3_signed_url(bucket_name, file_path):
+    import boto
+    s3conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    bucket = s3conn.get_bucket(bucket_name, validate=False)
+    key = bucket.new_key(file_path)
+    signed_url = key.generate_url(expires_in=300)
+    #print signed_url
+    return signed_url
+
+
+def get_stl(request):
+    print "get stl"
+    slug = request.GET.get('product', '')#Product.objects.get()
+    print slug
+    product = Product.objects.get(slug=slug) #queryset[0].get_item()
+    item = product.get_item()
+    controller = Controller('near', 'Default', 1)
+    print item.uuid
+    controller.get_stl(item.uuid)
+    url = "https://s3.amazonaws.com/deploy_stl_bucket/%s.stl" % item.uuid
+    #signed_url = s3_signed_url("deploy_stl_bucket","%s.stl" % item.uuid)
+    #print signed_url
+    result = simplejson.dumps({
+        "url": url
+    }, cls=LazyEncoder)
+    return HttpResponse(result)  
+
+from lfs.catalog.models import Product
+from lfs.catalog.settings import VARIANT
+from lfs.core.utils import LazyEncoder
+from lfs.caching.utils import lfs_get_object_or_404
+from lfs.core.models import Shop

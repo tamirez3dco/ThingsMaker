@@ -21,6 +21,7 @@ urlpatterns += patterns("",
 )
 
 urlpatterns += patterns("",
+    url(r'^admin_tools/', include('admin_tools.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.path.join(DIRNAME, "media"), 'show_indexes': True }),
 )
@@ -29,6 +30,7 @@ urlpatterns += patterns("",
     (r'^create','explorer.views.create'),
     (r'^designers','explorer.views.designers'),
     (r'^explorer/add_product_variant','explorer.views.add_product_variant'),
+    (r'^explorer/get_stl','explorer.views.get_stl'),
     (r'^explorer/set_product_name','explorer.views.set_product_name'),
     (r'^explore','explorer.views.explore'),
     (r'^addlover','explorer.views.add_lover_to_product'),

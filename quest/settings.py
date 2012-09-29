@@ -101,6 +101,10 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     "lfstheme",
     "compressor",
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     "django.contrib.admin",
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -166,6 +170,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.auth',
     'django.core.context_processors.request',
+    'django.core.context_processors.i18n',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lfs.core.context_processors.main',

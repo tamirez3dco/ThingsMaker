@@ -21,3 +21,4 @@ boto==2.3.0
 numpy
 django-storages
 newrelic
+django-admin-tools

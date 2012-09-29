@@ -52,3 +52,8 @@ def wakeup_servers(manual):
 def manage_servers():
     manager = ServerManager()
     manager.manage()
+
+from explorer.explore.controller import Base as Controller    
+#@task()
+#def preprocess_items(definition_id):
+#    controller = Controller()    

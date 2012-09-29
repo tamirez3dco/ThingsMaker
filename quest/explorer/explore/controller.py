@@ -13,7 +13,6 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
 
-
 class Base:
     """
     Explore parameter space
@@ -183,7 +182,12 @@ class Base:
             jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
             
         self.renderer.request_images_async(jobs, countdown=1) 
-         
+    
+    def get_stl(self, item_id):
+        item = Item.objects.get(uuid=item_id)
+        job = self._prepare_job(item.definition, item.uuid, item.params, item.textParam,"Render", item.material, 180, True)
+        self.renderer.request_images_async([job]) 
+    
     def _explore(self):
         #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         params = self._get_children_params(self.definition, self.root, self.distance, self.param_index, self.explore_type, self.iterate_type)
@@ -309,7 +313,7 @@ class Base:
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180):
+    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
@@ -326,6 +330,7 @@ class Base:
         job['scene'] = definition.scene_file 
         job['layer_name'] = material
         job['view_name'] = view_name
+        job['getSTL'] = get_stl
         return job
     
     def _make_result(self, uuids, materials, textParams):

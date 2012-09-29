@@ -1385,6 +1385,11 @@ button {
   overflow:visible;
 }
 
+a.button.cart-button,
+a.button.checkout-button {
+	margin-left: 14px;
+}
+
 button img,
 a.button img {
   margin:0 3px -3px 0 !important;
@@ -1451,8 +1456,8 @@ button.emphasized:hover {
 	display: none;	
 }
 .contactable-form {
-	background-color:#333333;
-	border:2px solid #FFFFFF;
+	background-color:rgb(77,77,77);
+	border:2px solid rgb(60,60,60);
 	color:#FFFFFF;
 	height:450px;
 	left:0;
@@ -1489,12 +1494,12 @@ form.contactable-form input, textarea {
 }
 
 form.contactable-form .submit {
-	background: #F5410F none repeat scroll 0 0;
+	background: #F9941F none repeat scroll 0 0;
 	outline-style:none;
 	outline-width:medium;
 	width:325px;
 	padding:5px;
-	border:3px solid #F52D0F;
+	border:3px solid #F9941F;
 	outline-color:-moz-use-text-color;
 	font-family: georgia;
 	font-size:1em;
@@ -1516,7 +1521,7 @@ form.contactable-form .disclaimer {
 }
 
 .contactable-form .contactable-red {
-	color:	#F5410F;
+	color:	#F9941F;
 }
 
 .contactable-close {

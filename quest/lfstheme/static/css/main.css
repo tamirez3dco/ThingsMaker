@@ -1528,6 +1528,9 @@ form.contactable-form .disclaimer {
 	width: 24px;
 	height: 24px;
 	display: none;
+	background-color: rgb(77,77,77);
+	margin-top: -4px;
+	margin-right: 1px;
 }
 
 .center .contactable-close {

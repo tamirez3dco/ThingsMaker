@@ -60,7 +60,7 @@ class GhDefinition(models.Model):
     product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False)
     default_material = models.ForeignKey(Material)
-    
+    use_cache = models.BooleanField(default=True)
     def __unicode__(self):
         return self.file_name
 

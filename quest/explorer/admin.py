@@ -19,7 +19,7 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     param_names = PickleField( max_length = 1000, required = True )
     accepts_text_params = forms.BooleanField(initial=False,required=False)
     default_material = forms.ModelChoiceField(Material.objects.all())
-    #use_cache = forms.BooleanField(initial=True,required=False)
+    use_cache = forms.BooleanField(initial=True,required=False)
     
 class GhDefinitionAdmin(admin.ModelAdmin):
     fields = ('file_name','scene_file','product','active','param_names','accepts_text_params', 'default_material','use_cache')

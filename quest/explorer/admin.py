@@ -32,7 +32,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition')
-          
+    list_filter = ('definition',)   
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(ExplorerConfig)

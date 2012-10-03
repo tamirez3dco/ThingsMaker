@@ -468,6 +468,7 @@ table.search-results {
 	right: 122px;
 	height: 60px;
 	z-index: -1;
+	padding-left: 30px;
 }
 /*#cart-tab {
 	border-top-right-radius: 6px;
@@ -479,18 +480,34 @@ table.search-results {
 	right: 0px;
 	height: 60px;
 }*/
+#cart-tab {
+	
+}
 #cart-tab A {
 	/*padding: 0px 0px 20px 8px;*/
-	width: 80px;	
+	width: 60px;	
 	height: 30px;
+	background-image: url(/static/img/CartEmpty.png);
+	background-repeat: no-repeat;
+	padding-left: 62px;
+	margin-top: 22px;
+	background-position-x: 58px;
 }
-#cart-tab-img {
-	position: absolute;
-	left: 56px;
-	top: 5px;
-	/*margin-top: 24px;*/
-	/*width: 30px;	*/
-	
+
+#cart-tab SPAN {
+	text-align: center;
+	background-color: rgb(216,0,12);
+	border-radius: 14px;
+	height: 18px;
+	width:18px;
+	padding: 0px;
+	color:white;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: Arial;
+	margin-left: 15px;
+	margin-top: 5px;
+	line-height: 18px;
 }
 
 #home-tab A {

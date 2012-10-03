@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load lfs_tags %}
 
 <div class="tabs">
     <ul>
@@ -17,12 +18,12 @@
                 </a>                           
             </li>            
         {% endfor %}
-        <li id="cart-tab">  
-        	 <a href="/cart"> 
-        	 	<img id="cart-tab-img" src="/static/img/cart_new.png" \>  
-        	 </a>                                  
-        </li>
-        
+       <li id="cart-tab">  
+	 		<a href="/cart">
+	 			{% if num_cart_items %}
+	 			<span>{{ num_cart_items }}</span> 
+	 			{% endif %}
+	 		</a>                                  
+		</li>
     </ul>
- 
 </div>

@@ -13,6 +13,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 # lfs imports
+import lfs.cart.utils
+from lfs.cart import utils as cart_utils
 import lfs.catalog.utils
 import lfs.utils.misc
 from lfs.caching.utils import lfs_get_object_or_404
@@ -49,6 +51,16 @@ def google_analytics_tracking(context):
         "ga_site_tracking": shop.ga_site_tracking,
         "google_analytics_id": shop.google_analytics_id,
     }
+
+    
+#    """Returns google analytics tracking code which has been entered to the
+#    shop.
+#    """
+#    shop = lfs.core.utils.get_default_shop(context.get("request"))
+#    return {
+#        "ga_site_tracking": shop.ga_site_tracking,
+#        "google_analytics_id": shop.google_analytics_id,
+#    }
 
 
 @register.inclusion_tag('lfs/shop/google_analytics_ecommerce.html', takes_context=True)
@@ -328,6 +340,8 @@ def tabs(context, obj=None):
         obj = context.get("product") or context.get("category")
 
     request = context.get("request")
+    cart = cart_utils.get_cart(request)
+    num_cart_items = len(cart.get_items())
     tabs = Action.objects.filter(active=True , group=1)
     if isinstance(obj, (Product, Category)):
         top_category = lfs.catalog.utils.get_current_top_category(request, obj)
@@ -347,6 +361,7 @@ def tabs(context, obj=None):
 
     return {
         "tabs": tabs,
+        "num_cart_items": num_cart_items,
         "STATIC_URL": context.get("STATIC_URL"),
     }
 

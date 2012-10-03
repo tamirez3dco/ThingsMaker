@@ -172,7 +172,7 @@ class Iterate(Base):
                     param = img_idx*(1/(self.page_size-1))
                     params.append(param)
                 else:
-                    params.append(0.21)
+                    params.append(0.5)
                     
             params_list.append(params) 
         return params_list  

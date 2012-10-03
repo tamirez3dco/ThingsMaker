@@ -76,7 +76,7 @@ class Renderer:
             for k,v in params['params'].iteritems():
                 if k == 'textParam':
                     continue
-                nv = float("%.1f" % v)
+                nv = float("%.2f" % v)
                 params['params'][k] = nv
             nlist.append(params)
         return nlist

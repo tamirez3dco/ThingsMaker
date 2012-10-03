@@ -169,10 +169,10 @@ class Iterate(Base):
             params = []
             for param_idx in range(num_params):
                 if selected_param_index == param_idx:
-                    param = img_idx*(0.98/(self.page_size-1))+0.01
+                    param = img_idx*(1/(self.page_size-1))
                     params.append(param)
                 else:
-                    params.append(0.5)
+                    params.append(0.21)
                     
             params_list.append(params) 
         return params_list  

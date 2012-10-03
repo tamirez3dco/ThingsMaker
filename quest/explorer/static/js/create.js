@@ -551,7 +551,7 @@ $.fn.exists = function() {
 			var img = new Image();
 			var self = this;
 			img.onerror = function(evt) {
-				if(count < 100) {
+				if(count < 300) {
 					setTimeout(self._waitImage(imgsrc, imageId, imageTitle, count + 1), 300);
 				}
 			}

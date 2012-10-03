@@ -138,7 +138,7 @@ class Base:
             #logging.error(param_key)
             cached = Item.objects.filter(param_hash = param_key, definition = definition)
             #res = []
-            if len(cached)>0:
+            if len(cached)>0 and (definition.use_cache==True):
                 all_uuids.append(cached[0].uuid)
                 #logging.error("found %s %s" % (param_key, cached[0].uuid))
             else:

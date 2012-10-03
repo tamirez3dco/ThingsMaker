@@ -341,7 +341,11 @@ def tabs(context, obj=None):
 
     request = context.get("request")
     cart = cart_utils.get_cart(request)
-    num_cart_items = len(cart.get_items())
+    if cart == None:
+        num_cart_items = 0
+    else:
+        num_cart_items = len(cart.get_items())
+        
     tabs = Action.objects.filter(active=True , group=1)
     if isinstance(obj, (Product, Category)):
         top_category = lfs.catalog.utils.get_current_top_category(request, obj)

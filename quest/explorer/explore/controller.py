@@ -400,7 +400,7 @@ class Base:
             
         print not_sent.count()
         
-        return
+        #return
         wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases'])
         can_send = max_wait - wait_count
         print can_send

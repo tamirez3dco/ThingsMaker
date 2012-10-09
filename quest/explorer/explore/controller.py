@@ -394,11 +394,10 @@ class Base:
         
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
-        else:
-            print "All"
+        else: 
             not_sent = Item.objects.filter(sent=False)
-            
-        print not_sent.count()
+        print "Not Sent %s" % not_sent.count()  
+        #print not_sent.count()
         
         #return
         wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases'])

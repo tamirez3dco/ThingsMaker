@@ -159,7 +159,7 @@ class Base:
             param_key = self._item_param_hash(p, m, text)
             print param_key
             #logging.error(param_key)
-            cached = Item.objects.filter(param_hash = param_key, definition = definition)
+            cached = Item.objects.filter(param_hash = param_key, definition = definition, sent=True)
             #res = []
             if len(cached)>0 and (definition.use_cache==True):
                 all_uuids.append(cached[0].uuid)

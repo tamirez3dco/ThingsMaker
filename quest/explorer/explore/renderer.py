@@ -30,7 +30,12 @@ class Renderer:
     def request_images(self, params):
         scene = params[0]['scene']
         scene = scene.replace('.3dm','')
-        q_name = "%s_%s_%s" % (self.site_name, scene, 'request')
+        lowpriority = ""
+        #print "low_priority"
+        #print params[0]['low_priority']
+        if params[0]['low_priority']==True:
+            lowpriority = "_lowpriority"
+        q_name = "%s%s_%s_%s" % (self.site_name, lowpriority, scene, 'request')
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         q = conn.create_queue(q_name)
         q.set_message_class(Message)
@@ -68,11 +73,20 @@ class Renderer:
             item.save()
             q.delete_message(rs[i])
             sys.stderr.write("\nRecieved results for "+str(body['item_id'])+"\n")                
-            
+    
+    def get_lowpriority_wait_count(self, scenes): 
+        conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY) 
+        count = 0
+        for scene in scenes:
+            q_name = "%s%s_%s_%s" % (self.site_name, '_lowpriority', scene, 'request')
+            q = conn.create_queue(q_name)
+            count += q.count()
+        return count
             
     def trunc_params(self, params_list):
         nlist = [];
         for params in params_list:
+            del params['low_priority']
             for k,v in params['params'].iteritems():
                 if k == 'textParam':
                     continue

@@ -301,6 +301,11 @@ CELERYBEAT_SCHEDULE = {
         "task": "explorer.tasks.get_ready_images",
         "schedule": timedelta(seconds=1),
         "args": ()
+    },
+    "send-background-items": {
+        "task": "explorer.tasks.send_background_items",
+        "schedule": timedelta(seconds=120),
+        "args": ()
     }
 }
 

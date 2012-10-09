@@ -68,8 +68,8 @@ def get_cart_items_for_paypal(request):
         "items": cart_items
     }, cls=LazyEncoder)
 
-    return HttpResponse(result)    
-
+    return HttpResponse(result)   
+ 
 def cart_inline(request, template_name="lfs/cart/cart_inline.html"):
     """
     The actual content of the cart.

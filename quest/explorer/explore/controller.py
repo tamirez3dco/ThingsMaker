@@ -12,7 +12,29 @@ from explorer.explore.algo import Axis, Explore, Iterate
 from django.conf import settings
 from django.contrib.sites.models import Site
 import uuid
+import itertools
 
+def all_perms(elements):
+    if len(elements) <=1:
+        yield elements
+    else:
+        for perm in all_perms(elements[1:]):
+            for i in range(len(elements)):
+                yield perm[:i] + elements[0:1] + perm[i:]
+
+#[(name1, [v1, v2, v3]),(name2, [v1, v2])...]
+# bad memory usage, need to yield..
+def all_params_perms(params):
+    if len(params) <=1:
+        return map(lambda x: [x], params[0][1])
+    else:
+        all_perms = []
+        for v in params[0][1]:
+            for perm in all_params_perms(params[1:]):
+                np = [v] + perm
+                all_perms.append(np)
+        return all_perms
+                
 class Base:
     """
     Explore parameter space
@@ -135,6 +157,7 @@ class Base:
         todo_materials = []
         for p,m in zip(params, materials):
             param_key = self._item_param_hash(p, m, text)
+            print param_key
             #logging.error(param_key)
             cached = Item.objects.filter(param_hash = param_key, definition = definition)
             #res = []
@@ -152,7 +175,7 @@ class Base:
         return (all_uuids, todo_uuids, todo_params, todo_materials) 
     
     def _item_param_hash(self, params, material, text):
-        p = "".join(map(lambda x: ("%.2f" %  x)[2:], params)) + material + text
+        p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
         return p
         
     def explore(self, item_id, param_index, explore_type, iterate_type, text):
@@ -300,20 +323,26 @@ class Base:
             self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material, text)
     
     
-    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text):
+    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text, low_priority=False):
         jobs = []
+        print low_priority
         for i in range(len(uuids)):
-            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material))
+            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority))
         
         self.renderer.request_images(jobs)  
         
         for i in range(len(uuids)):
-            self._save_item(root, definition, children_params[i], True, uuids[i], distance, self.material, text)
+            saved = Item.objects.filter(uuid=uuids[i])
+            if(len(saved)==0):
+                self._save_item(root, definition, children_params[i], True, uuids[i], distance, self.material, text)
+            else:
+                saved[0].sent = True
+                saved[0].save()
         
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False):
+    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
@@ -331,6 +360,7 @@ class Base:
         job['layer_name'] = material
         job['view_name'] = view_name
         job['getSTL'] = get_stl
+        job['low_priority'] = low_priority
         return job
     
     def _make_result(self, uuids, materials, textParams):
@@ -342,8 +372,7 @@ class Base:
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}
 
     def _save_item(self, parent, definition, params, sent, item_uuid, distance, material, textParam):
-        price = 172
-        
+        price = 172       
         param_hash = self._item_param_hash(params, material, textParam)
         db_item = Item(param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
@@ -359,8 +388,45 @@ class Base:
         old_obj.uuid = str(uuid.uuid1())
         old_obj.save()
         return old_obj
+   
+    def send_background_items(self, definition=None):
+        max_wait = 100
+        
+        if definition!=None:
+            not_sent = Item.objects.filter(sent=False, definition=definition)
+        else:
+            print "All"
+            not_sent = Item.objects.filter(sent=False)
+            
+        print not_sent.count()
+        
+        return
+        wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases'])
+        can_send = max_wait - wait_count
+        print can_send
+        for i in range(min(can_send,len(not_sent))):
+            print not_sent[i].uuid
+            self.material = not_sent[i].material
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", low_priority=True)
+            #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
+       
+    def preprocess_definition(self, definition):
+        param_values =  [0, 0.2, 0.4, 0.6, 0.8, 1] 
+        param_names = definition.param_names
+        #param_perms = itertools.combinations_with_replacement(param_values, len(param_names))
+        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        print materials
+        for material in materials:
+            print material
+            param_perms = itertools.product(param_values, repeat=len(param_names))
+            print param_perms
+            for perm in param_perms:
+                print perm
+                item_uuid = str(uuid.uuid1())
+                Item.objects.filter()
+                self._save_item(None, definition, perm, False, item_uuid, 0, material, "")
+        
     
-
 class Remember(Base):
     def stam(self):
         pass

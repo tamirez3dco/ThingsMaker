@@ -172,7 +172,7 @@ class Iterate(Base):
                     param = img_idx*(1/(self.page_size-1))
                     params.append(param)
                 else:
-                    params.append(0.5)
+                    params.append(0.4)
                     
             params_list.append(params) 
         return params_list  
@@ -186,7 +186,8 @@ class Iterate(Base):
         #logging.warn("Param index: %s" % param_index)
         params_list = []
         for i in range(self.page_size):
-            param = i*(0.98/(self.page_size-1))+0.01
+            param = i*(1.0/(self.page_size-1))+0.0
+            print param
             
             params = list(parent_params)
             params[param_index] = param

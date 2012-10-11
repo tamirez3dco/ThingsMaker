@@ -155,11 +155,13 @@ class Base:
         todo_uuids = []
         todo_params = []
         todo_materials = []
+        cache_count = 0
         for p,m in zip(params, materials):
             param_key = self._item_param_hash(p, m, text)
             cached = Item.objects.filter(param_hash = param_key, definition = definition, sent=True)
             
             if len(cached)>0 and (definition.use_cache==True):
+                cache_count += 1
                 if (cached[0].status == Item.ERROR):
                     continue
                 if (cached[0].status == Item.CREATED):
@@ -176,7 +178,7 @@ class Base:
                 todo_params.append(p)
                 all_uuids.append(new_uuid)
                 
-        logging.error("all %s, todo %s" % (len(materials), len(todo_uuids)))
+        logging.error("all %s, todo %s, cached %s" % (len(materials), len(todo_uuids), cache_count))
         return (all_uuids, todo_uuids, todo_params, todo_materials) 
     
     def _item_param_hash(self, params, material, text):

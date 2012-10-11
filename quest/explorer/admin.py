@@ -58,8 +58,8 @@ class GhDefinitionAdmin(admin.ModelAdmin):
 #        obj.save()    
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id','definition','uuid')
-    list_filter = ('definition',)   
+    list_display = ('id','definition','status','params','uuid', 'image_url')
+    list_filter = ('definition','status')   
     
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)

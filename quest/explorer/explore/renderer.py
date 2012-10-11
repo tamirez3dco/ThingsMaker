@@ -28,6 +28,8 @@ class Renderer:
         explorer.tasks.request_images.apply_async(args=[params], countdown=countdown)
         
     def request_images(self, params):
+        if len(params)==0: return
+        
         scene = params[0]['scene']
         scene = scene.replace('.3dm','')
         lowpriority = ""
@@ -52,7 +54,7 @@ class Renderer:
         sys.stderr.write("\n\n\nSent messages\n\n\n")
         return
  
-    def get_ready_images(self):
+    def get_ready_images_old(self):
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         q = conn.create_queue(self.q_ready)
         rs = q.get_messages(10)
@@ -73,7 +75,38 @@ class Renderer:
             item.save()
             q.delete_message(rs[i])
             sys.stderr.write("\nRecieved results for "+str(body['item_id'])+"\n")                
-    
+
+    def get_ready_images(self):
+        conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        q = conn.create_queue(self.q_ready)
+        rs = q.get_messages(10)
+        
+        for i in range(len(rs)):
+            sys.stderr.write(rs[i].get_body() + "\n")
+            body = simplejson.loads(rs[i].get_body())
+            if (body.has_key('status') == False):
+                q.delete_message(rs[i])
+                continue
+                
+            items = Item.objects.filter(uuid=body['item_id'])
+            if len(items) == 0:
+                continue
+            
+            item = items[0]
+
+            if (body['item_id'].find('_') != -1) or (body['status']=='STARTED'):
+                q.delete_message(rs[i])
+                continue
+            
+            if(body['status']=='FINISHED'):
+                item.status = Item.FINISHED
+            if(body['status']=='ERROR'):
+                item.status = Item.ERROR   
+                
+            item.save()
+            q.delete_message(rs[i])
+            sys.stderr.write("\nRecieved results for "+str(body['item_id'])+"\n")        
+                
     def get_lowpriority_wait_count(self, scenes): 
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY) 
         count = 0

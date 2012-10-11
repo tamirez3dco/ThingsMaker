@@ -157,13 +157,18 @@ class Base:
         todo_materials = []
         for p,m in zip(params, materials):
             param_key = self._item_param_hash(p, m, text)
-            print param_key
-            #logging.error(param_key)
             cached = Item.objects.filter(param_hash = param_key, definition = definition, sent=True)
-            #res = []
+            
             if len(cached)>0 and (definition.use_cache==True):
-                all_uuids.append(cached[0].uuid)
-                #logging.error("found %s %s" % (param_key, cached[0].uuid))
+                if (cached[0].status == Item.ERROR):
+                    continue
+                if (cached[0].status == Item.CREATED):
+                    todo_uuids.append(cached[0].uuid)
+                    todo_materials.append(m)
+                    todo_params.append(p)
+                
+                all_uuids.append(cached[0].uuid) 
+                
             else:
                 new_uuid = str(uuid.uuid1())
                 todo_uuids.append(new_uuid)
@@ -337,6 +342,7 @@ class Base:
                 self._save_item(root, definition, children_params[i], True, uuids[i], distance, self.material, text)
             else:
                 saved[0].sent = True
+                saved[0].status = Item.SENT
                 saved[0].save()
         
     def _uuid_to_url(self, item_uuid):
@@ -374,7 +380,18 @@ class Base:
     def _save_item(self, parent, definition, params, sent, item_uuid, distance, material, textParam):
         price = 172       
         param_hash = self._item_param_hash(params, material, textParam)
-        db_item = Item(param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, uuid=item_uuid, params=params, textParam=textParam)
+        if (sent == True):
+            status = Item.SENT
+        else:
+            status = Item.CREATED
+        
+        old_items = Item.objects.filter(uuid=item_uuid)
+        if len(old_items)!=0:
+            old_items[0].status = status
+            old_items[0].save()
+            return old_items[0]
+            
+        db_item = Item(param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, status=status,uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
         #db_item.set_params(params)
         return db_item

@@ -98,6 +98,18 @@ class Item(models.Model):
     material = models.CharField(max_length=20, default="Gold")
     param_hash = models.CharField(max_length=100, null=True, db_index=True)
     
+    CREATED = 'CR'
+    SENT = 'SE'
+    FINISHED = 'FI'
+    ERROR = 'ER'
+    
+    STATUS_CHOISES = ((CREATED,'Created'), (SENT, 'Sent'), (FINISHED, 'Finished'), (ERROR, 'Error'))
+    status = models.CharField(max_length=2,
+                              choices=STATUS_CHOISES,
+                              default=CREATED)
+    
+    num_trials = models.IntegerField(default=0)
+    
     
     def __unicode__(self):
         return str(self.id)

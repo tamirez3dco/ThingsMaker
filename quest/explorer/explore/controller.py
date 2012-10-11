@@ -158,7 +158,7 @@ class Base:
         cache_count = 0
         for p,m in zip(params, materials):
             param_key = self._item_param_hash(p, m, text)
-            cached = Item.objects.filter(param_hash = param_key, definition = definition, sent=True)
+            cached = Item.objects.filter(param_hash = param_key, definition = definition)
             
             if len(cached)>0 and (definition.use_cache==True):
                 cache_count += 1

@@ -151,6 +151,7 @@ class Base:
         return self._make_result(all_uuids, materials)
     
     def _get_cached_items(self, definition, params, materials, text):
+        self._get_base_cache(definition, params)
         all_uuids = []
         todo_uuids = []
         todo_params = []
@@ -182,9 +183,10 @@ class Base:
         return (all_uuids, todo_uuids, todo_params, todo_materials) 
     
     def _get_base_cache(self, definition, params):
-        #for p in params:
-        pass   
-        
+        for p in params:
+            cached = Item.objects.filter(params = p, definition = definition)
+            print "_get_base_cache %s" % len(cached)
+            
     def _item_param_hash(self, params, material, text):
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
         return p
@@ -386,6 +388,7 @@ class Base:
     def _save_item(self, parent, definition, params, sent, item_uuid, distance, material, textParam):
         price = 172       
         param_hash = self._item_param_hash(params, material, textParam)
+        base_param_hash = self._item_param_hash(params, "", "")
         if (sent == True):
             status = Item.SENT
         else:
@@ -397,7 +400,7 @@ class Base:
             old_items[0].save()
             return old_items[0]
             
-        db_item = Item(param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, status=status,uuid=item_uuid, params=params, textParam=textParam)
+        db_item = Item(base_param_hash=base_param_hash,param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, parent_distance=distance, definition=definition, sent=sent, status=status,uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
         #db_item.set_params(params)
         return db_item
@@ -413,7 +416,7 @@ class Base:
         return old_obj
    
     def send_background_items(self, definition=None):
-        max_wait = 100
+        max_wait = 0
         
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
@@ -429,7 +432,7 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=False, low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):

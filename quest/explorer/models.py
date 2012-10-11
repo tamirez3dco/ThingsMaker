@@ -97,6 +97,7 @@ class Item(models.Model):
     parent_distance = models.CharField(max_length=20)
     material = models.CharField(max_length=20, default="Gold")
     param_hash = models.CharField(max_length=100, null=True, db_index=True)
+    base_param_hash = models.CharField(max_length=100, null=True, db_index=True)
     
     CREATED = 'CR'
     SENT = 'SE'

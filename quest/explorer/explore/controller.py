@@ -181,6 +181,10 @@ class Base:
         logging.error("all %s, todo %s, cached %s" % (len(materials), len(todo_uuids), cache_count))
         return (all_uuids, todo_uuids, todo_params, todo_materials) 
     
+    def _get_base_cache(self, definition, params):
+        #for p in params:
+        pass   
+        
     def _item_param_hash(self, params, material, text):
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
         return p
@@ -330,11 +334,11 @@ class Base:
             self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material, text)
     
     
-    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text, low_priority=False):
+    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text, low_priority=False, get_stl=False):
         jobs = []
         print low_priority
         for i in range(len(uuids)):
-            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority))
+            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority, get_stl=get_stl))
         
         self.renderer.request_images(jobs)  
         
@@ -409,7 +413,7 @@ class Base:
         return old_obj
    
     def send_background_items(self, definition=None):
-        max_wait = 0
+        max_wait = 100
         
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
@@ -425,7 +429,7 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=False, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):

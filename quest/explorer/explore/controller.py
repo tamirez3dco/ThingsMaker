@@ -409,7 +409,7 @@ class Base:
         return old_obj
    
     def send_background_items(self, definition=None):
-        max_wait = 100
+        max_wait = 0
         
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
@@ -425,7 +425,7 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):

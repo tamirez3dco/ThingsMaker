@@ -21,11 +21,12 @@ def send_background_items(modeladmin, request, queryset):
 send_background_items.short_description = "Send Background Items"
 
 def set_sent(modeladmin, request, queryset):
-    definition = queryset[0]
-    items = Item.objects.filter(sent=False, definition=definition)
+    #definition = queryset[0]
+    #items = Item.objects.filter(sent=False, definition=definition)
+    items = Item.objects.all()
     print items.count()
     for item in items:
-        item.sent=True
+        item.status=Item.FINISHED
         item.save()
         
 set_sent.short_description = "Set all items as sent"

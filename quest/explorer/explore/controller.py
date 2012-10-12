@@ -183,17 +183,9 @@ class Base:
         return (all_uuids, todo_uuids, todo_params, todo_materials) 
     
     def _get_base_cache(self, definition, params):
-        uuids = []
-        cached = []
         for p in params:
-            param_key = self._item_param_hash(p, "", "")
-            current_cached = Item.objects.filter(base_param_hash = param_key, definition = definition)
-            cached.append(current_cached[0].uuid)
-            new_uuid = str(uuid.uuid1())
-            uuids.append(new_uuid)
+            cached = Item.objects.filter(params = p, definition = definition)
             print "_get_base_cache %s" % len(cached)
-            
-        return(uuids,cached)
             
     def _item_param_hash(self, params, material, text):
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
@@ -233,18 +225,18 @@ class Base:
         self.renderer.request_images_async([job]) 
     
     def _explore(self):
+        #uuids = map(lambda x: str(uuid.uuid1()), range(self.page_size))
         params = self._get_children_params(self.definition, self.root, self.distance, self.param_index, self.explore_type, self.iterate_type)
         materials = [self.material for i in range(len(params))]
-        #(all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(self.definition, params, materials, self.text)
-        (uuids, base_items) = self._get_base_cache(self.definition.base_definition, params)
-        explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': base_items}, args=[self.definition, uuids, self.root, params, self.distance, self.material, self.page_size, 'iterate', self.text])
+        (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(self.definition, params, materials, self.text)
+        #explorer.tasks.send_jobs.apply_async(args=[self.definition, uuids, self.root, self.page_size, self.distance, self.page_size, self.param_index, self.explore_type, self.iterate_type, self.material, self.text], countdown=0)
+        explorer.tasks.send_jobs_with_params.apply_async(args=[self.definition, todo_uuids, self.root, todo_params, self.distance, self.material, self.page_size, 'iterate', self.text])
         
         self.root.selected=True
         self.root.save()
-        return self._make_result(uuids, materials, [self.text for i in range(len(uuids))])
+        return self._make_result(all_uuids, materials, [self.text for i in range(len(all_uuids))])
         
-    
-    def render_materials_old(self, materials, parent_id, definition_id, text):
+    def render_materials(self, materials, parent_id, definition_id, text):
         if parent_id == None:
             root = None
             definition = GhDefinition.objects.get(pk=definition_id)
@@ -267,7 +259,7 @@ class Base:
         params = [params[0] for i in materials]
         (all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(definition, params, materials, text)
         for i in range(len(todo_materials)):
-            explorer.tasks.send_jobs_with_params.apply_async( args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
+            explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
        
        
         #for i in range(len(materials)):
@@ -275,40 +267,7 @@ class Base:
         
         return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))])
     
-
-    def render_materials(self, materials, parent_id, definition_id, text):
-        print "render materials"
-        if parent_id == None:
-            root = None
-            definition = GhDefinition.objects.get(pk=definition_id)
-        else:
-            root = Item.objects.get(uuid=parent_id)
-            definition = root.definition
-            if text == "":
-                text = root.textParam
-            
-        if definition.accepts_text_params == False:
-            text = ""    
-            
-        self.iterate_type = 'linear'
-        self.explore_type = 'iterate'
-        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
-        
-        #uuids = map(lambda x: str(uuid.uuid1()), range(len(materials)))
-       
-        params = self._get_children_params(definition, root, self.distance, -1, 'noop', 'linear') 
-        params = [params[0] for i in materials]
-        #(all_uuids, todo_uuids, todo_params, todo_materials) = self._get_cached_items(definition, params, materials, text)
-        (uuids, base_items) = self._get_base_cache(definition.base_definition, params)
-        for i in range(len(uuids)):
-            explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': [base_items[i]]}, args=[definition, [uuids[i]], None, [params[i]], self.distance, materials[i], self.page_size, 'iterate', text])
-            #explorer.tasks.send_jobs_new.apply_async(args=[definition, [uuids[i]]])
-       
-        #for i in range(len(materials)):
-        #    explorer.tasks.send_jobs.apply_async(args=[definition, [uuids[i]], root, 1, self.distance, 1, -1, 'noop', self.iterate_type, materials[i], text], countdown=0)
-        
-        return self._make_result(uuids, materials, [text for i in range(len(uuids))])
-
+    
     def _explore_deep(self):
         children = None
         for i in range(100):
@@ -377,14 +336,11 @@ class Base:
             self._save_item(root, definition, children_params[i], (i in perm), uuids[i], distance, self.material, text)
     
     
-    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text, base_models=None, low_priority=False, get_stl=False):
+    def _send_jobs_with_params(self, definition, uuids, root, children_params, distance, text, low_priority=False, get_stl=False):
         jobs = []
-        base_model=None
         print low_priority
         for i in range(len(uuids)):
-            if(base_models!=None):
-                base_model = base_models[i]
-            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority, get_stl=get_stl, base_model=base_model))
+            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority, get_stl=get_stl))
         
         self.renderer.request_images(jobs)  
         
@@ -400,7 +356,7 @@ class Base:
     def _uuid_to_url(self, item_uuid):
         return "http://s3.amazonaws.com/%s_Bucket/%s.jpg" % (Site.objects.get(id=settings.SITE_ID).name, item_uuid) 
     
-    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False, base_model=None):
+    def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False):
         job = {}
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
@@ -419,8 +375,6 @@ class Base:
         job['view_name'] = view_name
         job['getSTL'] = get_stl
         job['low_priority'] = low_priority
-        if base_model!=None:
-            job['load_stl'] = base_model
         return job
     
     def _make_result(self, uuids, materials, textParams):
@@ -478,7 +432,7 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=False, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):

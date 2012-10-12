@@ -27,10 +27,10 @@ def send_jobs(definition, uuids, root, n_jobs, distance, page_size, param_index,
     controller._send_jobs(definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text)
 
 @task()
-def send_jobs_with_params(definition, uuids, root, params, distance, material, page_size, explore_type, text):
+def send_jobs_with_params(definition, uuids, root, params, distance, material, page_size, explore_type, text, base_models=None):
     #return True
     controller = Controller(distance, material, page_size, explore_type)
-    controller._send_jobs_with_params(definition, uuids, root, params, distance, text)
+    controller._send_jobs_with_params(definition, uuids, root, params, distance, text, base_models=base_models)
 
 @task()
 def send_missing_jobs(items):

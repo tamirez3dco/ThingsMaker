@@ -603,7 +603,7 @@ $.fn.exists = function() {
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
 				$("#explorer-image-" + id).data('text', data[i].text);
-				$("#explorer-image-" + id).click(function() {
+				$("#explorer-image-" + id).one('click', function() {
 					wizard._updateStateFromItem(this);
 					wizard._imageClick(this);
 				});

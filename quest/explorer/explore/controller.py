@@ -1,4 +1,5 @@
 import random
+import math
 import sys
 import time
 import logging
@@ -6,7 +7,7 @@ from django.utils import simplejson
 from datetime import datetime
 #from explorer.explore.image_generator import Generator
 from explorer.explore.renderer import Renderer
-from explorer.models import Item, GhDefinition, ExplorerConfig, DefinitionMaterial
+from explorer.models import Item, GhDefinition, ExplorerConfig, DefinitionMaterial, DefinitionParam
 import explorer.tasks
 from explorer.explore.algo import Axis, Explore, Iterate
 from django.conf import settings
@@ -22,19 +23,19 @@ def all_perms(elements):
             for i in range(len(elements)):
                 yield perm[:i] + elements[0:1] + perm[i:]
 
-#[(name1, [v1, v2, v3]),(name2, [v1, v2])...]
+#[ [v1, v2, v3],  [v1, v2], ... ]
 # bad memory usage, need to yield..
 def all_params_perms(params):
     if len(params) <=1:
-        return map(lambda x: [x], params[0][1])
+        return map(lambda x: [x], params[0])
     else:
         all_perms = []
-        for v in params[0][1]:
+        for v in params[0]:
             for perm in all_params_perms(params[1:]):
                 np = [v] + perm
                 all_perms.append(np)
         return all_perms
-                
+             
 class Base:
     """
     Explore parameter space
@@ -53,6 +54,7 @@ class Base:
         self.deep = False
         self.bake = "all"
         self.renderer = Renderer()
+        self.default_param_values = [0.00,0.20,0.40,0.60,0.80,1.00]
         self.distances = {
             'near': [0.01, 0.09],
             'medium': [0.05, 0.2]
@@ -182,6 +184,7 @@ class Base:
                 if (definition.base_definition!=None):
                     #print definition.base_definition.id
                     param_key = self._item_param_hash(p, "", "")
+                    print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
                     if len(cached_base)>0:
                         todo_bases.append(cached_base[0].uuid)
@@ -269,7 +272,9 @@ class Base:
       
         params = self._get_children_params(definition, root, self.distance, -1, 'noop', 'linear') 
         params = [params[0] for i in materials]
+        print params
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(definition, params, materials, text)
+        print (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
         for i in range(len(todo_materials)):
             explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': [todo_bases[i]]}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
      
@@ -345,25 +350,43 @@ class Base:
                 self._send_jobs(item.definition, uuids, item, self.deep_count, distance)
     
     def _get_children_params(self, definition, root, distance, param_index, explore_type, iterate_type ):
-        children_params = None
-        if explore_type == 'noop':
-            if root==None:
-                children_params = self.algo.get_initial_page_params(len(definition.param_names), param_index)
-            else:
-                children_params = [root.params]
+        if explore_type=='noop' and root!=None:
+            children_params = [root.params]
         else:
-            if root==None:
-                if explore_type=='iterate':
-                    children_params = self.algo.get_initial_page_params(len(definition.param_names), param_index)
-                else:
-                    children_params = self.algo.get_random_page_params(len(definition.param_names))
-            
-            else:
-                children_params = self.algo.get_page_params(root.params, self.distances[distance], param_index, iterate_type)
+            children_params = self._get_page_params(definition, root, param_index)
            
         return children_params     
-    #def _get
-                      
+   
+    def _get_page_params(self, definition, root, param_index):
+        param_values = self.default_param_values
+        
+        if root!=None:
+            parent_params = root.params
+        else:
+            parent_params = self._get_initial_page_params(definition)
+        
+        if param_index < 0:
+            return [parent_params]
+        
+        db_param = DefinitionParam.objects.get(definition=definition, index=param_index)
+        param_values = db_param.get_values()
+        print param_index
+        print param_values
+        params_list = []
+        
+        for i in range(len(param_values)):
+            param = param_values[i]
+            params = list(parent_params)
+            params[param_index] = param
+            params_list.append(params)
+        
+        print params_list
+        return params_list
+    
+    def _get_initial_page_params(self, definition):
+        db_params = DefinitionParam.objects.filter(definition=definition).order_by('index')
+        return map(lambda x: x.get_initial_value(), db_params)
+       
     def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
         children_params = self._get_children_params(definition, root, distance, param_index, explore_type, iterate_type)
         perm = random.sample(range(len(uuids)), n_jobs)
@@ -482,19 +505,20 @@ class Base:
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):
-        param_values =  [0, 0.2, 0.4, 0.6, 0.8, 1] 
-        param_names = definition.param_names
-        #param_perms = itertools.combinations_with_replacement(param_values, len(param_names))
+        db_params = DefinitionParam.objects.filter(definition=definition).order_by('index')
+        param_values = map(lambda x: x.get_values(), db_params)
+        print param_values
+        param_perms = all_params_perms(param_values)
         materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        materials = [materials[0]]
         print materials
         for material in materials:
             print material
-            param_perms = itertools.product(param_values, repeat=len(param_names))
-            print param_perms
+            #param_perms = itertools.product(param_values, repeat=len(param_names))
+            #print param_perms
             for perm in param_perms:
                 print perm
                 item_uuid = str(uuid.uuid1())
-                Item.objects.filter()
                 self._save_item(None, definition, perm, False, item_uuid, 0, material, "")
         
     

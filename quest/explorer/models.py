@@ -1,3 +1,4 @@
+import math
 from django.db import models
 #import cPickle as pickle
 from django.utils import simplejson as pickle
@@ -61,7 +62,7 @@ class GhDefinition(models.Model):
     accepts_text_params = models.BooleanField(default=False)
     default_material = models.ForeignKey(Material)
     use_cache = models.BooleanField(default=True)
-    base_definition = models.ForeignKey('self', null=True, db_index=True, default=None)
+    base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     def __unicode__(self):
         return self.file_name
 
@@ -72,6 +73,7 @@ class DefinitionMaterial(models.Model):
         return "%s %s %s" % (self.definition.file_name, self.definition.id, self.material.name)
         
 class DefinitionParam(models.Model):
+    default_values = [0,0.2,0.4,0.6,0.8,1]
     name = models.CharField(max_length=100)
     readable_name = models.CharField(max_length=200)
     definition = models.ForeignKey(GhDefinition)
@@ -79,6 +81,18 @@ class DefinitionParam(models.Model):
     order = models.IntegerField()
     stage = models.IntegerField()
     active = models.BooleanField()
+    values = PickledObjectField(null=True, blank=True)
+    
+    def get_values(self):
+        if isinstance(self.values, list):
+            return self.values
+        return self.default_values
+    
+    def get_initial_value(self):
+        values = self.get_values()
+        initial_index = int(math.floor((len(values)-1)/2))
+        return values[initial_index]
+    
     def __unicode__(self):
         #p = Product.objects.get(pk=self.definition.product)
         return "%s - %s" % (self.definition.id, self.readable_name)

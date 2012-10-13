@@ -47,7 +47,7 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     accepts_text_params = forms.BooleanField(initial=False,required=False)
     default_material = forms.ModelChoiceField(Material.objects.all())
     use_cache = forms.BooleanField(initial=True,required=False)
-    base_definition = forms.ModelChoiceField(GhDefinition.objects.all())
+    base_definition = forms.ModelChoiceField(GhDefinition.objects.all(),required=False)
     
 class GhDefinitionAdmin(admin.ModelAdmin):
     fields = ('file_name','base_definition','scene_file','product','active','param_names','accepts_text_params', 'default_material','use_cache')

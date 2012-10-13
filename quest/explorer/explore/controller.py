@@ -227,9 +227,15 @@ class Base:
             return self._explore()       
     
     def item_to_product(self, item):
+        #cached = _get_cached_items(self, definition, params, materials, text):
+        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(item.definition, [item.params], [item.material], "")
+        base = None
+        if todo_bases!=None:
+            base = todo_bases[0]
+            
         jobs = []
         for view_name in ["Render"]:
-            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
+            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350, base_model=base)) 
      
         self.renderer.request_images_async(jobs) 
         
@@ -446,6 +452,7 @@ class Base:
         job['low_priority'] = low_priority
         if base_model!=None:
             job['load_stl'] = base_model
+            
         return job
     
     def _make_result(self, uuids, materials, textParams):
@@ -493,13 +500,11 @@ class Base:
             not_sent = Item.objects.filter(sent=False, definition=definition)
         else: 
             not_sent = Item.objects.filter(sent=False)
-        print "Not Sent %s" % not_sent.count()  
-        #print not_sent.count()
-        
-        #return
+      
         wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases'])
         can_send = max_wait - wait_count
-        print can_send
+       
+        print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material

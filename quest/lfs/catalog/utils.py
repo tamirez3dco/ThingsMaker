@@ -674,7 +674,11 @@ def calculate_real_amount(product, quantity):
     return product.get_amount_by_packages(quantity)
 
 
-def get_all_products():
-    products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS, active=True)
+def get_all_products(show_all):
+    if show_all:
+        products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS)
+    else: 
+        products = lfs.catalog.models.Product.objects.filter(sub_type = PRODUCT_WITH_VARIANTS, active=True)
+     
     return products
 

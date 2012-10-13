@@ -441,7 +441,8 @@ def category_products(request, slug, start=1, template_name="lfs/catalog/categor
     return result
 
 def all_products(request, template_name="lfs/catalog/products.html"):
-    raw_products = lfs.catalog.utils.get_all_products()
+    show_all = request.GET.get('show_all', None)
+    raw_products = lfs.catalog.utils.get_all_products(show_all)
     products = []
     for product in raw_products:
         if product.active:

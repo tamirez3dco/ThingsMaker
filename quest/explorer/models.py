@@ -54,6 +54,7 @@ class Material(models.Model):
     
 class GhDefinition(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
     file_name = models.CharField(max_length=100, null=True)
     active = models.BooleanField()
     param_names = PickledObjectField(null=True)
@@ -63,6 +64,7 @@ class GhDefinition(models.Model):
     default_material = models.ForeignKey(Material)
     use_cache = models.BooleanField(default=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
+    
     def __unicode__(self):
         return self.file_name
 

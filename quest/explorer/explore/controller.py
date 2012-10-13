@@ -179,7 +179,7 @@ class Base:
                 if (definition.base_definition!=None):
                     #print definition.base_definition.id
                     param_key = self._item_param_hash(p, "", "")
-                    print param_key
+                    #print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
                     if len(cached_base)>0:
                         if(cached_base[0].status == Item.ERROR): continue
@@ -195,17 +195,10 @@ class Base:
         return (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
     
     def _get_base_cache(self, definition, params):
-        uuids = []
-        cached = []
-        for p in params:
-            param_key = self._item_param_hash(p, "", "")
-            current_cached = Item.objects.filter(base_param_hash = param_key, definition = definition)
-            cached.append(current_cached[0].uuid)
-            new_uuid = str(uuid.uuid1())
-            uuids.append(new_uuid)
-            print "_get_base_cache %s" % len(cached)
+        param_key = self._item_param_hash(params, "", "")
+        cached = Item.objects.filter(base_param_hash = param_key, definition = definition)
             
-        return(uuids,cached)
+        return cached[0].uuid
             
     def _item_param_hash(self, params, material, text):
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
@@ -227,11 +220,9 @@ class Base:
             return self._explore()       
     
     def item_to_product(self, item):
-        #cached = _get_cached_items(self, definition, params, materials, text):
-        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(item.definition, [item.params], [item.material], "")
         base = None
-        if todo_bases!=None:
-            base = todo_bases[0]
+        if item.definition.base_definition != None:
+            base = self._get_base_cache(item.definition.base_definition, item.params) 
             
         jobs = []
         for view_name in ["Render"]:
@@ -241,7 +232,7 @@ class Base:
         
         jobs = []
         for view_name in ["Top","Front"]:
-            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350)) 
+            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350, base_model=base)) 
             
         self.renderer.request_images_async(jobs, countdown=1) 
     

@@ -87,17 +87,17 @@ class Renderer:
             if (body.has_key('status') == False):
                 q.delete_message(rs[i])
                 continue
-                
+            
+            if (body['item_id'].find('_') != -1) or (body['status']=='STARTED'):
+                q.delete_message(rs[i])
+                continue
+            
             items = Item.objects.filter(uuid=body['item_id'])
             if len(items) == 0:
                 continue
             
             item = items[0]
 
-            if (body['item_id'].find('_') != -1) or (body['status']=='STARTED'):
-                q.delete_message(rs[i])
-                continue
-            
             if(body['status']=='FINISHED'):
                 item.status = Item.FINISHED
             if(body['status']=='ERROR'):

@@ -511,8 +511,8 @@ class Base:
         param_values = map(lambda x: x.get_values(), db_params)
         print param_values
         param_perms = all_params_perms(param_values)
-        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
-        materials = [materials[0]]
+        #materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        materials = [definition.default_material.name]
         print materials
         for material in materials:
             print material

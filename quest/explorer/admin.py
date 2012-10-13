@@ -62,11 +62,15 @@ class GhDefinitionAdmin(admin.ModelAdmin):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','uuid', 'image_url')
     list_filter = ('definition','status')   
+
+class DefinitionParamAdmin(admin.ModelAdmin):
+    list_display = ('definition','name','readable_name','order')
+    list_filter = ('definition',)   
     
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(ExplorerConfig)
 admin.site.register(AppData)
-admin.site.register(DefinitionParam)
+admin.site.register(DefinitionParam,DefinitionParamAdmin)
 admin.site.register(Material)
 admin.site.register(DefinitionMaterial)

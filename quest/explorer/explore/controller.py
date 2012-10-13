@@ -176,19 +176,21 @@ class Base:
                 all_uuids.append(cached[0].uuid) 
                 
             else:
-                new_uuid = str(uuid.uuid1())
-                todo_uuids.append(new_uuid)
-                todo_materials.append(m)
-                todo_params.append(p)
-                all_uuids.append(new_uuid)
                 if (definition.base_definition!=None):
                     #print definition.base_definition.id
                     param_key = self._item_param_hash(p, "", "")
                     print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
                     if len(cached_base)>0:
+                        if(cached_base[0].status == Item.ERROR): continue
                         todo_bases.append(cached_base[0].uuid)
-                    
+                        
+                new_uuid = str(uuid.uuid1())
+                todo_uuids.append(new_uuid)
+                todo_materials.append(m)
+                todo_params.append(p)
+                all_uuids.append(new_uuid)
+               
         logging.error("all %s, todo %s, cached %s" % (len(materials), len(todo_uuids), cache_count))
         return (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
     

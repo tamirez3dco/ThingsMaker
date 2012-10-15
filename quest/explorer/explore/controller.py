@@ -504,7 +504,7 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=False, low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):
@@ -513,8 +513,8 @@ class Base:
         print param_values
         param_perms = all_params_perms(param_values)
         #if (definition)
-        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
-        #materials = [definition.default_material.name]
+        #materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        materials = [definition.default_material.name]
         print materials
         for material in materials:
             print material

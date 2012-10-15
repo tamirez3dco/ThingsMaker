@@ -275,12 +275,12 @@ class Base:
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(definition, params, materials, text)
         print (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
         for i in range(len(todo_materials)):
+            base = None
             if len(todo_bases)>0:
                 base = todo_bases[i]
-            else:
-                base = None
-                
-            explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': base}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
+            
+            
+            explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': [base]}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
      
         return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))])
     

@@ -429,6 +429,7 @@ class Base:
     
     def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False, base_model=None):
         job = {}
+        print "_prepare_job %s" % base_model
         job['params'] = dict(zip(definition.param_names, params))
         if (definition.accepts_text_params):
             textToSend = "test"

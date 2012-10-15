@@ -29,7 +29,7 @@ MANAGERS = ADMINS
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
 #DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
-# Local time zone for this installation. Choices can be found here:
+#  Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your

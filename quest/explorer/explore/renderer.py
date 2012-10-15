@@ -61,6 +61,7 @@ class Renderer:
         
         for i in range(len(rs)):
             sys.stderr.write(rs[i].get_body() + "\n")
+            #q.delete_message(rs[i])
             body = simplejson.loads(rs[i].get_body())
             if (body.has_key('status') == False):
                 q.delete_message(rs[i])
@@ -94,6 +95,7 @@ class Renderer:
             
             items = Item.objects.filter(uuid=body['item_id'])
             if len(items) == 0:
+                q.delete_message(rs[i])
                 continue
             
             item = items[0]

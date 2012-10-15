@@ -497,7 +497,7 @@ class Base:
         else: 
             not_sent = Item.objects.filter(sent=False)
       
-        wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases'])
+        wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases','pendants'])
         can_send = max_wait - wait_count
        
         print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 

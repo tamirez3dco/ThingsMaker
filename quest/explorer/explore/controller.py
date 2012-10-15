@@ -275,7 +275,12 @@ class Base:
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(definition, params, materials, text)
         print (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
         for i in range(len(todo_materials)):
-            explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': [todo_bases[i]]}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
+            if len(todo_bases)>0:
+                base = todo_bases[i]
+            else:
+                base = None
+                
+            explorer.tasks.send_jobs_with_params.apply_async(kwargs={'base_models': base}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], self.distance, todo_materials[i], self.page_size, 'iterate', text])
      
         return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))])
     
@@ -367,7 +372,7 @@ class Base:
         if param_index < 0:
             return [parent_params]
         
-        db_param = DefinitionParam.objects.get(definition=definition, index=param_index)
+        db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
         param_values = db_param.get_values()
         print param_index
         print param_values
@@ -383,7 +388,7 @@ class Base:
         return params_list
     
     def _get_initial_page_params(self, definition):
-        db_params = DefinitionParam.objects.filter(definition=definition).order_by('index')
+        db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         return map(lambda x: x.get_initial_value(), db_params)
        
     def _send_jobs(self, definition, uuids, root, n_jobs, distance, param_index, explore_type, iterate_type, text):
@@ -499,16 +504,17 @@ class Base:
         for i in range(min(can_send,len(not_sent))):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
+            self._send_jobs_with_params(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=False, low_priority=True)
             #explorer.tasks.send_jobs_with_params.apply_async(args=[definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, not_sent[i].material, 1, 'iterate', ""])
        
     def preprocess_definition(self, definition):
-        db_params = DefinitionParam.objects.filter(definition=definition).order_by('index')
+        db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         param_values = map(lambda x: x.get_values(), db_params)
         print param_values
         param_perms = all_params_perms(param_values)
-        #materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
-        materials = [definition.default_material.name]
+        #if (definition)
+        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        #materials = [definition.default_material.name]
         print materials
         for material in materials:
             print material

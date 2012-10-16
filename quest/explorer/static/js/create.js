@@ -618,7 +618,7 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
-			console.log("New1");
+			console.log("New2");
 			console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();
@@ -632,7 +632,10 @@ $.fn.exists = function() {
 				}
 				console.log("got data");
 				console.log(data);
-				
+				console.log("Fuck All");
+				if (data == []) {
+					console.log("Fuck 1");
+				}
 				if ((data == null) || (data.length == 0) || (data == [])) {
 					console.log('no data recieved !!!!!');
 					return;

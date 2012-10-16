@@ -506,21 +506,13 @@ $.fn.exists = function() {
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {
-					wizard._setAddress();
+					//wizard._setAddress();
 					$currentStep.hide();
 
 					if(($currentStep.data('paramType') != 'text')) {
 						$currentStep.children(".create-image-container").html('');
 					}
-					wizard._addImagesToStep(nextStep, wizard._stepIndex);
-					nextStep.css({
-						opacity : 1.0
-					}).show();
-
-					wizard._showImages();
-					wizard._enableButtons();
-					wizard._updateNavigation(firstStep);
-
+					wizard._changeStepInner(nextStep, firstStep);
 				});
 			} else {
 				this._stepIndex = $steps.index(nextStep);
@@ -539,6 +531,23 @@ $.fn.exists = function() {
 				}
 			}
 		},
+		_changeStepInner:  function(nextStep, firstStep) {
+			console.log('_changeStepInner');
+			if(this._loadedImages.length == 0) {
+				var self = this;
+				setTimeout(function(){self._changeStepInner(nextStep, firstStep)}, 300);
+				return;
+			}
+			
+			this._addImagesToStep(nextStep, this._stepIndex);
+			nextStep.css({
+				opacity : 1.0
+			}).show();
+
+			this._showImages();
+			this._enableButtons();
+			this._updateNavigation(firstStep);
+		},
 		_updateStateFromItem : function(item) {
 			this._itemId = $(item).data('itemId');
 			this._material = $(item).data('material');
@@ -552,7 +561,7 @@ $.fn.exists = function() {
 			var self = this;
 			img.onerror = function(evt) {
 				if(count < 300) {
-					setTimeout(self._waitImage(imgsrc, imageId, imageTitle, count + 1), 300);
+					setTimeout(function(){self._waitImage(imgsrc, imageId, imageTitle, count + 1)}, 300);
 				}
 			}
 			img.onload = function(evt) {

@@ -506,7 +506,7 @@ $.fn.exists = function() {
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {
-					//wizard._setAddress();
+					wizard._setAddress();
 					$currentStep.hide();
 
 					if(($currentStep.data('paramType') != 'text')) {

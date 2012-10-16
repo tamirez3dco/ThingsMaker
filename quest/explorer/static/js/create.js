@@ -618,14 +618,19 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
-			console.log("New2");
+			console.log("New3");
 			console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
 			this._latestParams = params;
 			//console.log(wizard._itemId);
-			$.getJSON(this._exploreURL, params, function(data) {
+			$.getJSON(this._exploreURL, params, function(data, textStatus, jqXHR) {
+				console.log('get json res');
+				console.log(data);
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log('end get json res');
 				if (params != wizard._latestParams) {
 					console.log('not latest!!!');
 					return;
@@ -642,6 +647,7 @@ $.fn.exists = function() {
 				}
 				console.log(params);
 				wizard._loadedImages = data;
+				
 				if(add) {
 					wizard._addImagesToStep(step, stepidx);
 				}

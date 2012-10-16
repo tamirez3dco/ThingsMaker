@@ -593,7 +593,10 @@ $.fn.exists = function() {
 			}, 100);
 		},
 		_addImagesToStep : function(step, stepidx) {
+			console.log("_addImagesToStep");
 			var data = this._loadedImages;
+			console.log("got data");
+			console.log(data);
 			var wizard = this;
 			for(var i = 0; i < data.length; i++) {
 				var id = stepidx + '-' + i;
@@ -615,11 +618,14 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
+			console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
 			//console.log(wizard._itemId);
 			$.getJSON(this._exploreURL, params, function(data) {
+				console.log("got data");
+				console.log(data);
 				wizard._loadedImages = data;
 				if(add) {
 					wizard._addImagesToStep(step, stepidx);

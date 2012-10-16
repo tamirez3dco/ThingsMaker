@@ -618,6 +618,7 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
+			console.log("New1");
 			console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();

@@ -632,11 +632,12 @@ $.fn.exists = function() {
 				}
 				console.log("got data");
 				console.log(data);
-				console.log(params);
-				if ((data == null) || (data.length == 0)) {
+				
+				if ((data == null) || (data.length == 0) || (data == [])) {
 					console.log('no data recieved !!!!!');
 					return;
 				}
+				console.log(params);
 				wizard._loadedImages = data;
 				if(add) {
 					wizard._addImagesToStep(step, stepidx);

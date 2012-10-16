@@ -5,10 +5,14 @@ function create_product_html(product)
 		likeClass = "home-product-like";
 	}
 
+	var product_name = product.name;
+	if (product_name.length > 15) {
+		product_name = product_name.substring(0,13) + '..';
+	}
 	var addClass = 'home-product';
 	var	html = '<div class="'+ addClass +'"><a class="home-product-pointer" href="' + product.product_url + '">'+
 			   '<img class="home-product-mainImage" src="' + product.image_url + '" />'+
-			   '<p class="home-product-name">'+ product.name +'</p>' +
+			   '<p class="home-product-name">'+ product_name +'</p>' +
 			   '<p class="home-product-price">$'+ product.price.toFixed(2) + '</p></a>' +
 			   '<div class="home-product-hover">'+
 			   '<div class="'+ likeClass +'" slug="' + product.slug + '" onclick="return hart_clicked(this)" alt="loveme"><span>' + product.lovers +'</span></div>'+

@@ -622,10 +622,20 @@ $.fn.exists = function() {
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
+			this._latestParams = params;
 			//console.log(wizard._itemId);
 			$.getJSON(this._exploreURL, params, function(data) {
+				if (params != wizard._latestParams) {
+					console.log('not latest!!!');
+					return;
+				}
 				console.log("got data");
 				console.log(data);
+				console.log(params);
+				if ((data == null) || (data.length == 0)) {
+					console.log('no data recieved !!!!!');
+					return;
+				}
 				wizard._loadedImages = data;
 				if(add) {
 					wizard._addImagesToStep(step, stepidx);

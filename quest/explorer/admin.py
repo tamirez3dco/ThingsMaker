@@ -62,7 +62,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
 #        obj.save()    
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id','definition','status','params','uuid', 'image_url')
+    list_display = ('id','definition','status','params','textParam','uuid', 'image_url')
     list_filter = ('definition','status')   
 
 class DefinitionParamAdmin(admin.ModelAdmin):

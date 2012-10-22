@@ -308,14 +308,14 @@ CELERYBEAT_SCHEDULE = {
         "args": ()
     }
 }
-
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = 'AKIAJ4FEEKD3KIPZASTQ'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_S3_SECURE_URLS=True,
+AWS_S3_SECURE_URLS=False,
 AWS_QUERYSTRING_AUTH=False,
 AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 #AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',

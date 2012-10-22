@@ -233,7 +233,7 @@ tr.odd {
 }
 
 .lfs-header {
-    background: url("../img/header_bg.jpg") repeat-x;
+    background: url("/static/img/header_bg.jpg") repeat-x;
 }
 
 .username {
@@ -378,27 +378,27 @@ td.management {
 .up {
     margin: 0 5px;
     padding-left: 16px;
-    background: url(../icons/arrow_up.png) no-repeat;
+    background: url(/static/icons/arrow_up.png) no-repeat;
     text-decoration: none;
 }
 
 .down {
     margin: 0 5px;
     padding-left: 16px;
-    background: url(../icons/arrow_down.png) no-repeat;
+    background: url(/static/icons/arrow_down.png) no-repeat;
     text-decoration: none;
 }
 a.add {
     margin: 0 10px;
     padding-left: 18px;
-    background: url(../icons/add.png) no-repeat;
+    background: url(/static/icons/add.png) no-repeat;
 }
 
 
 a.delete {
     margin: 0 5px;
     padding-left: 16px;
-    background: url(../icons/cross.png) no-repeat;
+    background: url(/static/icons/cross.png) no-repeat;
 }
 
 a.export {
@@ -409,56 +409,56 @@ a.export {
 a.overview {
     margin: 0 5px;
     padding-left: 20px;
-    background: url(../icons/arrow_up.png) no-repeat;
+    background: url(/static/icons/arrow_up.png) no-repeat;
 }
 
 a.preview {
     margin: 0 5px;
     padding-left: 18px;
-    background: url(../icons/zoom.png) no-repeat;
+    background: url(/static/icons/zoom.png) no-repeat;
 }
 
 a.reset {
     margin: 0 5px;
     padding-left: 18px;
-    background: url(../icons/cancel.png) no-repeat;
+    background: url(/static/icons/cancel.png) no-repeat;
 }
 
 a.send {
     margin: 0 5px;
     padding-left: 22px;
-    background: url(../icons/email.png) no-repeat;
+    background: url(/static/icons/email.png) no-repeat;
 }
 
 a.first {
     padding-left: 15px;
-    background: url(../icons/resultset_first.png) no-repeat;
+    background: url(/static/icons/resultset_first.png) no-repeat;
 }
 
 a.previous {
     padding-left: 15px;
-    background: url(../icons/resultset_previous.png) no-repeat;
+    background: url(/static/icons/resultset_previous.png) no-repeat;
 }
 
 a.next {
     padding-left: 15px;
-    background: url(../icons/resultset_next.png) no-repeat;
+    background: url(/static/icons/resultset_next.png) no-repeat;
 }
 
 a.last {
     padding-left: 15px;
-    background: url(../icons/resultset_last.png) no-repeat;
+    background: url(/static/icons/resultset_last.png) no-repeat;
 }
 
 a.view {
     padding-left: 20px;
-    background: url(../icons/zoom.png) no-repeat;
+    background: url(/static/icons/zoom.png) no-repeat;
 }
 
 a.edit {
     margin: 0 5px;
     padding-left: 16px;
-    background: url(../icons/pencil.png) no-repeat;
+    background: url(/static/icons/pencil.png) no-repeat;
 }
 
 
@@ -524,7 +524,7 @@ div.site-actions img {
 span.delete {
     margin: 0 0 0 10px;
     padding-left: 20px;
-    background: url(../icons/delete.png) no-repeat;
+    background: url(/static/icons/delete.png) no-repeat;
 }
 
 div.action a {

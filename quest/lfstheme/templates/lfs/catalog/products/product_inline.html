@@ -157,14 +157,16 @@
     
     {% if product.is_deliverable %}
     	<div class="product-buttons"> 
+    		
     		{% if user.is_staff %}
-    		<div class="container" style="margin-top: -50px; margin-bottom: 19px; clear:both;">
-	        <button class="left" type="button" id="get-stl-button">
-	        	 {% trans 'Get STL' %}
-	        </button>  
-	        <a style="visibility: hidden;" clear:none;" href="#" class="left">Download</a>
-	       </div>
-	        {% endif %}    
+	    		<div class="container" style="margin-top: -50px; margin-bottom: 19px; clear:both;">
+		        <button class="left" type="button" id="get-stl-button">
+		        	 {% trans 'Get STL' %}
+		        </button>  
+		        <a style="clear:none;" href="/admin/catalog/product/{{ product.id }}" class="left">Admin</a>
+		       	</div>
+	        {% endif %} 
+	           
 	        <a class="button left" href="/create?start_product={{ product.slug }}&material={{ product.get_item_material }}&textParam={{ product.get_item_textParam }}&product_type=variant">
 	           <div class="customize-image"></div>
 	           {% trans 'Customize' %}

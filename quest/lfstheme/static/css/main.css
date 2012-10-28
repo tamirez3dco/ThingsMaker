@@ -2227,7 +2227,7 @@ form.contactable-form .disclaimer {
 }
 .jw-steps-wrap {
 	/*display:none;*/
-	height: 430px;
+	/*height: 430px;*/
 	width: 610px;
 	overflow: auto;
 	/*padding: 0em 3em 0em 3.3em;*/

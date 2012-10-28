@@ -474,9 +474,9 @@ $.fn.exists = function() {
 			//if(wizard._userText != null) {
 			//			$(element).find("#create-param-text-input").val(wizard._userText);
 			//}
-			if($('#create-param-text-input').length) {
+			//if($('#create-param-text-input').length) {
 				this._userText = $('#create-param-text-input').val();
-			}
+			//}
 
 			if( typeof nextStep === "number") {
 				if(nextStep < 0 || nextStep > ($steps.length - 1)) {

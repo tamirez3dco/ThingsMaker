@@ -259,8 +259,8 @@ class Base:
         else:
             root = Item.objects.get(uuid=parent_id)
             definition = root.definition
-            if text == "":
-                text = root.textParam
+            #if text == "":
+            #    text = root.textParam
             
         if definition.accepts_text_params == False:
             text = ""    

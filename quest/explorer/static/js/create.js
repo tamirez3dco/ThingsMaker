@@ -475,8 +475,9 @@ $.fn.exists = function() {
 			//			$(element).find("#create-param-text-input").val(wizard._userText);
 			//}
 			//if($('#create-param-text-input').length) {
+			if ($currentStep.data('paramType') == 'text'){
 				this._userText = $('#create-param-text-input').val();
-			//}
+			}
 
 			if( typeof nextStep === "number") {
 				if(nextStep < 0 || nextStep > ($steps.length - 1)) {

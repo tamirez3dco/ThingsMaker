@@ -1900,6 +1900,7 @@ form.contactable-form .disclaimer {
 	width:970px;
 	position:relative;
 	overflow: auto;
+	clear: both;
 }
 
 .home-product {
@@ -2748,6 +2749,7 @@ display:block;
 	height: 350px;
 	margin:  0;
 	margin-left: -10px;  
+	margin-right:200px;
     clear: both;
     float:left;
 }

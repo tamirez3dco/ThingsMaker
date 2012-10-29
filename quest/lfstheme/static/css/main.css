@@ -2743,6 +2743,7 @@ display:block;
 }
 
 #home-banner {
+	position:relative;
 	width: 986px;
 	height: 350px;
 	margin:  0;
@@ -2776,8 +2777,8 @@ display:block;
 
 #home-banner A {
 	position: absolute;
-	top: 340px;
-	left: 466px;
+	top: 207px;
+	left: 344px;
 	width: 259px;
 	height: 96px;
 	z-index:99;

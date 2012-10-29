@@ -1893,9 +1893,11 @@ form.contactable-form .disclaimer {
 	margin-top: 13px;
 	position:relative;
 	overflow: auto;
+	width:970px;
 }
 #top-inspirations {
 	margin-top: 20px;
+	width:970px;
 	position:relative;
 	overflow: auto;
 }
@@ -2738,4 +2740,48 @@ display:block;
 	border: 0px solid white;
    	background-image: url(/static/img/content-bg.jpg);
 	background-repeat: repeat;
+}
+
+#home-banner {
+	width: 986px;
+	height: 350px;
+	margin:  0;
+	margin-left: -10px;  
+    clear: both;
+    float:left;
+}
+#home-message {
+	width: 366px;
+	height: 350px;
+	padding: 0;  
+    margin:  0;  
+    clear: none;
+    float:left;
+}
+
+#slideshow {
+	width: 618px;
+	height: 350px;
+	padding: 0;  
+    margin:  0;  
+    clear: none;
+    float:left;
+}
+
+#slideshow .image-container IMG {
+	width: 618px;
+	height: 325px;
+	padding: 0px;
+}
+
+#home-banner A {
+	position: absolute;
+	top: 340px;
+	left: 466px;
+	width: 259px;
+	height: 96px;
+	z-index:99;
+	background-image: url(/static/images/BtnStartCreatingNormal.png);
+	background-color: transparent;
+	background-repeat: no-repeat;
 }

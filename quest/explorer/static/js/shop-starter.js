@@ -1,5 +1,9 @@
 
 $(function() {
+	$('#slideshow').cycle({ 
+	    fx:    'fade', 
+	    speed:  2500 
+ 	});
 	jsonobj = {"limits":"0-10","sorter":"stock_amount"};
 	jsonstr = JSON.stringify(jsonobj);
 	getProductList('/get_ssp/'+jsonstr, '#top-inspirations');

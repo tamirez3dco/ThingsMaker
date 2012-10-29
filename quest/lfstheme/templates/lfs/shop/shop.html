@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block page_js %}
+	<script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery.cycle.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/explorer-shop.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/shop-starter.js"></script>
 {% endblock %}
@@ -25,22 +26,34 @@
 
 {% block content %}
     {{ shop.static_block.html|safe }}
-    <div id="home-img">
-    	<img src="https://s3.amazonaws.com/ez3d_media/home_products.jpg" alt=""/>
-    	<a class="button" href="/products">
-	           	{% trans 'Start Creating!' %}
-	    </a>
-    </div>
     
+    <div id="home-banner">
+    	<a class="button" href="/products">
+    		
+	    </a>
+    	<div id="slideshow">
+    		<div class="image-container">
+    			<img src="http://ez3d_media.s3.amazonaws.com/images/home_rings.jpg" alt="" class="active-img" />
+    		</div>
+    		<div class="image-container">
+    			<img src="http://ez3d_media.s3.amazonaws.com/images/home_cases.jpg" alt="" />
+    		</div>
+    	</div>
+    	<div id="home-message">
+    		<div class="image-container">
+    			<img src="http://ez3d_media.s3.amazonaws.com/images/home-shipping.jpg" alt=""  />
+    		</div>
+    	</div>
+    </div>
 	<div id="top-inspirations">
-		<a style="text-decoration:none" href="sorted_products/{%22limits%22:%220-10%22,%22sorter%22:%22stock_amount%22}">
+		<a style="text-decoration:none" href="sorted_products/{%22limits%22:%220-100%22,%22sorter%22:%22stock_amount%22}">
 		<div class="panel-heading">
 			<h3>Popular</h3>
 		</div>
 		</a>
 	</div>
 	<div id="recent-products">
-		<a style="text-decoration:none" href="sorted_products/{%22limits%22:%220-10%22,%22sorter%22:%22creation_date%22}">
+		<a style="text-decoration:none" href="sorted_products/{%22limits%22:%220-100%22,%22sorter%22:%22creation_date%22}">
 		<div class="panel-heading">
 			<h3>Recent</h3>
 		</div>

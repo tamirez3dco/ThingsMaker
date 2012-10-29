@@ -608,6 +608,8 @@ $.fn.exists = function() {
 			console.log("got data");
 			console.log(data);
 			var wizard = this;
+			var ua = navigator.userAgent,
+    			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
 			for(var i = 0; i < data.length; i++) {
 				var id = stepidx + '-' + i;
 				var html = '<div class="explorer-image" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
@@ -616,7 +618,7 @@ $.fn.exists = function() {
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
 				$("#explorer-image-" + id).data('text', data[i].text);
-				$("#explorer-image-" + id).one('click', function() {
+				$("#explorer-image-" + id).one(event, function() {
 					wizard._updateStateFromItem(this);
 					wizard._imageClick(this);
 				});

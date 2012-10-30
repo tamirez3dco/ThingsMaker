@@ -18,17 +18,32 @@
 
 {% block content %}
 	<div id="contact"><!-- contactable html placeholder --></div>
-	<h1>Designers</h1>
+	<div class="content-title">
+		<img src="http://ez3d_media.s3.amazonaws.com/images/IconDesignersBig.png" /><h1>Designers</h1>
+	</div>
+	<hr style="margin: 0px; background-color: rgba(0,0,0, 0.1);">
+	<hr style="margin-top: 0px; background-color: rgba(255,255,255, 0.9);">
 	<div id="products">
+		<div class="designers">
 		{% for designer in designers %}
 			<div class="designer">
-				<img src="{{ designer.image_url }}">
+				<div class="designer-image">
+					<img src="{{ designer.image_url }}">
+				</div>
 				<h3>{{ designer.user.first_name }} {{ designer.user.last_name }}</h3>
 				<p class="product-description">
         			{{ designer.bio|safe}}
     			</p>
 			</div>
 		{% endfor %}
-		{{ static_block.html|safe }}
+		</div>
+		<div class="designers-message">
+			<img class="looking" src="http://ez3d_media.s3.amazonaws.com/images/looking.png"/>
+			<div class="message">This is your chance to express yourself and interact with your customers</div>
+			<div class="contact"><a id="contact-link" href="#">Contact us</a> or visit our <a href="/page/design-guidlines">design guidelines</a> to learn more</div>
+		</div>
+		<div class="designers-static">
+			{{ static_block.html|safe }}
+		</div>
 	</div>
 {% endblock %}

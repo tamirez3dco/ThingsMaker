@@ -2853,3 +2853,27 @@ display:block;
 	background-color: transparent;
 	background-repeat: no-repeat;
 }
+
+.stLarge {
+	background-position-x: -50px;
+	background-repeat: no-repeat;
+}
+.product-share > span {
+	padding:20px 0 20px 0;
+	background-repeat: no-repeat;
+}
+.st_facebook_large{
+	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconFacbook.png") no-repeat;
+}
+.st_googleplus_large{
+	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconGooglePlus.png") no-repeat;
+}
+.st_twitter_large{
+	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconTwitter.png") no-repeat;
+}
+.st_pinterest_large{
+	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconPinterest.png") no-repeat;
+}
+.st_email_large{
+	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconEmail.png") no-repeat;
+}

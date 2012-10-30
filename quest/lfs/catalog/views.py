@@ -26,6 +26,7 @@ from lfs.catalog.models import Category, Property
 from lfs.catalog.models import File
 from lfs.catalog.models import Product
 from lfs.catalog.models import Designer
+from lfs.catalog.models import StaticBlock
 from lfs.catalog.models import ProductPropertyValue
 from lfs.catalog.models import PropertyOption
 from lfs.catalog.models import ProductAttachment
@@ -456,9 +457,11 @@ def all_products(request, template_name="lfs/catalog/products.html"):
     return result
 
 def designers(request, template_name="lfs/catalog/designers.html"):
+    sb = StaticBlock.objects.get(name='designers')
     designers = Designer.objects.all()
     result = render_to_response(template_name, RequestContext(request, {
-        "designers": designers
+        "designers": designers,
+        'static_block': sb
     }))
     return result
     

@@ -3,9 +3,10 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.template.loader import render_to_string
 from django.template import loader
 from django.template import RequestContext
-
+from django.core.cache import cache
 import logging
 from datetime import datetime
 from django.template import RequestContext, loader
@@ -177,10 +178,16 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
 
 def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
     myobj = simplejson.loads(jsonstr)
+    cache_key = "%s-sorted-view-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, jsonstr)
+    result = cache.get(cache_key)
+    if result is not None:
+        return result
     shop = lfs_get_object_or_404(Shop, pk=1)
     myobj["shop"]=shop
     #logging.error(myobj["myname"])
-    return render_to_response(template_name, RequestContext(request, myobj))
+    result = render_to_string(template_name, RequestContext(request, myobj))
+    cache.set(cache_key, result)
+    return result
 
 def get_screened_sorted_products(request,jsonstr):
     jsonobj = simplejson.loads(jsonstr)

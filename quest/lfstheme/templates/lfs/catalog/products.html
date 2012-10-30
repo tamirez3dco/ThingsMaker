@@ -23,7 +23,9 @@
 			<div class="products-product">
 				<h3>{{ product.name }}</h3>
 				<div class="products-product-inner">
-					<img src="{{ product.get_image }}">
+					<a href="/create?start_product={{ product.slug }}">
+						<img src="{{ product.get_image }}">
+					</a>
 					<p class="product-description">
 	        			{{ product.get_description|safe}}
 	    			</p>

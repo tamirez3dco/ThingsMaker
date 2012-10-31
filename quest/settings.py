@@ -190,7 +190,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "lfs"
 # CACHE_BACKEND = 'file:///'
 # CACHE_BACKEND = 'locmem:///'
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-#CACHE_BACKEND = 'dummy:///'
+CACHE_BACKEND = 'dummy:///'
 
 if DEBUG:
     EMAIL_HOST = ""
@@ -348,4 +348,5 @@ def get_cache():
           }
         }
 
-CACHES = get_cache()
+#CACHES = get_cache()
+#CACHE_BACKEND = CACHES

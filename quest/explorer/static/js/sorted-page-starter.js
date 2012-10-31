@@ -53,7 +53,7 @@ function initImages(sorterName)
 	}
 	var jsonstr = JSON.stringify(jsonobj);
 	
-	getProductsURL = window.location.origin+"/get_ssp/"+jsonstr;
+	getProductsURL = "/get_ssp/"+jsonstr;
 	getProductList(getProductsURL, '#sorted-products');
 }
 

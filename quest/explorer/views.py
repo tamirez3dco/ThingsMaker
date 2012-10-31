@@ -176,19 +176,24 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
     }))
     return result
 
+#def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
+#    print "thats me sorted_view"
+#    myobj = simplejson.loads(jsonstr)
+#    cache_key = "%s-sorted-view-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, jsonstr)
+#    #result = cache.get(cache_key)
+#    if result is not None:
+#        return result
+#    shop = lfs_get_object_or_404(Shop, pk=1)
+#    myobj["shop"]=shop
+#    #logging.error(myobj["myname"])
+#    result = render_to_string(template_name, RequestContext(request, myobj))
+#    #cache.set(cache_key, result, 3600)
+#    return result
 def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
-    print "thats me sorted_view"
     myobj = simplejson.loads(jsonstr)
-    cache_key = "%s-sorted-view-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, jsonstr)
-    result = cache.get(cache_key)
-    if result is not None:
-        return result
     shop = lfs_get_object_or_404(Shop, pk=1)
     myobj["shop"]=shop
-    #logging.error(myobj["myname"])
-    result = render_to_string(template_name, RequestContext(request, myobj))
-    cache.set(cache_key, result, 3600)
-    return result
+    return render_to_response(template_name, RequestContext(request, myobj))
 
 def get_screened_sorted_products(request,jsonstr):
     #print "thats me ssp"

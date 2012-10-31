@@ -166,7 +166,8 @@ INSTALLED_APPS = (
 
 FORCE_SCRIPT_NAME=""
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/manage/"
+#LOGIN_REDIRECT_URL = "/manage/"
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',

@@ -11,7 +11,7 @@
         {% for tab in tabs %}
             <li {% if tab.selected %}class="selected"{% endif %}>
                 <a id="tab-{{ tab.title }}" href="{{ tab.link }}">
-     				<div class="icon"><span></span></div>
+     				<div class="icon"><span class="nohov"></span><span class="hov"></span></div>
      				<div>
                     {{ tab.title }}
                 </div>

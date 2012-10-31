@@ -431,28 +431,61 @@ table.search-results {
 	margin-left: 32px;
 }
 
-#tab-Create span {
+#tab-Create span.nohov {
 	background-image: url(/static/img/create_icon_tabs.png);
+	visibility: visible;
 }
-.tabs li.selected #tab-Create span,
-#tab-Create:hover span {
-    background-image: url(/static/img/create_icon_tabs_hover.png);
+#tab-Create span.hov {
+	background-image: url(/static/img/create_icon_tabs_hover.png);
+	visibility: hidden;
 }
 
-#tab-Popular span {
+.tabs li.selected #tab-Create span.nohov,
+#tab-Create:hover span.nohov {
+    visibility: hidden;
+}
+.tabs li.selected #tab-Create span.hov,
+#tab-Create:hover span.hov {
+    visibility: visible;
+}
+
+
+
+#tab-Popular span.nohov {
 	background-image: url(/static/img/popular_icon_tabs.png);
+	visibility: visible;
 }
-.tabs li.selected #tab-Popular span,
-#tab-Popular:hover span {
-    background-image: url(/static/img/popular_icon_tabs_hover.png);
+#tab-Popular span.hov {
+	background-image: url(/static/img/popular_icon_tabs_hover.png);
+	visibility: hidden;
 }
 
-#tab-Recent span {
-	background-image: url(/static/img/recent_icon_tabs.png);
+.tabs li.selected #tab-Popular span.nohov,
+#tab-Popular:hover span.nohov {
+    visibility: hidden;
 }
-.tabs li.selected #tab-Recent span,
-#tab-Recent:hover span {
-    background-image: url(/static/img/recent_icon_tabs_hover.png);
+.tabs li.selected #tab-Popular span.hov,
+#tab-Popular:hover span.hov {
+    visibility: visible;
+}
+
+
+#tab-Recent span.nohov {
+	background-image: url(/static/img/recent_icon_tabs.png);
+	visibility: visible;
+}
+#tab-Recent span.hov {
+	background-image: url(/static/img/recent_icon_tabs_hover.png);
+	visibility: hidden;
+}
+
+.tabs li.selected #tab-Recent span.nohov,
+#tab-Recent:hover span.nohov {
+   	visibility: hidden; 
+}
+.tabs li.selected #tab-Recent span.hov,
+#tab-Recent:hover span.hov {
+   	visibility: visible; 
 }
 
 #home-tab {

@@ -189,8 +189,8 @@ INTERNAL_IPS = (
 CACHE_MIDDLEWARE_KEY_PREFIX = "lfs"
 # CACHE_BACKEND = 'file:///'
 # CACHE_BACKEND = 'locmem:///'
-# CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-CACHE_BACKEND = 'dummy:///'
+#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+#CACHE_BACKEND = 'dummy:///'
 
 if DEBUG:
     EMAIL_HOST = ""
@@ -327,3 +327,25 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/explore',
     #r'/explorer',
 )
+
+def get_cache():
+    try:
+        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
+        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+        return {
+          'default': {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'LOCATION': os.environ['MEMCACHIER_SERVERS'],
+            'TIMEOUT': 500,
+            'BINARY': True,
+          }
+        }
+    except:
+        return {
+          'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+          }
+        }
+
+CACHES = get_cache()

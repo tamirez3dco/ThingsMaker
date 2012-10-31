@@ -190,6 +190,7 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
 #    #cache.set(cache_key, result, 3600)
 #    return result
 def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
+    print "jsonstr-- %s --" % jsonstr
     myobj = simplejson.loads(jsonstr)
     shop = lfs_get_object_or_404(Shop, pk=1)
     myobj["shop"]=shop

@@ -349,6 +349,7 @@ def get_cache():
           }
         }
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 CACHES = get_cache()
+COMPRESS_CACHE_BACKEND = 'dummy:///'
 #CACHE_BACKEND = CACHES

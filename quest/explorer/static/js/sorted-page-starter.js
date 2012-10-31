@@ -39,10 +39,7 @@ function removeAllImages()
 }
 function getJSONableStringFromURLString(urlStr)
 {
-	var res = urlStr.replace(/%22/g,'"');
-	res = res.replace(/%7B/g,'{');
-	res = res.replace(/%7D/g,'}');
-	return res;
+	return decodeURIComponent(urlStr);
 }
 
 function initImages(sorterName)

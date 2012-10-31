@@ -457,13 +457,18 @@ def all_products(request, template_name="lfs/catalog/products.html"):
     return result
 
 def designers(request, template_name="lfs/catalog/designers.html"):
+    cache_key = "%s-designers" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX)
+    result = cache.get(cache_key)
+    if result is not None:
+        return HttpResponse(result)
     sb = StaticBlock.objects.get(name='designers')
     designers = Designer.objects.all()
-    result = render_to_response(template_name, RequestContext(request, {
+    result = render_to_string(template_name, RequestContext(request, {
         "designers": designers,
         'static_block': sb
     }))
-    return result
+    cache.set(cache_key, result)
+    return HttpResponse(result)
     
 def product_view(request, slug, template_name="lfs/catalog/product_base.html"):
     """Main view to display a product.

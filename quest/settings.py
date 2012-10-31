@@ -160,7 +160,8 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'south',
     'storages',
-    'explorer'
+    'explorer',
+    'social_auth'
 )
 
 FORCE_SCRIPT_NAME=""
@@ -175,11 +176,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lfs.core.context_processors.main',
+    'social_auth.context_processors.social_auth_by_name_backends',
 )
 
 AUTHENTICATION_BACKENDS = (
     'lfs.customer.auth.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'social_auth.backends.facebook.FacebookBackend',
 )
 
 # For sql_queries
@@ -349,7 +352,13 @@ def get_cache():
           }
         }
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 CACHES = get_cache()
 COMPRESS_CACHE_BACKEND = 'dummy:///'
-#CACHE_BACKEND = CACHES
+
+FACEBOOK_APP_ID              = '487109477988417'
+FACEBOOK_API_SECRET          = '9728c8157cba4c39e5563c73b36718e8'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+

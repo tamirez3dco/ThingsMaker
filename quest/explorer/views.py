@@ -177,6 +177,7 @@ def list_products_by_name(request, name, template_name="lfs/catalog/products/pro
     return result
 
 def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_products_sorted.html"):
+    print "thats me sorted_view"
     myobj = simplejson.loads(jsonstr)
     cache_key = "%s-sorted-view-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, jsonstr)
     result = cache.get(cache_key)
@@ -186,10 +187,19 @@ def sorted_view(request, jsonstr, template_name="lfs/catalog/products/all_produc
     myobj["shop"]=shop
     #logging.error(myobj["myname"])
     result = render_to_string(template_name, RequestContext(request, myobj))
-    cache.set(cache_key, result)
+    cache.set(cache_key, result, 3600)
     return result
 
 def get_screened_sorted_products(request,jsonstr):
+    #print "thats me ssp"
+    cache_key = "%s-sorted-prods-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, jsonstr)
+    result = cache.get(cache_key)
+    #print cache_key
+    #print result
+    if result is not None:
+        print "cached.."
+        return HttpResponse(result)   
+    
     jsonobj = simplejson.loads(jsonstr)
     lower_limit = 0
     upper_limit = 10
@@ -205,7 +215,16 @@ def get_screened_sorted_products(request,jsonstr):
     sorter = None
     if ('sorter' in jsonobj):
         sorter = jsonobj['sorter']
-
+    
+    #cache_key = "%s-sorted-prods-%s-%s-%s-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, screener, sorter, lower_limit, upper_limit)
+    #cache_key = "amitaviv"
+    #print cache_key 
+    #result = cache.get(cache_key)
+    #print result
+    #if result is not None:
+    #    print "cached.."
+    #    return HttpResponse(result)   
+     
     shop = lfs_get_object_or_404(Shop, pk=1)
     products = shop.get_ssp(screener,sorter,lower_limit,upper_limit)
     res = []
@@ -222,8 +241,11 @@ def get_screened_sorted_products(request,jsonstr):
                     "lovers" : product.stock_amount})
     result = simplejson.dumps({
         "products": res
-    }, cls=LazyEncoder)
-
+    })
+    cache.set(cache_key, result, 3600)
+    #result = cache.get(cache_key)
+    #print "wtf %s" % dd
+    #return result
     return HttpResponse(result)  
 
 def s3_signed_url(bucket_name, file_path):

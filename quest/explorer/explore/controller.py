@@ -35,7 +35,7 @@ def all_params_perms(params):
                 np = [v] + perm
                 all_perms.append(np)
         return all_perms
-             
+            
 class Base:
     """
     Explore parameter space
@@ -201,6 +201,7 @@ class Base:
         return cached[0].uuid
             
     def _item_param_hash(self, params, material, text):
+        #hacked_params = filter(lambda x: x.)
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
         return p
         

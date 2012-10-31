@@ -28,7 +28,7 @@
 {% if page_name %}
 <div class="content-title container">
 {% if icon != "false" %}
-<img src="/static/img/IconNormal{{ page_name }}Big.png" />
+<img src="{{ STATIC_URL }}img/IconNormal{{ page_name }}Big.png" />
 {% endif %}
 <h1>{{ page_name }}</h1>
 </div>

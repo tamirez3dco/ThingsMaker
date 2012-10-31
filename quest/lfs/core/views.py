@@ -25,6 +25,7 @@ logger = logging.getLogger("default")
 def shop_view(request, template_name="lfs/shop/shop.html"):
     """Displays the shop.
     """
+    
     shop = lfs_get_object_or_404(Shop, pk=1)
     return render_to_response(template_name, RequestContext(request, {
         "shop": shop

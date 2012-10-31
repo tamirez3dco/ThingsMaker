@@ -22,4 +22,5 @@ numpy
 django-storages
 newrelic
 django-admin-tools
+pylibmc==1.2.3
 django-pylibmc-sasl

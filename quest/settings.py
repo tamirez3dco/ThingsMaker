@@ -11,8 +11,8 @@ djcelery.setup_loader()
 
 DIRNAME = os.path.dirname(__file__)
 
-DEBUG = False
-#DEBUG = True
+#DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
@@ -53,6 +53,7 @@ MEDIA_ROOT = DIRNAME + "/media"
 # static files settings
 STATIC_URL = '/static/'
 STATIC_ROOT = DIRNAME + "/sitestatic"
+#STATIC_URL = 'http://ez3d_media.s3.amazonaws.com/static/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -190,7 +191,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "lfs"
 # CACHE_BACKEND = 'file:///'
 # CACHE_BACKEND = 'locmem:///'
 #CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-#CACHE_BACKEND = 'dummy:///'
+CACHE_BACKEND = 'dummy:///'
 
 if DEBUG:
     EMAIL_HOST = ""
@@ -348,5 +349,5 @@ def get_cache():
           }
         }
 
-CACHES = get_cache()
+#CACHES = get_cache()
 #CACHE_BACKEND = CACHES

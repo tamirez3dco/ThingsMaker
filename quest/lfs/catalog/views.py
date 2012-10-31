@@ -443,6 +443,10 @@ def category_products(request, slug, start=1, template_name="lfs/catalog/categor
 
 def all_products(request, template_name="lfs/catalog/products.html"):
     show_all = request.GET.get('show_all', None)
+    cache_key = "%s-create-products-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, show_all)
+    result = cache.get(cache_key)
+    if result is not None:
+        return HttpResponse(result)
     raw_products = lfs.catalog.utils.get_all_products(show_all)
     products = []
     for product in raw_products:
@@ -451,10 +455,11 @@ def all_products(request, template_name="lfs/catalog/products.html"):
                 'name': product.name,
                 'description': product.description
             })
-    result = render_to_response(template_name, RequestContext(request, {
+    result = render_to_string(template_name, RequestContext(request, {
         "products": raw_products
     }))
-    return result
+    cache.set(cache_key, result)
+    return HttpResponse(result)
 
 def designers(request, template_name="lfs/catalog/designers.html"):
     cache_key = "%s-designers" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX)

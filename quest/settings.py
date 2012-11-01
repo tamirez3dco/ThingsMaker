@@ -160,12 +160,14 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'south',
     'storages',
-    'explorer'
+    'explorer',
+    'social_auth'
 )
 
 FORCE_SCRIPT_NAME=""
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/manage/"
+#LOGIN_REDIRECT_URL = "/manage/"
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
@@ -175,11 +177,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lfs.core.context_processors.main',
+    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'lfs.customer.auth.EmailBackend',
+    #'lfs.customer.auth.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'social_auth.backends.facebook.FacebookBackend',
 )
 
 # For sql_queries
@@ -346,7 +351,7 @@ def get_cache():
           'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'LOCATION': os.environ['MEMCACHIER_SERVERS'],
-            'TIMEOUT': 3600,
+            'TIMEOUT': 36000,
             'BINARY': True,
           }
         }
@@ -360,4 +365,11 @@ def get_cache():
 COMPRESS_ENABLED = True
 CACHES = get_cache()
 COMPRESS_CACHE_BACKEND = 'dummy:///'
-#CACHE_BACKEND = CACHES
+
+FACEBOOK_APP_ID              = '487109477988417'
+FACEBOOK_API_SECRET          = '9728c8157cba4c39e5563c73b36718e8'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+SOCIAL_AUTH_CREATE_USERS          = True
+SOCIAL_AUTH_SESSION_EXPIRATION = False

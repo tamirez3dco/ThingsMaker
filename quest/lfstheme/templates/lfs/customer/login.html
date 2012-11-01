@@ -34,4 +34,5 @@
             <button type="submit"
                     class="button login-button emphasized left">{% trans 'Login' %}</button>
         </form>
+        Login with <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">Facebook</a>
 </div>

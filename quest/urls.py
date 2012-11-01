@@ -10,6 +10,7 @@ DIRNAME = os.path.dirname(__file__)
 handler500 = 'lfs.core.views.server_error'
 
 urlpatterns = patterns("",
+    url(r'', include('social_auth.urls')),
     (r'', include('lfs.core.urls')),
     (r'^manage/', include('lfs.manage.urls')),
 )
@@ -37,6 +38,4 @@ urlpatterns += patterns("",
     (r'^products_by_name/(?P<name>[-\w ]*)', 'explorer.views.list_products_by_name'),    
     (r'^get_ssp/(?P<jsonstr>.*)','explorer.views.get_screened_sorted_products'),
     (r'^sorted_products/(?P<jsonstr>.*)','explorer.views.sorted_view'),
-
-    
 )

@@ -10,7 +10,7 @@
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" />
          </head>
-<body style="background-size: 100%; background-image:url('/static/images/cellular1.png');"></body>
+<body style="background-size: 100%; background-image:url("{{ STATIC_URL }}images/cellular1.png");"></body>
 <div>
         <form class="authenticate"
               action="{% url lfs_login %}"

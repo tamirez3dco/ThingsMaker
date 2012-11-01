@@ -182,7 +182,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'lfs.customer.auth.EmailBackend',
+    #'lfs.customer.auth.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social_auth.backends.facebook.FacebookBackend',
 )
@@ -363,5 +363,5 @@ FACEBOOK_API_SECRET          = '9728c8157cba4c39e5563c73b36718e8'
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
-
+SOCIAL_AUTH_CREATE_USERS          = True
 SOCIAL_AUTH_SESSION_EXPIRATION = False

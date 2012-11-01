@@ -52,7 +52,10 @@ MEDIA_ROOT = DIRNAME + "/media"
 
 # static files settings
 #STATIC_URL = '/static/'
-STATIC_ROOT = DIRNAME + '/sitestatic/'
+if DEBUG:
+    STATIC_ROOT = DIRNAME + '/sitestatic/'
+else:
+    STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
 STATIC_URL = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a

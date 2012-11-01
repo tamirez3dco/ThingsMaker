@@ -52,10 +52,10 @@ MEDIA_ROOT = DIRNAME + "/media"
 
 # static files settings
 #STATIC_URL = '/static/'
-if DEBUG:
-    STATIC_ROOT = DIRNAME + '/sitestatic/'
-else:
-    STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
+#if DEBUG:
+STATIC_ROOT = DIRNAME + '/sitestatic/'
+#else:
+#STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
 STATIC_URL = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -332,7 +332,7 @@ STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
 
 COMPRESS_URL = STATIC_URL
 COMPRESS_STORAGE = STATICFILES_STORAGE
-COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_ROOT = STATIC_URL#STATIC_ROOT
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',

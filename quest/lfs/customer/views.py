@@ -50,7 +50,7 @@ def login(request, template_name="lfs/customer/login.html"):
     try:
         print "%s" % request.user.username
         print "%s" % request.user.first_name
-    
+        print "%s" % request.user.is_authenticated()
     except:
         pass
     

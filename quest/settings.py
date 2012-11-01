@@ -177,7 +177,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lfs.core.context_processors.main',
-    'social_auth.context_processors.social_auth_by_name_backends',
+    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
 )
 
 AUTHENTICATION_BACKENDS = (

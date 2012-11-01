@@ -353,7 +353,7 @@ def get_cache():
           }
         }
 
-COMPRESS_ENABLED = False
+COMPRESS_ENABLED = True
 CACHES = get_cache()
 COMPRESS_CACHE_BACKEND = 'dummy:///'
 
@@ -363,3 +363,4 @@ FACEBOOK_API_SECRET          = '9728c8157cba4c39e5563c73b36718e8'
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
+SOCIAL_AUTH_SESSION_EXPIRATION = False

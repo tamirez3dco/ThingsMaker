@@ -51,9 +51,9 @@ USE_I18N = True
 MEDIA_ROOT = DIRNAME + "/media"
 
 # static files settings
-STATIC_URL = '/static/'
-STATIC_ROOT = DIRNAME + "/sitestatic"
-#STATIC_URL = 'http://ez3d_media.s3.amazonaws.com/static/'
+#STATIC_URL = '/static/'
+STATIC_ROOT = DIRNAME + '/sitestatic/'
+STATIC_URL = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -63,7 +63,7 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = '/admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '+0zsw5n@v7*rhl6r6ufqhoc6jlqq0f-u8c+gh(hjb+_jmg@rh6'
@@ -317,6 +317,14 @@ AWS_S3_SECURE_URLS=False
 AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 #AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATIC_FILES_BUCKET = 'ez3d_static_files'
+#STATICFILES_STORAGE = 's3utils.StaticFilesStorage'
+ 
+STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
+
+COMPRESS_URL = STATIC_URL
+COMPRESS_STORAGE = STATICFILES_STORAGE
+COMPRESS_ROOT = STATIC_ROOT
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',

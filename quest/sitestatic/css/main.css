@@ -1,4 +1,4 @@
-@import url("/static/css/tinymce_styles.css");
+@import url("../css/tinymce_styles.css");
 
 .large_thumbnail {
 	width: 100px; 
@@ -22,7 +22,7 @@ body {
 #wrap-all {
    min-height:100%;
    position:relative;
-   background-image: url(/static/img/content-bg.jpg);
+   background-image: url(../img/content-bg.jpg);
 	background-repeat: repeat;
 }
 
@@ -376,7 +376,7 @@ table.search-results {
 	position: relative;
     height: 82px;
     padding: 0;
-    /*background: url(/static/img/menu_bg.jpg) repeat;*/
+    /*background: url(../img/menu_bg.jpg) repeat;*/
    /*background-color: #ECECEC;*/
 }
 
@@ -405,7 +405,7 @@ table.search-results {
 
 .tabs li.selected a,
 .tabs li a:hover {
-    /*background: url(/static/img/menu_bg_selected.jpg) repeat-x;*/
+    /*background: url(../img/menu_bg_selected.jpg) repeat-x;*/
     color: #0c80d1 !important;
 }
 
@@ -431,28 +431,61 @@ table.search-results {
 	margin-left: 32px;
 }
 
-#tab-Create span {
-	background-image: url(/static/img/create_icon_tabs.png);
+#tab-Create span.nohov {
+	background-image: url(../img/create_icon_tabs.png);
+	visibility: visible;
 }
-.tabs li.selected #tab-Create span,
-#tab-Create:hover span {
-    background-image: url(/static/img/create_icon_tabs_hover.png);
-}
-
-#tab-Popular span {
-	background-image: url(/static/img/popular_icon_tabs.png);
-}
-.tabs li.selected #tab-Popular span,
-#tab-Popular:hover span {
-    background-image: url(/static/img/popular_icon_tabs_hover.png);
+#tab-Create span.hov {
+	background-image: url(../img/create_icon_tabs_hover.png);
+	visibility: hidden;
 }
 
-#tab-Recent span {
-	background-image: url(/static/img/recent_icon_tabs.png);
+.tabs li.selected #tab-Create span.nohov,
+#tab-Create:hover span.nohov {
+    visibility: hidden;
 }
-.tabs li.selected #tab-Recent span,
-#tab-Recent:hover span {
-    background-image: url(/static/img/recent_icon_tabs_hover.png);
+.tabs li.selected #tab-Create span.hov,
+#tab-Create:hover span.hov {
+    visibility: visible;
+}
+
+
+
+#tab-Popular span.nohov {
+	background-image: url(../img/popular_icon_tabs.png);
+	visibility: visible;
+}
+#tab-Popular span.hov {
+	background-image: url(../img/popular_icon_tabs_hover.png);
+	visibility: hidden;
+}
+
+.tabs li.selected #tab-Popular span.nohov,
+#tab-Popular:hover span.nohov {
+    visibility: hidden;
+}
+.tabs li.selected #tab-Popular span.hov,
+#tab-Popular:hover span.hov {
+    visibility: visible;
+}
+
+
+#tab-Recent span.nohov {
+	background-image: url(../img/recent_icon_tabs.png);
+	visibility: visible;
+}
+#tab-Recent span.hov {
+	background-image: url(../img/recent_icon_tabs_hover.png);
+	visibility: hidden;
+}
+
+.tabs li.selected #tab-Recent span.nohov,
+#tab-Recent:hover span.nohov {
+   	visibility: hidden; 
+}
+.tabs li.selected #tab-Recent span.hov,
+#tab-Recent:hover span.hov {
+   	visibility: visible; 
 }
 
 #home-tab {
@@ -487,7 +520,7 @@ table.search-results {
 	/*padding: 0px 0px 20px 8px;*/
 	width: 60px;	
 	height: 30px;
-	background-image: url(/static/img/CartEmpty.png);
+	background-image: url(../img/CartEmpty.png);
 	background-repeat: no-repeat;
 	padding-left: 62px;
 	margin-top: 22px;
@@ -541,7 +574,7 @@ ul.breadcrumbs li {
 /* Content ################################################################# */
 #content {
     padding-top: 44px;
-    background-image: url(/static/img/content-bg.jpg);
+    background-image: url(../img/content-bg.jpg);
 	background-repeat: repeat;
 	padding-bottom: 60px; 
 	border-top: 1px solid #ffffff;
@@ -672,7 +705,7 @@ div.product-quantity {
 }
 
 .sorting {
-    background: url(/static/img/portlet_header_bg.jpg) no-repeat right;
+    background: url(../img/portlet_header_bg.jpg) no-repeat right;
     text-align: right;
     padding-right: 5px;
 }
@@ -809,7 +842,7 @@ ___________________________________________________________________________ */
 }
 
 .product .cart-image {
-	background-image: url(/static/img/add_to_cart.jpg);
+	background-image: url(../img/add_to_cart.jpg);
 	height: 24px;
 	width: 30px;
 	clear: none;
@@ -817,7 +850,7 @@ ___________________________________________________________________________ */
 	margin-right: 5px;
 }
 .product .customize-image {
-	background-image: url(/static/img/IconNormalCustomize.png);
+	background-image: url(../img/IconNormalCustomize.png);
 	height: 18px;
 	width: 20px;
 	clear: none;
@@ -865,7 +898,7 @@ ___________________________________________________________________________ */
 .overview {
     text-align: right;
     padding: 10px 30px 10px 0;
-    background: url("/static/img/portlet_header_bg.jpg") right no-repeat;
+    background: url("../img/portlet_header_bg.jpg") right no-repeat;
     font-size: 80%;
     font-weight: bold;
 }
@@ -985,7 +1018,7 @@ ___________________________________________________________________________ */
 }
 
 h2.authenticate {
-    background: url(/static/img/menu_bg.jpg) repeat-x;
+    background: url(../img/menu_bg.jpg) repeat-x;
     padding: 10px;
 }
 
@@ -1038,7 +1071,7 @@ ___________________________________________________________________________ */
 .star-rating a:active,
 .star-rating a:focus,
 .star-rating .current-rating {
-    background: url(/static/img/star.gif) left -1000px repeat-x;
+    background: url(../img/star.gif) left -1000px repeat-x;
 }
 
 .star-rating {
@@ -1091,7 +1124,7 @@ ___________________________________________________________________________ */
 .small-star a:active,
 .small-star a:focus,
 .small-star .current-rating {
-    background-image: url(/static/img/star_small.gif);
+    background-image: url(../img/star_small.gif);
     line-height: 10px;
     height: 10px;
 }
@@ -1165,7 +1198,7 @@ ___________________________________________________________________________ */
 .portlet-footer a {
     padding-left: 25px;
     text-decoration: none;
-    background: url("/static/img/portlet-bullet.gif") left center no-repeat;
+    background: url("../img/portlet-bullet.gif") left center no-repeat;
 }
 
 .portlet .for-sale-standard-price {
@@ -1250,13 +1283,13 @@ ___________________________________________________________________________ */
 
 .categories-portlet li.level-0 a {
     padding-left: 15px;
-    background: transparent url("/static/img/bullet_light.jpg") left 5px no-repeat;
+    background: transparent url("../img/bullet_light.jpg") left 5px no-repeat;
     display: block;
 }
 
 .categories-portlet li.level-0 a.current,
 .categories-portlet li.level-0 a:hover {
-    background: transparent url("/static/img/bullet_dark.jpg") left 5px no-repeat;
+    background: transparent url("../img/bullet_dark.jpg") left 5px no-repeat;
 }
 
 .categories-portlet li.level-1,
@@ -1304,7 +1337,7 @@ ___________________________________________________________________________ */
 /* Footer
 ___________________________________________________________________________ */
 #footer {
-    /*background-image: url(/static/img/content-bg.jpg);
+    /*background-image: url(../img/content-bg.jpg);
 	background-repeat: repeat; */ 
 	   position:absolute;
    bottom:0;
@@ -1452,7 +1485,7 @@ button.emphasized:hover {
 
 /*.contactableack */
 .contactable-inner {
-	background-image:url(/static/img/FeedbackBTN.png);
+	background-image:url(../img/FeedbackBTN.png);
 	color:#FFFFFF;
 	background-color:transparent;
 	cursor:pointer;
@@ -1564,7 +1597,7 @@ form.contactable-form .disclaimer {
 }
 
 .contactable form.contactable-form .contactable-loading {
-	background: url(/static/images/large-loading.gif) no-repeat;
+	background: url(../images/large-loading.gif) no-repeat;
 	width:55px;
 	height:55px;
 	margin: 100px auto;
@@ -1594,7 +1627,7 @@ form.contactable-form .disclaimer {
 .small_tabs ul {
 	position: relative;
     margin: 0;
-    /*background: url(/static/img/menu_bg.jpg) repeat;*/
+    /*background: url(../img/menu_bg.jpg) repeat;*/
    /*background-color: #ECECEC;*/
 }
 
@@ -1627,7 +1660,7 @@ form.contactable-form .disclaimer {
 
 .small_tabs li.selected p,
 .small_tabs li p:hover {
-    /*background: url(/static/img/menu_bg_selected.jpg);*/
+    /*background: url(../img/menu_bg_selected.jpg);*/
     color: white !important;
 }
 
@@ -1942,14 +1975,14 @@ form.contactable-form .disclaimer {
 	top : -168px;
 	left : 17px; 
 	visibility: hidden;
-	background-image: url("/static/images/Hart_fainted.png");
+	background-image: url("../images/Hart_fainted.png");
 	text-align:center;
 	line-height:25px;
 	color:white;
 	display:none;
 }
 
-.home-product-lovemeImage:hover {background-image: url("/static/images/Hart.png");}
+.home-product-lovemeImage:hover {background-image: url("../images/Hart.png");}
 
 .home-product-customize, .home-product-customize:visited .home-product-customize:hover {
 	width: 79px; 
@@ -1958,7 +1991,7 @@ form.contactable-form .disclaimer {
 	float: right;
 	clear: none;
 	color: #ffffff;
-	background-image: url("/static/img/CustomizeBG.png");
+	background-image: url("../img/CustomizeBG.png");
 	/*padding-top: 5px;*/
 }
 
@@ -1982,7 +2015,7 @@ form.contactable-form .disclaimer {
 	float: left;
 	clear:none;
 	background-color: rgba(0,0,0,0.1);
-	background-image: url("/static/img/HeartRed+BG.png");
+	background-image: url("../img/HeartRed_BG.png");
 	background-repeat: no-repeat;
 	padding:0px;
 	text-decoration: none;
@@ -1992,7 +2025,7 @@ form.contactable-form .disclaimer {
 }
 .home-product-like.empty {
 	/*color: #000000;*/
-	background-image: url("/static/img/HeartWhite+BG.png");
+	background-image: url("../img/HeartWhite_BG.png");
 }
 
 .home-product-like span {
@@ -2505,7 +2538,7 @@ display:block;
 	/*padding-top:*/ 
 }
 #create-finish-dialog {
-	background-image: url(/static/img/content-bg.jpg);
+	background-image: url(../img/content-bg.jpg);
 	border: 0px solid white;
 }
 #create-finish-dialog-left {
@@ -2583,14 +2616,14 @@ display:block;
 .wizard-step-post{
 	float: left;
 	clear: none;
-	background-image: url(/static/img/CreateStepsLineFull.png);
+	background-image: url(../img/CreateStepsLineFull.png);
 	background-repeat:repeat-x;
 	height:44px;
 }
 .wizard-step-circle{
 	float: left;
 	clear: none;
-	background-image: url(/static/img/CreateStepsCircleBG.png);
+	background-image: url(../img/CreateStepsCircleBG.png);
 	background-repeat: no-repeat;
 	width: 42px;
 	height:44px;
@@ -2600,18 +2633,18 @@ display:block;
 }
 .completed-step:first-child .wizard-step-circle {
 	/*margin-left: 5px;*/
-	background-image: url(/static/img/CreateStepsCircleLeftBG.png);
+	background-image: url(../img/CreateStepsCircleLeftBG.png);
 }
 .completed-step:last-child .wizard-step-circle {
 	/*margin-left: 5px;*/
-	background-image: url(/static/img/CreateStepsCircleRightBG.png);
+	background-image: url(../img/CreateStepsCircleRightBG.png);
 }
 .wizard-step-circle-inner{
 	height: 32px;
 	width: 42px;
 	margin-left: 0px;
 	margin-top: 6px;
-	background-image: url(/static/img/CreateStepsCircleBoth.png);
+	background-image: url(../img/CreateStepsCircleBoth.png);
 	background-repeat: no-repeat;	
 	line-height: 30px;
 	color: #ffffff;
@@ -2619,16 +2652,16 @@ display:block;
 .completed-step:first-child.active-step .wizard-step-circle-inner,
 .completed-step:last-child.active-step .wizard-step-circle-inner,
 .active-step .wizard-step-circle-inner{
-	background-image: url(/static/img/CreateCircleOrange.png);
+	background-image: url(../img/CreateCircleOrange.png);
 }
 
 .completed-step:first-child .wizard-step-circle-inner {
 	/*margin-left: 5px;*/
-	background-image: url(/static/img/CreateStepsCircleLeft.png);
+	background-image: url(../img/CreateStepsCircleLeft.png);
 }
 .completed-step:last-child .wizard-step-circle-inner {
 	/*margin-left: 5px;*/
-	background-image: url(/static/img/CreateStepsCircleRight.png);
+	background-image: url(../img/CreateStepsCircleRight.png);
 }
 .wizard-step-text {
 	height: 30px;
@@ -2804,7 +2837,7 @@ display:block;
 
 .ui-dialog {
 	border: 0px solid white;
-   	background-image: url(/static/img/content-bg.jpg);
+   	background-image: url(../img/content-bg.jpg);
 	background-repeat: repeat;
 }
 
@@ -2849,7 +2882,7 @@ display:block;
 	width: 259px;
 	height: 96px;
 	z-index:99;
-	background-image: url(/static/images/BtnStartCreatingNormal.png);
+	background-image: url(../images/BtnStartCreatingNormal.png);
 	background-color: transparent;
 	background-repeat: no-repeat;
 }

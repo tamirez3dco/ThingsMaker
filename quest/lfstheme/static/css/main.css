@@ -2015,7 +2015,7 @@ form.contactable-form .disclaimer {
 	float: left;
 	clear:none;
 	background-color: rgba(0,0,0,0.1);
-	background-image: url("../img/HeartRed+BG.png");
+	background-image: url("../img/HeartRed_BG.png");
 	background-repeat: no-repeat;
 	padding:0px;
 	text-decoration: none;
@@ -2025,7 +2025,7 @@ form.contactable-form .disclaimer {
 }
 .home-product-like.empty {
 	/*color: #000000;*/
-	background-image: url("../img/HeartWhite+BG.png");
+	background-image: url("../img/HeartWhite_BG.png");
 }
 
 .home-product-like span {

@@ -63,7 +63,7 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/admin/'
+ADMIN_MEDIA_PREFIX = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '+0zsw5n@v7*rhl6r6ufqhoc6jlqq0f-u8c+gh(hjb+_jmg@rh6'

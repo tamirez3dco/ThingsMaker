@@ -47,6 +47,13 @@ def login(request, template_name="lfs/customer/login.html"):
     """
     shop = lfs.core.utils.get_default_shop(request)
 
+    try:
+        print "%s" % request.user.username
+        print "%s" % request.user.first_name
+    
+    except:
+        pass
+    
     # If only anonymous checkout is allowed this view doesn't exists :)
     # if shop.checkout_type == CHECKOUT_TYPE_ANON:
     #     raise Http404()

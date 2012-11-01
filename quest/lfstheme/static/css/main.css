@@ -2910,3 +2910,8 @@ display:block;
 .st_email_large{
 	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconEmail.png") no-repeat;
 }
+
+body.login {
+	background-size: 100%; 
+	background-image:url("../images/cellular1.png");
+}

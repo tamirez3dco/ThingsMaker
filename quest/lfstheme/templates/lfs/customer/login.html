@@ -10,29 +10,8 @@
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" />
          </head>
-<body style="background-size: 100%; background-image:url("{{ STATIC_URL }}images/cellular1.png");"></body>
+<body class="login">
 <div>
-        <form class="authenticate"
-              action="{% url lfs_login %}"
-              method="post">
-            {% csrf_token %}
-
-            <div class="form">
-                <table>
-                    {{ login_form }}
-                </table>
-            </div>
-
-            <input type="hidden"
-                   name="action"
-                   value="login" />
-
-            <input type="hidden"
-                   name="next"
-                   value="{{ next_url }}" />
-
-            <button type="submit"
-                    class="button login-button emphasized left">{% trans 'Login' %}</button>
-        </form>
         Login with <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">Facebook</a>
 </div>
+</body>

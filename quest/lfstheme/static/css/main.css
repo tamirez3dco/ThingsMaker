@@ -2329,7 +2329,7 @@ form.contactable-form .disclaimer {
 .jw-steps-wrap {
 	/*display:none;*/
 	/*height: 430px;*/
-	width: 610px;
+	width: 616px;
 	overflow: auto;
 	/*padding: 0em 3em 0em 3.3em;*/
 	padding:0px;
@@ -2468,8 +2468,11 @@ form.contactable-form .disclaimer {
 	height:188px;
 	margin: 0px 10px 10px 0px;
 	float: left;
-	border: 1px solid rgb(207,207,207); 
-	
+	border: 2px solid white; 
+	/*border: 2px solid #f9941f; */
+}
+.explorer-image.selected {
+	border: 2px solid #f9941f; 
 }
 .explorer-image img {
 	width:186px;
@@ -2512,7 +2515,7 @@ form.contactable-form .disclaimer {
 }
 .create-image-container {
 	float: left;
-	width: 610px;
+	width: 616px;
 }
 .create-button-container {
 	float: left;

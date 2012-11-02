@@ -180,7 +180,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'lfs.core.context_processors.main',
-    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_by_name_backends',
     'social_auth.context_processors.social_auth_login_redirect',
 )
 
@@ -375,3 +375,4 @@ SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_CREATE_USERS          = True
 SOCIAL_AUTH_SESSION_EXPIRATION = False
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']

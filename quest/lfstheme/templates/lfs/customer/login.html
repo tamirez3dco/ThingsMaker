@@ -8,7 +8,9 @@
         {% block head %}{% endblock %}
         <meta name="google-site-verification" content="qGdLnamaMsZGRBDhB5m68JrsKzj2k39v_nqGNsdOOCc" />
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+         {% compress css %}
         <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css" />
+         {% endcompress %}
          </head>
 <body class="login">
 <div>

@@ -2915,3 +2915,6 @@ body.login {
 	size: 100%; 
 	background-image:url("../images/cellular1.png");
 }
+.fblogin {
+	background-image:url("../img/fb-connect-large.png");
+}

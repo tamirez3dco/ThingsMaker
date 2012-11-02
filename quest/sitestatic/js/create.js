@@ -611,8 +611,12 @@ $.fn.exists = function() {
 			var ua = navigator.userAgent,
     			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
 			for(var i = 0; i < data.length; i++) {
+				var addClass = "explorer-image";
+				if (this._itemId==data[i].id) {
+					addClass = "explorer-image selected";
+				}
 				var id = stepidx + '-' + i;
-				var html = '<div class="explorer-image" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
+				var html = '<div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
 				step.children(".create-image-container").append(html);
 				console.log(data[i]);
 				$("#explorer-image-" + id).data('itemId', data[i].id);

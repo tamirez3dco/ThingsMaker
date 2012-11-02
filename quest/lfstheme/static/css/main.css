@@ -2912,6 +2912,6 @@ display:block;
 }
 
 body.login {
-	background-size: 100%; 
+	size: 100%; 
 	background-image:url("../images/cellular1.png");
 }

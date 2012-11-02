@@ -2920,6 +2920,7 @@ body.login {
 	position: absolute;
 	top: 10px;
 	left: 10px;
-	width: 370px;
-	height: 30px;
+	width: 330px;
+	height: 45px;
+	background-repeat: no-repeat;
 }

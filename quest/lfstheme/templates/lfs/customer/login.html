@@ -15,7 +15,6 @@
          </head>
 <body class="login">
 <div>
-	<button class="fblogin"></button>
-        Login with <a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}">Facebook</a>
+	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"></a>
 </div>
 </body>

@@ -3,7 +3,7 @@ $.extend({
 		var vars = [], hash;
 		//var base = $.address.queryString();
 		var base = $.address.baseURL();
-		console.log(base);
+		//console.log(base);
 		var hashes = base.slice(base.indexOf('?') + 1).split('&');
 		for(var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
@@ -265,6 +265,8 @@ $.fn.exists = function() {
 			var $steps = this.element.find(".jw-step");
 			if(this._stepIndex == $steps.length - 1) {
 				this._onLastStep();
+				//return;
+				this.changeStep(this._stepAfterLast);
 				return;
 			}
 			var options = {
@@ -539,7 +541,7 @@ $.fn.exists = function() {
 			}
 		},
 		_changeStepInner:  function(nextStep, firstStep) {
-			console.log('_changeStepInner');
+			//console.log('_changeStepInner');
 			if(this._loadedImages.length == 0) {
 				var self = this;
 				setTimeout(function(){self._changeStepInner(nextStep, firstStep)}, 300);
@@ -650,10 +652,10 @@ $.fn.exists = function() {
 			});
 		},
 		_addImagesToStep : function(step, stepidx) {
-			console.log("_addImagesToStep");
+			//console.log("_addImagesToStep");
 			var data = this._loadedImages;
-			console.log("got data");
-			console.log(data);
+			//console.log("got data");
+			//console.log(data);
 			var wizard = this;
 			var ua = navigator.userAgent,
     			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
@@ -665,7 +667,7 @@ $.fn.exists = function() {
 				var id = stepidx + '-' + i;
 				var html = '<div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
 				step.children(".create-image-container").append(html);
-				console.log(data[i]);
+				//console.log(data[i]);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
 				$("#explorer-image-" + id).data('text', data[i].text);
@@ -681,34 +683,34 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
-			console.log("New3");
-			console.log("_loadImages");
+			///console.log("New3");
+			//console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
 			this._latestParams = params;
 			//console.log(wizard._itemId);
 			$.getJSON(this._exploreURL, params, function(data, textStatus, jqXHR) {
-				console.log('get json res');
-				console.log(data);
-				console.log(jqXHR);
-				console.log(textStatus);
-				console.log('end get json res');
+				//console.log('get json res');
+				//console.log(data);
+				//console.log(jqXHR);
+				//console.log(textStatus);
+				//console.log('end get json res');
 				if (params != wizard._latestParams) {
-					console.log('not latest!!!');
+					//console.log('not latest!!!');
 					return;
 				}
-				console.log("got data");
-				console.log(data);
-				console.log("Fuck All");
+				//console.log("got data");
+				//console.log(data);
+				//console.log("Fuck All");
 				if (data == []) {
-					console.log("Fuck 1");
+					//console.log("Fuck 1");
 				}
 				if ((data == null) || (data.length == 0) || (data == [])) {
-					console.log('no data recieved !!!!!');
+					//console.log('no data recieved !!!!!');
 					return;
 				}
-				console.log(params);
+				//console.log(params);
 				wizard._loadedImages = data;
 				
 				if(add) {
@@ -747,11 +749,7 @@ $.fn.exists = function() {
 		_imageClick : function(image_parent) {
 			var $steps = this.element.find(".jw-step")
 			this._appendHistory(image_parent);
-			if(this._stepIndex == $steps.length - 1) {
-				this._onLastStep();
-			} else {
-				this.nextStep();
-			}
+			this.nextStep();
 		},
 		_appendHistory : function(image_parent) {
 			var wizard = this;
@@ -813,8 +811,14 @@ $.fn.exists = function() {
 			return $("#explorer-image-" + this._itemId);
 		},
 		_onLastStep : function() {
-			//var currentItem =
 			$("#create-finish-dialog").dialog('open');
+			$("#create-finish-dialog").parent().animate({
+					opacity : 0.0
+				}, 5000, 'linear', function() {
+					$("#create-finish-dialog").parent().css({'opacity': 1});
+					$("#create-finish-dialog").dialog('close');
+			});
+			
 		},
 		_buildDialog : function() {
 			var wizard = this;
@@ -824,7 +828,7 @@ $.fn.exists = function() {
 				height : 200,
 				//position: [300, 300],
 				resizable : false,
-				modal : true,
+				modal : false,
 				//dialogClass: 'alert'
 			});
 			$("#create-continue-creating").click(function() {
@@ -930,7 +934,7 @@ $.fn.exists = function() {
 		_setAddress : function() {
 			//console.log(this._stepIndex);
 			//$.address.value(this._stepIndex);
-			console.log(this._itemId);
+			//console.log(this._itemId);
 			$.address.autoUpdate(false);
 			$.address.parameter('step', this._stepIndex.toString());
 			$.address.parameter('item', this._itemId);
@@ -963,7 +967,7 @@ $.fn.exists = function() {
 
 			this.element.addClass("jw-hasmenu");
 			this.element.find(".jw-step").each(function(x) {
-				console.log(x);
+				//console.log(x);
 				list.push($("<li />", {
 				"class": "ui-corner-all " + (x === 0 ? "jw-current ui-state-highlight" : "jw-inactive ui-state-disabled"),
 				html: $("<a />", {
@@ -1063,8 +1067,8 @@ $.fn.exists = function() {
 			 */
 			$menu.find("a").click($.proxy(function(event) {
 				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
-				console.log('click');
-				console.log(parent);
+				//console.log('click');
+				//console.log(parent);
 				if($(parent).hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
@@ -1110,10 +1114,10 @@ $.fn.exists = function() {
 			 }
 			 */
 			$menu.find(".wizard-step-circle").click($.proxy(function(event) {
-				console.log('click1');
+				//console.log('click1');
 				var $target = $(event.target), parent = $target.parents('.completed-step')[0], nextStep = parseInt($(parent).attr("step"), 10);
-				console.log('click');
-				console.log(parent);
+				//console.log('click');
+				//console.log(parent);
 				if($(parent).hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}

@@ -1,5 +1,10 @@
 @import url("../css/tinymce_styles.css");
 
+@font-face {
+  font-family: 'TMFreeScript';
+  src: url('../img/FREESCPT.eot?') format('eot'), url('../img/FREESCPT.woff') format('woff'), url('../img/FREESCPT.TTF') format('truetype');
+}
+
 .large_thumbnail {
 	width: 100px; 
 	height: 100px;
@@ -2329,7 +2334,7 @@ form.contactable-form .disclaimer {
 .jw-steps-wrap {
 	/*display:none;*/
 	/*height: 430px;*/
-	width: 616px;
+	width: 613px;
 	overflow: auto;
 	/*padding: 0em 3em 0em 3.3em;*/
 	padding:0px;
@@ -2515,7 +2520,7 @@ form.contactable-form .disclaimer {
 }
 .create-image-container {
 	float: left;
-	width: 616px;
+	width: 613px;
 }
 .create-button-container {
 	float: left;
@@ -2926,4 +2931,33 @@ body.login {
 	width: 330px;
 	height: 45px;
 	background-repeat: no-repeat;
+}
+
+#mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: blue;
+	opacity: 0.2;
+	pointer-events:none;
+	z-index: 999;
+	display: none;
+}
+
+.ui-dialog .create-tip-dialog {
+	font-family: 'TMFreeScript';
+	font-size: 38px;
+	color: #f99417;
+	background-image: none;
+	background-color: transparent;
+	padding:0px;
+	padding-left:6px;
+	z-index: 9999;
+	line-height: 30px;
+}
+.ui-dialog {
+	background-color: transparent;
+	background-image:none;
 }

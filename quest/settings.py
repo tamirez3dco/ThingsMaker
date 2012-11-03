@@ -56,7 +56,7 @@ MEDIA_ROOT = DIRNAME + "/media"
 STATIC_ROOT = DIRNAME + '/sitestatic/'
 #else:
 #STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
-STATIC_URL = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
+STATIC_URL = 'http://ez3d_statics2.s3.amazonaws.com/sitestatic/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -324,9 +324,9 @@ AWS_SECRET_ACCESS_KEY = 'Ff4feFxgAs0+JqWCOAoTsdbCS3Ep8PMRurG8ZBfA'
 AWS_S3_SECURE_URLS=False
 AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 
-STATIC_FILES_BUCKET = 'ez3d_static_files'
+STATIC_FILES_BUCKET = 'ez3d_statics2'
 
-STATICFILES_STORAGE = 's3utils.StaticFilesStorage'
+STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
 COMPRESS_STORAGE = STATICFILES_STORAGE
 
 COMPRESS_URL = STATIC_URL

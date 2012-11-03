@@ -63,7 +63,9 @@ h2 {
     font-weight: normal;
     /*margin: 10px 0;*/
 }
-
+/*
+ * checking how does main.css updates happen on heroku...
+ */
 h3 {
 	font-size: 22px;
     font-weight: normal;

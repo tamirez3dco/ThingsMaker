@@ -72,6 +72,18 @@
 		<button type="button" class="button right" style="clear: both">Continue</input>
 	</div>
 </div>
+<div class="create-tip-dialog" id="create-tip-dialog-1">
+	<div>Click the design you like most</div>
+	<img src="{{STATIC_URL}}img/Arrow03.png"/>
+</div>
+<div class="create-tip-dialog" id="create-tip-dialog-2">
+	<div style="margin-right: 15px; margin-top: 30px; float: left; clear: none; height: 40px;"><img src="{{STATIC_URL}}img/Arrow02.png"/></div>
+	<div style="padding-left: 10px;">You can always jump to any step</div>
+</div>
+<div class="create-tip-dialog" id="create-tip-dialog-3">
+	<div>When you love your creation click Done!</div>
+	<div style="float: right; margin-right: 5px; margin-top: 5px;"><img src="{{STATIC_URL}}img/Arrow01.png"/></div>
+</div>
 <div style="display: none">
 	{% if product.is_variant %}
 		<img id="start-product-img" src="{{ product.get_item_image }}" />

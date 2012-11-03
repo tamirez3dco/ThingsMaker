@@ -34,7 +34,7 @@ $.fn.exists = function() {
 		 * @property int _stepCount Represents the `functional` number of steps
 		 */
 		_stepCount : 0,
-
+		_stepCounter : 0,
 		/**
 		 * @private
 		 * @property int _actualCount Represents the `actual` number of steps
@@ -493,6 +493,10 @@ $.fn.exists = function() {
 			}
 			clearInterval(this._showImagesTask);
 			if(!firstStep) {
+				if(($currentStep.data('paramType') != 'text')) {
+					this._updateTip();
+					this._stepCounter++;
+				}
 				this._disableButtons();
 				this._stepIndex = $steps.index(nextStep);
 				this._updateTitle(firstStep);
@@ -502,8 +506,10 @@ $.fn.exists = function() {
 					//wizard._loadImages(nextStep, this._stepIndex);
 				}
 				if(nextStep.data('paramType') != 'text') {
+					//this._stepCounter++;
 					wizard._loadImages(nextStep, this._stepIndex, false);
 				}
+				
 				$currentStep.animate({
 					opacity : 0.0
 				}, 2000, 'linear', function() {
@@ -598,9 +604,50 @@ $.fn.exists = function() {
 					}
 				});
 				if(done == $('.explorer-image').size()) {
+					$steps = wizard.element.find(".jw-step"), $currentStep = $steps.eq(wizard._stepIndex);
+					if(($currentStep.data('paramType') != 'text')) {
+						if (wizard._stepCounter==0) {
+							wizard._openTip1();
+						} else if (wizard._stepCounter==1) {
+							wizard._openTip2();
+						} else if (wizard._stepCounter==2) {
+							wizard._openTip3();
+						}
+					}
 					clearInterval(wizard._showImagesTask);
 				}
 			}, 100);
+		},
+		
+		_openTip1: function() {
+			console.log($(".create-image-container:visible").offset());
+			var left = $(".create-image-container:visible").offset().left+$(".create-image-container:visible").width()
+			var top = $(".create-image-container:visible").offset().top
+			$("#create-tip-dialog-1").dialog('option','position', [left-12,top]);
+			$("#create-tip-dialog-1").dialog('open');
+		},
+		_openTip2: function() {
+			console.log($(".create-image-container:visible").offset());
+			var left = $(".create-image-container:visible").offset().left+($(".create-image-container:visible").width()/2)
+			var top = $(".create-image-container:visible").offset().top-200
+			$("#create-tip-dialog-2").dialog('option','position', [left,top]);
+			$("#create-tip-dialog-2").dialog('open');
+		},
+		_openTip3: function() {
+			console.log($(".create-image-container:visible").offset());
+			var left = $(".create-image-container:visible").offset().left-160;
+			var top = $(".create-image-container:visible").offset().top+48;
+			$("#create-tip-dialog-3").dialog('option','position', [left,top]);
+			$("#create-tip-dialog-3").dialog('open');
+		},
+		_updateTip: function() {
+			//if
+			var dialogId = "#create-tip-dialog-" + (this._stepCounter+1);
+			$(dialogId).animate({
+					opacity : 0.0
+				}, 2000, 'linear', function() {
+					$(dialogId).dialog('close');
+			});
 		},
 		_addImagesToStep : function(step, stepidx) {
 			console.log("_addImagesToStep");
@@ -814,6 +861,33 @@ $.fn.exists = function() {
 			$("#create-makeit-dialog").find("button").click(function() {
 				wizard._makeIt();
 				$("#create-makeit-dialog").dialog('close');
+			});
+			$("#create-tip-dialog-1").dialog({
+				autoOpen : false,
+				width : 200,
+				height : 160,
+				position: [300, 300],
+				resizable : false,
+				modal : false,
+				//dialogClass: 'alert'
+			});
+			$("#create-tip-dialog-2").dialog({
+				autoOpen : false,
+				width : 280,
+				height : 130,
+				position: [300, 300],
+				resizable : false,
+				modal : false,
+				//dialogClass: 'alert'
+			});
+			$("#create-tip-dialog-3").dialog({
+				autoOpen : false,
+				width : 160,
+				height : 200,
+				position: [300, 300],
+				resizable : false,
+				modal : false,
+				//dialogClass: 'alert'
 			});
 		},
 		_replaceShareButtons : function(image_url, product_url) {

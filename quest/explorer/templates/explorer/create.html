@@ -60,14 +60,13 @@
 <div id="create-makeit-dialog">
 	<div id="create-makeit-dialog-left"></div>
 	<div id="create-makeit-dialog-right">
-		<h3>You made it, You can name it..</h3>
+		<h3>You can name it..</h3>
 		<input type="text" id="new-product-name" value="My precious" />
-		<h3>Share your creation</h3>
 		<div class="product-share-popup" style="clear: both">
+		<span>Share It</span>
 		<span class='st_facebook_large'  st_image="{{ product.get_item_image }}" displayText='Facebook'></span>
 		<span class='st_pinterest_large' st_image="{{ product.get_item_image }}" displayText='Pinterest'></span>
 		<span class='st_twitter_large'  st_image="{{ product.get_item_image }}" displayText='Tweet'></span>
-		<span class='st_email_large' st_image="{{ product.get_item_image }}" displayText='Email'></span>
 		</div>
 		<button type="button" class="button right" style="clear: both">Continue</input>
 	</div>
@@ -84,7 +83,9 @@
 	<div>When you love your creation click Done!</div>
 	<div style="float: right; margin-right: 5px; margin-top: 5px;"><img src="{{STATIC_URL}}img/Arrow01.png"/></div>
 </div>
-
+<div class="create-tip-dialog" style="visibility: hidden;">
+	LoadSS
+</div>
 <div style="display: none">
 	{% if product.is_variant %}
 		<img id="start-product-img" src="{{ product.get_item_image }}" />

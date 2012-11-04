@@ -867,12 +867,13 @@ $.fn.exists = function() {
 			var wizard = this;
 			$("#create-makeit-dialog").dialog({
 				autoOpen : false,
-				width : 468,
-				height : 233,
+				width : 469,
+				height : 294,
 				//position: [300, 300],
 				resizable : false,
 				modal : true,
-				//dialogClass: 'alert'
+				dialogClass: 'withTitle',
+				title: 'You made it!'
 			});
 			$("#create-makeit-dialog").find("button").click(function() {
 				wizard._makeIt();
@@ -907,13 +908,11 @@ $.fn.exists = function() {
 			});
 		},
 		_replaceShareButtons : function(image_url, product_url) {
-			$(".product-share-popup").html('');
+			$(".product-share-popup").html('<div>Share It</div>');
 			var services = [
 				{cname: 'facebook', text: 'Facebook'},
-				{cname: 'googleplus', text: 'Google +'},
 				{cname: 'pinterest', text: 'Pinterest'},
 				{cname: 'twitter', text: 'Twitter'},
-				{cname: 'email', text: 'Email'},
 			];
 			var summary = "I made this at ThingsMaker";
 			for(var i=0; i<services.length; i++) {

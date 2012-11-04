@@ -2531,6 +2531,37 @@ form.contactable-form .disclaimer {
 	float: left;
 }
 
+.withTitle .ui-dialog-titlebar {
+	display:block;
+	background-color: #ffffff;
+	background-image: none;
+	border: 0px solid rgb(218,218,218);
+	border-bottom: 1px solid rgb(218,218,218);
+	border-radius: 0px;
+	border-top-right-radius: 7px;
+	border-top-left-radius: 7px;
+	height: 30px;
+	text-align: center;
+	color: #f9941f;
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+	overflow: hidden;
+	padding: 6px 0px 26px 110px;
+}
+.withTitle .ui-dialog-titlebar-close {
+	display: none;
+}
+.ui-dialog.withTitle{
+	background-color: #f2f2f2;
+	border: 1px solid rgba(0,0,0,0.4);
+	/*box-shadow: inset 1px #ffffff;*/
+	border-radius: 7px;
+	box-shadow: 1px 1px 0px 5px rgba(0,0,0,0.3), inset 1px 1px #ffffff;;
+	font-size: 24px;
+	overflow: hidden;
+	padding: 0;
+}
 .ui-dialog-titlebar {display:none}
 #create-finish-dialog BUTTON,
 #create-makeit-dialog-right .button {
@@ -2559,8 +2590,7 @@ form.contactable-form .disclaimer {
 	width: 100px;
 	background-color: #F9941F;
 }
-#create-finish-dialog,
-#create-makeit-dialog
+#create-finish-dialog
  {
 	/*background-image: url(../img/content-bg.jpg);*/
 	background-color: #f2f2f2;
@@ -2571,6 +2601,13 @@ form.contactable-form .disclaimer {
 	font-size: 24px;
 	padding: 20px;
 	overflow: hidden;
+}
+#create-makeit-dialog {
+padding: 20px;
+}
+#create-makeit-dialog h3
+ {
+	font-size: 18px;
 }
 #create-finish-dialog-left {
 	float: left;
@@ -2605,16 +2642,19 @@ form.contactable-form .disclaimer {
 	/*height: 190px;*/
 }
 #create-makeit-dialog-right input{
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	font-size: 18px;
-	width: 160px;
+	width: 213px;
+	font-family: Arial;
+	height: 34px;
+	
 	/*height: 190px;*/
 }
 #create-makeit-dialog-right input:focus{
 	outline-style: none;
 }
 #create-makeit-dialog-right .button {
-	margin-top: 31px;
+	margin-top: 15px;
 	margin-right: 0px;
 	margin-left: 150px;
 	background-color: #F9941F;
@@ -2622,7 +2662,10 @@ form.contactable-form .disclaimer {
 	/*float: right;*/
 }
 .product-share-popup {
-	display: none;
+	height: 30px;
+	padding: 17px 0 17px 0px;
+	background-color: rgba(203,203,203,0.2);
+	overflow: hidden;
 }
 /* = STEPS CONTAINER
 ----------------------------*/
@@ -2942,20 +2985,45 @@ form.contactable-form .disclaimer {
 	background-position-x: -50px;
 	background-repeat: no-repeat;
 }
-.product-share > span {
+.product-share-popup > div:first-child {
+	float: left;
+	clear:none;
+	padding:0px 0 0px 0;
+	font-family: "Arial Narrow";
+	font-size: 18px;
+	margin-right: 5px;
+	margin-top: 20px;
+	margin: 5px 16px 0 14px;
+}
+.product-share-popup > span {
+	padding-top: 50px;
+	background-repeat: no-repeat;
+}
+.product-share > span,
+.product-share-popup > span {
 	padding:20px 0 20px 0;
 	background-repeat: no-repeat;
 }
-.st_facebook_large{
+.product-share-popup > span {
+	background-repeat: no-repeat;
+	padding:20px 0 20px 0;
+}
+.product-share-popup .stButton {
+	margin-right: 9px;
+}
+.st_facebook_large,
+#facebook-share{
 	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconFacbook.png") no-repeat;
 }
 .st_googleplus_large{
 	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconGooglePlus.png") no-repeat;
 }
-.st_twitter_large{
+.st_twitter_large,
+#twitter-share{
 	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconTwitter.png") no-repeat;
 }
-.st_pinterest_large{
+.st_pinterest_large,
+#pinterest-share{
 	background: url("http://ez3d_media.s3.amazonaws.com/images/SocialIconPinterest.png") no-repeat;
 }
 .st_email_large{

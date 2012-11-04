@@ -11,7 +11,8 @@ djcelery.setup_loader()
 
 DIRNAME = os.path.dirname(__file__)
 
-DEBUG = False
+
+DEBUG = False 
 #DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
@@ -25,6 +26,8 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
 #DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}

@@ -1734,10 +1734,10 @@ form.contactable-form .disclaimer {
 }
 .ad-gallery .ad-image-wrapper .ad-prev, .ad-gallery .ad-image-wrapper .ad-next {
 	/* Or else IE will hide it */
-	background: url(trans.gif);
+	background: url(../adgalery/trans.gif);
 }
 .ad-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-	background: url(ad_prev.png);
+	background: url(../adgalery/ad_prev.png);
 	width: 30px;
 	height: 30px;
 	display: none;
@@ -1747,7 +1747,7 @@ form.contactable-form .disclaimer {
 	z-index: 101;
 }
 .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-	background: url(ad_next.png);
+	background: url(../adgalery/ad_next.png);
 	width: 30px;
 	height: 30px;
 	right: 0;

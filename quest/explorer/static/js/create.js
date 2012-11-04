@@ -890,7 +890,7 @@ $.fn.exists = function() {
 			$("#create-tip-dialog-2").dialog({
 				autoOpen : false,
 				width : 280,
-				height : 130,
+				height : 70,
 				position: [300, 300],
 				resizable : false,
 				modal : false,

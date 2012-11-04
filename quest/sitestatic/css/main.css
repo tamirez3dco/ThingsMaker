@@ -63,7 +63,9 @@ h2 {
     font-weight: normal;
     /*margin: 10px 0;*/
 }
-
+/*
+ * checking how does main.css updates happen on heroku...
+ */
 h3 {
 	font-size: 22px;
     font-weight: normal;
@@ -1428,7 +1430,10 @@ button {
   border: 0px solid #dfd7d3;
   color: #fff !important;
 }
-
+a.button:focus,
+button:focus{
+	outline-style: none;
+}
 a.button.left,
 button.left {
   /*margin: 0.7em 0.5em 0.7em 0em;*/
@@ -1729,10 +1734,10 @@ form.contactable-form .disclaimer {
 }
 .ad-gallery .ad-image-wrapper .ad-prev, .ad-gallery .ad-image-wrapper .ad-next {
 	/* Or else IE will hide it */
-	background: url(trans.gif);
+	background: url(../adgalery/trans.gif);
 }
 .ad-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-	background: url(ad_prev.png);
+	background: url(../adgalery/ad_prev.png);
 	width: 30px;
 	height: 30px;
 	display: none;
@@ -1742,7 +1747,7 @@ form.contactable-form .disclaimer {
 	z-index: 101;
 }
 .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-	background: url(ad_next.png);
+	background: url(../adgalery/ad_next.png);
 	width: 30px;
 	height: 30px;
 	right: 0;
@@ -2531,7 +2536,7 @@ form.contactable-form .disclaimer {
 #create-makeit-dialog-right .button {
 	width: 180px;
 	margin: 115px 10px 0px 10px;
-display:block;
+	display:block;
   padding:5px 10px 2px 10px;   /* Links */
   font-size: 15px;
   line-height: 24px;
@@ -2545,16 +2550,45 @@ display:block;
   color: #fff !important;
 	/*padding-top:*/ 
 }
-#create-finish-dialog {
-	background-image: url(../img/content-bg.jpg);
-	border: 0px solid white;
+#create-finish-dialog BUTTON {
+	width: 157px;
+	margin: 104px 0px 0px 0px;
+}
+#create-finish-dialog BUTTON:last-child {
+	margin: 104px 0px 0px 10px;
+	width: 100px;
+	background-color: #F9941F;
+}
+#create-finish-dialog,
+#create-makeit-dialog
+ {
+	/*background-image: url(../img/content-bg.jpg);*/
+	background-color: #f2f2f2;
+	border: 1px solid #707070;
+	/*box-shadow: inset 1px #ffffff;*/
+	border-radius: 7px;
+	box-shadow: 1px 1px 0px 5px #707070, inset 1px 1px #ffffff;;
+	font-size: 24px;
+	padding: 20px;
+	overflow: hidden;
 }
 #create-finish-dialog-left {
 	float: left;
 }
+#create-finish-dialog-left IMG,
+#create-makeit-dialog-left IMG {
+	border: solid 5px #ffffff;
+	height: 180px;
+	width: 180px;
+	box-shadow: 0px 0px 1px #cfcfcf
+}
+#create-makeit-dialog-left INPUT {
+	font-size: 18px;
+}
 #create-finish-dialog-right {
 	float: left;
-	margin-left: 20px;
+	margin-left: 19px;
+	width: 268px;
 	/*height: 190px;*/
 }
 #create-makeit-dialog-left {
@@ -2562,7 +2596,8 @@ display:block;
 }
 #create-makeit-dialog-right {
 	float: left;
-	margin-left: 20px;
+	margin-left: 18px;
+	width: 217px;
 	/*height: 190px;*/
 }
 #create-makeit-dialog-right h3 {
@@ -2571,15 +2606,23 @@ display:block;
 }
 #create-makeit-dialog-right input{
 	margin-bottom: 10px;
+	font-size: 18px;
+	width: 160px;
 	/*height: 190px;*/
 }
-
+#create-makeit-dialog-right input:focus{
+	outline-style: none;
+}
 #create-makeit-dialog-right .button {
-	margin-top: 0px;
-	margin-top: 18px;
+	margin-top: 31px;
 	margin-right: 0px;
-	margin-left: 225px;
+	margin-left: 150px;
+	background-color: #F9941F;
+	width: 100%;
 	/*float: right;*/
+}
+.product-share-popup {
+	display: none;
 }
 /* = STEPS CONTAINER
 ----------------------------*/

@@ -27,6 +27,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+
+
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
 #DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 

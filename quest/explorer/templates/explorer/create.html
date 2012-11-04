@@ -52,9 +52,9 @@
 <div id="create-finish-dialog">
 	<div id="create-finish-dialog-left"></div>
 	<div id="create-finish-dialog-right">
-		<h3>Your new {{ product.name|lower }} is ready.</h3>
-		<button type="button" class="button left" id="create-show-details">Make It</input>
+		<h3>You have completed <span id="create-round-num">1</span> creation round</h3>
 		<button type="button" class="button left" id="create-continue-creating">Continue Creating</input>
+		<button type="button" class="button left" id="create-show-details">Make It</input>
 	</div>
 </div>
 <div id="create-makeit-dialog">
@@ -84,6 +84,7 @@
 	<div>When you love your creation click Done!</div>
 	<div style="float: right; margin-right: 5px; margin-top: 5px;"><img src="{{STATIC_URL}}img/Arrow01.png"/></div>
 </div>
+
 <div style="display: none">
 	{% if product.is_variant %}
 		<img id="start-product-img" src="{{ product.get_item_image }}" />

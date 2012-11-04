@@ -818,11 +818,11 @@ $.fn.exists = function() {
 			setTimeout(function(){
 			$("#create-finish-dialog").parent().animate({
 					opacity : 0.0
-				}, 4500, 'linear', function() {
+				}, 3000, 'linear', function() {
 					$("#create-finish-dialog").parent().css({'opacity': 1});
 					$("#create-finish-dialog").dialog('close');
 			});
-			}, 1000);
+			}, 1500);
 		},
 		_buildDialog : function() {
 			var wizard = this;

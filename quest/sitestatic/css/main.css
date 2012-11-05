@@ -1,6 +1,9 @@
 @import url("../css/tinymce_styles.css");
 @import url("../css/fonts.css");
 
+.blablabla {
+	width: 100px; 
+}
 .large_thumbnail {
 	width: 100px; 
 	height: 100px;

@@ -14,7 +14,19 @@
          {% endcompress %}
          </head>
 <body class="login">
-<div>
-	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"></a>
+<div class="login-center">
+	<div style="margin-left: 125px; margin-top: 10px; clear:both; overflow: hidden;">
+		<img style="background-color: transparent; float: left; clear: none;" src="{{ STATIC_URL }}img/logo-trans.png"/><div style="margin-top: 20px; padding-left: 12px; float: left; clear: none; overflow:hidden; font-size: 45px; font-family: 'TMFreeScript';">designer preview</div>
+	</div>
+	<div style="margin-top: 40px;">
+	<h2 style="margin-top: 0px; margin-bottom:0px;">ThingsMaker is a one of kind offering for generative designers.</h2>
+	
+	<h2 style="margin-top: 0px; margin-bottom:0px;">Let real customers interact with your models in real time and buy them.</h2>
+
+	<h2 style="margin-top: 20px; margin-bottom:0px; font-size: 20px;">The site will be launched to the public in the coming months, we are still working on it. </h2>
+	<h2 style="margin-top: 5px; margin-bottom:0px; font-size: 20px;">Please take a look at our site and contact us for cooperation.</h2>
+	</div>
+	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><div class="fblogin"></div></a>
+	<h3 style="margin-top: 5px; margin-bottom:0px; font-size: 12px;">If you don't have Facebook please contact us for invitation.</h3>
 </div>
 </body>

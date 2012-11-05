@@ -2232,7 +2232,6 @@ form.contactable-form .disclaimer {
 	overflow: hidden;
 	float: left;
 	clear: both;	
-	
 }
 /* From explorer */
 /* jWizard-specific configuration */
@@ -3036,22 +3035,24 @@ body.login {
 }
 .fblogin {
 	background-image:url("../img/fb-connect-large.png");
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	width: 330px;
+	margin:0 auto;
+	margin-top: 20px;
+	width: 300px;
 	height: 45px;
 	background-repeat: no-repeat;
+	
 }
 
 .login-center {
+	border-top: 5px solid #f9941f;
 	width:800px;
-	height:600px;
+	height:420px;
 	position:absolute;
 	left:50%;
 	top:50%;
-	margin:-300px 0 0 -400px;
-	background-color: white;
+	margin:-210px 0 0 -400px;
+	background-image:url("../img/content-bg.jpg");
+	text-align: center;
 }
 
 

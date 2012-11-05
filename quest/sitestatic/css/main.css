@@ -2232,7 +2232,7 @@ form.contactable-form .disclaimer {
 	overflow: hidden;
 	float: left;
 	clear: both;	
-	display: none;
+	
 }
 /* From explorer */
 /* jWizard-specific configuration */
@@ -3043,6 +3043,17 @@ body.login {
 	height: 45px;
 	background-repeat: no-repeat;
 }
+
+.login-center {
+	width:800px;
+	height:600px;
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin:-300px 0 0 -400px;
+	background-color: white;
+}
+
 
 #mask {
 	position: absolute;

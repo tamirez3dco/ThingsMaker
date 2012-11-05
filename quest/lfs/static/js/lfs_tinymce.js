@@ -15,7 +15,7 @@ function addEditor(selector, hide_save, height) {
     // Theme options
     $(selector).tinymce({
         // Location of TinyMCE script
-        script_url : 'http://ez3d_statics2.s3.amazonaws.com/sitestatic/tiny_mce-3.5b3/tiny_mce.js',
+        script_url : '/sitestatic/tiny_mce-3.5b3/tiny_mce.js',
 
         // General options
         theme : "advanced",
@@ -31,7 +31,7 @@ function addEditor(selector, hide_save, height) {
         relative_urls : false,
         verify_html : false,
         height : height,
-        content_css : "http://ez3d_statics2.s3.amazonaws.com/sitestatic/css/tinymce_styles.css",
+        content_css : "/sitestatic/css/tinymce_styles.css",
         setup : function(ed) {
             ed.addButton('image', {
                 onclick : function(e) {

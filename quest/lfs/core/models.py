@@ -246,12 +246,12 @@ class Shop(models.Model):
             product = Product.objects.filter(slug=screener)
             if len(product)>0:
                 parent = product[0].parent
-                products = Product.objects.filter(sub_type=VARIANT, parent=parent).order_by('?')[lower_limit:upper_limit]
+                products = Product.objects.filter(sub_type=VARIANT, parent=parent, item__isnull=False).order_by('?')[lower_limit:upper_limit]
             else:
                 parent = Product.objects.filter(sub_type=PRODUCT_WITH_VARIANTS,name=screener)[0]
-                products = Product.objects.filter(parent=parent).order_by('-' + sorter)[lower_limit:upper_limit]
+                products = Product.objects.filter(parent=parent, item__isnull=False).order_by('-' + sorter)[lower_limit:upper_limit]
         else:
-            products = Product.objects.filter(sub_type=VARIANT).order_by('-' + sorter)[lower_limit:upper_limit]
+            products = Product.objects.filter(sub_type=VARIANT, item__isnull=False).order_by('-' + sorter)[lower_limit:upper_limit]
         return products
 
 

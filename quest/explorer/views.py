@@ -235,13 +235,11 @@ def get_screened_sorted_products(request,jsonstr):
     products = shop.get_ssp(screener,sorter,lower_limit,upper_limit)
     res = []
     for product in products:
-        item = product.get_item()   
-        if item == None: continue
         res.append({"image_url": product.get_item_image(), 
                     "name": product.name,
                     "price": product.price,
-                    "material": item.material,
-                    "text" : item.textParam,
+                    "material": product.item.material,
+                    "text" : product.item.textParam,
                     "product_url": "/product/" + product.slug,
                     "slug" : product.slug,
                     "lovers" : product.stock_amount})

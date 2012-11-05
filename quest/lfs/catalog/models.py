@@ -969,6 +969,7 @@ class Product(models.Model):
             return None
 
     def get_item(self):
+        return self.item
         try:
             item = Item.objects.filter(uuid=self.slug)[0]
             return item

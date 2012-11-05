@@ -1,5 +1,6 @@
 # django imports
 from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
@@ -38,4 +39,4 @@ urlpatterns += patterns("",
     (r'^products_by_name/(?P<name>[-\w ]*)', 'explorer.views.list_products_by_name'),    
     (r'^get_ssp/(?P<jsonstr>.*)','explorer.views.get_screened_sorted_products'),
     (r'^sorted_products/(?P<jsonstr>.*)','explorer.views.sorted_view'),
-)
+) + static('/sitestatic/', document_root=settings.STATIC_ROOT)

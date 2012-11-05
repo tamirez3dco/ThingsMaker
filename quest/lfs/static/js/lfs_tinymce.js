@@ -15,7 +15,7 @@ function addEditor(selector, hide_save, height) {
     // Theme options
     $(selector).tinymce({
         // Location of TinyMCE script
-        script_url : 'http://ez3d_statics2.s3.amazonaws.com/sitestatic/js/tiny_mce-3.5b3/tiny_mce.js',
+        script_url : 'http://ez3d_statics2.s3.amazonaws.com/sitestatic/tiny_mce-3.5b3/tiny_mce.js',
 
         // General options
         theme : "advanced",

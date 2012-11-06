@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load lfs_tags %}
+{% load lfs_theme_tags %}
 {% load compress %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -35,5 +36,9 @@
 	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><div class="fblogin"></div></a>
 	<h3 style="margin-top: 5px; margin-bottom:0px; font-size: 12px;">If you don't have Facebook please <a id="contact-link-1" href="#">contact us</a> for invitation.</h3>
 </div>
-
+      
+        {% block google-analytics-tracking %}
+            {% google_analytics_tracking %}
+        {% endblock %}
+        {% block google-analytics-ecommerce %}{% endblock %}
 </body>

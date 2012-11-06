@@ -886,16 +886,16 @@ $.fn.exists = function() {
 		_replaceShareButtons : function(image_url, product_url) {
 			$(".product-share-popup").html('<div>Share It</div>');
 			var services = [
-				{cname: 'facebook', text: 'Facebook'},
-				{cname: 'pinterest', text: 'Pinterest'},
-				{cname: 'twitter', text: 'Twitter'},
+				{ccname: 'facebook', text: 'Facebook'},
+				{ccname: 'pinterest', text: 'Pinterest'},
+				{ccname: 'twitter', text: 'Twitter'},
 			];
 			var summary = "I made this at ThingsMaker";
 			for(var i=0; i<services.length; i++) {
-				$(".product-share-popup").append('<span id="'+ services[i].cname+ '-share" class="' + services[i].cname + '" st_summary="' + summary + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
+				$(".product-share-popup").append('<span id="'+ services[i].ccname+ '-share" class="' + services[i].ccname + '" st_summary="' + summary + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
 				stWidget.addEntry({
-                 	"service": services[i].cname,
-                 	"element": document.getElementById(services[i].cname +'-share'),
+                 	"service": services[i].ccname,
+                 	"element": document.getElementById(services[i].ccname +'-share'),
                  	"url": product_url,
                  	"title": "ThingsMaker",
                  	"type":"large",

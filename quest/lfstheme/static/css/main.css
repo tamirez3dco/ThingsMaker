@@ -5,7 +5,8 @@
 		}	
 		@font-face {
   			font-family: 'TMFreeScript';
-  			src: url('../img/freescpt.svg#freescpt') format('svg');
+  			src: url('../img/FREESCPT.ttf')  format('truetype'),
+  			url('../img/freescpt.svg#freescpt') format('svg');
 		}
 .blablabla {
 	width: 100px; 

@@ -888,7 +888,7 @@ $.fn.exists = function() {
 			var services = [
 				{ccname: 'facebook', text: 'Facebook'},
 				{ccname: 'pinterest', text: 'Pinterest'},
-				{ccname: 'twitter', text: 'Twitter'},
+				{ccname: 'twitter', text: 'Twitter'}
 			];
 			var summary = "I made this at ThingsMaker";
 			for(var i=0; i<services.length; i++) {

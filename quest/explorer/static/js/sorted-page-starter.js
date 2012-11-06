@@ -57,6 +57,28 @@ function initImages(sorterName)
 	getProductList(getProductsURL, '#sorted-products');
 }
 
+function TMgetJsonObj(sorterName)
+{
+	var strs = window.location.href.split("sorted_products/");
+	var urlStr = strs[1];
+	var jsonobj = JSON.parse(getJSONableStringFromURLString(urlStr));
+	if (sorterName != undefined) 
+	{
+		jsonobj["sorter"] = sorterName;
+	}
+	console.log(jsonobj);
+	return jsonobj;
+}
+
+function TMLoadMore(jsonobj, begin, end)
+{
+	jsonobj['limits'] = begin + '-' + end;
+	var jsonstr = JSON.stringify(jsonobj);
+	getProductsURL = "/get_ssp/"+jsonstr;
+	getProductList(getProductsURL, '#sorted-products');
+}
+var TMInterval = 25;
+var TMlast = TMInterval;
 $(function() {
 	var screenerExists = document.URL.indexOf("screener") > 0;
 	if (screenerExists)
@@ -77,7 +99,18 @@ $(function() {
 	{
 		var child = document.getElementById("small_tabs");
 		child.parentNode.removeChild(child);
-		initImages();
+		//initImages();
+		var jsonobj = TMgetJsonObj();
+		TMLoadMore(jsonobj,0, TMlast);
+		$(document).scroll(function(){
+			console.log('scroll');
+			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
+				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval);
+				TMlast = TMlast+TMInterval;
+				console.log('load!!!');
+			}
+			
+		});
 	}
 });
 

@@ -101,8 +101,8 @@ $(function() {
 		child.parentNode.removeChild(child);
 		//initImages();
 		var jsonobj = TMgetJsonObj();
-		TMLoadMore(jsonobj,0, 10);
-		setTimeout(function(){TMLoadMore(jsonobj,0, 20);}, 1000);
+		TMLoadMore(jsonobj,0, 15);
+		setTimeout(function(){TMLoadMore(jsonobj,0, 15);}, 1000);
 		$(document).scroll(function(){
 			console.log('scroll');
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {

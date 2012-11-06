@@ -467,7 +467,7 @@ def designers(request, template_name="lfs/catalog/designers.html"):
     #if result is not None:
     #    return HttpResponse(result)
     sb = StaticBlock.objects.get(name='designers')
-    designers = Designer.objects.all()
+    designers = Designer.objects.all().order_by('-id')
     result = render_to_string(template_name, RequestContext(request, {
         "designers": designers,
         'static_block': sb

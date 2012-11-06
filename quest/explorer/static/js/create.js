@@ -575,7 +575,7 @@ $.fn.exists = function() {
 				$("#explorer-image-" + imageId).prepend(img);
 				$("#explorer-image-" + imageId).data('loaded', true);
 			}
-			img.src = imgsrc + '?' + count;
+			img.src = imgsrc + '?counter=' + count;
 		},
 		_showImages : function() {
 			var wizard = this;

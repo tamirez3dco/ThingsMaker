@@ -344,6 +344,7 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     #r'/$',
     r'/complete/(.*)',
     r'/explore',
+    r'/feedback',
     #r'/explorer',
 )
 

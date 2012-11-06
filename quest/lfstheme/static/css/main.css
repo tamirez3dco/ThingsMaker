@@ -1,4 +1,8 @@
-@import url("../css/tinymce_styles.css");		
+@import url("../css/tinymce_styles.css");	
+		@font-face {
+			font-family: 'TMFreeScript';
+			src: url('../img/FREESCPT.eot?') format('embedded-opentype');
+		}	
 		@font-face {
   			font-family: 'TMFreeScript';
   			src: url('../img/freescpt.svg#freescpt') format('svg');

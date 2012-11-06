@@ -815,14 +815,14 @@ $.fn.exists = function() {
 			this._roundCounter++;
 			$("#create-round-num").html(this._roundCounter.toString());
 			$("#create-finish-dialog").dialog('open');
-			setTimeout(function(){
+			/*setTimeout(function(){
 			$("#create-finish-dialog").parent().animate({
 					opacity : 0.0
 				}, 3000, 'linear', function() {
 					$("#create-finish-dialog").parent().css({'opacity': 1});
 					$("#create-finish-dialog").dialog('close');
 			});
-			}, 1500);
+			}, 1500);*/
 		},
 		_buildDialog : function() {
 			var wizard = this;
@@ -835,14 +835,14 @@ $.fn.exists = function() {
 				modal : false,
 				//dialogClass: 'alert'
 			});
-			$("#create-finish-dialog").hover(function(){
+			/*$("#create-finish-dialog").hover(function(){
 				//alert('hhhhhhhhhhhhh');
 				$("#create-finish-dialog").parent().stop();
 				$("#create-finish-dialog").parent().css({'opacity': 1});
 			});
 			$("#create-finish-dialog").mouseleave(function(){
 				$("#create-finish-dialog").dialog('close');
-			});
+			});*/
 			$("#create-continue-creating").click(function() {
 				//wizard.changeStep(wizard._stepAfterLast);
 				$("#create-finish-dialog").dialog('close');

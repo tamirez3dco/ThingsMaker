@@ -78,7 +78,7 @@ function TMLoadMore(jsonobj, begin, end)
 	getProductList(getProductsURL, '#sorted-products');
 }
 var TMInterval = 20;
-var TMlast = TMInterval;
+var TMlast = 30;
 $(function() {
 	var screenerExists = document.URL.indexOf("screener") > 0;
 	if (screenerExists)
@@ -101,10 +101,11 @@ $(function() {
 		child.parentNode.removeChild(child);
 		//initImages();
 		var jsonobj = TMgetJsonObj();
-		TMLoadMore(jsonobj,0, TMlast);
+		TMLoadMore(jsonobj,0, 10);
+		setTimeout(function(){TMLoadMore(jsonobj,0, 20);}, 1000);
 		$(document).scroll(function(){
 			console.log('scroll');
-			if($(window).scrollTop()+$(window).height()>=$(document).height()-300) {
+			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval);
 				TMlast = TMlast+TMInterval;
 				console.log('load!!!');

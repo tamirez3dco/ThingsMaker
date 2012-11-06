@@ -77,7 +77,7 @@ function TMLoadMore(jsonobj, begin, end)
 	getProductsURL = "/get_ssp/"+jsonstr;
 	getProductList(getProductsURL, '#sorted-products');
 }
-var TMInterval = 25;
+var TMInterval = 20;
 var TMlast = TMInterval;
 $(function() {
 	var screenerExists = document.URL.indexOf("screener") > 0;
@@ -104,7 +104,7 @@ $(function() {
 		TMLoadMore(jsonobj,0, TMlast);
 		$(document).scroll(function(){
 			console.log('scroll');
-			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
+			if($(window).scrollTop()+$(window).height()>=$(document).height()-300) {
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval);
 				TMlast = TMlast+TMInterval;
 				console.log('load!!!');

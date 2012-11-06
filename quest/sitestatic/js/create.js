@@ -1,9 +1,7 @@
 $.extend({
 	getUrlVars : function() {
 		var vars = [], hash;
-		//var base = $.address.queryString();
 		var base = $.address.baseURL();
-		//console.log(base);
 		var hashes = base.slice(base.indexOf('?') + 1).split('&');
 		for(var i = 0; i < hashes.length; i++) {
 			hash = hashes[i].split('=');
@@ -542,7 +540,6 @@ $.fn.exists = function() {
 			}
 		},
 		_changeStepInner:  function(nextStep, firstStep) {
-			//console.log('_changeStepInner');
 			if(this._loadedImages.length == 0) {
 				var self = this;
 				setTimeout(function(){self._changeStepInner(nextStep, firstStep)}, 300);
@@ -623,28 +620,24 @@ $.fn.exists = function() {
 		},
 		
 		_openTip1: function() {
-			console.log($(".create-image-container:visible").offset());
 			var left = $(".create-image-container:visible").offset().left+$(".create-image-container:visible").width()
 			var top = $(".create-image-container:visible").offset().top
 			$("#create-tip-dialog-1").dialog('option','position', [left-12,top]);
 			$("#create-tip-dialog-1").dialog('open');
 		},
 		_openTip2: function() {
-			console.log($(".create-image-container:visible").offset());
 			var left = $(".create-image-container:visible").offset().left+($(".create-image-container:visible").width()/2)
 			var top = $(".create-image-container:visible").offset().top-200
 			$("#create-tip-dialog-2").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-2").dialog('open');
 		},
 		_openTip3: function() {
-			console.log($(".create-image-container:visible").offset());
 			var left = $(".create-image-container:visible").offset().left-160;
 			var top = $(".create-image-container:visible").offset().top+48;
 			$("#create-tip-dialog-3").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-3").dialog('open');
 		},
 		_updateTip: function() {
-			//if
 			var dialogId = "#create-tip-dialog-" + (this._stepCounter+1);
 			$(dialogId).animate({
 					opacity : 0.0
@@ -653,10 +646,7 @@ $.fn.exists = function() {
 			});
 		},
 		_addImagesToStep : function(step, stepidx) {
-			//console.log("_addImagesToStep");
 			var data = this._loadedImages;
-			//console.log("got data");
-			//console.log(data);
 			var wizard = this;
 			var ua = navigator.userAgent,
     			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
@@ -668,7 +658,6 @@ $.fn.exists = function() {
 				var id = stepidx + '-' + i;
 				var html = '<div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
 				step.children(".create-image-container").append(html);
-				//console.log(data[i]);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
 				$("#explorer-image-" + id).data('text', data[i].text);
@@ -684,34 +673,21 @@ $.fn.exists = function() {
 			wizard._showNextImage = true;
 		},
 		_loadImages : function(step, stepidx, add) {
-			///console.log("New3");
-			//console.log("_loadImages");
 			var wizard = this;
 			var params = this._getExploreParams();
 			this._loadedImages = [];
 			this._latestParams = params;
-			//console.log(wizard._itemId);
+			
 			$.getJSON(this._exploreURL, params, function(data, textStatus, jqXHR) {
-				//console.log('get json res');
-				//console.log(data);
-				//console.log(jqXHR);
-				//console.log(textStatus);
-				//console.log('end get json res');
 				if (params != wizard._latestParams) {
-					//console.log('not latest!!!');
 					return;
 				}
-				//console.log("got data");
-				//console.log(data);
-				//console.log("Fuck All");
 				if (data == []) {
-					//console.log("Fuck 1");
+					
 				}
 				if ((data == null) || (data.length == 0) || (data == [])) {
-					//console.log('no data recieved !!!!!');
 					return;
 				}
-				//console.log(params);
 				wizard._loadedImages = data;
 				
 				if(add) {
@@ -755,7 +731,7 @@ $.fn.exists = function() {
 		_appendHistory : function(image_parent) {
 			var wizard = this;
 			var last_image_clone = $(".jw-last").find(':first-child').find(':first-child').clone();
-			//console.log(last_image_clone);
+			
 			var new_history_div;
 			if(last_image_clone.length > 0) {
 				new_history_div = $('<div />').append(last_image_clone);
@@ -943,9 +919,6 @@ $.fn.exists = function() {
 			});
 		},
 		_setAddress : function() {
-			//console.log(this._stepIndex);
-			//$.address.value(this._stepIndex);
-			//console.log(this._itemId);
 			$.address.autoUpdate(false);
 			$.address.parameter('step', this._stepIndex.toString());
 			$.address.parameter('item', this._itemId);
@@ -978,7 +951,6 @@ $.fn.exists = function() {
 
 			this.element.addClass("jw-hasmenu");
 			this.element.find(".jw-step").each(function(x) {
-				//console.log(x);
 				list.push($("<li />", {
 				"class": "ui-corner-all " + (x === 0 ? "jw-current ui-state-highlight" : "jw-inactive ui-state-disabled"),
 				html: $("<a />", {
@@ -1068,18 +1040,11 @@ $.fn.exists = function() {
 				html : $(list)
 			});
 
-			//console.log($menu);
-
 			this.element.find(".jw-content").prepend($menu);
 
-			/*if(this.options.effects.enable || this.options.effects.menu.enable) {
-			 $menu.find("li").addClass("jw-animated");
-			 }
-			 */
 			$menu.find("a").click($.proxy(function(event) {
 				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
-				//console.log('click');
-				//console.log(parent);
+				
 				if($(parent).hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
@@ -1116,19 +1081,11 @@ $.fn.exists = function() {
 			})
 			});
 
-			//console.log($menu);
-
 			this.element.find(".jw-content").prepend($menu);
 
-			/*if(this.options.effects.enable || this.options.effects.menu.enable) {
-			 $menu.find("li").addClass("jw-animated");
-			 }
-			 */
+		
 			$menu.find(".wizard-step-circle").click($.proxy(function(event) {
-				//console.log('click1');
 				var $target = $(event.target), parent = $target.parents('.completed-step')[0], nextStep = parseInt($(parent).attr("step"), 10);
-				//console.log('click');
-				//console.log(parent);
 				if($(parent).hasClass("completed-step")) {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
@@ -1176,7 +1133,6 @@ $.fn.exists = function() {
 			var wizard = this, currentStep = this._stepIndex, $menu = this.element.find(".wizard-steps-inner");
 			$menu.children().each(function(x) {
 				var $d = $(this), iStep = parseInt($d.attr("step"), 10);
-				//console.log(iStep);
 				var sClass = "";
 				if(iStep == currentStep) {
 					sClass = "active-step";

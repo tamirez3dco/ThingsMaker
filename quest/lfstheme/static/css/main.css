@@ -3064,12 +3064,12 @@ body.login {
 
 .login-center {
 	border-top: 5px solid #f9941f;
-	width:800px;
-	height:390px;
+	width:840px;
+	height:410px;
 	position:absolute;
 	left:50%;
 	top:50%;
-	margin:-195px 0 0 -400px;
+	margin:-205px 0 0 -410px;
 	background-image:url("../img/content-bg.jpg");
 	text-align: center;
 }

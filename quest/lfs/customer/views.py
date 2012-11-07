@@ -129,12 +129,14 @@ def login(request, template_name="lfs/customer/login.html"):
     except KeyError:
         login_form_errors = None
 
-    return render_to_response(template_name, RequestContext(request, {
+    rs = render_to_response(template_name, RequestContext(request, {
         "login_form": login_form,
         "login_form_errors": login_form_errors,
         "register_form": register_form,
         "next_url": next_url,
     }))
+    rs['Access-Control-Allow-Origin'] = 'http://ez3d_statics2.s3.amazonaws.com/'
+    return rs
 
 
 def logout(request):

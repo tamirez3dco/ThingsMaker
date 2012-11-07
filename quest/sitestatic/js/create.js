@@ -892,7 +892,7 @@ $.fn.exists = function() {
 			];
 			var summary = "I made this at ThingsMaker";
 			for(var i=0; i<services.length; i++) {
-				$(".product-share-popup .second").append('<span id="'+ services[i].ccname+ '-share" class="' + services[i].ccname + '" st_summary="' + summary + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
+				$(".product-share-popup .second").append('<div id="'+ services[i].ccname+ '-share" class="' + services[i].ccname + '" st_summary="' + summary + '" st_image="' + image_url + '" st_url="' + product_url + '" displayText="' + services[i].text + '"></span>')
 				stWidget.addEntry({
                  	"service": services[i].ccname,
                  	"element": document.getElementById(services[i].ccname +'-share'),

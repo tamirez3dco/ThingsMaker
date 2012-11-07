@@ -135,7 +135,9 @@ def login(request, template_name="lfs/customer/login.html"):
         "register_form": register_form,
         "next_url": next_url,
     }))
+    mm = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
     rs['Access-Control-Allow-Origin'] = 'http://ez3d_statics2.s3.amazonaws.com/'
+    rs['Access-Control-Allow-Methods'] = ",".join( mm)
     print "gggggggggggg"
     return rs
 

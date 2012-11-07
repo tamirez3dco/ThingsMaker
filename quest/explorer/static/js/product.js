@@ -5,42 +5,44 @@ var waitImages = false;
 $(document).ready(function() {
 	var slug = ((this.URL.split('product/')[1]).split('?'))[0];
 	slug=slug.split('#')[0]
-	console.log("slllug "+ slug)
+	//console.log("slllug "+ slug)
 	waitImages = (this.URL.indexOf("waitImages") != -1);
 	if(waitImages) {
-		console.log("waitImages");
+		//console.log("waitImages");
 		waitForImages();
 		myInterval = setInterval(chooseRenderImage2, 500);
 	} else {
-		console.log("Dont waitImages");
+		//console.log("Dont waitImages");
 		dontWaitImages();
 	}
 	$('#get-stl-button').click(function(){
-		console.log('click');
+		//console.log('click');
 		$.getJSON('/explorer/get_stl',{product: slug}, function(data) {
-			console.log(data);
+			//console.log(data);
 		});	
 	});
 	getProductList('/get_ssp/%7B"limits":"0-5","screener":"'+ slug +'","sorter":"stock_amount"%7D', '.popular-variants');
 });
-function waitImage(imgsrc, imageId, imageTitle) {
+function waitImage(imgsrc, imageId, imageTitle, count) {
 	var img = new Image();
 
 	img.onerror = function(evt) {
-		console.log(this.src + " can't be loaded.");
-		setTimeout(waitImage(imgsrc, imageId, imageTitle), 3000);
+		//console.log(this.src + " can't be loaded.");
+		if (count<200) {
+			setTimeout(function(){waitImage(imgsrc, imageId, imageTitle, count+1)}, 500);
+		}
 	}
 	img.onload = function(evt) {
-		console.log(this.src + " is loaded.");
+		//console.log(this.src + " is loaded.");
 		galleries[0].tamir_addImage(imgsrc, imageId, imageTitle);
 	}
-	img.src = imgsrc;
+	img.src = imgsrc + '?count=' + count;
 }
 
 function chooseRenderImage2() {
 	for(var i = 0; i < this.galleries[0].images.length; i++) {
 		if(galleries[0].images[i].image.indexOf("Render") != -1) {
-			console.log("i=" + i);
+			//console.log("i=" + i);
 			if(step == 0) {
 				galleries[0].removeImage(0);
 				step++;
@@ -63,9 +65,9 @@ function waitForImages() {
 	var urlSmall = tamir_element.getAttribute("urlSmall");
 	var statics = tamir_element.getAttribute("statics");
 
-	console.log("Top=" + urlTop);
-	console.log("Front=" + urlFront);
-	console.log("Render=" + urlRender);
+	//console.log("Top=" + urlTop);
+	//console.log("Front=" + urlFront);
+	//console.log("Render=" + urlRender);
 	galleries = $('.ad-gallery').adGallery({
 		'loader_image' : statics + "adgalery/loader.gif"
 	});
@@ -76,11 +78,11 @@ function waitForImages() {
 	 galleries[0].tamir_addImage(urlTop, "Top_ID", "Top Title");
 	 galleries[0].tamir_addImage(urlFront, "Front_ID", "Front Title");
 	 */
-	waitImage(urlRender, "RenderID", "Render Title");
-	waitImage(urlTop, "TopID", "Top Title");
-	waitImage(urlFront, "FrontID", "Front Title");
+	waitImage(urlRender, "RenderID", "Render Title",0);
+	waitImage(urlTop, "TopID", "Top Title",0);
+	waitImage(urlFront, "FrontID", "Front Title",0);
 
-	console.log(galleries[0].images);
+	//console.log(galleries[0].images);
 }
 
 function dontWaitImages() {
@@ -101,5 +103,5 @@ function dontWaitImages() {
 	galleries[0].in_transition = false;
 	galleries[0].showImage(2, undefined);
 	//galleries[0].removeImage(0);
-	console.log(galleries[0].images);
+	//console.log(galleries[0].images);
 }

@@ -128,12 +128,17 @@ def login(request, template_name="lfs/customer/login.html"):
         login_form_errors = login_form.errors["__all__"]
     except KeyError:
         login_form_errors = None
-
+    browser = request.META['HTTP_USER_AGENT']
+    supported = True
+    if ((browser.find("MSIE 8") != -1) or (browser.find("MSIE 7")  != -1)):
+        supported = False
+        
     rs = render_to_response(template_name, RequestContext(request, {
         "login_form": login_form,
         "login_form_errors": login_form_errors,
         "register_form": register_form,
         "next_url": next_url,
+        "supported": supported
     }))
     mm = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
     rs['Access-Control-Allow-Origin'] = 'http://ez3d_statics2.s3.amazonaws.com/'

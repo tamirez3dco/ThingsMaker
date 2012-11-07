@@ -31,10 +31,17 @@
 	<h2 style="margin-top: 0px; margin-bottom:0px;">Let real customers interact with your models in real time and buy them.</h2>
 
 	<h2 style="margin-top: 20px; margin-bottom:0px; font-size: 20px;">The site will be launched to the public in the coming months, we are still working on it. </h2>
+	{% if supported %}
 	<h2 style="margin-top: 5px; margin-bottom:0px; font-size: 20px;">Please take a look at our site and <a id="contact-link" href="#">contact us</a> for cooperation.</h2>
+	{% endif %}
 	</div>
+	{% if supported %}
 	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><div class="fblogin"></div></a>
 	<h3 style="margin-top: 5px; margin-bottom:0px; font-size: 12px;">If you don't have Facebook please <a id="contact-link-1" href="#">contact us</a> for invitation.</h3>
+	{% else %}
+	<h3 style="margin-top: 40px; margin-bottom:0px; font-size: 22px;">We are sorry, ThingsMaker does not support your browser.</h3>
+	<h3 style="margin-top: 8px; margin-bottom:0px; font-size: 32px;">Please come back with a modern browser!</h3>
+	{% endif %}
 </div>
       
         {% block google-analytics-tracking %}

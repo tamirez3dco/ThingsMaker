@@ -136,6 +136,7 @@ def login(request, template_name="lfs/customer/login.html"):
         "next_url": next_url,
     }))
     rs['Access-Control-Allow-Origin'] = 'http://ez3d_statics2.s3.amazonaws.com/'
+    print "gggggggggggg"
     return rs
 
 

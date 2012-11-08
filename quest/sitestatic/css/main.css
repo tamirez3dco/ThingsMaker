@@ -3105,3 +3105,16 @@ body.login {
 	background-color: transparent;
 	background-image:none;
 }
+
+.ui-dialog .popup
+ {
+	/*background-image: url(../img/content-bg.jpg);*/
+	background-color: #f2f2f2;
+	border: 1px solid #707070;
+	/*box-shadow: inset 1px #ffffff;*/
+	border-radius: 7px;
+	box-shadow: 1px 1px 0px 5px #707070, inset 1px 1px #ffffff;;
+	font-size: 24px;
+	padding: 20px;
+	overflow: hidden;
+}

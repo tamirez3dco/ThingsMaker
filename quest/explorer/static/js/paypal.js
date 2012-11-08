@@ -1,4 +1,22 @@
-
+$(function() {
+$("#no-checkout-popup").dialog({
+				autoOpen : false,
+				width : 519,
+				height : 180,
+				//position: [300, 300],
+				resizable : false,
+				modal : true,
+				//dialogClass: 'alert'
+			});
+$("#no-checkout-popup button").click(function(){
+	$("#no-checkout-popup").dialog('close');
+});
+});
+function no_checkout(element)
+{
+	
+	$("#no-checkout-popup").dialog('open');
+}
 function paypal_checkout(element)
 {
 	

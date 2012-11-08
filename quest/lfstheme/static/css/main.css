@@ -3098,6 +3098,7 @@ body.login {
 	padding-left:6px;
 	z-index: 9999;
 	line-height: 30px;
+	overflow: hidden;
 }
 .ui-dialog {
 	background-color: transparent;

@@ -128,9 +128,13 @@ def login(request, template_name="lfs/customer/login.html"):
         login_form_errors = login_form.errors["__all__"]
     except KeyError:
         login_form_errors = None
-    browser = request.META['HTTP_USER_AGENT']
-    supported = True
-    if ((browser.find("MSIE 8") != -1) or (browser.find("MSIE 7")  != -1)):
+    
+    supported = True    
+    try:
+        browser = request.META['HTTP_USER_AGENT']
+        if ((browser.find("MSIE 8") != -1) or (browser.find("MSIE 7")  != -1)):
+            supported = False
+    except:
         supported = False
         
     rs = render_to_response(template_name, RequestContext(request, {

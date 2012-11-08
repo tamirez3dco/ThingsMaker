@@ -3096,6 +3096,7 @@ body.login {
 	background-color: transparent;
 	padding:0px;
 	padding-left:6px;
+	padding-right:3px;
 	z-index: 9999;
 	line-height: 30px;
 	overflow: hidden;

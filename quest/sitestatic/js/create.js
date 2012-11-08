@@ -632,7 +632,7 @@ $.fn.exists = function() {
 			$("#create-tip-dialog-2").dialog('open');
 		},
 		_openTip3: function() {
-			var left = $(".create-image-container:visible").offset().left-160;
+			var left = $(".create-image-container:visible").offset().left-167;
 			var top = $(".create-image-container:visible").offset().top+48;
 			$("#create-tip-dialog-3").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-3").dialog('open');

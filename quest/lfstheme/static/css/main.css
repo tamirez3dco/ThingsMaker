@@ -2225,10 +2225,10 @@ form.contactable-form .disclaimer {
 	margin-left:20px;
 	width: 260px;
 	font-family: Arial;
-	font-size: 14px;
+	font-size: 22px;
 	font-weight: normal;
 	color: #4c4c4c;
-	background-image: url('http://ez3d_media.s3.amazonaws.com/images/IconArrowBannerDesigners.png');
+	background-image: url('../images/IconArrowBannerDesigners.png');
 	background-repeat: no-repeat;
 	padding-left: 32px;
 	background-position: 5px 0px;
@@ -2863,6 +2863,7 @@ padding: 20px;
     top: 0px;
     left: -16px;
 }
+
 .wizard-steps a:after {
     width: 0;
     height: 0;
@@ -2877,7 +2878,6 @@ padding: 20px;
  
 /* = COMPLETED STEPS
 ----------------------------*/
- 
 .wizard-steps .completed-step a {
     color:#163038;
     vertical-align: middle;

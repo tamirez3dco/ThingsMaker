@@ -623,7 +623,7 @@ $.fn.exists = function() {
 			var left = $(".create-image-container:visible").offset().left+$(".create-image-container:visible").width()
 			var top = $(".create-image-container:visible").offset().top
 			$("#create-tip-dialog-1").dialog('option','position', [left-12,top]);
-			$("#create-tip-dialog-1").dialog('open');
+			$("#create-tip-dialog-1").css('opacity', 1);
 		},
 		_openTip2: function() {
 			var left = $(".create-image-container:visible").offset().left+($(".create-image-container:visible").width()/2)
@@ -864,6 +864,10 @@ $.fn.exists = function() {
 				modal : false,
 				//dialogClass: 'alert'
 			});
+			
+			$("#create-tip-dialog-1").css('opacity', 0);
+			$("#create-tip-dialog-1").dialog('open');
+			
 			$("#create-tip-dialog-2").dialog({
 				autoOpen : false,
 				width : 280,

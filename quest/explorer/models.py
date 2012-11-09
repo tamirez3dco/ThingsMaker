@@ -83,17 +83,42 @@ class DefinitionParam(models.Model):
     order = models.IntegerField()
     stage = models.IntegerField()
     active = models.BooleanField()
+    range_start = models.FloatField(default=0)
+    range_end = models.FloatField(default=1)
     values = PickledObjectField(null=True, blank=True)
-    
-    def get_values(self):
-        if isinstance(self.values, list):
-            return self.values
-        return self.default_values
-    
+    INTEGER = 'IN'
+    FLOAT = 'FL'
+    STRING = 'ST'
+   
+    STATUS_CHOISES = ((INTEGER,'Integer'), (FLOAT, 'Float'), (STRING, 'String'))
+    param_type = models.CharField(max_length=2,
+                              choices=STATUS_CHOISES,
+                              default=FLOAT)
+
     def get_initial_value(self):
         values = self.get_values()
         initial_index = int(math.floor((len(values)-1)/2))
         return values[initial_index]
+    
+    def get_values(self):
+        if isinstance(self.values, list):
+            return self.values
+        else:
+            return map(lambda x: self.map_value(x), self.default_values)
+    
+    def map_value(self, x):
+        print "X %s" % x
+        v = (x*(self.range_end-self.range_start))+self.range_start
+        if self.param_type == self.INTEGER:
+            return(math.floor(v))
+        print "V %s" % v
+        return v
+        #return (x*(self.range_end-self.range_start))+self.range_start
+#    
+#    def get_initial_value(self):
+#        values = self.get_values()
+#        initial_index = int(math.floor((len(values)-1)/2))
+#        return values[initial_index]
     
     def __unicode__(self):
         #p = Product.objects.get(pk=self.definition.product)

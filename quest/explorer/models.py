@@ -65,7 +65,7 @@ class GhDefinition(models.Model):
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     
     def param_names(self):
-        return map(lambda x: x.name, self.definitionparam_set.all().order_by('index'))
+        return map(lambda x: x.name, self.definitionparam_set.all().order_by('index','pk'))
     
     def __unicode__(self):
         return self.file_name
@@ -81,7 +81,7 @@ class DefinitionParam(models.Model):
     name = models.CharField(max_length=100)
     readable_name = models.CharField(max_length=200)
     definition = models.ForeignKey(GhDefinition)
-    index = models.IntegerField()
+    index = models.IntegerField(default=0)
     order = models.IntegerField()
     stage = models.IntegerField()
     active = models.BooleanField()

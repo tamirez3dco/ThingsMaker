@@ -57,13 +57,15 @@ class GhDefinition(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     file_name = models.CharField(max_length=100, null=True)
     active = models.BooleanField()
-    param_names = PickledObjectField(null=True)
     scene_file = models.CharField(max_length=100)
     product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False)
     default_material = models.ForeignKey(Material)
     use_cache = models.BooleanField(default=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
+    
+    def param_names(self):
+        return map(lambda x: x.name, self.definitionparam_set.all().order_by('index'))
     
     def __unicode__(self):
         return self.file_name

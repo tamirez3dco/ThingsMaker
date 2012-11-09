@@ -44,15 +44,14 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     scene_file = forms.CharField( max_length = 255, required = True )
     product = forms.IntegerField()
     active = forms.BooleanField(initial=True, required=False)
-    param_names = PickleField( max_length = 1000, required = True )
     accepts_text_params = forms.BooleanField(initial=False,required=False)
     default_material = forms.ModelChoiceField(Material.objects.all())
     use_cache = forms.BooleanField(initial=True,required=False)
     base_definition = forms.ModelChoiceField(GhDefinition.objects.all(),required=False)
     
 class GhDefinitionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'file_name','scene_file','product','active','param_names','accepts_text_params' )
-    fields = ('name', 'file_name','base_definition','scene_file','product','active','param_names','accepts_text_params', 'default_material','use_cache')
+    list_display = ('name', 'file_name','scene_file','product','active','accepts_text_params' )
+    fields = ('name', 'file_name','base_definition','scene_file','product','active','accepts_text_params', 'default_material','use_cache')
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent]
 #    def save_model(self, request, obj, form, change):
@@ -68,6 +67,8 @@ class ItemAdmin(admin.ModelAdmin):
 class DefinitionParamAdmin(admin.ModelAdmin):
     list_display = ('definition','name','readable_name','order')
     list_filter = ('definition',)   
+    fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
+    
     
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)

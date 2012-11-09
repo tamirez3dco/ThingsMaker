@@ -69,7 +69,7 @@ class DefinitionParamAdmin(admin.ModelAdmin):
     list_filter = ('definition',)   
     fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
     
-    
+
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(ExplorerConfig)

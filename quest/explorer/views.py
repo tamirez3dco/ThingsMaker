@@ -43,69 +43,39 @@ def create(request, template_name="explorer/create.html"):
         
     return render_to_response(template_name, RequestContext(request, {'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
-def inspirations(request, template_name="explorer/create.html"):
-    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
-
-def mystore(request, template_name="explorer/create.html"):
-    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
-
-def designers(request, template_name="explorer/create.html"):
-    return render_to_response(template_name, RequestContext(request, {'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
-
 def explore(request):
-    #cb = request.GET.get('callback','')
-    model_types = request.GET.get('show_definitions', False)
     param_index = int(request.GET.get('param_index', 0)) 
     explore_type = request.GET.get('explore_type', 'explore')
-    iterate_type = request.GET.get('iterate_type', 'linear')
-    page_size = int(request.GET.get('page_size', '6'))
     material = request.GET.get('material', 'Default')
     text = request.GET.get('text', '')
     text = text.strip()
       
-    controller = Controller(request.GET.get('distance', 'near'), material, page_size)
+    controller = Controller(material)
     start_product = request.GET.get('start_product', None)
     if (start_product):
         product = Product.objects.get(slug=start_product)
         if product.is_variant() == False:
             gh_def = GhDefinition.objects.filter(product=product.id, active=True)[0]
             if material == 'Available':
-                #material_list = DefinitionMaterial.
-                items = controller.render_materials(['Gold', 'Silver'], None, gh_def.id, text)
+                items = controller.render_materials(None, gh_def.id, text)
             else:
                 items = controller.get_random_items(product)
-                #items = controller.start_iterate(gh_def.id, param_index, text)
-            logging.error(gh_def.file_name)
+               
         else:
             if material == 'Available':
-                items = controller.render_materials(['Gold', 'Silver'], start_product, None, text)
+                items = controller.render_materials(start_product, None, text)
             else:
-                items = controller.explore(start_product, param_index, explore_type, iterate_type, text)            
-            #items = controller.explore_product(start_product, param_index, explore_type, iterate_type)
+                items = controller.explore(start_product, param_index, explore_type, text)            
     
     else:   
-        if (model_types):
-            #explorer.tasks.wakeup_servers.delay(True)
-            items = controller.get_definitions() 
-            
+        item_id = request.GET.get('item_id','')
+        if material == 'Available':
+            items = controller.render_materials(item_id, None, text)
         else:
-            start = datetime.now()
-            definition_id = request.GET.get('definition_id','')
-            if (definition_id != ''):
-                logging.info('Start exploration')
-                items = controller.start_exploration(definition_id)
-                end = datetime.now()
-                logging.info('Completed: '+ str(end-start))
-            else:
-                item_id = request.GET.get('item_id','')
-                if material == 'Available':
-                    items = controller.render_materials(['Gold', 'Silver'], item_id, None, text)
-                else:
-                    items = controller.explore(item_id, param_index, explore_type, iterate_type, text)
-        
-    #jsonp = cb + "(" + simplejson.dumps(to_json) + ");"
-    jsonp = simplejson.dumps(items)
-    return HttpResponse(jsonp, mimetype='text/javascript')
+            items = controller.explore(item_id, param_index, explore_type, text)
+
+    json = simplejson.dumps(items)
+    return HttpResponse(json, mimetype='text/javascript')
 
 def add_lover_to_product(request):
     item_uuid = request.POST.get('item_uuid','')
@@ -145,7 +115,7 @@ def add_product_variant(request):
     old_products = Product.objects.filter(slug=item.uuid)
     if len(old_products)>0:
         return HttpResponse(result)
-    controller = Controller(request.GET.get('distance', 'medium'))
+    controller = Controller()
     controller.item_to_product(item);
     product = Product.objects.get(pk=item.definition.product)
     #props = product.get_properties()

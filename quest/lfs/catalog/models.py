@@ -64,7 +64,7 @@ from lfs.supplier.models import Supplier
 from lfs.manufacturer.models import Manufacturer
 
 #Explorer imports
-from explorer.models import Item
+from explorer.models import Item, GhDefinition
 
 def get_unique_id_str():
     return str(uuid.uuid4())
@@ -698,6 +698,7 @@ class Product(models.Model):
     
     # Explorer additions
     item = models.ForeignKey(Item, blank=True, null=True)
+    ghdefinition = models.ForeignKey(GhDefinition, blank=True, null=True)
     designer = models.ForeignKey(Designer, blank=True, null=True)
 
     class Meta:

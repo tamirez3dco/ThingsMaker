@@ -276,15 +276,13 @@ class Base:
     def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False, base_model=None):
         job = {}
         
-        print "_prepare_job %s" % base_model
-        #param definition.definitionparam_set.all()[0].name
         job['params'] = dict(zip(definition.param_names(), params))
         if (definition.accepts_text_params):
             textToSend = "test"
             if (text != None):
                 textToSend = text
             job['params']['textParam'] = textToSend
-        job['item_id'] = item_id #+ '_' + str(width)
+        job['item_id'] = item_id
         job['bake'] = self.bake
         job['operation'] = 'render_model'
         job['width'] = width

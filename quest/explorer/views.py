@@ -32,9 +32,7 @@ def create(request, template_name="explorer/create.html"):
     start_product = request.GET.get('start_product', None)
     product = Product.objects.get(slug=start_product)
     if product.is_variant() == False:
-        logging.error('here')
-        gh_def = GhDefinition.objects.filter(product=product.id, active=True)[0]
-        logging.error(gh_def.file_name)
+        gh_def = product.ghdefinition
     else:
         item = Item.objects.filter(uuid=start_product)[0]
         gh_def = item.definition 
@@ -55,7 +53,7 @@ def explore(request):
     if (start_product):
         product = Product.objects.get(slug=start_product)
         if product.is_variant() == False:
-            gh_def = GhDefinition.objects.filter(product=product.id, active=True)[0]
+            gh_def = product.ghdefinition
             if material == 'Available':
                 items = controller.render_materials(None, gh_def.id, text)
             else:

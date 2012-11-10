@@ -77,7 +77,7 @@ class GhDefinition(models.Model):
     uploaded_file_name = models.CharField(max_length=100, null=True)
     active = models.BooleanField()
     scene_file = models.CharField(max_length=100)
-    product = models.IntegerField()
+    #product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False)
     default_material = models.ForeignKey(Material)
     use_cache = models.BooleanField(default=True)

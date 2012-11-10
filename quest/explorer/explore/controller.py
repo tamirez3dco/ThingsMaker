@@ -56,15 +56,13 @@ class Base:
         return self._make_res_from_items(items)
     
     def _make_res_from_items(self, items):
-#        materials = map(lambda x: x.material, items)
-#        all_uuids = map(lambda x: str(x.uuid), items)
         textParams = []
         materials = []
         all_uuids = []
         for i in range(len(items)):
             try:
-               pp = str(items[i].textParam)
-               textParams.append(pp)
+                pp = str(items[i].textParam)
+                textParams.append(pp)
             except:
                 try:
                     pp = items[i].textParam
@@ -73,7 +71,7 @@ class Base:
                     continue;
             materials.append(items[i].material)
             all_uuids.append(str(items[i].uuid))
-        #textParams = map(lambda x: str(x.textParam), items)
+     
         return self._make_result(all_uuids, materials, textParams)
     
     def start_iterate(self, definition_id, param_index, text):

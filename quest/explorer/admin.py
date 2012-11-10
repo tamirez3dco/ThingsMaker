@@ -57,8 +57,8 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
     
 class GhDefinitionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'file_name','scene_file','product','active','accepts_text_params' )
-    fields = ('name', 'file_name','base_definition','scene_file','product','active','accepts_text_params', 'default_material','use_cache', 'uploaded_file', 'current_file_name','uploaded_file_name')
+    list_display = ('name', 'uploaded_file_name','file_name','scene_file','product','active','accepts_text_params' )
+    fields = ('name','uploaded_file_name','file_name','base_definition','scene_file','product','active','accepts_text_params', 'default_material','use_cache', 'uploaded_file')
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent, process_ghx]
     def save_model(self, request, obj, form, change):

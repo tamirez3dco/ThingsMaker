@@ -113,7 +113,7 @@ class GhDefinition(models.Model):
         self.file_name = "%s%s.%s" % (parts[0],self.ADJUSTED_SUFFIX ,parts[1])
     
     def __unicode__(self):
-        return self.file_name
+        return self.name
 
 class DefinitionMaterial(models.Model):
     definition = models.ForeignKey(GhDefinition)
@@ -160,13 +160,7 @@ class DefinitionParam(models.Model):
             return(math.floor(v))
         print "V %s" % v
         return v
-        #return (x*(self.range_end-self.range_start))+self.range_start
-#    
-#    def get_initial_value(self):
-#        values = self.get_values()
-#        initial_index = int(math.floor((len(values)-1)/2))
-#        return values[initial_index]
-    
+
     def __unicode__(self):
         #p = Product.objects.get(pk=self.definition.product)
         return "%s - %s" % (self.definition.id, self.readable_name)

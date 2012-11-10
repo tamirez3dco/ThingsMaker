@@ -34,8 +34,8 @@ admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", )}
-    list_display = ('id','name','parent','slug','sub_type')
-    list_filter = ('parent', 'sub_type')
+    list_display = ('id','name','definition','parent','slug','sub_type')
+    list_filter = ('sub_type')
     actions = [get_stl]
     
 admin.site.register(Product, ProductAdmin)

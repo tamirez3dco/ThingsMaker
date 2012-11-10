@@ -54,7 +54,7 @@ $.fn.exists = function() {
 		_create : function() {
 			this._startProduct = $.getUrlVar('start_product');
 			this._productType = $.getUrlVar('product_type');
-			this._userText = $.getUrlVar('textParam');
+			this._userText = decodeURIComponent($.getUrlVar('textParam'));
 			this._material = $.getUrlVar('material');
 			this._buildSteps();
 			this._buildTitle();

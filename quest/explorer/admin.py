@@ -62,12 +62,12 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent, process_ghx]
     def save_model(self, request, obj, form, change):
-        print "JJJJJJJJJ"
         super(GhDefinitionAdmin, self).save_model(request, obj, form, change)
-        controller = Controller()
-        controller.process_ghx(obj)
-        obj.set_file_name()
-        obj.save()
+        if "uploaded_file" in form.changed_data:
+            controller = Controller()
+            controller.process_ghx(obj)
+            obj.set_file_name()
+            obj.save()
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','textParam','uuid', 'image_url')

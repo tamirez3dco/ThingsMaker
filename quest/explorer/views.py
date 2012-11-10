@@ -115,7 +115,7 @@ def add_product_variant(request):
         return HttpResponse(result)
     controller = Controller()
     controller.item_to_product(item);
-    product = Product.objects.get(pk=item.definition.product)
+    product = Product.objects.get(ghdefinition=item.definition)
     #props = product.get_properties()
     slug = item_uuid
     sku = item_uuid[:30]

@@ -7,7 +7,7 @@ import base64
 from datetime import datetime
 from django.utils import simplejson
 from suds.client import Client
-from explorer.models import Item
+from explorer.models import Item, GhDefinition
 import explorer.tasks
 from boto.sqs.connection import SQSConnection
 from boto.sqs.message import Message
@@ -46,6 +46,7 @@ class Renderer:
         for i in range(len(params)):
             #params[i]['params']['textParam'] = 'sunsun'
             body = simplejson.dumps(params[i])
+            
             sys.stderr.write(body + "\n")
             messages.append((i,base64.b64encode(body),0))
            
@@ -54,6 +55,15 @@ class Renderer:
         sys.stderr.write("\n\n\nSent messages\n\n\n")
         return
  
+    def adjust_ghx(self, file_name):
+        q_name = "%s_%s_%s" % (self.site_name, 'cases', 'request')
+        conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        q = conn.create_queue(q_name)
+        q.set_message_class(Message)
+        body = simplejson.dumps({'operation': 'adjust_ghx', 'gh_file': file_name})
+        sys.stderr.write(body + "\n")
+        conn.send_message_batch(q, [(0,base64.b64encode(body),0)])
+        
     def get_ready_images_old(self):
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         q = conn.create_queue(self.q_ready)
@@ -89,6 +99,11 @@ class Renderer:
                 q.delete_message(rs[i])
                 continue
             
+            if (body.has_key('sliders') == True):
+                if(GhDefinition.parse_message(body)):
+                    q.delete_message(rs[i])
+                continue
+            
             if (body['item_id'].find('_') != -1) or (body['status']=='STARTED'):
                 q.delete_message(rs[i])
                 continue
@@ -108,7 +123,8 @@ class Renderer:
             item.save()
             q.delete_message(rs[i])
             sys.stderr.write("\nRecieved results for "+str(body['item_id'])+"\n")        
-                
+         
+           
     def get_lowpriority_wait_count(self, scenes): 
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY) 
         count = 0

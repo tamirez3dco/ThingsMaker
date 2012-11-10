@@ -1,10 +1,25 @@
 import math
+import uuid
 from django.db import models
 #import cPickle as pickle
 from django.utils import simplejson as pickle
 from south.modelsinspector import add_introspection_rules
 #from lfs.catalog.models import Product
 #from lfs.catalog.models import Product
+
+def file_name_suffix(name):
+    l = name.split('.')
+    return l[len(l)-1]
+
+def get_gh_upload_path(instance, filename=None): 
+    suffix = file_name_suffix(filename) 
+    instance.current_file_name = "%s.%s" % (str(uuid.uuid1()), suffix)
+    instance.file_name = "%s_adj.%s" % (str(uuid.uuid1()), suffix)
+    instance.uploaded_file_name = filename
+    return "%s/%s" % ( 
+            'gh_files', 
+            instance.current_file_name,
+            ) 
 
 class PickledObject(str):
     """A subclass of string so it can be told whether a string is
@@ -53,9 +68,13 @@ class Material(models.Model):
         return self.name
     
 class GhDefinition(models.Model):
+    ADJUSTED_SUFFIX = '_adj'
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     file_name = models.CharField(max_length=100, null=True)
+    uploaded_file = models.FileField(upload_to=get_gh_upload_path, null=True) 
+    current_file_name = models.CharField(max_length=100, null=True)
+    uploaded_file_name = models.CharField(max_length=100, null=True)
     active = models.BooleanField()
     scene_file = models.CharField(max_length=100)
     product = models.IntegerField()
@@ -64,8 +83,34 @@ class GhDefinition(models.Model):
     use_cache = models.BooleanField(default=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     
+    @staticmethod
+    def parse_message(message):
+        definitions = GhDefinition.objects.filter(current_file_name=message['gh_file'])
+        if (len(definitions)==0):
+            return False
+        definition =  definitions[0]
+        definition.definitionparam_set.all().delete()
+        order=0
+        for param in message['sliders']:
+            print param['old_name']   
+            p = DefinitionParam(definition=definition, 
+                                name=param['new_name'], 
+                                readable_name=param['old_name'], 
+                                range_start=float(param['min']),
+                                range_end=float(param['max']),
+                                order=order,
+                                index=order)  
+            p.save()
+            order=order+1
+        
+        return True
+    
     def param_names(self):
         return map(lambda x: x.name, self.definitionparam_set.all().order_by('index','pk'))
+    
+    def set_file_name(self):
+        parts = self.current_file_name.split('.')
+        self.file_name = "%s%s.%s" % (parts[0],self.ADJUSTED_SUFFIX ,parts[1])
     
     def __unicode__(self):
         return self.file_name
@@ -83,8 +128,8 @@ class DefinitionParam(models.Model):
     definition = models.ForeignKey(GhDefinition)
     index = models.IntegerField(default=0)
     order = models.IntegerField()
-    stage = models.IntegerField()
-    active = models.BooleanField()
+    stage = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
     range_start = models.FloatField(default=0)
     range_end = models.FloatField(default=1)
     values = PickledObjectField(null=True, blank=True)

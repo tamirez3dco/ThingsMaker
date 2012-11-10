@@ -187,9 +187,7 @@ class Base:
         else:
             root = Item.objects.get(uuid=parent_id)
             definition = root.definition
-            #if text == "":
-            #    text = root.textParam
-            
+          
         if definition.accepts_text_params == False:
             text = ""    
             
@@ -230,8 +228,6 @@ class Base:
         
         db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
         param_values = db_param.get_values()
-        print param_index
-        print param_values
         params_list = []
         
         for i in range(len(param_values)):
@@ -369,7 +365,9 @@ class Base:
                 print perm
                 item_uuid = str(uuid.uuid1())
                 self._save_item(None, definition, perm, False, item_uuid, 0, material, "")
-        
+ 
+    def process_ghx(self, definition):
+        self.renderer.adjust_ghx(definition.current_file_name)
  
 #    def _explore_deep(self):
 #        children = None

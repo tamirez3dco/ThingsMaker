@@ -7,15 +7,13 @@ from django.utils import simplejson
 
 def preprocess_items(modeladmin, request, queryset):
     definition = queryset[0]
-    controller = Controller('near', 'Default', 1)
+    controller = Controller('Default', 1)
     controller.preprocess_definition(definition)
     
 preprocess_items.short_description = "Preprocess Items"
       
 def send_background_items(modeladmin, request, queryset):
-    definition = queryset[0]
-    controller = Controller('near', 'Default', 1)
-    #controller.send_background_items(definition)
+    controller = Controller('Default', 1)
     controller.send_background_items()
     
 send_background_items.short_description = "Send Background Items"
@@ -30,6 +28,12 @@ def set_sent(modeladmin, request, queryset):
         item.save()
         
 set_sent.short_description = "Set all items as sent"
+ 
+def process_ghx(modeladmin, request, queryset):
+    definition = queryset[0]
+    controller = Controller()
+    controller.process_ghx(definition)
+process_ghx.short_description = "Process GHX file"
       
 class PickleField(forms.CharField):
     def clean(self, value):
@@ -48,24 +52,29 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     default_material = forms.ModelChoiceField(Material.objects.all())
     use_cache = forms.BooleanField(initial=True,required=False)
     base_definition = forms.ModelChoiceField(GhDefinition.objects.all(),required=False)
+    uploaded_file = forms.FileField(required=False)
+    current_file_name = forms.CharField( max_length = 255, required = False ) 
+    uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
     
 class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'file_name','scene_file','product','active','accepts_text_params' )
-    fields = ('name', 'file_name','base_definition','scene_file','product','active','accepts_text_params', 'default_material','use_cache')
+    fields = ('name', 'file_name','base_definition','scene_file','product','active','accepts_text_params', 'default_material','use_cache', 'uploaded_file', 'current_file_name','uploaded_file_name')
     form = GhDefinitionAdminForm
-    actions = [preprocess_items, send_background_items, set_sent]
-#    def save_model(self, request, obj, form, change):
-#        obj.file_name = form.cleaned_data['file_name']
-#        obj.active = form.cleaned_data['active']
-#        obj.set_param_names(form.cleaned_data['param_names'])
-#        obj.save()    
+    actions = [preprocess_items, send_background_items, set_sent, process_ghx]
+    def save_model(self, request, obj, form, change):
+        print "JJJJJJJJJ"
+        super(GhDefinitionAdmin, self).save_model(request, obj, form, change)
+        controller = Controller()
+        controller.process_ghx(obj)
+        obj.set_file_name()
+        obj.save()
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','textParam','uuid', 'image_url')
     list_filter = ('definition','status')   
 
 class DefinitionParamAdmin(admin.ModelAdmin):
-    list_display = ('definition','name','readable_name','order')
+    list_display = ('readable_name', 'order', 'definition','name')
     list_filter = ('definition',)   
     fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
     

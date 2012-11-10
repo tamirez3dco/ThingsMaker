@@ -41,7 +41,8 @@ class Base:
     """
     def __init__(self, material='Default', explore_type='iterate', textParam=''):
         self.material = material
-        self.text = textParam
+#        self.text = textParam
+        self.text = "MUSSA"
        
         #self.deep_count=int(ExplorerConfig.objects.get(k__exact='deep_count').v)
         self.deep = False
@@ -55,15 +56,23 @@ class Base:
         return self._make_res_from_items(items)
     
     def _make_res_from_items(self, items):
-        materials = map(lambda x: x.material, items)
-        all_uuids = map(lambda x: str(x.uuid), items)
+#        materials = map(lambda x: x.material, items)
+#        all_uuids = map(lambda x: str(x.uuid), items)
         textParams = []
+        materials = []
+        all_uuids = []
         for i in range(len(items)):
             try:
-                pp = str(items[i].textParam)
-                textParams.append(pp)
+               pp = str(items[i].textParam)
+               textParams.append(pp)
             except:
-                pass
+                try:
+                    pp = items[i].textParam
+                    textParams.append(pp)
+                except:
+                    continue;
+            materials.append(items[i].material)
+            all_uuids.append(str(items[i].uuid))
         #textParams = map(lambda x: str(x.textParam), items)
         return self._make_result(all_uuids, materials, textParams)
     

@@ -594,7 +594,7 @@ ul.breadcrumbs li {
 	background-repeat: repeat;
 	padding-bottom: 60px; 
 	border-top: 1px solid #ffffff;
-	border-bottom: 1px solid #ffffff;
+	/*border-bottom: 1px solid #ffffff;*/
 }
 
 .content-title {
@@ -1355,11 +1355,12 @@ ___________________________________________________________________________ */
 #footer {
     /*background-image: url(../img/content-bg.jpg);
 	background-repeat: repeat; */ 
-	   position:absolute;
+	   position:fixed;
    bottom:0;
    width:100%;
 	background-color: #4d4d4d;
 	height:40px;
+	border-top: 1px solid white;
 }
 
 #footer .container {
@@ -1946,6 +1947,7 @@ form.contactable-form .disclaimer {
 	position:relative;
 	overflow: auto;
 	width:970px;
+	display: none;
 }
 #top-inspirations {
 	margin-top: 20px;
@@ -1953,6 +1955,10 @@ form.contactable-form .disclaimer {
 	position:relative;
 	overflow: auto;
 	clear: both;
+}
+#recent-products h3,
+#top-inspirations h3{
+	margin-bottom:6px;
 }
 
 .home-product {

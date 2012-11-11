@@ -31,7 +31,10 @@ logging.basicConfig(level=logging.INFO)
 def create(request, template_name="explorer/create.html"):
     start_product = request.GET.get('start_product', None)
     product = Product.objects.get(slug=start_product)
+    show_initial_step = False
     if product.is_variant() == False:
+        if Product.objects.filter(parent=product).count() > 0:
+            show_initial_step = True
         gh_def = product.ghdefinition
     else:
         item = Item.objects.filter(uuid=start_product)[0]
@@ -39,7 +42,7 @@ def create(request, template_name="explorer/create.html"):
 
     params = DefinitionParam.objects.filter(definition=gh_def, active=True).order_by('order')
         
-    return render_to_response(template_name, RequestContext(request, {'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
+    return render_to_response(template_name, RequestContext(request, {'show_initial_step': show_initial_step, 'product': product, 'definition': gh_def, 'params': params, 'site_domain': Site.objects.get(id=settings.SITE_ID).domain}))
 
 def explore(request):
     param_index = int(request.GET.get('param_index', 0)) 

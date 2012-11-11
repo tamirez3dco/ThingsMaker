@@ -26,8 +26,8 @@
 <img src="{{ STATIC_URL }}img/IconNormalCreateBig.png" /><h1>Create</h1>
 </div>
 <div id="wizard">
-	{% if not product.is_variant %}
-	<div title="Start Model" id="create-param-start">
+	{% if show_initial_step %}
+	<div title="Initial Model" id="create-param-start">
 		<div class="create-image-container"></div>
 	</div>
 	{% endif %}

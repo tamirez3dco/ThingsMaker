@@ -53,3 +53,10 @@ function getProductList(url, element) {
 	});	
 }
 
+function TMLoadMore(jsonobj, begin, end, el)
+{
+	jsonobj['limits'] = begin + '-' + end;
+	var jsonstr = JSON.stringify(jsonobj);
+	getProductsURL = "/get_ssp/"+jsonstr;
+	getProductList(getProductsURL, el);
+}

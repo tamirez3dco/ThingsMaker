@@ -70,13 +70,6 @@ function TMgetJsonObj(sorterName)
 	return jsonobj;
 }
 
-function TMLoadMore(jsonobj, begin, end)
-{
-	jsonobj['limits'] = begin + '-' + end;
-	var jsonstr = JSON.stringify(jsonobj);
-	getProductsURL = "/get_ssp/"+jsonstr;
-	getProductList(getProductsURL, '#sorted-products');
-}
 var TMInterval = 20;
 var TMlast = 30;
 $(function() {
@@ -101,12 +94,12 @@ $(function() {
 		child.parentNode.removeChild(child);
 		//initImages();
 		var jsonobj = TMgetJsonObj();
-		TMLoadMore(jsonobj,0, 15);
-		setTimeout(function(){TMLoadMore(jsonobj,15, 30);}, 1000);
+		TMLoadMore(jsonobj,0, 15,'#sorted-products');
+		setTimeout(function(){TMLoadMore(jsonobj,15, 30,'#sorted-products');}, 1000);
 		$(document).scroll(function(){
 			console.log('scroll');
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
-				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval);
+				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#sorted-products');
 				TMlast = TMlast+TMInterval;
 				console.log('load!!!');
 			}

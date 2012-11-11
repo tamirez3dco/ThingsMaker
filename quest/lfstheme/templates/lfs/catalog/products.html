@@ -35,12 +35,33 @@
 		       			</a>
 	       			</div>
        			</div>
-       			<a class="products-product-link" href="sorted_products/{%22limits%22:%220-20%22,%22screener%22:%22{{ product.name }}%22,%22sorter%22:%22stock_amount%22,%22icon%22:%22false%22,%22page_name%22:%22What Others Made%22}">
+       			<a class="products-product-link" href="/designers">
 		           			{% trans 'See what others made' %}
 		           			<font style="font-size:9px;">&gt;</font>
 		           			
 		       	</a>
 			</div>
 		{% endfor %}
+			<div class="products-product">
+				<h3>Your Grasshopper Definition</h3>
+				<div class="products-product-inner">
+					<a href="/designers">
+						<img src="{{ STATIC_URL }}img/your_definition.jpg">
+					</a>
+					<p class="product-description">
+	        			{{ product.get_description|safe}}
+	    			</p>
+	    			<div class="buttons">
+		    			<a class="button left emphasized" href="/designers">
+		           			{% trans 'Make Yours' %}
+		       			</a>
+	       			</div>
+       			</div>
+       			<a class="products-product-link" href="/designers">
+		           			{% trans 'Learn more' %}
+		           			<font style="font-size:9px;">&gt;</font>
+		           			
+		       	</a>
+			</div>
 	</div>
 {% endblock %}

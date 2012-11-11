@@ -19,7 +19,7 @@ $(function() {
 				TMCanLoad=false;
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#top-inspirations');
 				TMlast = TMlast+TMInterval;
-				console.log('load!!!');
+				//console.log('load!!!');
 			}
 			
 		});

@@ -14,7 +14,7 @@ $(function() {
 		$(document).scroll(function(){
 			//console.log('scroll');
 			if (TMlast>500) return;
-			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
+			if($(window).scrollTop()+$(window).height()>=$(document).height()-350) {
 				if(TMCanLoad==false) return;
 				TMCanLoad=false;
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#top-inspirations');

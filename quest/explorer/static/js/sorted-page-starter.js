@@ -72,6 +72,7 @@ function TMgetJsonObj(sorterName)
 
 var TMInterval = 20;
 var TMlast = 30;
+var TMCanLoad=true;
 $(function() {
 	var screenerExists = document.URL.indexOf("screener") > 0;
 	if (screenerExists)
@@ -98,8 +99,11 @@ $(function() {
 		setTimeout(function(){TMLoadMore(jsonobj,15, 30,'#sorted-products');}, 1000);
 		$(document).scroll(function(){
 			if (TMlast>500) return;
+			
 			//console.log('scroll');
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
+				if(TMCanLoad==false) return;
+				TMCanLoad=false;
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#sorted-products');
 				TMlast = TMlast+TMInterval;
 				//console.log('load!!!');

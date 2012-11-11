@@ -1,5 +1,6 @@
 var TMInterval = 20;
 var TMlast = 30;
+var TMCanLoad=true;
 $(function() {
 	$('#slideshow').cycle({ 
 	    fx:    'fade', 
@@ -14,6 +15,8 @@ $(function() {
 			//console.log('scroll');
 			if (TMlast>500) return;
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
+				if(TMCanLoad==false) return;
+				TMCanLoad=false;
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#top-inspirations');
 				TMlast = TMlast+TMInterval;
 				console.log('load!!!');

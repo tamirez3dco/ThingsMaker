@@ -44,12 +44,14 @@ function hart_clicked(element)
 
 function getProductList(url, element) {
 	$.getJSON(url, function(data) {
+		
 		var items = [];
 		var productList = $('<div class="home-product-list"></div>').appendTo(element);
 		for(var i = 0; i < data.products.length; i++) {
 			var html = create_product_html(data.products[i]);
 			$(html, {}).appendTo(productList);
 		}
+		TMCanLoad=true;
 	});	
 }
 

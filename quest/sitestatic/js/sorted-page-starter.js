@@ -97,11 +97,12 @@ $(function() {
 		TMLoadMore(jsonobj,0, 15,'#sorted-products');
 		setTimeout(function(){TMLoadMore(jsonobj,15, 30,'#sorted-products');}, 1000);
 		$(document).scroll(function(){
-			console.log('scroll');
+			if (TMlast>500) return;
+			//console.log('scroll');
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#sorted-products');
 				TMlast = TMlast+TMInterval;
-				console.log('load!!!');
+				//console.log('load!!!');
 			}
 			
 		});

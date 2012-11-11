@@ -11,7 +11,8 @@ $(function() {
 		TMLoadMore(jsonobj,0, 15,'#top-inspirations');
 		setTimeout(function(){TMLoadMore(jsonobj,15, 30,'#top-inspirations');}, 1000);
 		$(document).scroll(function(){
-			console.log('scroll');
+			//console.log('scroll');
+			if (TMlast>500) return;
 			if($(window).scrollTop()+$(window).height()>=$(document).height()-200) {
 				TMLoadMore(jsonobj,TMlast, TMlast+TMInterval, '#top-inspirations');
 				TMlast = TMlast+TMInterval;

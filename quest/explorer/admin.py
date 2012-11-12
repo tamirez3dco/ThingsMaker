@@ -80,6 +80,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     actions = [preprocess_items, send_background_items, set_sent, process_ghx]
     def save_model(self, request, obj, form, change):
         form.default_material = Material.objects.all()[1]
+        obj.default_material = Material.objects.all()[1]
         super(GhDefinitionAdmin, self).save_model(request, obj, form, change)
         if change==False:
             obj.set_defaults()

@@ -89,10 +89,13 @@ class GhDefinition(models.Model):
         if (len(definitions)==0):
             return False
         definition =  definitions[0]
-        definition.definitionparam_set.all().delete()
+        Item.objects.filter(definition=definition).delete()
+        #definition.definitionparam_set.all().delete()
         order=0
         for param in message['sliders']:
             print param['old_name']   
+            old_param = DefinitionParam.objects.filter(definition=definition, name=param['old_name']).count()
+            if old_param > 0: continue
             p = DefinitionParam(definition=definition, 
                                 name=param['new_name'], 
                                 readable_name=param['old_name'], 

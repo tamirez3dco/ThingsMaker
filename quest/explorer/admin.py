@@ -1,9 +1,12 @@
 from explorer.models import Item, GhDefinition, ExplorerConfig, AppData, DefinitionParam, Material, DefinitionMaterial
 from explorer.explore.controller import Base as Controller
+from lfs.catalog.models import Product
+from lfs.catalog.settings import PRODUCT_WITH_VARIANTS
 from django.contrib import admin
 from django import forms
 import cPickle as pickle
 from django.utils import simplejson
+import uuid
 
 def preprocess_items(modeladmin, request, queryset):
     definition = queryset[0]
@@ -54,19 +57,51 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     uploaded_file = forms.FileField(required=False)
     current_file_name = forms.CharField( max_length = 255, required = False ) 
     uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
-    
+
+class GhDefinitionAddAdminForm( forms.ModelForm ): 
+    class Meta:
+        model = GhDefinition
+    name = forms.CharField( max_length = 255, required = False ) 
+    file_name = forms.CharField( max_length = 255, required = False )
+    scene_file = forms.CharField( max_length = 255, required = False )
+    active = forms.BooleanField(initial=True, required=False)
+    accepts_text_params = forms.BooleanField(initial=False,required=False)
+    default_material = forms.ModelChoiceField(Material.objects.all(), initial=Material.objects.all()[0], required = False )
+    use_cache = forms.BooleanField(initial=True,required=False)
+    base_definition = forms.ModelChoiceField(GhDefinition.objects.all(),required=False)
+    uploaded_file = forms.FileField(required=False)
+    current_file_name = forms.CharField( max_length = 255, required = False ) 
+    uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
+        
 class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'uploaded_file_name','file_name','scene_file','active','accepts_text_params' )
-    fields = ('name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache', 'uploaded_file')
+    fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent, process_ghx]
     def save_model(self, request, obj, form, change):
+        print "Saving..."
         super(GhDefinitionAdmin, self).save_model(request, obj, form, change)
+        if change==False:
+            obj.set_defaults()
+            p = Product(name=obj.name, slug=uuid.uuid1(), ghdefinition=obj, sub_type=PRODUCT_WITH_VARIANTS, active=False)
+            p.save()
+            
         if "uploaded_file" in form.changed_data:
             controller = Controller()
-            controller.process_ghx(obj)
             obj.set_file_name()
+            controller.process_ghx(obj)
             obj.save()
+    
+    def get_form(self, request, obj=None, **kwargs):
+        if obj is None:       
+            self.fields = ('uploaded_file',)
+            return GhDefinitionAddAdminForm
+            #return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
+        else:
+            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
+            return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
+
+    
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','textParam','uuid', 'image_url')
@@ -77,6 +112,11 @@ class DefinitionParamAdmin(admin.ModelAdmin):
     list_filter = ('definition',)   
     fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
     
+class DefinitionMaterialAdmin(admin.ModelAdmin):
+    list_display = ('definition', 'material')
+    list_filter = ('definition', 'material')   
+    #fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
+    
 
 admin.site.register(GhDefinition, GhDefinitionAdmin)
 admin.site.register(Item,ItemAdmin)
@@ -84,4 +124,4 @@ admin.site.register(ExplorerConfig)
 admin.site.register(AppData)
 admin.site.register(DefinitionParam,DefinitionParamAdmin)
 admin.site.register(Material)
-admin.site.register(DefinitionMaterial)
+admin.site.register(DefinitionMaterial,DefinitionMaterialAdmin)

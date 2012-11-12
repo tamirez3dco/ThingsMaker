@@ -66,7 +66,12 @@ class Material(models.Model):
     readable_name = models.CharField(max_length=200)
     def __unicode__(self):
         return self.name
-    
+
+def get_material():
+    m = Material.objects.all()[0]
+    print m
+    return Material.objects.all()[0]
+
 class GhDefinition(models.Model):
     ADJUSTED_SUFFIX = '_adj'
     id = models.AutoField(primary_key=True)
@@ -76,11 +81,11 @@ class GhDefinition(models.Model):
     current_file_name = models.CharField(max_length=100, null=True)
     uploaded_file_name = models.CharField(max_length=100, null=True)
     active = models.BooleanField()
-    scene_file = models.CharField(max_length=100)
+    scene_file = models.CharField(max_length=100, blank=True)
     #product = models.IntegerField()
-    accepts_text_params = models.BooleanField(default=False)
-    default_material = models.ForeignKey(Material)
-    use_cache = models.BooleanField(default=True)
+    accepts_text_params = models.BooleanField(default=False,blank=True)
+    default_material = models.ForeignKey(Material, default=get_material, null=True, blank=True)
+    use_cache = models.BooleanField(default=True, blank=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     
     @staticmethod
@@ -114,7 +119,18 @@ class GhDefinition(models.Model):
     def set_file_name(self):
         parts = self.current_file_name.split('.')
         self.file_name = "%s%s.%s" % (parts[0],self.ADJUSTED_SUFFIX ,parts[1])
-    
+    def set_defaults(self):
+        parts = self.uploaded_file_name.split('.',2)
+        self.name = parts[0]
+        self.scene_file = 'cases.3dm'
+        self.active = True
+        self.use_cache = True
+        self.default_material = get_material()
+        materials = Material.objects.all()
+        for m in materials:
+            dm = DefinitionMaterial(definition=self, material = m)
+            dm.save()
+               
     def __unicode__(self):
         return self.name
 

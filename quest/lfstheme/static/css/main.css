@@ -2966,6 +2966,7 @@ padding: 20px;
     margin:  0;  
     clear: none;
     float:left;
+    position: relative;
 }
 
 #slideshow {
@@ -3123,4 +3124,14 @@ body.login {
 	font-size: 24px;
 	padding: 20px;
 	overflow: hidden;
+}
+
+#home-banner-text
+{
+	position: absolute;
+	top: 40px;
+	left: 60px;
+	font-family: 'TMFreeScript';
+	font-size: 70px;
+	color: white;
 }

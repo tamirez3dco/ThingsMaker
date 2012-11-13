@@ -629,19 +629,19 @@ $.fn.exists = function() {
 		
 		_openTip1: function() {
 			var left = $(".create-image-container:visible").offset().left+$(".create-image-container:visible").width()
-			var top = $(".create-image-container:visible").offset().top
+			var top = $(".create-image-container:visible").offset().top-$(window).scrollTop()
 			$("#create-tip-dialog-1").dialog('option','position', [left-12,top]);
 			$("#create-tip-dialog-1").css('opacity', 1);
 		},
 		_openTip2: function() {
 			var left = $(".create-image-container:visible").offset().left+($(".create-image-container:visible").width()/2)
-			var top = $(".create-image-container:visible").offset().top-200
+			var top = $(".create-image-container:visible").offset().top-$(window).scrollTop()-200
 			$("#create-tip-dialog-2").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-2").dialog('open');
 		},
 		_openTip3: function() {
 			var left = $(".create-image-container:visible").offset().left-167;
-			var top = $(".create-image-container:visible").offset().top+48;
+			var top = $(".create-image-container:visible").offset().top-$(window).scrollTop()+48;
 			$("#create-tip-dialog-3").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-3").dialog('open');
 		},

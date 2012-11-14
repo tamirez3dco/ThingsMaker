@@ -191,6 +191,7 @@ AUTHENTICATION_BACKENDS = (
     #'lfs.customer.auth.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
     'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
 )
 
 # For sql_queries
@@ -376,6 +377,8 @@ COMPRESS_CACHE_BACKEND = 'dummy:///'
 
 FACEBOOK_APP_ID              = '487109477988417'
 FACEBOOK_API_SECRET          = '9728c8157cba4c39e5563c73b36718e8'
+LINKEDIN_CONSUMER_KEY        = '2lu38tci70up'
+LINKEDIN_CONSUMER_SECRET     = 'ht5O64CnmaaEbMmb'
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'

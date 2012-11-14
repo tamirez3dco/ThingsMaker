@@ -39,7 +39,10 @@
 	{% endif %}
 	</div>
 	{% if supported %}
-	<a class="fblogin" href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><div class="fblogin"></div></a>
+	<div class="" style="overflow: hidden; width: 335px; margin-left: auto; margin-right: auto;">
+	<a href="{% url socialauth_begin 'facebook' %}?{{ redirect_querystring }}"><div class="fblogin"></div></a>
+	<a href="{% url socialauth_begin 'linkedin' %}?{{ redirect_querystring }}"><div class="lnlogin"></div></a>
+	</div>
 	<h3 style="margin-top: 5px; margin-bottom:0px; font-size: 12px;">If you don't have Facebook please <a id="contact-link-1" href="#">contact us</a> for invitation.</h3>
 	{% else %}
 	<h3 style="margin-top: 40px; margin-bottom:0px; font-size: 22px;">We are sorry, ThingsMaker does not support your browser.</h3>

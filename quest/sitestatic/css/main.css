@@ -3060,14 +3060,29 @@ body.login {
 	background-image:url("../images/cellular1.png");
 }
 .fblogin {
-	background-image:url("../img/fb-connect-large.png");
+	background-image:url("../img/LoginFB.png");
 	margin:0 auto;
-	margin-top: 35px;
-	width: 300px;
-	height: 45px;
-	background-repeat: no-repeat;
+	margin-top: 25px;
+	margin-right: 10px;
+	width: 162px;
+	height: 28px;
+	background-repeat: no-repeat;	
+	clear: none;
+	float: left;
 	
 }
+.lnlogin {
+	background-image:url("../img/LoginLinkedin.png");
+	margin:0 auto;
+	margin-top: 25px;
+	width: 162px;
+	height: 28px;
+	background-repeat: no-repeat;	
+	clear: none;
+	float: left;
+	
+}
+
 
 .login-center {
 	border-top: 5px solid #f9941f;

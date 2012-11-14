@@ -21,8 +21,7 @@ DEFAULT_FROM_EMAIL = 'amit@ez3d.co'
 
 ADMINS = (
     ('Amit Aviv', 'amit@ez3d.co'),
-    ('Tamir Levy', 'tamir@ez3d.co'),
-    ('Alon Israely', 'alon@ez3d.co')
+    ('Tamir Levy', 'tamir@ez3d.co')
 )
 
 MANAGERS = ADMINS

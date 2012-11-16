@@ -95,9 +95,7 @@ class GhDefinition(models.Model):
             return False
         definition =  definitions[0]
         Item.objects.filter(definition=definition).delete()
-        #stam = DefinitionParam.objects.filter(definition=definition).count()
-        #definition.definitionparam_set.all().delete()
-        
+
         old_params = DefinitionParam.objects.filter(definition=definition)
         for op in old_params:
             todel = True

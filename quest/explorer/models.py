@@ -95,13 +95,24 @@ class GhDefinition(models.Model):
             return False
         definition =  definitions[0]
         Item.objects.filter(definition=definition).delete()
-        stam = DefinitionParam.objects.filter(definition=definition).count()
+        #stam = DefinitionParam.objects.filter(definition=definition).count()
         #definition.definitionparam_set.all().delete()
+        
+        old_params = DefinitionParam.objects.filter(definition=definition)
+        for op in old_params:
+            todel = True
+            for np in message['sliders']:
+                if op.name == np['new_name']:
+                    todel = False
+            
+            if todel==True:
+                op.delete()
+        
         order=0
         for param in message['sliders']:
-            old_param = DefinitionParam.objects.filter(definition=definition, readable_name=param['old_name'])
+            old_param = DefinitionParam.objects.filter(definition=definition, name=param['new_name'])
             if old_param.count() > 0:
-                old_param[0].order=old_param.index=order
+                old_param[0].order=old_param[0].index=order
                 order = order + 1
                 old_param[0].save()
                 continue

@@ -97,33 +97,41 @@ class GhDefinition(models.Model):
         Item.objects.filter(definition=definition).delete()
 
         old_params = DefinitionParam.objects.filter(definition=definition)
-        for op in old_params:
-            todel = True
-            for np in message['sliders']:
-                if op.name == np['new_name']:
-                    todel = False
-            
-            if todel==True:
-                op.delete()
-        
+        sliders = message['sliders']
+        sliders_dict={}
+        for param in sliders:
+            sliders_dict[param['new_name']]=param
+
+        for older in old_params:
+            if (not older.name in sliders_dict):
+                older.delete()    
+        #definition.definitionparam_set.all().delete()
+        older_params = DefinitionParam.objects.filter(definition=definition).order_by('order')
         order=0
+        for older in older_params:
+            older.order = order
+            order = order + 1
+            older.save()
+
+
         for param in message['sliders']:
             old_param = DefinitionParam.objects.filter(definition=definition, name=param['new_name'])
-            if old_param.count() > 0:
-                old_param[0].order=old_param[0].index=order
-                order = order + 1
-                old_param[0].save()
-                continue
-            p = DefinitionParam(definition=definition, 
+            if old_param.count() == 0:
+                p = DefinitionParam(definition=definition, 
                                 name=param['new_name'], 
                                 readable_name=param['old_name'], 
                                 range_start=float(param['min']),
                                 range_end=float(param['max']),
                                 order=order,
                                 index=order)  
-            p.save()
-            order=order+1
+                p.save()
+                order=order+1
         
+        new_params = DefinitionParam.objects.filter(definition=definition)
+        for new_param in new_params:
+            new_param.index = new_param.order
+            new_param.save()
+
         return True
     
     def param_names(self):

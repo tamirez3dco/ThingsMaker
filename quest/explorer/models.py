@@ -105,14 +105,13 @@ class GhDefinition(models.Model):
         for older in old_params:
             if (not older.name in sliders_dict):
                 older.delete()    
-        #definition.definitionparam_set.all().delete()
+        
         older_params = DefinitionParam.objects.filter(definition=definition).order_by('order')
         order=0
         for older in older_params:
             older.order = order
             order = order + 1
             older.save()
-
 
         for param in message['sliders']:
             old_param = DefinitionParam.objects.filter(definition=definition, name=param['new_name'])
@@ -143,7 +142,7 @@ class GhDefinition(models.Model):
     def set_defaults(self):
         parts = self.uploaded_file_name.split('.',2)
         self.name = parts[0]
-        self.scene_file = 'cases.3dm'
+        self.scene_file = 'cases_testing.3dm'
         self.active = True
         self.use_cache = True
         self.default_material = get_material()

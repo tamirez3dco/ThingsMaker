@@ -84,7 +84,7 @@ class GhDefinition(models.Model):
     scene_file = models.CharField(max_length=100, blank=True)
     #product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False,blank=True)
-    default_material = models.ForeignKey(Material, default=get_material, null=True, blank=True)
+    default_material = models.ForeignKey(Material, default=get_material)
     use_cache = models.BooleanField(default=True, blank=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     
@@ -171,6 +171,7 @@ class DefinitionParam(models.Model):
     active = models.BooleanField(default=True)
     range_start = models.FloatField(default=0)
     range_end = models.FloatField(default=1)
+    rendering_view = models.CharField(max_length=200, null=True, blank=True)
     values = PickledObjectField(null=True, blank=True)
     INTEGER = 'IN'
     FLOAT = 'FL'

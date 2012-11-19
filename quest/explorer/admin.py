@@ -111,7 +111,7 @@ class ItemAdmin(admin.ModelAdmin):
 class DefinitionParamAdmin(admin.ModelAdmin):
     list_display = ('readable_name', 'order', 'definition','name')
     list_filter = ('definition',)   
-    fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active')
+    fields = ('readable_name', 'name', 'definition', 'order', 'range_start', 'range_end', 'values', 'active','rendering_view')
     
 class DefinitionMaterialAdmin(admin.ModelAdmin):
     list_display = ('definition', 'material')

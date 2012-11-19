@@ -47,6 +47,7 @@ class Base:
         #self.deep_count=int(ExplorerConfig.objects.get(k__exact='deep_count').v)
         self.deep = False
         self.bake = "all"
+        self.DEFAULT_VIEW = "Render"
         self.renderer = Renderer()
 
     def get_random_items(self, product):
@@ -83,7 +84,7 @@ class Base:
             text = ""
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, text)
        
-        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases}, args=[self.definition, todo_uuids, None, todo_params, self.definition.default_material.name, 'iterate', text])
+        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': param_index}, args=[self.definition, todo_uuids, None, todo_params, self.definition.default_material.name, 'iterate', text])
         return self._make_result(all_uuids, materials)
     
     def _get_cached_items(self, definition, params, materials, text):
@@ -181,7 +182,7 @@ class Base:
         materials = [self.material for i in range(len(params))]
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, self.text)
         #(uuids, base_items) = self._get_base_cache(self.definition.base_definition, todo_params)
-        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases}, args=[self.definition, todo_uuids, self.root, todo_params, self.material, 'iterate', self.text])
+        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': self.param_index}, args=[self.definition, todo_uuids, self.root, todo_params, self.material, 'iterate', self.text])
         
         self.root.selected=True
         self.root.save()
@@ -250,14 +251,18 @@ class Base:
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         return map(lambda x: x.get_initial_value(), db_params)
     
-    def _send_jobs(self, definition, uuids, root, children_params, text, base_models=None, low_priority=False, get_stl=False):
+    def _send_jobs(self, definition, uuids, root, children_params, text, base_models=None, low_priority=False, get_stl=False, param_index=None):
         jobs = []
         base_model=None
-        print low_priority
+        view = self.DEFAULT_VIEW
+        if (param_index!=None):
+            db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
+            if db_param.rendering_view != None:
+                view = db_param.rendering_view
         for i in range(len(uuids)):
             if(base_models!=None)and(len(base_models)>0):
                 base_model = base_models[i]
-            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, "Render", self.material, low_priority=low_priority, get_stl=get_stl, base_model=base_model))
+            jobs.append(self._prepare_job(definition, uuids[i], children_params[i], text, view, self.material, low_priority=low_priority, get_stl=get_stl, base_model=base_model))
         
         self.renderer.request_images(jobs)  
         

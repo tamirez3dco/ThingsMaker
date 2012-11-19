@@ -21,10 +21,10 @@ def send_deep(children, r1, r2):
     controller._send_deep(children)
 
 @task()
-def send_jobs(definition, uuids, root, params, material, explore_type, text, base_models=None):
+def send_jobs(definition, uuids, root, params, material, explore_type, text, base_models=None, param_index=None):
     #return True
     controller = Controller(material, explore_type)
-    controller._send_jobs(definition, uuids, root, params, text, base_models=base_models)
+    controller._send_jobs(definition, uuids, root, params, text, base_models=base_models,param_index=param_index)
 
 @task()
 def send_missing_jobs(items):

@@ -235,7 +235,7 @@ class Base:
         db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
         param_values = db_param.get_values()
         params_list = []
-        
+        selected=-1
         for i in range(len(param_values)):
             param = param_values[i]
             params = list(parent_params)

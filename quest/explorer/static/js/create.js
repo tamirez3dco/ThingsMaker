@@ -47,6 +47,7 @@ $.fn.exists = function() {
 		_stepAfterLast : 0,
 		_material : null,
 		_firstStep : true,
+		_selected:-1,
 		/**
 		 * @description Initializes jWizard
 		 * @return void
@@ -660,7 +661,7 @@ $.fn.exists = function() {
     			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
 			for(var i = 0; i < data.length; i++) {
 				var addClass = "explorer-image";
-				if (this._itemId==data[i].id) {
+				if (this._selected==i) {
 					addClass = "explorer-image selected";
 				}
 				var id = stepidx + '-' + i;
@@ -696,7 +697,9 @@ $.fn.exists = function() {
 				if ((data == null) || (data.length == 0) || (data == [])) {
 					return;
 				}
-				wizard._loadedImages = data;
+				wizard._loadedImages = data.items;
+				wizard._selected = data.selected;
+				//console.log(data.selected);
 				
 				if(add) {
 					wizard._addImagesToStep(step, stepidx);

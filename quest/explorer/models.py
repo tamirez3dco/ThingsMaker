@@ -221,6 +221,7 @@ class Item(models.Model):
     material = models.CharField(max_length=20, default="Gold")
     param_hash = models.CharField(max_length=100, null=True, db_index=True)
     base_param_hash = models.CharField(max_length=100, null=True, db_index=True)
+    rendering_view = models.CharField(max_length=200, default="")
     
     CREATED = 'CR'
     SENT = 'SE'

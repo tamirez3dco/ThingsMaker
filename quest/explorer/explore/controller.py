@@ -73,21 +73,53 @@ class Base:
             materials.append(items[i].material)
             all_uuids.append(str(items[i].uuid))
      
-        return self._make_result(all_uuids, materials, textParams)
+        return self._make_result(all_uuids, materials, textParams, -1)
+
+    def render_materials(self, parent_id, definition_id, text):
+        if parent_id == None:
+            root = None
+            definition = GhDefinition.objects.get(pk=definition_id)
+        else:
+            root = Item.objects.get(uuid=parent_id)
+            definition = root.definition
+          
+        if definition.accepts_text_params == False:
+            text = ""    
+            
+        self.explore_type = 'iterate'
+        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
+        
+        (selected,params) = self._get_children_params(definition, root, -1, 'noop')
+        print materials
+        if root != None:
+            selected = materials.index(root.material) 
+            
+        params = [params[0] for i in materials]
+        #print params
+        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(definition, params, materials, text)
+        #print (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
+        for i in range(len(todo_materials)):
+            base = None
+            if len(todo_bases)>0:
+                base = todo_bases[i]
+            
+            explorer.tasks.send_jobs.apply_async(kwargs={'base_models': [base]}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], todo_materials[i], 'iterate', text])
+     
+        return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))], selected)
+   
+    def _explore(self):
+        (selected,params) = self._get_children_params(self.definition, self.root, self.param_index, self.explore_type)
+        materials = [self.material for i in range(len(params))]
+        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, self.text, param_index=self.param_index)
+        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': self.param_index}, args=[self.definition, todo_uuids, self.root, todo_params, self.material, 'iterate', self.text])
+        print selected
+        return self._make_result(all_uuids, materials, [self.text for i in range(len(all_uuids))], selected)
     
-    def start_iterate(self, definition_id, param_index, text):
-        self.definition = GhDefinition.objects.get(pk=definition_id) 
-       
-        params = self._get_children_params(self.definition, None, param_index, 'iterate')
-        materials = [self.definition.default_material.name for i in range(len(params))]
-        if self.definition.accepts_text_params == False:
-            text = ""
-        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, text)
-       
-        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': param_index}, args=[self.definition, todo_uuids, None, todo_params, self.definition.default_material.name, 'iterate', text])
-        return self._make_result(all_uuids, materials)
     
-    def _get_cached_items(self, definition, params, materials, text):
+    def get_models(self, definition, parent, param_index):
+        params = self._get_children_params(self.definition, self.root, self.param_index, self.explore_type)
+    
+    def _get_cached_items(self, definition, params, materials, text, param_index=None):
         #self._get_base_cache(definition, params)
         all_uuids = []
         todo_uuids = []
@@ -95,8 +127,13 @@ class Base:
         todo_materials = []
         todo_bases = []
         cache_count = 0
+        view = self._get_view(definition, param_index)
+        if view == self.DEFAULT_VIEW:
+            view = ""
+            
         for p,m in zip(params, materials):
-            param_key = self._item_param_hash(p, m, text)
+            #param_key = self._item_param_hash(p, "", "","")
+            param_key = self._item_param_hash(p, m, text,view)
             cached = Item.objects.filter(param_hash = param_key, definition = definition)
             
             if len(cached)>0 and (definition.use_cache==True):
@@ -113,7 +150,7 @@ class Base:
             else:
                 if (definition.base_definition!=None):
                     #print definition.base_definition.id
-                    param_key = self._item_param_hash(p, "", "")
+                    param_key = self._item_param_hash(p, "", "","")
                     #print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
                     if len(cached_base)>0:
@@ -130,14 +167,14 @@ class Base:
         return (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
     
     def _get_base_cache(self, definition, params):
-        param_key = self._item_param_hash(params, "", "")
+        param_key = self._item_param_hash(params, "", "", "")
         cached = Item.objects.filter(base_param_hash = param_key, definition = definition)
             
         return cached[0].uuid
             
-    def _item_param_hash(self, params, material, text):
+    def _item_param_hash(self, params, material, text, view):
         #hacked_params = filter(lambda x: x.)
-        p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text
+        p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text + view
         return p
         
     def explore(self, item_id, param_index, explore_type, text):
@@ -177,53 +214,14 @@ class Base:
         job = self._prepare_job(item.definition, item.uuid+ '-sw', item.params, item.textParam,"Render", item.material, 674, True)
         self.renderer.request_images_async([job]) 
     
-    def _explore(self):
-        params = self._get_children_params(self.definition, self.root, self.param_index, self.explore_type)
-        materials = [self.material for i in range(len(params))]
-        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, self.text)
-        #(uuids, base_items) = self._get_base_cache(self.definition.base_definition, todo_params)
-        explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': self.param_index}, args=[self.definition, todo_uuids, self.root, todo_params, self.material, 'iterate', self.text])
-        
-        self.root.selected=True
-        self.root.save()
-        return self._make_result(all_uuids, materials, [self.text for i in range(len(all_uuids))])
-        
-    def render_materials(self, parent_id, definition_id, text):
-        if parent_id == None:
-            root = None
-            definition = GhDefinition.objects.get(pk=definition_id)
-        else:
-            root = Item.objects.get(uuid=parent_id)
-            definition = root.definition
-          
-        if definition.accepts_text_params == False:
-            text = ""    
-            
-        self.explore_type = 'iterate'
-        materials = map(lambda x: x.material.name, DefinitionMaterial.objects.filter(definition=definition))
-      
-        params = self._get_children_params(definition, root, -1, 'noop') 
-        params = [params[0] for i in materials]
-        print params
-        (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(definition, params, materials, text)
-        print (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
-        for i in range(len(todo_materials)):
-            base = None
-            if len(todo_bases)>0:
-                base = todo_bases[i]
-            
-            
-            explorer.tasks.send_jobs.apply_async(kwargs={'base_models': [base]}, args=[definition, [todo_uuids[i]], None, [todo_params[i]], todo_materials[i], 'iterate', text])
-     
-        return self._make_result(all_uuids, materials, [text for i in range(len(all_uuids))])
-    
     def _get_children_params(self, definition, root, param_index, explore_type ):
         if explore_type=='noop' and root!=None:
             children_params = [root.params]
+            selected=-1
         else:
-            children_params = self._get_page_params(definition, root, param_index)
-           
-        return children_params     
+            (selected, children_params) = self._get_page_params(definition, root, param_index)
+        
+        return (selected,children_params)    
    
     def _get_page_params(self, definition, root, param_index):
         if root!=None:
@@ -232,7 +230,7 @@ class Base:
             parent_params = self._get_initial_page_params(definition)
         
         if param_index < 0:
-            return [parent_params]
+            return (-1,[parent_params])
         
         db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
         param_values = db_param.get_values()
@@ -241,24 +239,30 @@ class Base:
         for i in range(len(param_values)):
             param = param_values[i]
             params = list(parent_params)
+            if params[param_index] == param:
+                selected=i
             params[param_index] = param
             params_list.append(params)
         
-        print params_list
-        return params_list
+        #print params_list
+        return (selected,params_list)
     
     def _get_initial_page_params(self, definition):
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         return map(lambda x: x.get_initial_value(), db_params)
-    
-    def _send_jobs(self, definition, uuids, root, children_params, text, base_models=None, low_priority=False, get_stl=False, param_index=None):
-        jobs = []
-        base_model=None
+
+    def _get_view(self, definition, param_index):
         view = self.DEFAULT_VIEW
         if (param_index!=None):
             db_param = DefinitionParam.objects.get(definition=definition,index=param_index)
             if db_param.rendering_view != None:
                 view = db_param.rendering_view
+        return view
+                
+    def _send_jobs(self, definition, uuids, root, children_params, text, base_models=None, low_priority=False, get_stl=False, param_index=None):
+        jobs = []
+        base_model=None
+        view = self._get_view(definition, param_index)
         for i in range(len(uuids)):
             if(base_models!=None)and(len(base_models)>0):
                 base_model = base_models[i]
@@ -269,7 +273,7 @@ class Base:
         for i in range(len(uuids)):
             saved = Item.objects.filter(uuid=uuids[i])
             if(len(saved)==0):
-                self._save_item(root, definition, children_params[i], True, uuids[i], self.material, text)
+                self._save_item(root, definition, children_params[i], True, uuids[i], self.material, text, view=view)
             else:
                 saved[0].sent = True
                 saved[0].status = Item.SENT
@@ -303,18 +307,21 @@ class Base:
             
         return job
     
-    def _make_result(self, uuids, materials, textParams):
+    def _make_result(self, uuids, materials, textParams, selected):
         def do(x):
             return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1], "material": x[2], "text": x[3]}
-        return map(do, zip(uuids, range(len(uuids)), materials, textParams))
+        return {'selected': selected, 'items': map(do, zip(uuids, range(len(uuids)), materials, textParams))}
         
     def _prepare_result_item(self, item, index):
         return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}
 
-    def _save_item(self, parent, definition, params, sent, item_uuid, material, textParam):
+    def _save_item(self, parent, definition, params, sent, item_uuid, material, textParam, view=""):
         price = 172       
-        param_hash = self._item_param_hash(params, material, textParam)
-        base_param_hash = self._item_param_hash(params, "", "")
+        if view == self.DEFAULT_VIEW:
+            view = ""
+        
+        param_hash = self._item_param_hash(params, material, textParam, view)
+        base_param_hash = self._item_param_hash(params, "", "", "")
         if (sent == True):
             status = Item.SENT
         else:

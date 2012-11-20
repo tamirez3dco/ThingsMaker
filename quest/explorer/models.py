@@ -84,7 +84,7 @@ class GhDefinition(models.Model):
     scene_file = models.CharField(max_length=100, blank=True)
     #product = models.IntegerField()
     accepts_text_params = models.BooleanField(default=False,blank=True)
-    default_material = models.ForeignKey(Material, default=get_material)
+    default_material = models.ForeignKey(Material, default=get_material, null=True, blank=True)
     use_cache = models.BooleanField(default=True, blank=True)
     base_definition = models.ForeignKey('self', null=True, db_index=True, default=None, blank=True)
     

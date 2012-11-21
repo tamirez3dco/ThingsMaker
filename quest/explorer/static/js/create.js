@@ -75,6 +75,7 @@ $.fn.exists = function() {
 				//this._buildTopMenu();
 				//this._buildTriangleButtons();
 				this._buildTopMenu();
+				
 			}
 
 			this._buildButtons();
@@ -92,6 +93,7 @@ $.fn.exists = function() {
 					$(this).removeClass("ui-state-hover");
 				}
 			});
+			this._buildLoadMask();
 			this._initAddress();
 			//this._changeStep(this._stepIndex, true);
 		},
@@ -525,7 +527,7 @@ $.fn.exists = function() {
 				}, 2000, 'linear', function() {
 					wizard._setAddress();
 					$currentStep.hide();
-
+					wizard._showLoading(true);
 					if(($currentStep.data('paramType') != 'text')) {
 						$currentStep.children(".create-image-container").html('');
 					}
@@ -572,6 +574,13 @@ $.fn.exists = function() {
 				this.element.find("#create-param-text-input").val(this._userText);
 			}
 		},
+		_showLoading: function(show){
+			if(show){
+				//$("#create-loading").css('display', 'block');
+			} else {
+				//$("#create-loading").css('display', 'none');
+			}
+		},
 		_waitImage : function(imgsrc, imageId, imageTitle, count) {
 			var img = new Image();
 			var self = this;
@@ -598,6 +607,7 @@ $.fn.exists = function() {
 						done++;
 					}
 					if(($(element).data('loaded') == true) && ($(element).data('visible') != true)) {
+						$(element).parent().find('.loader').css('display','none');
 						wizard._showNextImage = false;
 						$(element).data('visible', true);
 						$(element).css({
@@ -613,6 +623,7 @@ $.fn.exists = function() {
 					}
 				});
 				if(done == $('.explorer-image').size()) {
+					wizard._showLoading(false);
 					$steps = wizard.element.find(".jw-step"), $currentStep = $steps.eq(wizard._stepIndex);
 					if(($currentStep.data('paramType') != 'text')) {
 						if (wizard._stepCounter==0) {
@@ -665,7 +676,7 @@ $.fn.exists = function() {
 					addClass = "explorer-image selected";
 				}
 				var id = stepidx + '-' + i;
-				var html = '<div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div>';
+				var html = '<div class="explorer-image-wrap"><img class="loader" src="sitestatic/img/loading141.gif?a='+data[i].id+'"/><div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></div>';
 				step.children(".create-image-container").append(html);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);
@@ -1028,43 +1039,7 @@ $.fn.exists = function() {
 				wizard.previousStep();
 			});
 		},
-		_buildTopMenuOld : function() {
-			var list = [], $menu, $anchors;
-			var $steps = this.element.find(".jw-step");
-			var constWidth = 26 * $steps.size();
-			var stepWidth = Math.floor((840 - constWidth) / $steps.size());
-			this.element.addClass("jw-hastopmenu");
-			$steps.each(function(x) {
-				var sClass = "wizard-steps-inner";
-				var l = $(this).attr("title").split(' ');
-				if(l.length == 1) {
-					sClass = "wizard-steps-inner-ol";
-				}
-				var menuTitle = $(this).attr("title").replace(/ /g, "<br>");
-				list.push($("<div />",{
-				"class": "completed-step",
-				step: x,
-				html: $("<a />", {
-				style: 'width: '+ stepWidth + 'px;',
-				html: '<span>'+ (x+1).toString() + '</span>' + '<div class="'+ sClass +'">' + menuTitle + '</div>'
-				})
-				})[0]);
-			});
-			$menu = $("<div />", {
-				"class" : "wizard-steps",
-				html : $(list)
-			});
-
-			this.element.find(".jw-content").prepend($menu);
-
-			$menu.find("a").click($.proxy(function(event) {
-				var $target = $(event.target), parent = $target.parents('div')[0], nextStep = parseInt($(parent).attr("step"), 10);
-				
-				if($(parent).hasClass("completed-step")) {
-					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
-				}
-			}, this));
-		},
+		
 		_buildTopMenu : function() {
 			var list = [], $menu, $anchors;
 			var $steps = this.element.find(".jw-step");
@@ -1105,6 +1080,9 @@ $.fn.exists = function() {
 					this.changeStep(nextStep, nextStep <= this._stepIndex ? "previous" : "next");
 				}
 			}, this));
+		},
+		_buildLoadMask: function() {
+			this.element.find(".jw-content").append('<div id="create-loading"></div>');
 		},
 		/**
 		 * @private

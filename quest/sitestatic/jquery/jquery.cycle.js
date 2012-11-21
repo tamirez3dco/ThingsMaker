@@ -453,7 +453,7 @@ function buildOptions($cont, $slides, els, options, o) {
 		while((opts.timeout - opts.speed) < buffer) // sanitize timeout
 			opts.timeout += opts.speed;
 		opts.timeout=1000;
-		alert(opts.timeout)
+		
 	}
 	if (opts.easing)
 		opts.easeIn = opts.easeOut = opts.easing;

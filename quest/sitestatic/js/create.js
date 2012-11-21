@@ -676,7 +676,7 @@ $.fn.exists = function() {
 					addClass = "explorer-image selected";
 				}
 				var id = stepidx + '-' + i;
-				var html = '<div class="explorer-image-wrap"><img class="loader" src="../img/loading141.gif?a='+data[i].id+'"/><div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></div>';
+				var html = '<div class="explorer-image-wrap"><img class="loader" src="http://ez3d_statics2.s3.amazonaws.com/sitestatic/img/loading141.gif?a='+data[i].id+'"/><div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></div>';
 				step.children(".create-image-container").append(html);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);

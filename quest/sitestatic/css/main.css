@@ -1361,12 +1361,13 @@ ___________________________________________________________________________ */
 	background-color: #4d4d4d;
 	height:40px;
 	border-top: 1px solid white;
+	z-index: 9999;
 }
 
 #footer .container {
     text-align: left;
     margin-top: 0px;
-    padding-bottom: 0px;
+    padding-bottom: 44px;
     padding-top: 12px;
     color: #ffffff;
     margin-bottom: 0px;

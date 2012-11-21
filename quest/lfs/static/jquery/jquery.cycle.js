@@ -441,6 +441,7 @@ function buildOptions($cont, $slides, els, options, o) {
 	$($slides[first]).css(opts.cssFirst);
 
 	if (opts.timeout) {
+		alert(opts.timeout)
 		opts.timeout = parseInt(opts.timeout,10);
 		// ensure that timeout and speed settings are sane
 		if (opts.speed.constructor == String)
@@ -451,6 +452,8 @@ function buildOptions($cont, $slides, els, options, o) {
 		var buffer = opts.fx == 'none' ? 0 : opts.fx == 'shuffle' ? 500 : 250;
 		while((opts.timeout - opts.speed) < buffer) // sanitize timeout
 			opts.timeout += opts.speed;
+		opts.timeout=1000;
+		alert(opts.timeout)
 	}
 	if (opts.easing)
 		opts.easeIn = opts.easeOut = opts.easing;

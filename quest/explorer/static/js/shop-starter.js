@@ -4,7 +4,9 @@ var TMCanLoad=true;
 $(function() {
 	$('#slideshow').cycle({ 
 	    fx:    'fade', 
-	    speed:  2500 
+	    timeout:  1000,  
+	    speed: 3000,
+	    continous: 1
  	});
 	jsonobj = {"limits":"0-10","sorter":"stock_amount"};
 	//jsonstr = JSON.stringify(jsonobj);

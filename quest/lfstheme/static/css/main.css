@@ -2991,6 +2991,7 @@ padding: 20px;
     clear: both;
     float:left;
 }
+
 #home-message {
 	width: 366px;
 	height: 350px;
@@ -2999,10 +3000,11 @@ padding: 20px;
     clear: none;
     float:left;
     position: relative;
+    display:none;
 }
 
 #slideshow {
-	width: 618px;
+	width: 986px;
 	height: 350px;
 	padding: 0;  
     margin:  0;  
@@ -3011,7 +3013,7 @@ padding: 20px;
 }
 
 #slideshow .image-container IMG {
-	width: 618px;
+	width: 986px;
 	height: 325px;
 	padding: 0px;
 }

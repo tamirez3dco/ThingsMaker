@@ -2492,13 +2492,13 @@ form.contactable-form .disclaimer {
 	position: relative;
 	width:188px;
 	height:188px;
-	margin: 0px 10px 10px 0px;
+	margin: 0;
 	float: left;
 	border: 2px solid white; 
 	/*border: 2px solid #f9941f; */
 }
-.explorer-image.selected {
-	border: 2px solid #f9941f; 
+.explorer-image-wrap.selected  .explorer-image {
+	border: 3px solid #f9941f; 
 }
 .explorer-image img {
 	width:186px;
@@ -2510,6 +2510,8 @@ form.contactable-form .disclaimer {
 	overflow: hidden;
 	clear: none;
 	float: left;
+	margin: 0px 8px 8px 0px;
+	/*border: 3px solid transparent;*/
 }
 .explorer-image-wrap .loader {
 	width:32px;
@@ -2520,7 +2522,18 @@ form.contactable-form .disclaimer {
 	top:50%;
 	margin-left: -16px;
 	margin-top: -16px;
-	z-index: 999;
+	z-index: 5;
+}
+
+.explorer-image-wrap .wrap-in {
+	position: relative;
+	overflow: hidden;
+	clear: none;
+	float: left;
+	border: 1px solid transparent; 	
+}
+.explorer-image-wrap.selected .wrap-in {
+	border: 0px solid transparent; 	
 }
 .explorer-image:hover {
 	cursor: pointer;

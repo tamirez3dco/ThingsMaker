@@ -607,7 +607,7 @@ $.fn.exists = function() {
 						done++;
 					}
 					if(($(element).data('loaded') == true) && ($(element).data('visible') != true)) {
-						$(element).parent().find('.loader').css('display','none');
+						$(element).parent().parent().find('.loader').css('display','none');
 						wizard._showNextImage = false;
 						$(element).data('visible', true);
 						$(element).css({
@@ -671,12 +671,14 @@ $.fn.exists = function() {
 			var ua = navigator.userAgent,
     			event = (ua.match(/iPad/i)) ? "touchstart" : "click";
 			for(var i = 0; i < data.length; i++) {
-				var addClass = "explorer-image";
+				var expClass = "explorer-image";
+				var wrpClass = "explorer-image-wrap"
 				if (this._selected==i) {
-					addClass = "explorer-image selected";
+					//expClass = "explorer-image selected";
+					wrpClass = "explorer-image-wrap selected"
 				}
 				var id = stepidx + '-' + i;
-				var html = '<div class="explorer-image-wrap"><img class="loader" src="http://ez3d_statics2.s3.amazonaws.com/sitestatic/img/loading141.gif?a='+data[i].id+'"/><div class="'+addClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></div>';
+				var html = '<div class="'+wrpClass+'"><img class="loader" src="http://ez3d_statics2.s3.amazonaws.com/sitestatic/img/loading141.gif?a='+data[i].id+'"/><div class="wrap-in"><div class="'+expClass+'" id="explorer-image-' + id + '"><button class="explorer-image-button" type="button">Make It</button></div></div></div>';
 				step.children(".create-image-container").append(html);
 				$("#explorer-image-" + id).data('itemId', data[i].id);
 				$("#explorer-image-" + id).data('material', data[i].material);

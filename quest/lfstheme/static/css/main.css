@@ -3020,12 +3020,11 @@ padding: 20px;
 
 #home-banner A {
 	position: absolute;
-	top: 207px;
-	left: 344px;
-	width: 259px;
-	height: 96px;
+	top: 215px;
+	left: 409px;
+	width: 255px;
+	height: 70px;
 	z-index:99;
-	background-image: url(../images/BtnStartCreatingNormal.png);
 	background-color: transparent;
 	background-repeat: no-repeat;
 }

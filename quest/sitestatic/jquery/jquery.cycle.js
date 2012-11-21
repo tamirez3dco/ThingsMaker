@@ -441,7 +441,7 @@ function buildOptions($cont, $slides, els, options, o) {
 	$($slides[first]).css(opts.cssFirst);
 
 	if (opts.timeout) {
-		alert(opts.timeout)
+		
 		opts.timeout = parseInt(opts.timeout,10);
 		// ensure that timeout and speed settings are sane
 		if (opts.speed.constructor == String)

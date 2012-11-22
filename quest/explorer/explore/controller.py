@@ -381,7 +381,7 @@ class Base:
             for perm in param_perms:
                 print perm
                 item_uuid = str(uuid.uuid1())
-                self._save_item(None, definition, perm, False, item_uuid, 0, material, "")
+                self._save_item(None, definition, perm, False , item_uuid, material, "")
  
     def process_ghx(self, definition):
         self.renderer.adjust_ghx(definition.current_file_name)

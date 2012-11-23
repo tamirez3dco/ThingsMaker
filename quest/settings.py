@@ -336,7 +336,7 @@ COMPRESS_URL = STATIC_URL
 COMPRESS_ROOT = STATIC_ROOT
 
 LOGIN_REQUIRED_URLS = (
-#    r'/(.*)$',
+    r'/(.*)$',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$', 

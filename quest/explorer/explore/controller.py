@@ -360,7 +360,7 @@ class Base:
         can_send = max_wait - wait_count
        
         print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 
-        for i in range(min(can_send,len(not_sent))):
+        for i in range(min(can_send,not_sent.count())):
             print not_sent[i].uuid
             self.material = not_sent[i].material
             self._send_jobs(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)

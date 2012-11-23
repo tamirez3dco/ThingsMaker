@@ -177,6 +177,9 @@ class Base:
         p = "".join(map(lambda x: ("%.2f" %  x)[0:], params)) + material + text + view
         return p
         
+        
+        #comment
+        
     def explore(self, item_id, param_index, explore_type, text):
         self.root = Item.objects.get(uuid=item_id)
         self.param_index = int(param_index)

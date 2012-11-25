@@ -24,7 +24,14 @@ def get_stl(modeladmin, request, queryset):
     controller.get_stl(item.uuid)
 get_stl.short_description = "Get STL"
       
-
+def fix_name(modeladmin, request, queryset):
+    for product in queryset:
+        if (product.name == "My precious") or (product.name == "My Precious"):
+            product.name = product.parent.name
+            product.save()
+    
+fix_name.short_description = "Fix names"
+      
 class CategoryAdmin(admin.ModelAdmin):
     """
     """
@@ -36,7 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", )}
     list_display = ('id','name','ghdefinition','parent','slug','sub_type')
     list_filter = ( 'sub_type', )
-    actions = [get_stl]
+    actions = [get_stl, fix_name]
     
 admin.site.register(Product, ProductAdmin)
 

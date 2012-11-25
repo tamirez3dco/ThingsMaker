@@ -15,14 +15,14 @@
     {% trans 'Create' %} - {{ block.super }}
 {% endblock %}
 
-{% block section %}create{% endblock %}
+{% block section %}products{% endblock %}
 
 {% block breadcrumbs %}
     {% breadcrumbs _("Create") %}
 {% endblock %}
 
 {% block content %}
-	<div class="content-title container">
+	<div class="content-title container" style="display: none;">
 <img src="{{ STATIC_URL }}img/IconNormalCreateBig.png" /><h1>Create</h1>
 </div>
 <div id="wizard">
@@ -62,7 +62,7 @@
 	
 	<div id="create-makeit-dialog-right">
 		<h3>You can name it..</h3>
-		<input type="text" id="new-product-name" value="My precious" />
+		<input type="text" id="new-product-name" value="{{ product.name }}" />
 		<div class="product-share-popup" style="clear: both">
 		<div class="first">Share It</div>
 		<div class="second">

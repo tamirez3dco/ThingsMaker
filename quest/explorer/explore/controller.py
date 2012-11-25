@@ -200,17 +200,17 @@ class Base:
         if item.definition.base_definition != None:
             base = self._get_base_cache(item.definition.base_definition, item.params) 
             
-        jobs = []
-        for view_name in ["Render"]:
-            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350, base_model=base)) 
-     
-        self.renderer.request_images_async(jobs) 
+        job = self._prepare_job(item.definition, item.uuid + '_' + 'Render', item.params, item.textParam,'Render', item.material, 350, base_model=base)
+        self.renderer.request_images_async([job]) 
         
         jobs = []
         for view_name in ["Top","Front"]:
             jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350, base_model=base)) 
             
         self.renderer.request_images_async(jobs, countdown=1) 
+        
+        job = self._prepare_job(item.definition, item.uuid, item.params, item.textParam,'Render', item.material, 180, base_model=base)
+        self.renderer.request_images_async([job]) 
     
     def get_stl(self, item_id):
         item = Item.objects.get(uuid=item_id)

@@ -616,10 +616,10 @@ $.fn.exists = function() {
 							visibility : "visible"
 						}).animate({
 							opacity : 1.0
-						}, 900, 'linear');
+						}, 950, 'linear');
 						setTimeout(function() {
 							wizard._showNextImage = true;
-						}, 450);
+						}, 475);
 						return false;
 					}
 				});

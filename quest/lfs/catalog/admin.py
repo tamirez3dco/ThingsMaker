@@ -42,7 +42,7 @@ admin.site.register(Category, CategoryAdmin)
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", )}
     list_display = ('id','name','ghdefinition','parent','slug','sub_type')
-    fields = ('name','ghdefinition','parent','slug','sub_type')
+    fields = ('name','ghdefinition','parent','slug','sub_type','designer')
     list_filter = ( 'sub_type', )
     actions = [get_stl, fix_name]
     

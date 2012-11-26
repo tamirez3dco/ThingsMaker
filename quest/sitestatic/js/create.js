@@ -550,6 +550,7 @@ $.fn.exists = function() {
 				}
 			}
 		},
+		
 		_changeStepInner:  function(nextStep, firstStep) {
 			if(this._loadedImages.length == 0) {
 				var self = this;
@@ -615,10 +616,10 @@ $.fn.exists = function() {
 							visibility : "visible"
 						}).animate({
 							opacity : 1.0
-						}, 900, 'linear');
+						}, 950, 'linear');
 						setTimeout(function() {
 							wizard._showNextImage = true;
-						}, 450);
+						}, 475);
 						return false;
 					}
 				});

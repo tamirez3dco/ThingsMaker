@@ -156,6 +156,8 @@ class Base:
                     
                     if len(cached_base)>0:
                         print "Found"
+                        print "%s" % cached_base[0].status
+                        print "%s" % len(cached_base)
                         if(cached_base[0].status == Item.ERROR): continue
                         todo_bases.append(cached_base[0].uuid)
                     else:

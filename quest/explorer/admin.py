@@ -109,7 +109,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ('definition','status')   
 
 class DefinitionParamAdmin(admin.ModelAdmin):
-    list_display = ('readable_name', 'order', 'definition','name')
+    list_display = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')
     list_filter = ('definition',)   
     fields = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')
     

@@ -105,8 +105,9 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id','definition','status','params','textParam','uuid', 'image_url')
-    list_filter = ('definition','status')   
+    list_display = ('id','definition','status','params','base_param_hash','textParam','uuid', 'image_url')
+    list_filter = ('definition','status')  
+    fields = ('id','definition','status','params','textParam','uuid', 'image_url', 'base_param_hash') 
 
 class DefinitionParamAdmin(admin.ModelAdmin):
     list_display = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')

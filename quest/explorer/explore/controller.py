@@ -153,11 +153,13 @@ class Base:
                     param_key = self._item_param_hash(p, "", "","")
                     print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
-                    print "Not found"
+                    
                     if len(cached_base)>0:
+                        print "Found"
                         if(cached_base[0].status == Item.ERROR): continue
                         todo_bases.append(cached_base[0].uuid)
-                        
+                    else:
+                        print "Not found" 
                 new_uuid = str(uuid.uuid1())
                 todo_uuids.append(new_uuid)
                 todo_materials.append(m)

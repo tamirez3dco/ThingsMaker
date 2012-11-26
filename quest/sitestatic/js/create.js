@@ -524,7 +524,7 @@ $.fn.exists = function() {
 				
 				$currentStep.animate({
 					opacity : 0.0
-				}, 2000, 'linear', function() {
+				}, 2500, 'linear', function() {
 					wizard._setAddress();
 					$currentStep.hide();
 					wizard._showLoading(true);
@@ -615,10 +615,10 @@ $.fn.exists = function() {
 							visibility : "visible"
 						}).animate({
 							opacity : 1.0
-						}, 700, 'linear');
+						}, 900, 'linear');
 						setTimeout(function() {
 							wizard._showNextImage = true;
-						}, 350);
+						}, 450);
 						return false;
 					}
 				});

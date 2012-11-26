@@ -184,7 +184,7 @@ class DefinitionParam(models.Model):
 
     def get_initial_value(self):
         values = self.get_values()
-        initial_index = int(math.floor((len(values)-1)/2))
+        initial_index = int(math.floor((len(values)-1)/2))-1
         return values[initial_index]
     
     def get_values(self):

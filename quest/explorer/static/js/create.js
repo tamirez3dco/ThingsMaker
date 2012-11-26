@@ -550,6 +550,7 @@ $.fn.exists = function() {
 				}
 			}
 		},
+		
 		_changeStepInner:  function(nextStep, firstStep) {
 			if(this._loadedImages.length == 0) {
 				var self = this;

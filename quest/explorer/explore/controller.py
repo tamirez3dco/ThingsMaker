@@ -392,7 +392,7 @@ class Base:
                 self._save_item(None, definition, perm, False , item_uuid, material, "")
  
     def process_ghx(self, definition):
-        self.renderer.adjust_ghx(definition.current_file_name)
+        self.renderer.adjust_ghx(definition.current_file_name, definition.scene_file)
  
 #    def _explore_deep(self):
 #        children = None

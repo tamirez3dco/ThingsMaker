@@ -55,8 +55,9 @@ class Renderer:
         sys.stderr.write("\n\n\nSent messages\n\n\n")
         return
  
-    def adjust_ghx(self, file_name):
-        q_name = "%s_%s_%s" % (self.site_name, 'cases', 'request')
+    def adjust_ghx(self, file_name, scene):
+        scene = scene.replace('.3dm','')
+        q_name = "%s_%s_%s" % (self.site_name, scene, 'request')
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         q = conn.create_queue(q_name)
         q.set_message_class(Message)

@@ -1,2 +1,2 @@
 web: newrelic-admin run-program python quest/manage.py runserver "0.0.0.0:$PORT" --noreload --insecure
-celeryd: python quest/manage.py collectstatic --noinput; python quest/manage.py compress --noinput; python quest/manage.py celeryd -E -B --loglevel=WARNING -I explorer.tasks
+celeryd: python quest/manage.py compress; python quest/manage.py celeryd -E -B --loglevel=WARNING -I explorer.tasks

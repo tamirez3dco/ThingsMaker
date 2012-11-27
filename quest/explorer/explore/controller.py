@@ -152,7 +152,7 @@ class Base:
                     #print definition.base_definition.id
                     param_key = self._item_param_hash(p, "", "","")
                     print param_key
-                    cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition).order_by('-id')
+                    cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition)
                     
                     if len(cached_base)>0:
                         print "Found"

@@ -3012,6 +3012,12 @@ padding: 20px;
     clear: none;
     float:left;
 }
+#slideshow .image-container  {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 
 #slideshow .image-container IMG {
 	width: 986px;

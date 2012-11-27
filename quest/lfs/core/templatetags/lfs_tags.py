@@ -336,6 +336,7 @@ register.tag('cheapest_variant', do_cheapest_variant)
 def tabs(context, obj=None):
     """
     """
+    print "AA %s" % "AAAA"
     if obj is None:
         obj = context.get("product") or context.get("category")
 
@@ -348,6 +349,7 @@ def tabs(context, obj=None):
         
     tabs = Action.objects.filter(active=True , group=1)
     if isinstance(obj, (Product, Category)):
+        print "AA %s" % "BBBB"
         top_category = lfs.catalog.utils.get_current_top_category(request, obj)
         if top_category:
             for tab in tabs:
@@ -359,6 +361,9 @@ def tabs(context, obj=None):
             urlStr = tab.link.replace("%7B","{")
             urlStr = urlStr.replace("%7D","}")
             urlStr = urlStr.replace("%22",'"')
+            
+            print "AA %s" % urlStr
+            
             if request.path.find(urlStr) != -1:
                 tab.selected = True
                 break

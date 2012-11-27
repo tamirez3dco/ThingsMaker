@@ -2,6 +2,7 @@ var TMInterval = 20;
 var TMlast = 30;
 var TMCanLoad=true;
 function runAnimation(){
+	/*amit test*/
 	$('#banner-bg').css('display', 'block');
 	$('#iml1').css('display', 'block');
 	$('#imc1').css('display', 'block');

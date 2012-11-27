@@ -2199,12 +2199,13 @@ form.contactable-form .disclaimer {
 	float: left;
 	margin-right: 11px;
 	padding: 5px;
-	background-image: url('http://ez3d_media.s3.amazonaws.com/images/ImageBorderDesigners.png');
+	/*background-image: url('http://ez3d_media.s3.amazonaws.com/images/ImageBorderDesigners.png');*/
+	border: 2px solid #ECECEC;
 	background-repeat: no-repeat;
 }	
 .designer-image IMG {
-	width: 100px; 
-	height: 100px;	
+	width: 110px; 
+	height: 110px;	
 }
 .designers-message {
 	float: right;

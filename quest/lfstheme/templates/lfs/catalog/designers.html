@@ -26,6 +26,17 @@
 	<div id="products">
 		<div class="designers">
 		{% for designer in designers %}
+			{% if designer.user.first_name == 'Amit' %}
+			<div class="designer">
+				<div class="designer-image">
+					<img src="{{ STATIC_URL }}img/blank_profile.jpeg">
+				</div>
+				<h3>Your Name</h3>
+				<p class="product-description">
+        			Your bio
+    			</p>
+			</div>
+			{% else %}
 			<div class="designer">
 				<div class="designer-image">
 					<img src="{{ designer.image_url }}">
@@ -35,6 +46,7 @@
         			{{ designer.bio|safe}}
     			</p>
 			</div>
+			{% endif %}
 		{% endfor %}
 		</div>
 		<div class="designers-message">

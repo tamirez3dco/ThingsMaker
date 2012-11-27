@@ -336,7 +336,7 @@ COMPRESS_URL = STATIC_URL
 COMPRESS_ROOT = STATIC_ROOT
 
 LOGIN_REQUIRED_URLS = (
-    r'/(.*)$',
+#    r'/(.*)$',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$', 
@@ -394,3 +394,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.load_extra_data',
     'social_auth.backends.pipeline.user.update_user_details'
 )
+
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()

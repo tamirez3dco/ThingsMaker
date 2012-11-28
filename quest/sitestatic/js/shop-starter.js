@@ -31,7 +31,7 @@ function fastTransition(el1, el2, start){
 }
 function runRingAnimation(start) {
 	runSequence(['#ph','#im-r-l2', '#im-r-l3', '#im-r-l1'], start, [3,3,3]);
-	runSequence(['#ph','#im-r-r2', '#im-r-r3', '#im-r-r1'], start, [3,3,3]);
+	//runSequence(['#ph','#im-r-r2', '#im-r-r3', '#im-r-r1'], start, [3,3,3]);
 }
 
 function runPhoneAnimation(start) {

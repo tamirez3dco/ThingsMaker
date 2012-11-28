@@ -2986,7 +2986,7 @@ padding: 20px;
 #home-banner {
 	position:relative;
 	width: 986px;
-	height: 350px;
+	height: 320px;
 	margin:  0;
 	margin-left: -10px;  
 	margin-right:200px;
@@ -3007,7 +3007,7 @@ padding: 20px;
 
 #slideshow {
 	width: 986px;
-	height: 350px;
+	height: 320px;
 	padding: 0;  
     margin:  0;  
     clear: none;

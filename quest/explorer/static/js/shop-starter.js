@@ -1,96 +1,70 @@
 var TMInterval = 20;
 var TMlast = 30;
 var TMCanLoad=true;
+function runTransition(start, duration, el1, el2){
+	duration = duration*1000;
+	start = start*1000;
+	setTimeout(function() {
+		$(el1).animate({opacity: 0}, duration);
+	} , start);
+	
+	setTimeout(function() {
+		$(el2).css('opacity', 0);
+		$(el2).css('display', 'block');
+		$(el2).animate({opacity: 1}, duration)
+	} , start);	
+}
+
+function runSequence(imList, start, durations){
+	for(var i=0; i<(imList.length-1); i++){
+		runTransition(start, durations[i], imList[i], imList[i+1]);
+		start=start+durations[i];
+	}
+}
+
+function fastTransition(el1, el2, start){
+	start = start*1000;
+	setTimeout(function() {
+		$(el2).css('display', 'block');
+		$(el1).css('display', 'none');
+	} , start);
+}
+function runRingAnimation(start) {
+	setTimeout(function() {
+		$('#im-r-l1').css('display', 'block');
+		$('#im-r-r1').css('display', 'block');
+	} , start*1000);
+	runSequence(['#im-r-l1', '#im-r-l2', '#im-r-l3'], start+2, [3,3]);
+	runSequence(['#im-r-r1', '#im-r-r2', '#im-r-r3'], start+2, [3,3]);
+	setTimeout(function() {
+		//$('#im-r-l1').css('display', 'none');
+		//$('#im-r-r1').css('display', 'none');
+	} , (start+8)*1000);
+}
+
+function runPhoneAnimation(start) {
+	setTimeout(function() {
+		//$('#im-p-l1').css('display', 'block');
+		//$('#im-p-c1').css('display', 'block');
+		//$('#im-p-r1').css('display', 'block');
+	} , start*1000);
+		
+	runSequence(['#im-p-l1', '#im-p-l2', '#im-p-l3', '#im-p-l4'], start+2, [3,3,3]);
+	runSequence(['#im-p-c1', '#im-p-c2', '#im-p-c1'], start+2, [4,4]);
+	runSequence(['#im-p-r1', '#im-p-r2', '#im-p-r1'], start+2, [4,4]);
+	
+	fastTransition('#im-p-l4', '#im-p-l5', start+11);
+	fastTransition('#im-p-l5', '#im-p-l6', start+11.8);
+	fastTransition('#im-p-l6', '#im-p-l7', start+12.6);
+	fastTransition('#im-p-l7', '#im-p-l8', start+13.4);
+}
 function runAnimation(){
-	/*amit test*/
 	$('#banner-bg').css('display', 'block');
-	$('#iml1').css('display', 'block');
-	$('#imc1').css('display', 'block');
-	$('#imr1').css('display', 'block');
-	$('#hpbutton').css('display', 'block');
-	
-	var delayCounter = 0;
-	//$("#im1").animate({opacity: 0}, 10000);
-	
-	//Left
-	/////
-	var pause=2000;
-	var duration=3000;
-	delayCounter+=pause;
-	setTimeout(function() {
-		$("#iml1").animate({opacity: 0}, 3000);
-	} , 2000);
-	
-	setTimeout(function() {
-		$('#iml2').css('opacity', 0);
-		$('#iml2').css('display', 'block');
-		$("#iml2").animate({opacity: 1}, 3000)
-	} , 2000);
-	
-	//delayCounter+=duration;	
-	
-	//////
-	pause=0;
-	duration=3000;
-	delayCounter+=pause;
-	setTimeout(function() {
-		//$('#iml2').css('display', 'none');
-		$("#iml2").animate({opacity: 0}, 3000);
-	} , 5000);
-	
-	
-	setTimeout(function() {
-		$('#iml3').css('opacity', 0);
-		$('#iml3').css('display', 'block');
-		$("#iml3").animate({opacity: 1}, 3000);
-	} , 5000);
-	
-
-	setTimeout(function() {
-		$('#iml4').css('display', 'block');
-		$('#iml3').css('display', 'none');
-	} , 8000);
-	setTimeout(function() {
-		$('#iml5').css('display', 'block');
-		$('#iml4').css('display', 'none');
-	} , 8600);
-	setTimeout(function() {
-		$('#iml6').css('display', 'block');
-		$('#iml5').css('display', 'none');
-	} , 9200);
-	setTimeout(function() {
-		$('#iml7').css('display', 'block');
-		$('#iml6').css('display', 'none');
-	} , 9800);
-	setTimeout(function() {
-		$('#iml8').css('display', 'block');
-		$('#iml7').css('display', 'none');
-	} , 10400);
-		
-
-	//Center
-	setTimeout(function() {
-		$("#imc1").animate({opacity: 0}, 5000);
-	} , 3000);
-	
-	setTimeout(function() {
-		$('#imc2').css('opacity', 0);
-		$('#imc2').css('display', 'block');
-		$("#imc2").animate({opacity: 1}, 5000)
-	} , 3000);
-		
-
-	//Right
-	setTimeout(function() {
-		$("#imr1").animate({opacity: 0}, 5000);
-	} , 500);
-	
-	setTimeout(function() {
-		$('#imr2').css('opacity', 0);
-		$('#imr2').css('display', 'block');
-		$("#imr2").animate({opacity: 1}, 5000)
-	} , 500);	
-	
+	runRingAnimation(0);
+	runTransition(8, 3, '#im-r-l3', '#im-p-l1');
+	runTransition(8, 3, '#im-r-c3', '#im-p-c1');
+	runTransition(8, 3, '#im-r-r3', '#im-p-r1');
+	runPhoneAnimation(11);	
 }
 $(function() {
 	/*$('#slideshow').cycle({ 

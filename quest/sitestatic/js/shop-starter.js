@@ -47,6 +47,7 @@ function runPhoneAnimation(start) {
 function runAnimation(){
 	$('#banner-bg').css('display', 'block');
 	$('#hpbutton').css('display', 'block');
+	$('#hppreview').css('display', 'block');
 	runRingAnimation(0);
 	runTransition(10, 3, '#im-r-l1', '#im-p-l1');
 	runTransition(10, 3, '#im-r-c1', '#im-p-c1');

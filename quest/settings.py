@@ -2,6 +2,7 @@
 import os
 import os.path
 import imp
+import socket
 import djcelery
 #from boto.s3.connection. import CallingFormat
 from datetime import timedelta
@@ -11,20 +12,52 @@ import dj_database_url
 djcelery.setup_loader()
 
 
+LOCAL_HOSTNAMES= ('Amits-MacBook-Air.local',)
+
+
+
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 def get_environment_file_path(env):
     return os.path.join(PROJECT_ROOT, 'config', '%s.py' % env)
 
-ENV = os.environ['APP_ENV']
-config = imp.load_source('env_settings', get_environment_file_path(ENV))
-from env_settings import *
+def get_cache():
+    try:
+        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
+        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+        return {
+          'default': {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'LOCATION': os.environ['MEMCACHIER_SERVERS'],
+            'TIMEOUT': 36000,
+            'BINARY': True,
+          }
+        }
+    except:
+        return {
+          'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+          }
+        }
+
+
+HOSTNAME = socket.gethostname()
+if 'APP_ENV' in os.environ:
+    ENV = os.environ['APP_ENV']
+elif HOSTNAME in LOCAL_HOSTNAMES:
+    ENV = 'development'
+
+try:
+    config = imp.load_source('env_settings', get_environment_file_path(ENV))
+    from env_settings import *
+except IOError:
+    exit("No configuration file found for env '%s'" % ENV)
+
 
 DIRNAME = os.path.dirname(__file__)
 
 
-DEBUG = False 
-#DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
@@ -36,50 +69,15 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-
-
-DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '../quest.db', 'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': '',}}
-#DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-
-#  Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
 TIME_ZONE = 'America/Chicago'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en'
-
 SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
+
 MEDIA_ROOT = DIRNAME + "/media"
-
-# static files settings
-#STATIC_URL = '/static/'
-#if DEBUG:
 STATIC_ROOT = DIRNAME + '/sitestatic/'
-#else:
-#STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
-
-STATIC_URL = 'http://ez3d_statics2.s3.amazonaws.com/'+STATIC_DIR_S3+'/'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
-#MEDIA_URL = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/admin/'
 
 # Make this unique, and don't share it with anybody.
@@ -332,6 +330,7 @@ CELERYBEAT_SCHEDULE = {
         "args": ()
     }
 }
+
 AWS_QUERYSTRING_AUTH=False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = 'AKIAJ4FEEKD3KIPZASTQ'
@@ -341,8 +340,9 @@ AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 
 STATIC_FILES_BUCKET = 'ez3d_statics2'
 
-STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
-COMPRESS_STORAGE = STATICFILES_STORAGE
+if not DEBUG:
+    STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
+    COMPRESS_STORAGE = 's3utils.CachedS3BotoStorage'
 
 COMPRESS_URL = STATIC_URL
 COMPRESS_ROOT = STATIC_ROOT
@@ -359,26 +359,6 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/feedback',
     #r'/explorer',
 )
-
-def get_cache():
-    try:
-        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']
-        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
-        return {
-          'default': {
-            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': os.environ['MEMCACHIER_SERVERS'],
-            'TIMEOUT': 36000,
-            'BINARY': True,
-          }
-        }
-    except:
-        return {
-          'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-          }
-        }
 
 COMPRESS_ENABLED = True
 CACHES = get_cache()
@@ -406,7 +386,3 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.load_extra_data',
     'social_auth.backends.pipeline.user.update_user_details'
 )
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()

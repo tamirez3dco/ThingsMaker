@@ -1,1 +1,1 @@
-STATIC_DIR_S3 = 'stage'
+STATIC_DIR_S3 = 'production'

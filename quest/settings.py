@@ -58,7 +58,8 @@ MEDIA_ROOT = DIRNAME + "/media"
 STATIC_ROOT = DIRNAME + '/sitestatic/'
 #else:
 #STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
-STATIC_URL = 'http://ez3d_statics2.s3.amazonaws.com/stage/'
+STATIC_DIR_S3 = 'stage'
+STATIC_URL = 'http://ez3d_statics2.s3.amazonaws.com/'+STATIC_DIR_S3+'/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).

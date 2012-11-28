@@ -25,7 +25,7 @@ class CachedS3BotoStorage(S3BotoStorage):
     def __init__(self, *args, **kwargs):
         kwargs['bucket'] = settings.STATIC_FILES_BUCKET
         kwargs['custom_domain'] = domain(settings.STATIC_URL)
-        kwargs['location'] = 'sitestatic'
+        kwargs['location'] = settings.STATIC_DIR_S3
         super(CachedS3BotoStorage, self).__init__(*args, **kwargs)
         self.local_storage = get_storage_class(
             "compressor.storage.CompressorFileStorage")()

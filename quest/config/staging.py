@@ -1,0 +1,1 @@
+STATIC_DIR_S3 = 'stage'

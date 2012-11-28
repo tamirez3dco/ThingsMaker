@@ -1,6 +1,7 @@
 # python imports
 import os
 import os.path
+import imp
 import djcelery
 #from boto.s3.connection. import CallingFormat
 from datetime import timedelta
@@ -8,6 +9,16 @@ from django.utils.translation import gettext_lazy as _
 import dj_database_url
 
 djcelery.setup_loader()
+
+
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+def get_environment_file_path(env):
+    return os.path.join(PROJECT_ROOT, 'config', '%s.py' % env)
+
+ENV = os.environ['APP_ENV']
+config = imp.load_source('env_settings', get_environment_file_path(ENV))
+from env_settings import *
 
 DIRNAME = os.path.dirname(__file__)
 
@@ -58,7 +69,7 @@ MEDIA_ROOT = DIRNAME + "/media"
 STATIC_ROOT = DIRNAME + '/sitestatic/'
 #else:
 #STATIC_ROOT = 'http://ez3d_static_files.s3.amazonaws.com/sitestatic/'
-STATIC_DIR_S3 = 'stage'
+
 STATIC_URL = 'http://ez3d_statics2.s3.amazonaws.com/'+STATIC_DIR_S3+'/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a

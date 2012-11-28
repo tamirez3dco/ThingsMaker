@@ -31,11 +31,11 @@ function fastTransition(el1, el2, start){
 }
 function runRingAnimation(start) {
 	setTimeout(function() {
-		$('#im-r-l3').css('display', 'block');
-		$('#im-r-r3').css('display', 'block');
+		//$('#im-r-l3').css('display', 'block');
+		//$('#im-r-r3').css('display', 'block');
 	} , start*1000);
-	runSequence(['#im-r-l3', '#im-r-l2', '#im-r-l1'], start+2, [3,3]);
-	runSequence(['#im-r-r3', '#im-r-r2', '#im-r-r1'], start+2, [3,3]);
+	runSequence(['#ph','#im-r-l3', '#im-r-l2', '#im-r-l1'], start+2, [3,3]);
+	runSequence(['#ph','#im-r-r3', '#im-r-r2', '#im-r-r1'], start+2, [3,3]);
 	setTimeout(function() {
 		//$('#im-r-l1').css('display', 'none');
 		//$('#im-r-r1').css('display', 'none');
@@ -60,6 +60,7 @@ function runPhoneAnimation(start) {
 }
 function runAnimation(){
 	$('#banner-bg').css('display', 'block');
+	$('#hpbutton').css('display', 'block');
 	runRingAnimation(0);
 	runTransition(8, 3, '#im-r-l1', '#im-p-l1');
 	runTransition(8, 3, '#im-r-c1', '#im-p-c1');

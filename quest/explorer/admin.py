@@ -8,6 +8,13 @@ import cPickle as pickle
 from django.utils import simplejson
 import uuid
 
+class PickleField(forms.CharField):
+    def clean(self, value):
+        #try:
+        return simplejson.loads(str(value))
+        #except:
+        #    raise ValidationError
+        
 def preprocess_items(modeladmin, request, queryset):
     definition = queryset[0]
     controller = Controller('Default', 1)
@@ -37,14 +44,13 @@ def process_ghx(modeladmin, request, queryset):
     controller = Controller()
     controller.process_ghx(definition)
 process_ghx.short_description = "Process GHX file"
-      
-class PickleField(forms.CharField):
-    def clean(self, value):
-        #try:
-        return simplejson.loads(str(value))
-        #except:
-        #    raise ValidationError
+
+def check_3dm(modeladmin, request, queryset):
+    for definition in queryset:
+        definition.check_3dm()
         
+check_3dm.short_description = "Check 3dm"
+    
 class GhDefinitionAdminForm( forms.ModelForm ):  
     name = forms.CharField( max_length = 255, required = False ) 
     file_name = forms.CharField( max_length = 255, required = True )
@@ -77,7 +83,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'uploaded_file_name','file_name','scene_file','active','accepts_text_params' )
     fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
     form = GhDefinitionAdminForm
-    actions = [preprocess_items, send_background_items, set_sent, process_ghx]
+    actions = [preprocess_items, send_background_items, set_sent, process_ghx, check_3dm]
     def save_model(self, request, obj, form, change):
         form.default_material = Material.objects.all()[1]
         obj.default_material = Material.objects.all()[1]
@@ -103,12 +109,11 @@ class GhDefinitionAdmin(admin.ModelAdmin):
             return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
 
     
-
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','base_param_hash','textParam','uuid', 'image_url')
     list_filter = ('definition','status')  
     fields = ('definition','status','params','base_param_hash','textParam','uuid', 'image_url') 
-
+     
 class DefinitionParamAdmin(admin.ModelAdmin):
     list_display = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')
     list_filter = ('definition',)   

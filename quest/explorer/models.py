@@ -3,7 +3,11 @@ import uuid
 from django.db import models
 #import cPickle as pickle
 from django.utils import simplejson as pickle
+from django.conf import settings
 from south.modelsinspector import add_introspection_rules
+import boto
+from boto.s3.key import Key
+from boto.s3.connection import OrdinaryCallingFormat
 #from lfs.catalog.models import Product
 #from lfs.catalog.models import Product
 
@@ -139,6 +143,7 @@ class GhDefinition(models.Model):
     def set_file_name(self):
         parts = self.current_file_name.split('.')
         self.file_name = "%s%s.%s" % (parts[0],self.ADJUSTED_SUFFIX ,parts[1])
+        
     def set_defaults(self):
         parts = self.uploaded_file_name.split('.',2)
         self.name = parts[0]
@@ -150,7 +155,20 @@ class GhDefinition(models.Model):
         for m in materials:
             dm = DefinitionMaterial(definition=self, material = m)
             dm.save()
-               
+    
+    def check_3dm(self):
+        conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, calling_format=OrdinaryCallingFormat())
+        bucket = conn.get_bucket(settings.BASE_MODELS_BUCKET)
+        k = Key(bucket)
+        items = Item.objects.filter(definition=self)
+        for item in items:
+            k.key = item.get_3dm_key()
+            exists = k.exists()
+            print "%s %s" % (item.uuid, exists)
+            if exists:
+                item.has_3dm = True
+                item.save()    
+                    
     def __unicode__(self):
         return self.name
 
@@ -222,6 +240,7 @@ class Item(models.Model):
     param_hash = models.CharField(max_length=100, null=True, db_index=True)
     base_param_hash = models.CharField(max_length=100, null=True, db_index=True)
     rendering_view = models.CharField(max_length=200, default="")
+    has_3dm = models.BooleanField(default=True)
     
     CREATED = 'CR'
     SENT = 'SE'
@@ -234,17 +253,13 @@ class Item(models.Model):
                               default=CREATED)
     
     num_trials = models.IntegerField(default=0)
-    
-    
+        
     def __unicode__(self):
         return str(self.id)
-
-#class DefinitionReps(models.Model):
-#    definition = models.ForeignKey(GhDefinition)
-#    item = models.ForeignKey(GhDefinition)
-#    param_name = models.CharField(max_length=100)
-#    param_val = 
-
+        
+    def get_3dm_key(self):
+        return self.uuid + '.3dm'
+    
 class ExplorerConfig(models.Model):
     id = models.AutoField(primary_key=True)
     k = models.CharField(max_length=32)

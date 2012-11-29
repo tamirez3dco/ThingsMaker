@@ -338,6 +338,7 @@ AWS_S3_SECURE_URLS=False
 AWS_STORAGE_BUCKET_NAME = 'ez3d_media'
 
 STATIC_FILES_BUCKET = 'ez3d_statics2'
+BASE_MODELS_BUCKET = 'deploy_stl_Bucket'
 
 if not DEBUG:
     STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'

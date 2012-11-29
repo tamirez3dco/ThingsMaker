@@ -51,3 +51,8 @@ def manage_servers():
 def send_background_items():
     controller = Controller()  
     controller.send_background_items()
+    
+@task()
+def check_3dm(definitions):
+    for definition in definitions:
+        definition.check_3dm()

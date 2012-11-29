@@ -169,7 +169,7 @@ class GhDefinition(models.Model):
             print "%s %s" % (item.uuid, exists)
             if exists:
                 for_update.append(item.pk)
-            if len(for_update)>=100:
+            if len(for_update)>=1000:
                 Item.objects.filter(pk__in=for_update).update(has_3dm=True)
                 for_update=[]
         if len(for_update)>0:

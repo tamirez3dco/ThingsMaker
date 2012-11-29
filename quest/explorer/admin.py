@@ -7,6 +7,7 @@ from django import forms
 import cPickle as pickle
 from django.utils import simplejson
 import uuid
+import explorer.tasks
 
 class PickleField(forms.CharField):
     def clean(self, value):
@@ -46,8 +47,7 @@ def process_ghx(modeladmin, request, queryset):
 process_ghx.short_description = "Process GHX file"
 
 def check_3dm(modeladmin, request, queryset):
-    for definition in queryset:
-        definition.check_3dm()
+    explorer.tasks.check_3dm.apply_async(args=[queryset])
 check_3dm.short_description = "Check 3dm"
     
 def risky_delete(modeladmin, request, queryset):

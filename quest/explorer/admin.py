@@ -111,7 +111,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
             return GhDefinitionAddAdminForm
             #return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
         else:
-            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
+            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache','material_title')
             return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
 
     

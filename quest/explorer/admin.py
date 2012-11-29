@@ -83,7 +83,7 @@ class GhDefinitionAddAdminForm( forms.ModelForm ):
         
 class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'uploaded_file_name','file_name','scene_file','active','accepts_text_params' )
-    fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache','material_title')
+    fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent, process_ghx, check_3dm]
     def save_model(self, request, obj, form, change):
@@ -107,13 +107,13 @@ class GhDefinitionAdmin(admin.ModelAdmin):
             return GhDefinitionAddAdminForm
             #return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
         else:
-            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache','material_title')
+            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
             return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
 
     
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','base_param_hash','textParam','uuid', 'image_url','has_3dm')
-    list_filter = ('definition','status','has_3dm')  
+    list_filter = ('definition','status')  
     fields = ('definition','status','params','base_param_hash','textParam','uuid', 'image_url') 
      
 class DefinitionParamAdmin(admin.ModelAdmin):

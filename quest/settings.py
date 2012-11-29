@@ -13,8 +13,8 @@ djcelery.setup_loader()
 
 
 LOCAL_HOSTNAMES= ('Amits-MacBook-Air.local',)
-
-
+HOSTNAME = socket.gethostname()
+#print HOSTNAME
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
@@ -42,7 +42,6 @@ def get_cache():
         }
 
 
-HOSTNAME = socket.gethostname()
 if 'APP_ENV' in os.environ:
     ENV = os.environ['APP_ENV']
 elif HOSTNAME in LOCAL_HOSTNAMES:

@@ -1359,9 +1359,10 @@ ___________________________________________________________________________ */
    bottom:0;
    width:100%;
 	background-color: #4d4d4d;
-	height:40px;
+	height:38px;
 	border-top: 1px solid white;
 	z-index: 9999;
+	border-bottom: 0px solid #545454;
 }
 
 #footer .container {

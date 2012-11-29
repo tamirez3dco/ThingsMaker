@@ -163,15 +163,20 @@ class GhDefinition(models.Model):
         k = Key(bucket)
         items = Item.objects.filter(definition=self, has_3dm=False)
         for_update = []
+        counter=0
         for item in items:
             k.key = item.get_3dm_key()
             exists = k.exists()
-            print "%s %s" % (item.uuid, exists)
+            print "%s %s %s" % (counter, item.uuid, exists)
             if exists:
                 for_update.append(item.pk)
             if len(for_update)>=1000:
+                print "Saving.."
                 Item.objects.filter(pk__in=for_update).update(has_3dm=True)
                 for_update=[]
+                
+            counter+=1
+            
         if len(for_update)>0:
             Item.objects.filter(pk__in=for_update).update(has_3dm=True)        
                     

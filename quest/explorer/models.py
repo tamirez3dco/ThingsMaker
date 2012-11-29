@@ -152,6 +152,7 @@ class GhDefinition(models.Model):
         self.active = True
         self.use_cache = True
         self.default_material = get_material()
+        self.material_title = 'Material'
         materials = Material.objects.all()
         for m in materials:
             dm = DefinitionMaterial(definition=self, material = m)

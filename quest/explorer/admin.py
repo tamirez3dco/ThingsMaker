@@ -54,7 +54,8 @@ check_3dm.short_description = "Check 3dm"
 def risky_delete(modeladmin, request, queryset):
     for definition in queryset:
         definition.delete()    
-    
+risky_delete.short_description = "Delete without confirmation"
+  
 class GhDefinitionAdminForm( forms.ModelForm ):  
     name = forms.CharField( max_length = 255, required = False ) 
     file_name = forms.CharField( max_length = 255, required = True )
@@ -89,7 +90,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'uploaded_file_name','file_name','scene_file','active','accepts_text_params' )
     fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
     form = GhDefinitionAdminForm
-    actions = [preprocess_items, send_background_items, set_sent, process_ghx, check_3dm]
+    actions = [preprocess_items, send_background_items, set_sent, process_ghx, check_3dm,risky_delete]
     def save_model(self, request, obj, form, change):
         form.default_material = Material.objects.all()[1]
         obj.default_material = Material.objects.all()[1]

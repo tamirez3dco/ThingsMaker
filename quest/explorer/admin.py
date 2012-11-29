@@ -68,7 +68,7 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     current_file_name = forms.CharField( max_length = 255, required = False ) 
     uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
     material_title = forms.CharField( max_length = 20, required = False ) 
-
+    
 class GhDefinitionAddAdminForm( forms.ModelForm ): 
     class Meta:
         model = GhDefinition
@@ -117,7 +117,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id','definition','status','params','base_param_hash','textParam','uuid', 'image_url','has_3dm')
-    list_filter = ('definition','status')  
+    list_filter = ('definition','status','has_3dm')  
     fields = ('definition','status','params','base_param_hash','textParam','uuid', 'image_url') 
      
 class DefinitionParamAdmin(admin.ModelAdmin):

@@ -63,6 +63,7 @@ class GhDefinitionAdminForm( forms.ModelForm ):
     uploaded_file = forms.FileField(required=False)
     current_file_name = forms.CharField( max_length = 255, required = False ) 
     uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
+    material_title = forms.CharField( max_length = 20, required = False ) 
 
 class GhDefinitionAddAdminForm( forms.ModelForm ): 
     class Meta:
@@ -78,10 +79,11 @@ class GhDefinitionAddAdminForm( forms.ModelForm ):
     uploaded_file = forms.FileField(required=False)
     current_file_name = forms.CharField( max_length = 255, required = False ) 
     uploaded_file_name = forms.CharField( max_length = 255, required = False ) 
+    material_title = forms.CharField( max_length = 20, required = False ) 
         
 class GhDefinitionAdmin(admin.ModelAdmin):
     list_display = ('name', 'uploaded_file_name','file_name','scene_file','active','accepts_text_params' )
-    fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
+    fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache','material_title')
     form = GhDefinitionAdminForm
     actions = [preprocess_items, send_background_items, set_sent, process_ghx, check_3dm]
     def save_model(self, request, obj, form, change):
@@ -105,7 +107,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
             return GhDefinitionAddAdminForm
             #return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
         else:
-            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache')
+            self.fields = ('uploaded_file','name','uploaded_file_name','file_name','base_definition','scene_file','active','accepts_text_params', 'default_material','use_cache','material_title')
             return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
 
     

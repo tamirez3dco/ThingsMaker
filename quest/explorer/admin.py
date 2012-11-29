@@ -48,7 +48,6 @@ process_ghx.short_description = "Process GHX file"
 def check_3dm(modeladmin, request, queryset):
     for definition in queryset:
         definition.check_3dm()
-        
 check_3dm.short_description = "Check 3dm"
     
 def risky_delete(modeladmin, request, queryset):

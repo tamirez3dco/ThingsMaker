@@ -161,14 +161,19 @@ class GhDefinition(models.Model):
         conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, calling_format=OrdinaryCallingFormat())
         bucket = conn.get_bucket(settings.BASE_MODELS_BUCKET)
         k = Key(bucket)
-        items = Item.objects.filter(definition=self)
+        items = Item.objects.filter(definition=self, has_3dm=False)
+        for_update = []
         for item in items:
             k.key = item.get_3dm_key()
             exists = k.exists()
             print "%s %s" % (item.uuid, exists)
             if exists:
-                item.has_3dm = True
-                item.save()    
+                for_update.append(item.pk)
+            if len(for_update)>=100:
+                Item.objects.filter(pk__in=for_update).update(has_3dm=True)
+                for_update=[]
+        if len(for_update)>0:
+            Item.objects.filter(pk__in=for_update).update(has_3dm=True)        
                     
     def __unicode__(self):
         return self.name

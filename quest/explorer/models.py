@@ -241,7 +241,7 @@ class Item(models.Model):
     param_hash = models.CharField(max_length=100, null=True, db_index=True)
     base_param_hash = models.CharField(max_length=100, null=True, db_index=True)
     rendering_view = models.CharField(max_length=200, default="")
-    #has_3dm = models.BooleanField(default=False)
+    has_3dm = models.BooleanField(default=False)
     
     CREATED = 'CR'
     SENT = 'SE'

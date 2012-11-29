@@ -51,6 +51,10 @@ def check_3dm(modeladmin, request, queryset):
         
 check_3dm.short_description = "Check 3dm"
     
+def risky_delete(modeladmin, request, queryset):
+    for definition in queryset:
+        definition.delete()    
+    
 class GhDefinitionAdminForm( forms.ModelForm ):  
     name = forms.CharField( max_length = 255, required = False ) 
     file_name = forms.CharField( max_length = 255, required = True )

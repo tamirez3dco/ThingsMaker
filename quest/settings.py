@@ -342,7 +342,10 @@ STATIC_FILES_BUCKET = 'ez3d_statics2'
 if not DEBUG:
     STATICFILES_STORAGE = 's3utils.CachedS3BotoStorage'
     COMPRESS_STORAGE = 's3utils.CachedS3BotoStorage'
-
+    COMPRESS_ENABLED = True
+else:
+    COMPRESS_ENABLED = False
+    
 COMPRESS_URL = STATIC_URL
 COMPRESS_ROOT = STATIC_ROOT
 
@@ -359,7 +362,6 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     #r'/explorer',
 )
 
-COMPRESS_ENABLED = True
 CACHES = get_cache()
 COMPRESS_CACHE_BACKEND = 'dummy:///'
 

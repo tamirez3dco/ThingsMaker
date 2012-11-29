@@ -168,6 +168,7 @@ class GhDefinition(models.Model):
             k.key = item.get_3dm_key()
             exists = k.exists()
             print "%s %s %s" % (counter, item.uuid, exists)
+            
             if exists:
                 for_update.append(item.pk)
             if len(for_update)>=1000:

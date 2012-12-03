@@ -348,26 +348,26 @@ def tabs(context, obj=None):
         num_cart_items = len(cart.get_items())
         
     tabs = Action.objects.filter(active=True , group=1)
-    if isinstance(obj, (Product, Category)):
-        print "AA %s" % "BBBB"
-        top_category = lfs.catalog.utils.get_current_top_category(request, obj)
-        if top_category:
-            for tab in tabs:
-                if top_category.get_absolute_url().find(tab.link) != -1:
-                    tab.selected = True
-                    break
-    else:
-        for tab in tabs:
-            urlStr = tab.link.replace("%7B","{")
-            urlStr = urlStr.replace("%7D","}")
-            urlStr = urlStr.replace("%22",'"')
-            
-            print "AA %s" % urlStr
-            
-            if request.path.find(urlStr) != -1:
-                tab.selected = True
-                break
-
+#    if isinstance(obj, (Product, Category)):
+#        print "AA %s" % "BBBB"
+#        top_category = lfs.catalog.utils.get_current_top_category(request, obj)
+#        if top_category:
+#            for tab in tabs:
+#                if top_category.get_absolute_url().find(tab.link) != -1:
+#                    tab.selected = True
+#                    break
+#    else:
+    for tab in tabs:
+        urlStr = tab.link.replace("%7B","{")
+        urlStr = urlStr.replace("%7D","}")
+        urlStr = urlStr.replace("%22",'"')
+        
+        print "AA %s" % urlStr
+        print "CC %s" % request.path
+        if request.path.find(urlStr) != -1:
+            tab.selected = True
+            break
+        
     return {
         "tabs": tabs,
         "num_cart_items": num_cart_items,

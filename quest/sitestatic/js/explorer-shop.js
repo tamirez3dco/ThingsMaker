@@ -16,7 +16,7 @@ function create_product_html(product)
 			   '<p class="home-product-price">$'+ product.price.toFixed(2) + '</p></a>' +
 			   '<div class="home-product-hover">'+
 			   '<div class="'+ likeClass +'" slug="' + product.slug + '" onclick="return hart_clicked(this)" alt="loveme"><span>' + product.lovers +'</span></div>'+
-			   '<div class="home-product-customize"><a href="/create?start_product='+ product.slug + '&material=' + product.material + '&textParam=' + product.text + '&product_type=variant">Customize</a></div>'+
+			   '<div class="home-product-customize"><a href="/create/wizard?start_product='+ product.slug + '&material=' + product.material + '&textParam=' + product.text + '&product_type=variant">Customize</a></div>'+
 			   '</div>'+
 			   + '</div>';	
 	return html;

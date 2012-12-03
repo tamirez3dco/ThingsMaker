@@ -29,7 +29,7 @@ urlpatterns += patterns("",
 )
 
 urlpatterns += patterns("",
-    (r'^create','explorer.views.create'),
+    (r'^create/wizard$','explorer.views.create'),
     (r'^explorer/add_product_variant','explorer.views.add_product_variant'),
     (r'^explorer/get_stl','explorer.views.get_stl'),
     (r'^explorer/set_product_name','explorer.views.set_product_name'),

@@ -40,6 +40,7 @@ urlpatterns += patterns('lfs.cart.views',
 # Catalog
 urlpatterns += patterns('lfs.catalog.views',
     url(r'^products$', "all_products"),
+    url(r'^create$', "all_products"),
     url(r'^designers', "designers"),
     url(r'^category-(?P<slug>[-\w]*)$', "category_view", name="lfs_category"),
     url(r'^product/(?P<slug>[-\w]*)$', "product_view", name="lfs_product"),

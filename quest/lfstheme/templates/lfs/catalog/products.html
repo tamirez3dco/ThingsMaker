@@ -23,14 +23,14 @@
 			<div class="products-product">
 				<h3>{{ product.name }}</h3>
 				<div class="products-product-inner">
-					<a href="/create?start_product={{ product.slug }}">
+					<a href="/create/wizard?start_product={{ product.slug }}">
 						<img src="{{ product.get_image }}">
 					</a>
 					<p class="product-description">
 	        			{{ product.get_description|safe}}
 	    			</p>
 	    			<div class="buttons">
-		    			<a class="button left emphasized" href="/create?start_product={{ product.slug }}">
+		    			<a class="button left emphasized" href="/create/wizard?start_product={{ product.slug }}">
 		           			{% trans 'Make Yours' %}
 		       			</a>
 	       			</div>

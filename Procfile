@@ -1,2 +1,2 @@
 web: newrelic-admin run-program python quest/manage.py runserver "0.0.0.0:$PORT" --noreload
-celeryd: python quest/manage.py collectstatic -i flags -i jquery -i tiny_mce --noinput; python quest/manage.py celeryd -E -B --loglevel=WARNING -I explorer.tasks
+celeryd: python quest/manage.py collectstatic -i flags -i jquery -i tiny_mce-3.5b3 -i admin -i blueprint --noinput; python quest/manage.py celeryd -E -B --loglevel=WARNING -I explorer.tasks

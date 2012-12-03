@@ -380,7 +380,8 @@ class Base:
             #print to_send[i].base_param_hash
             self.material = to_send[i].material
             self._send_jobs(to_send[i].definition, [to_send[i].uuid], None, [to_send[i].get_params()], 0, "", get_stl=True, low_priority=True)
-            
+            to_send[i].has_3dm = True
+            to_send[i].save()
     def preprocess_definition(self, definition):
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         param_values = map(lambda x: x.get_values(), db_params)

@@ -257,9 +257,9 @@ class Base:
             params[param_index].value = param
             params_list.append(params)
      
-        for pp in params_list:
-            for p in pp.params:
-                print "%s %s" % (p.base.name, p.value)
+        #for pp in params_list:
+        #    for p in pp.params:
+        #        print "%s %s" % (p.base.name, p.value)
         return (selected,params_list)
    
     def _get_initial_page_params(self, definition):
@@ -363,7 +363,7 @@ class Base:
         return old_obj
    
     def send_background_items(self, definition=None):
-        max_wait = 100
+        max_wait = 1
         #print settings.CELERYBEAT_SCHEDULE
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
@@ -375,7 +375,8 @@ class Base:
        
         print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 
         for i in range(min(can_send,not_sent.count())):
-            print not_sent[i].uuid
+            print "%s %s" % (not_sent[i].uuid,not_sent[i].base_param_hash)
+            #print not_sent[i].base_param_hash
             self.material = not_sent[i].material
             self._send_jobs(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].get_params()], 0, "", get_stl=True, low_priority=True)
             

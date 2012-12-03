@@ -21,7 +21,7 @@ CELERYBEAT_SCHEDULE = {
     },
     "send-background-items": {
         "task": "explorer.tasks.send_background_items",
-        "schedule": timedelta(seconds=120),
+        "schedule": timedelta(seconds=60),
         "args": ()
     }
 }

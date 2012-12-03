@@ -207,7 +207,7 @@ class Base:
     def item_to_product(self, item):
         base = None
         if item.definition.base_definition != None:
-            base = self._get_base_cache(item.definition.base_definition, item.params) 
+            base = self._get_base_cache(item.definition.base_definition, item.get_params().values()) 
             
         job = self._prepare_job(item.definition, item.uuid + '_' + 'Render', item.get_params(), item.textParam,'Render', item.material, 350, base_model=base)
         self.renderer.request_images_async([job]) 

@@ -107,7 +107,7 @@ class GhDefinitionAdmin(admin.ModelAdmin):
     
     def get_form(self, request, obj=None, **kwargs):
         if obj is None:       
-            self.fields = ('uploaded_file',)
+            self.fields = ('uploaded_file','base_definition')
             return GhDefinitionAddAdminForm
             #return super(GhDefinitionAdmin, self).get_form(request, obj, **kwargs)
         else:
@@ -123,7 +123,7 @@ class ItemAdmin(admin.ModelAdmin):
 class DefinitionParamAdmin(admin.ModelAdmin):
     list_display = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')
     list_filter = ('definition',)   
-    fields = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view')
+    fields = ('readable_name', 'name', 'definition', 'index','order', 'range_start', 'range_end', 'values', 'active','rendering_view','parent')
     
 class DefinitionMaterialAdmin(admin.ModelAdmin):
     list_display = ('definition', 'material')

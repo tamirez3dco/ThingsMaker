@@ -89,6 +89,7 @@ class Renderer:
             sys.stderr.write("\nRecieved results for "+str(body['item_id'])+"\n")                
 
     def get_ready_images(self):
+        print "get_ready_images"
         conn = SQSConnection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         q = conn.create_queue(self.q_ready)
         rs = q.get_messages(10)
@@ -111,7 +112,7 @@ class Renderer:
             
             items = Item.objects.filter(uuid=body['item_id'])
             if len(items) == 0:
-                q.delete_message(rs[i])
+                #q.delete_message(rs[i])
                 continue
             
             item = items[0]

@@ -1,5 +1,6 @@
 import math
 import uuid
+import copy
 from django.db import models
 #import cPickle as pickle
 from django.utils import simplejson as pickle
@@ -107,7 +108,7 @@ class GhDefinition(models.Model):
         for param in sliders:
             sliders_dict[param['new_name']]=param
 
-        for older in old_params:
+        for older in filter(lambda x: x.parent==None, old_params):
             if (not older.name in sliders_dict):
                 older.delete()    
         
@@ -139,7 +140,22 @@ class GhDefinition(models.Model):
         return True
     
     def param_names(self):
-        return map(lambda x: x.name, self.definitionparam_set.all().order_by('index','pk'))
+        return map(lambda x: x.name, self.get_params())
+    
+    
+    def get_params(self):
+        return self.definitionparam_set.all().order_by('index','pk')
+    
+#    def get_base_params(self):
+#        if self.base_definition is None:
+#            return []
+#        else:
+#            return self.base_definition.get_params()
+    
+    def get_initial_params(self):
+        db_params = DefinitionParam.objects.filter(definition=self, active=True).order_by('index','pk')
+        return MemParamList(map(lambda x: MemParam(x,x.get_initial_value()), db_params))
+        
     
     def set_file_name(self):
         parts = self.current_file_name.split('.')
@@ -157,6 +173,15 @@ class GhDefinition(models.Model):
         for m in materials:
             dm = DefinitionMaterial(definition=self, material = m)
             dm.save()
+        
+        if self.base_definition != None:
+            base_params = self.base_definition.get_params()
+            for p in base_params:
+                opk = p.pk
+                p.pk = None
+                p.definition = self
+                p.parent = DefinitionParam.objects.get(pk=opk)
+                p.save()
     
     def check_3dm(self):
         conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, calling_format=OrdinaryCallingFormat())
@@ -204,6 +229,8 @@ class DefinitionParam(models.Model):
     range_end = models.FloatField(default=1)
     rendering_view = models.CharField(max_length=200, null=True, blank=True)
     values = PickledObjectField(null=True, blank=True)
+    parent = models.ForeignKey('self', null=True)
+    #current_value = 0
     INTEGER = 'IN'
     FLOAT = 'FL'
     STRING = 'ST'
@@ -235,10 +262,26 @@ class DefinitionParam(models.Model):
     def __unicode__(self):
         #p = Product.objects.get(pk=self.definition.product)
         return "%s - %s" % (self.definition.id, self.readable_name)
-    
+
+class MemParam:
+    def __init__(self, base, value):
+        self.base = base
+        self.value = value
+
+class MemParamList:
+    def __init__(self, memparams):
+        self.params = memparams
+    def __getitem__(self, index):
+        return self.params[index]
+    def values(self):
+        return map(lambda x: x.value, self.params)
+    def base_values(self):
+        return map(lambda x: x.value, (filter(lambda x: x.base.parent != None, self.params)))
+    def copy(self):
+        return MemParamList(map(lambda x: copy.copy(x), self.params))
+          
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
-    price = models.DecimalField(max_digits=7, decimal_places=2)
     image_url = models.CharField(max_length=100, null=True)
     parent = models.ForeignKey('self', null=True)
     definition = models.ForeignKey(GhDefinition, db_index=True)
@@ -273,6 +316,13 @@ class Item(models.Model):
     def get_3dm_key(self):
         return self.uuid + '.3dm'
     
+    def get_raw_params(self):
+        return self.params
+    
+    def get_params(self):
+        db_params = DefinitionParam.objects.filter(definition=self.definition, active=True).order_by('index')
+        return MemParamList(map(lambda x: MemParam(x[0],x[1]), zip(db_params, self.get_raw_params())))     
+        
 class ExplorerConfig(models.Model):
     id = models.AutoField(primary_key=True)
     k = models.CharField(max_length=32)

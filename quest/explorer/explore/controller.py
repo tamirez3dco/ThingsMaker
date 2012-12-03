@@ -2,6 +2,7 @@ import random
 import math
 import sys
 import time
+import copy
 import logging
 from django.utils import simplejson
 from datetime import datetime
@@ -34,6 +35,12 @@ def all_params_perms(params):
                 np = [v] + perm
                 all_perms.append(np)
         return all_perms
+
+class Param:
+    def __init__(self, base, value):
+        self.base = base
+        self.value = value
+        
             
 class Base:
     """
@@ -112,15 +119,10 @@ class Base:
         materials = [self.material for i in range(len(params))]
         (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) = self._get_cached_items(self.definition, params, materials, self.text, param_index=self.param_index)
         explorer.tasks.send_jobs.apply_async(kwargs={'base_models': todo_bases, 'param_index': self.param_index}, args=[self.definition, todo_uuids, self.root, todo_params, self.material, 'iterate', self.text])
-        print selected
         return self._make_result(all_uuids, materials, [self.text for i in range(len(all_uuids))], selected)
-    
-    
-    def get_models(self, definition, parent, param_index):
-        params = self._get_children_params(self.definition, self.root, self.param_index, self.explore_type)
+        
     
     def _get_cached_items(self, definition, params, materials, text, param_index=None):
-        #self._get_base_cache(definition, params)
         all_uuids = []
         todo_uuids = []
         todo_params = []
@@ -133,7 +135,7 @@ class Base:
             
         for p,m in zip(params, materials):
             #param_key = self._item_param_hash(p, "", "","")
-            param_key = self._item_param_hash(p, m, text,view)
+            param_key = self._item_param_hash(p.values(), m, text,view)
             cached = Item.objects.filter(param_hash = param_key, definition = definition)
             
             if len(cached)>0 and (definition.use_cache==True):
@@ -150,7 +152,7 @@ class Base:
             else:
                 if (definition.base_definition!=None):
                     #print definition.base_definition.id
-                    param_key = self._item_param_hash(p, "", "","")
+                    param_key = self._item_param_hash(p.base_values(), "", "","")
                     print param_key
                     cached_base = Item.objects.filter(base_param_hash = param_key, definition = definition.base_definition, has_3dm=True)
                     
@@ -170,9 +172,9 @@ class Base:
                 todo_params.append(p)
                 all_uuids.append(new_uuid)
                 
-        logging.error("all %s, todo %s, cached %s" % (len(materials), len(todo_uuids), cache_count))
+        logging.error("new all %s, todo %s, cached %s" % (len(materials), len(todo_uuids), cache_count))
         return (all_uuids, todo_uuids, todo_params, todo_materials, todo_bases) 
-    
+        
     def _get_base_cache(self, definition, params):
         param_key = self._item_param_hash(params, "", "", "")
         cached = Item.objects.filter(base_param_hash = param_key, definition = definition)
@@ -207,12 +209,12 @@ class Base:
         if item.definition.base_definition != None:
             base = self._get_base_cache(item.definition.base_definition, item.params) 
             
-        job = self._prepare_job(item.definition, item.uuid + '_' + 'Render', item.params, item.textParam,'Render', item.material, 350, base_model=base)
+        job = self._prepare_job(item.definition, item.uuid + '_' + 'Render', item.get_params(), item.textParam,'Render', item.material, 350, base_model=base)
         self.renderer.request_images_async([job]) 
         
         jobs = []
         for view_name in ["Top","Front"]:
-            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.params, item.textParam,view_name, item.material, 350, base_model=base)) 
+            jobs.append(self._prepare_job(item.definition, item.uuid + '_' + view_name, item.get_params(), item.textParam,view_name, item.material, 350, base_model=base)) 
             
         self.renderer.request_images_async(jobs, countdown=1) 
         
@@ -221,24 +223,24 @@ class Base:
     
     def get_stl(self, item_id):
         item = Item.objects.get(uuid=item_id)
-        job = self._prepare_job(item.definition, item.uuid+ '-sw', item.params, item.textParam,"Render", item.material, 674, True)
+        job = self._prepare_job(item.definition, item.uuid+ '-sw', item.get_params(), item.textParam,"Render", item.material, 674, True)
         self.renderer.request_images_async([job]) 
-    
+  
     def _get_children_params(self, definition, root, param_index, explore_type ):
         if explore_type=='noop' and root!=None:
-            children_params = [root.params]
+            children_params = [root.get_params()]
             selected=-1
         else:
             (selected, children_params) = self._get_page_params(definition, root, param_index)
-        
-        return (selected,children_params)    
-   
+       
+        return (selected,children_params) 
+
     def _get_page_params(self, definition, root, param_index):
         if root!=None:
-            parent_params = root.params
+            parent_params = root.get_params()
         else:
-            parent_params = self._get_initial_page_params(definition)
-        
+            parent_params = definition.get_initial_params()
+    
         if param_index < 0:
             return (-1,[parent_params])
         
@@ -248,15 +250,18 @@ class Base:
         selected=-1
         for i in range(len(param_values)):
             param = param_values[i]
-            params = list(parent_params)
-            if params[param_index] == param:
+            #params = list(parent_params)
+            params = parent_params.copy()
+            if params[param_index].value == param:
                 selected=i
-            params[param_index] = param
+            params[param_index].value = param
             params_list.append(params)
-        
-        #print params_list
+     
+        for pp in params_list:
+            for p in pp.params:
+                print "%s %s" % (p.base.name, p.value)
         return (selected,params_list)
-    
+   
     def _get_initial_page_params(self, definition):
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
         return map(lambda x: x.get_initial_value(), db_params)
@@ -295,7 +300,7 @@ class Base:
     def _prepare_job(self, definition, item_id, params, text, view_name, material, width=180, get_stl=False, low_priority=False, base_model=None):
         job = {}
         
-        job['params'] = dict(zip(definition.param_names(), params))
+        job['params'] = dict(zip(definition.param_names(), params.values()))
         if (definition.accepts_text_params):
             textToSend = "test"
             if (text != None):
@@ -319,14 +324,13 @@ class Base:
     
     def _make_result(self, uuids, materials, textParams, selected):
         def do(x):
-            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "price": 172, "index": x[1], "material": x[2], "text": x[3]}
+            return  { "id": x[0], "image_url": self._uuid_to_url(x[0]), "index": x[1], "material": x[2], "text": x[3]}
         return {'selected': selected, 'items': map(do, zip(uuids, range(len(uuids)), materials, textParams))}
         
-    def _prepare_result_item(self, item, index):
-        return  { "id": str(item.uuid), "image_url": item.image_url, "price": float(item.price), "index": index}
-
     def _save_item(self, parent, definition, params, sent, item_uuid, material, textParam, view=""):
-        price = 172       
+        if not(isinstance(params, list)):
+            params = params.values()   
+             
         if view == self.DEFAULT_VIEW:
             view = ""
         
@@ -343,7 +347,7 @@ class Base:
             old_items[0].save()
             return old_items[0]
             
-        db_item = Item(base_param_hash=base_param_hash,param_hash=param_hash, price=price, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, definition=definition, sent=sent, status=status,uuid=item_uuid, params=params, textParam=textParam)
+        db_item = Item(base_param_hash=base_param_hash,param_hash=param_hash, selected=False, material = material, image_url=self._uuid_to_url(item_uuid), parent=parent, definition=definition, sent=sent, status=status,uuid=item_uuid, params=params, textParam=textParam)
         db_item.save()
         #db_item.set_params(params)
         return db_item
@@ -360,7 +364,7 @@ class Base:
    
     def send_background_items(self, definition=None):
         max_wait = 100
-        
+        #print settings.CELERYBEAT_SCHEDULE
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)
         else: 
@@ -373,7 +377,7 @@ class Base:
         for i in range(min(can_send,not_sent.count())):
             print not_sent[i].uuid
             self.material = not_sent[i].material
-            self._send_jobs(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].params], 0, "", get_stl=True, low_priority=True)
+            self._send_jobs(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].get_params()], 0, "", get_stl=True, low_priority=True)
             
     def preprocess_definition(self, definition):
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')
@@ -392,7 +396,7 @@ class Base:
                 print perm
                 item_uuid = str(uuid.uuid1())
                 self._save_item(None, definition, perm, False , item_uuid, material, "")
- 
+    
     def process_ghx(self, definition):
         self.renderer.adjust_ghx(definition.current_file_name, definition.scene_file)
  

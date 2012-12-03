@@ -218,7 +218,7 @@ class Base:
             
         self.renderer.request_images_async(jobs, countdown=1) 
         
-        job = self._prepare_job(item.definition, item.uuid, item.params, item.textParam,'Render', item.material, 180, base_model=base)
+        job = self._prepare_job(item.definition, item.uuid, item.get_params(), item.textParam,'Render', item.material, 180, base_model=base)
         self.renderer.request_images_async([job]) 
     
     def get_stl(self, item_id):

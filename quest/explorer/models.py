@@ -229,7 +229,7 @@ class DefinitionParam(models.Model):
     range_end = models.FloatField(default=1)
     rendering_view = models.CharField(max_length=200, null=True, blank=True)
     values = PickledObjectField(null=True, blank=True)
-    parent = models.ForeignKey('self', null=True)
+    parent = models.ForeignKey('self', null=True, blank=True)
     #current_value = 0
     INTEGER = 'IN'
     FLOAT = 'FL'

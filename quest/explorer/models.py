@@ -303,6 +303,7 @@ class Item(models.Model):
     FINISHED = 'FI'
     ERROR = 'ER'
     
+
     STATUS_CHOISES = ((CREATED,'Created'), (SENT, 'Sent'), (FINISHED, 'Finished'), (ERROR, 'Error'))
     status = models.CharField(max_length=2,
                               choices=STATUS_CHOISES,

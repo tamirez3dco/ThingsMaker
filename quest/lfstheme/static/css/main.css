@@ -2353,7 +2353,7 @@ form.contactable-form .disclaimer {
 	margin-left: 15em;
 }
 .jw-hastopmenu .jw-steps-wrap {
-	margin-top: 38px;
+	margin-top: 22px;
 }
 .jw-steps-wrap {
 	/*display:none;*/
@@ -2375,6 +2375,7 @@ form.contactable-form .disclaimer {
 .jw-footer {
 	/*padding: 1em;
 	padding-top: 0.1em;*/
+	margin-top: -19px;
 }
 .jw-counter {
 	display: none;

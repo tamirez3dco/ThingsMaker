@@ -53,6 +53,7 @@ $.fn.exists = function() {
 		 * @return void
 		 */
 		_create : function() {
+			$('#content').css('padding-top', '30px');
 			this._startProduct = $.getUrlVar('start_product');
 			this._productType = $.getUrlVar('product_type');
 			var tempTextParam = $.getUrlVar('textParam');
@@ -648,7 +649,7 @@ $.fn.exists = function() {
 		},
 		_openTip2: function() {
 			var left = $(".create-image-container:visible").offset().left+($(".create-image-container:visible").width()/2)-100;
-			var top = $(".create-image-container:visible").offset().top-$(window).scrollTop()-168;
+			var top = $(".create-image-container:visible").offset().top-$(window).scrollTop()-142;
 			$("#create-tip-dialog-2").dialog('option','position', [left,top]);
 			$("#create-tip-dialog-2").dialog('open');
 		},

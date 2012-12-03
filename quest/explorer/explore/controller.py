@@ -363,7 +363,7 @@ class Base:
         return old_obj
    
     def send_background_items(self, definition=None):
-        max_wait = 20
+        max_wait = 50
         #print settings.CELERYBEAT_SCHEDULE
         if definition!=None:
             not_sent = Item.objects.filter(sent=False, definition=definition)

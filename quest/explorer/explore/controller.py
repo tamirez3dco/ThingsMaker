@@ -98,7 +98,7 @@ class Base:
         
         (selected,params) = self._get_children_params(definition, root, -1, 'noop')
         print materials
-        if root != None:
+        if (root != None) and (root.material != 'Default'):
             selected = materials.index(root.material) 
             
         params = [params[0] for i in materials]

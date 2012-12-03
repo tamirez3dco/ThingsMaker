@@ -374,11 +374,13 @@ class Base:
         can_send = max_wait - wait_count
        
         print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 
-        for i in range(min(can_send,not_sent.count())):
-            print "%s %s" % (not_sent[i].uuid,not_sent[i].base_param_hash)
-            #print not_sent[i].base_param_hash
-            self.material = not_sent[i].material
-            self._send_jobs(not_sent[i].definition, [not_sent[i].uuid], None, [not_sent[i].get_params()], 0, "", get_stl=True, low_priority=True)
+        num_to_send = min(can_send,not_sent.count())
+        to_send = not_sent[:num_to_send]
+        for i in range(num_to_send):
+            print "%s %s" % (to_send[i].uuid,to_send[i].base_param_hash)
+            #print to_send[i].base_param_hash
+            self.material = to_send[i].material
+            self._send_jobs(to_send[i].definition, [to_send[i].uuid], None, [to_send[i].get_params()], 0, "", get_stl=True, low_priority=True)
             
     def preprocess_definition(self, definition):
         db_params = DefinitionParam.objects.filter(definition=definition, active=True).order_by('index')

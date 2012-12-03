@@ -364,19 +364,18 @@ class Base:
    
     def send_background_items(self, definition=None):
         max_wait = 50
-        #print settings.CELERYBEAT_SCHEDULE
-        if definition!=None:
-            not_sent = Item.objects.filter(sent=False, definition=definition)
-        else: 
-            not_sent = Item.objects.filter(sent=False)
-      
         wait_count = self.renderer.get_lowpriority_wait_count(['vases','rings','cases','pendants'])
         can_send = max_wait - wait_count
        
-        print "Not Sent: %s, Can Send: %s" % (not_sent.count(), can_send) 
-        num_to_send = min(can_send,not_sent.count())
-        to_send = not_sent[:num_to_send]
-        for i in range(num_to_send):
+        #print settings.CELERYBEAT_SCHEDULE
+        if definition!=None:
+            to_send = Item.objects.filter(sent=False, definition=definition)[:can_send]
+        else: 
+            to_send = Item.objects.filter(sent=False)[:can_send]
+      
+        print "Sending %s low priority jobs" % (len(to_send)) 
+       
+        for i in range(len(to_send)):
             print "%s %s" % (to_send[i].uuid,to_send[i].base_param_hash)
             #print to_send[i].base_param_hash
             self.material = to_send[i].material
